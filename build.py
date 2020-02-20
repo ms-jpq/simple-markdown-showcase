@@ -76,7 +76,7 @@ def download_projects(whoami, projects):
   for project in projects:
     download_project(project)
 
-
+# https://avatars.githubusercontent.com/{user}
 def build():
   config = read_yaml(_config_)
   projects = config["projects"]
