@@ -72,8 +72,7 @@ def download_projects(whoami, projects):
     base = f"https://raw.githubusercontent.com/{whoami}/{project}/master"
     jekyll = get(f"{base}/_config.yml")
     readme = get(f"{base}/README.md")
-    print(jekyll)
-    print(readme)
+    write(readme, f"_posts/{project}.md", mode="wb")
   for project in projects:
     download_project(project)
 
