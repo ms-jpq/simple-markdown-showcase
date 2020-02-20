@@ -1,6 +1,10 @@
 .vscode
 temp/
 venv/
-content/
-public/
-themes/
+_site
+_posts
+.sass-cache
+.jekyll-cache
+.jekyll-metadata
+vendor
+Gemfile.lock
