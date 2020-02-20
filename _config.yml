@@ -1,0 +1,12 @@
+title: About:Me
+email: git@bigly.dog
+description: >-
+  a showcase for my personal projects
+baseurl: ""
+url: "https://ms-jpq.github.io/"
+twitter_username: "TODO - REMOVE THIS"
+github_username: ms-jpq
+
+theme: minima
+plugins:
+  - jekyll-feed
