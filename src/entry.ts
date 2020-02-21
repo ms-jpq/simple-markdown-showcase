@@ -1,19 +1,21 @@
 import { extract } from "./github/api"
-import { safeLoad } from "js-yaml"
+import { parse } from "./domain_agnostic/yaml"
 import { slurp } from "./domain_agnostic/fs"
+import { local_resources } from "./consts"
 
-const _config_ = "projects.yml"
-const _user_ = "ms-jpq"
+export type RepoConfig = {
+  name: string
+}
 
 export type Config = {
-  priority_repos: string[]
+  user: string
+  priority_repos: RepoConfig[]
 }
 
 const main = async () => {
-  const yml = await slurp(_config_)
-  const config: Config = safeLoad(yml)
-  const user = await extract(_user_)
-  console.log(config)
+  const yml = await slurp(local_resources.config)
+  const { user, priority_repos }: Config = parse(yml)
+  const info = await extract(user)
 }
 
 main()

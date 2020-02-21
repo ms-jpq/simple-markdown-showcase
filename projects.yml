@@ -1,9 +1,11 @@
 ---
+user: ms-jpq
+
 priority_repos:
-  - noact
-  - kaleidoscope
-  - simple-traefik-dash
-  - simple-traefik-identity
-  - jinja2pp
-  - kde-in-docker
-  - simple-reeducks
+  - name: noact
+  - name: kaleidoscope
+  - name: simple-traefik-dash
+  - name: simple-traefik-identity
+  - name: jinja2pp
+  - name: kde-in-docker
+  - name: simple-reeducks

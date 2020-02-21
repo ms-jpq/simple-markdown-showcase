@@ -20,3 +20,37 @@ const Head = ({ title, js, css }: HeadProps) => (
     }
   </head>
 )
+
+export type HeaderProps = {}
+
+const Header = ({}: HeaderProps) => <header></header>
+
+export type FooterProps = {}
+
+const Footer = ({}: FooterProps) => <footer> </footer>
+
+export type AsideProps = {}
+
+const Aside = ({}: AsideProps) => (
+  <aside>
+    <section></section>
+    <section></section>
+  </aside>
+)
+
+export type MainProps = {}
+
+const Main = ({}: MainProps) => <main> </main>
+
+export type BodyProps = {}
+
+const Body = ({}: BodyProps) => (
+  <body>
+    <Header />
+    <Aside />
+    <div>
+      <Main />
+      <Footer />
+    </div>
+  </body>
+)
