@@ -1,5 +1,6 @@
 .vscode
 temp/
+out/
 node_modules/
 venv/
 package-lock.json

@@ -1,21 +1,27 @@
+import express from "express"
 import { extract } from "./github/api"
+import { hostname } from "os"
 import { parse } from "./domain_agnostic/yaml"
-import { slurp } from "./domain_agnostic/fs"
-import { local_resources } from "./consts"
-
-export type RepoConfig = {
-  name: string
-}
-
-export type Config = {
-  user: string
-  priority_repos: RepoConfig[]
-}
+import { promises as fs } from "fs"
+import { render } from "./render/render"
+import { static_config, StaticConfig } from "./consts"
 
 const main = async () => {
-  const yml = await slurp(local_resources.config)
-  const { user, priority_repos }: Config = parse(yml)
+  const yml = (await fs.readFile(static_config.config)).toString()
+  const { user, priority_repos }: StaticConfig = parse(yml)
   const info = await extract(user)
+  const instructions = render({})
+  await fs.mkdir(static_config.out_dir, { recursive: true })
+  await Promise.all(
+    instructions.map(({ sub_path, content }) =>
+      fs.writeFile(content, `${static_config.out_dir}/${sub_path}`),
+    ),
+  )
+  const files = express.static(static_config.out_dir)
+  express()
+    .use(files)
+    .listen(static_config.port)
+  console.log(`Serving files at:  http://${hostname()}:${static_config.port}`)
 }
 
 main()

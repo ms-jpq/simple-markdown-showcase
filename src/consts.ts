@@ -1,5 +1,7 @@
-export const local_resources = {
+export const static_config = {
   config: "projects.yml",
+  out_dir: "out",
+  port: 8080,
 }
 
 export const repo_resources = {
@@ -11,6 +13,15 @@ export const additional_pages = {
   index: "pages/index.md",
   about_me: "pages/about_me.md",
   contact_me: "pages/contact_me.md",
+}
+
+export type RepoConfig = {
+  name: string
+}
+
+export type StaticConfig = {
+  user: string
+  priority_repos: RepoConfig[]
 }
 
 export type BuildSpec = {}
