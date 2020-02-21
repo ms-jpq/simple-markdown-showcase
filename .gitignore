@@ -1,10 +1,5 @@
 .vscode
 temp/
+node_modules/
 venv/
-_site
-_posts
-.sass-cache
-.jekyll-cache
-.jekyll-metadata
-vendor
-Gemfile.lock
+package-lock.json

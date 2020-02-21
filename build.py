@@ -65,6 +65,7 @@ def clone(src, dest="./"):
 #
 
 _config_ = "projects.yml"
+_posts_dir_ = "post"
 
 
 def download_projects(whoami, projects):
@@ -72,12 +73,13 @@ def download_projects(whoami, projects):
     base = f"https://raw.githubusercontent.com/{whoami}/{project}/master"
     jekyll = get(f"{base}/_config.yml")
     readme = get(f"{base}/README.md")
-    write(readme, f"_posts/{project}.md", mode="wb")
+    write(readme, f"{_posts_dir_}/{project}.md", mode="wb")
   for project in projects:
     download_project(project)
 
-# https://avatars.githubusercontent.com/{user}
+
 def build():
+  # {user}
   config = read_yaml(_config_)
   projects = config["projects"]
   whoami = config["whoami"]

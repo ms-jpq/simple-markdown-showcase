@@ -1,12 +1,20 @@
 {
-  "author": "",
-  "description": "",
-  "homepage": "about:blank",
-  "license": "MIT",
-  "main": "",
-  "name": "-",
-  "scripts": {
-    "run": "sl"
+  "author": "_",
+  "dependencies": {
+    "@types/node": "*",
+    "node-fetch": "^2.6.0",
+    "typescript": "*"
   },
-  "version": "-1"
+  "description": "_",
+  "homepage": "https://ms-jpq.github.io",
+  "license": "MIT",
+  "name": "ms-jpq.github.io",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ms-jpq/ms-jpq.github.io.git"
+  },
+  "scripts": {
+    "test": ""
+  },
+  "version": "1.0.0"
 }
