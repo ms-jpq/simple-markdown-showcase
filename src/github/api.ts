@@ -3,8 +3,14 @@ import assert from "assert"
 import { parse } from "../domain_agnostic/yaml"
 import { Repo, repo_resources } from "../consts"
 
-const github_avatar = async (user: string) => {
-  const res = await fetch(`https://avatars.githubusercontent.com/${user}`)
+const secure_fetch = (uri: string, token?: string) =>
+  fetch(uri, { headers: token ? { Authorization: `token ${token}` } : {} })
+
+const github_avatar = async (user: string, token?: string) => {
+  const res = await secure_fetch(
+    `https://avatars.githubusercontent.com/${user}`,
+    token,
+  )
   const data = await res.blob()
   const type = ((data as unknown) as File).type
   assert(type.includes("image/"))
@@ -12,10 +18,15 @@ const github_avatar = async (user: string) => {
   return { ext, data }
 }
 
-const repo_resource = async (full_name: string, resource: string) => {
+const repo_resource = async (
+  full_name: string,
+  resource: string,
+  token?: string,
+) => {
   try {
-    const res = await fetch(
+    const res = await secure_fetch(
       `https://raw.githubusercontent.com/${full_name}/master/${resource}`,
+      token,
     )
     return res.text()
   } catch {
@@ -23,11 +34,11 @@ const repo_resource = async (full_name: string, resource: string) => {
   }
 }
 
-const github_repo = async (repo_data: any) => {
+const github_repo = (token?: string) => async (repo_data: any) => {
   const { full_name, created_at, updated_at } = repo_data
   const [read_me, spec] = await Promise.all([
-    repo_resource(full_name, repo_resources.read_me),
-    repo_resource(full_name, repo_resources.build_spec),
+    repo_resource(full_name, repo_resources.read_me, token),
+    repo_resource(full_name, repo_resources.build_spec, token),
   ])
   if (!read_me) {
     return undefined
@@ -42,11 +53,15 @@ const github_repo = async (repo_data: any) => {
   return repo
 }
 
-const github_repos = async (user: string) => {
-  const res = await fetch(`https://api.github.com/users/${user}/repos`)
+const github_repos = async (user: string, token?: string) => {
+  const res = await secure_fetch(
+    `https://api.github.com/users/${user}/repos`,
+    token,
+  )
   const repo_data: any[] = await res.json()
+  const seek = github_repo(token)
   try {
-    const repos = await Promise.all(repo_data.map(github_repo))
+    const repos = await Promise.all(repo_data.map(seek))
     return repos.flatMap((r) => (r ? [r] : []))
   } catch (err) {
     console.error(err, repo_data)
@@ -54,10 +69,10 @@ const github_repos = async (user: string) => {
   }
 }
 
-export const extract = async (user_name: string) => {
+export const extract = async (user_name: string, token?: string) => {
   const [avatar, repos] = await Promise.all([
-    github_avatar(user_name),
-    github_repos(user_name),
+    github_avatar(user_name, token),
+    github_repos(user_name, token),
   ])
   return {
     user_name,

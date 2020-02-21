@@ -12,7 +12,7 @@ const run = (program: string, ...args: string[]) => {
   let child: ChildProcess | undefined = undefined
   return async () => {
     if (child) {
-      const dead = new Promise((resolve) => child!.on("exit", resolve))
+      const dead = new Promise((resolve) => child!.once("exit", resolve))
       child.kill()
       await dead
       console.warn(msg)

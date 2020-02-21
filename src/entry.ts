@@ -10,7 +10,7 @@ import { static_config, StaticConfig } from "./consts"
 const main = async () => {
   const yml = (await fs.readFile(static_config.config)).toString()
   const { user, priority_repos }: StaticConfig = parse(yml)
-  const info = await extract(user)
+  const info = await extract(user, static_config.github_token)
   const instructions = render({})
   await fs.rmdir(static_config.out_dir, { recursive: true })
   await fs.mkdir(static_config.out_dir, { recursive: true })
