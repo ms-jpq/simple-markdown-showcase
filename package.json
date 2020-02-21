@@ -2,10 +2,19 @@
   "author": "_",
   "dependencies": {
     "@types/node": "*",
-    "node-fetch": "^2.6.0",
-    "typescript": "*"
+    "@types/node-fetch": "^2.5.4",
+    "jsonschema": "^1.2.5",
+    "node-fetch": "^2.6.0"
   },
   "description": "_",
+  "devDependencies": {
+    "eslint": "*",
+    "eslint-config-prettier": "*",
+    "eslint-plugin-prettier": "*",
+    "prettier": "*",
+    "ts-node": "*",
+    "typescript": "*"
+  },
   "homepage": "https://ms-jpq.github.io",
   "license": "MIT",
   "name": "ms-jpq.github.io",
@@ -14,7 +23,7 @@
     "url": "git+https://github.com/ms-jpq/ms-jpq.github.io.git"
   },
   "scripts": {
-    "test": ""
+    "prettier": "prettier --write **/**.tsx --write **/**.ts"
   },
   "version": "1.0.0"
 }
