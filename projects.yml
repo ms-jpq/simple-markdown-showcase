@@ -1,5 +1,5 @@
 ---
-projects:
+priority_repos:
   - noact
   - kaleidoscope
   - simple-traefik-dash

@@ -1,13 +1,20 @@
 {
   "author": "_",
   "dependencies": {
+    "@types/js-yaml": "^3.12.2",
     "@types/node": "*",
     "@types/node-fetch": "^2.5.4",
-    "jsonschema": "^1.2.5",
-    "node-fetch": "^2.6.0"
+    "@types/react": "^16.9.21",
+    "@types/react-dom": "^16.9.5",
+    "js-yaml": "^3.13.1",
+    "markdown-it": "^10.0.0",
+    "node-fetch": "^2.6.0",
+    "react": "^16.12.0",
+    "react-dom": "^16.12.0"
   },
   "description": "_",
   "devDependencies": {
+    "@types/node": "*",
     "eslint": "*",
     "eslint-config-prettier": "*",
     "eslint-plugin-prettier": "*",
@@ -17,6 +24,7 @@
   },
   "homepage": "https://ms-jpq.github.io",
   "license": "MIT",
+  "main": "src/entry.ts",
   "name": "ms-jpq.github.io",
   "repository": {
     "type": "git",
