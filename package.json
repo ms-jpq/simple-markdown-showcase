@@ -18,13 +18,15 @@
   "devDependencies": {
     "@types/express": "*",
     "@types/node": "*",
+    "@types/watch": "*",
     "eslint": "*",
     "eslint-config-prettier": "*",
     "eslint-plugin-prettier": "*",
     "express": "*",
     "prettier": "*",
     "ts-node": "*",
-    "typescript": "*"
+    "typescript": "*",
+    "watch": "*"
   },
   "homepage": "https://ms-jpq.github.io",
   "license": "MIT",

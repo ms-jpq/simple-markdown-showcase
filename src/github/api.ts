@@ -45,8 +45,13 @@ const github_repo = async (repo_data: any) => {
 const github_repos = async (user: string) => {
   const res = await fetch(`https://api.github.com/users/${user}/repos`)
   const repo_data: any[] = await res.json()
-  const repos = await Promise.all(repo_data.map(github_repo))
-  return repos.flatMap((r) => (r ? [r] : []))
+  try {
+    const repos = await Promise.all(repo_data.map(github_repo))
+    return repos.flatMap((r) => (r ? [r] : []))
+  } catch (err) {
+    console.error(err, repo_data)
+    return []
+  }
 }
 
 export const extract = async (user_name: string) => {

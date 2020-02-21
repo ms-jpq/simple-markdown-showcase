@@ -1,3 +1,4 @@
+#!/usr/bin/env ts-node
 import express from "express"
 import { extract } from "./github/api"
 import { hostname } from "os"
@@ -11,6 +12,7 @@ const main = async () => {
   const { user, priority_repos }: StaticConfig = parse(yml)
   const info = await extract(user)
   const instructions = render({})
+  await fs.rmdir(static_config.out_dir, { recursive: true })
   await fs.mkdir(static_config.out_dir, { recursive: true })
   await Promise.all(
     instructions.map(({ sub_path, content }) =>
