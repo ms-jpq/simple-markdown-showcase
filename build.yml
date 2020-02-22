@@ -3,8 +3,25 @@ user: ms-jpq
 
 header:
   title: Creative Portfolio
+  menu: Menu
 
 aside:
+  about_me:
+    title: Creative Portfolio
+    desc:
+      - >-
+        PLACE HOLDER DESC LINE 1
+      - >-
+        PLACE HOLDER DESC LINE 2
+
+  nav:
+    - title: PLACE_HOLDER_NAV_1
+      link: about:blank
+    - title: PLACE_HOLDER_NAV_2
+      link: about:blank
+    - title: PLACE_HOLDER_NAV_3
+      link: about:blank
+
   contacts:
     email: github@bigly.dog
     github: ms-jpq

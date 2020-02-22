@@ -1,10 +1,11 @@
 import React from "react"
 import { AsideAboutMe } from "./aside/00_about_me"
 import { AsideAssociations } from "./aside/02_associations"
+import { AsideConfig, FooterConfig, HeaderConfig } from "../../consts"
 import { AsideNav } from "./aside/01_nav"
-import { ContactsConfig } from "../../consts"
+import { FooterDesc } from "./footer/00_desc"
 import { HeaderMenu } from "./header/00_menu"
-import { HeaderTitle, TitleProps } from "./header/01_title"
+import { HeaderTitle } from "./header/01_title"
 import { map } from "../../domain_agnostic/list"
 import { Parent } from "../../domain_agnostic/react"
 
@@ -35,38 +36,38 @@ const Head = ({ title, js, css }: HeadProps) => (
 )
 
 // Part of aside
-export type FooterProps = { desc: string[] }
+export type FooterProps = {} & FooterConfig
 
 const Footer = ({ desc }: FooterProps) => (
   <footer>
-    {map(
-      (d) => (
-        <p>{d}</p>
-      ),
-      desc,
-    )}
+    <FooterDesc desc={desc} />
   </footer>
 )
 
 // Invisble in mobile size
-export type AsideProps = { contacts: ContactsConfig }
+export type AsideProps = {} & AsideConfig
 
 // Children is only <Footer />
-const Aside = ({ contacts, children }: AsideProps & Parent) => (
+const Aside = ({
+  about_me,
+  contacts,
+  nav,
+  footer,
+}: AsideProps & { footer: FooterProps }) => (
   <aside>
-    <AsideAboutMe />
-    <AsideNav />
+    <AsideAboutMe title={about_me.title} desc={about_me.desc} />
+    <AsideNav dests={nav} />
     <AsideAssociations contacts={contacts} />
-    {children}
+    <Footer desc={footer.desc} />
   </aside>
 )
 
 // Invisible until mobile size
-export type HeaderProps = {} & TitleProps
+export type HeaderProps = {} & HeaderConfig
 
-const Header = ({ title }: HeaderProps) => (
+const Header = ({ title, menu }: HeaderProps) => (
   <header>
-    <HeaderMenu />
+    <HeaderMenu menu_title={menu} />
     <HeaderTitle title={title} />
   </header>
 )
@@ -82,9 +83,14 @@ export type BodyProps = {
 
 const Body = ({ aside, header, footer, children }: BodyProps & Parent) => (
   <body>
-    <Aside contacts={aside.contacts}>{[<Footer desc={footer.desc} />]}</Aside>
+    <Aside
+      about_me={aside.about_me}
+      nav={aside.nav}
+      contacts={aside.contacts}
+      footer={footer}
+    />
     <div>
-      <Header title={header.title} />
+      <Header title={header.title} menu={header.menu} />
       <Main>{children}</Main>
     </div>
   </body>

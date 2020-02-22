@@ -25,11 +25,16 @@ export type ContactsConfig = {
 
 export type AsideConfig = {
   contacts: ContactsConfig
+  nav: {
+    title: string
+    link: string
+  }[]
+  about_me: { title: string; desc: string[] }
 }
 
 export type HeaderConfig = {
-  link: string
   title: string
+  menu: string
 }
 
 export type FooterConfig = {
