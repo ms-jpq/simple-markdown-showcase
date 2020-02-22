@@ -35,7 +35,7 @@ const repo_resource = async (
 }
 
 const github_repo = (token?: string) => async (repo_data: any) => {
-  const { full_name, created_at, updated_at } = repo_data
+  const { name, full_name, created_at, updated_at } = repo_data
   const [read_me, spec] = await Promise.all([
     repo_resource(full_name, repo_resources.read_me, token),
     repo_resource(full_name, repo_resources.build_spec, token),
@@ -45,6 +45,7 @@ const github_repo = (token?: string) => async (repo_data: any) => {
   }
   const repo: Repo = {
     build_spec: spec ? parse(spec) : undefined,
+    name,
     full_name,
     created_at: new Date(created_at),
     updated_at: new Date(updated_at),

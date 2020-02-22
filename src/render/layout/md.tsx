@@ -5,6 +5,8 @@ import parser from "react-html-parser"
 
 const md = markdown({})
 
-export const Markdown = (content: string) => (
+export type MarkDownProps = { content: string }
+
+export const Markdown = ({ content }: MarkDownProps) => (
   <article className={cn("markdown")}>{parser(md.render(content))}</article>
 )

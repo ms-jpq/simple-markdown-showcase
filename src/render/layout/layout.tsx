@@ -38,14 +38,15 @@ const Footer = ({ description }: FooterProps) => (
 )
 
 // Invisble in mobile size
-export type AsideProps = { footer: FooterProps }
+export type AsideProps = {}
 
-const Aside = ({ footer }: AsideProps) => (
+// Children is only <Footer />
+const Aside = ({ children }: AsideProps & Parent) => (
   <aside>
     <AsideAboutMe />
     <AsideNav />
     <AsideAssociations />
-    <Footer description={footer.description} />
+    {children}
   </aside>
 )
 
@@ -60,20 +61,17 @@ const Header = ({}: HeaderProps) => (
 )
 
 // Main drawing area
-export type MainProps = {} & Parent
-
-const Main = ({ children }: MainProps) => <main>{children}</main>
+const Main = ({ children }: Parent) => <main>{children}</main>
 
 export type BodyProps = {
   aside: AsideProps
   header: HeaderProps
-  main: MainProps
   footer: FooterProps
-} & Parent
+}
 
-const Body = ({ aside, header, footer, main, children }: BodyProps) => (
+const Body = ({ aside, header, footer, children }: BodyProps & Parent) => (
   <body>
-    <Aside footer={footer} />
+    <Aside>{[<Footer description={footer.description} />]}</Aside>
     <div>
       <Header />
       <Main>{children}</Main>
@@ -86,12 +84,7 @@ export type PageProps = { head: HeadProps; body: BodyProps } & Parent
 export const Page = ({ head, body, children }: PageProps) => (
   <html>
     <Head title={head.title} js={head.js} css={head.css} />
-    <Body
-      header={body.header}
-      footer={body.footer}
-      aside={body.aside}
-      main={body.main}
-    >
+    <Body header={body.header} footer={body.footer} aside={body.aside}>
       {children}
     </Body>
   </html>

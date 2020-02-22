@@ -30,6 +30,7 @@ export type BuildSpec = {}
 
 export type Repo = {
   build_spec?: BuildSpec
+  name: string
   full_name: string
   created_at: Date
   updated_at: Date
