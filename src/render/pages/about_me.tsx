@@ -1,4 +1,4 @@
-import { Render, additional_pages } from "../../consts"
+import { additional_pages, Render } from "../../consts"
 import { BodyProps } from "../layout/layout"
 
 export type RenderProps = {

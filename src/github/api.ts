@@ -3,7 +3,7 @@ import fetch from "node-fetch"
 import { compact_map, map } from "../domain_agnostic/list"
 import { id } from "../domain_agnostic/prelude"
 import { parse } from "../domain_agnostic/yaml"
-import { Repo, repo_resources } from "../consts"
+import { Repo, repo_resources, RepoConfig } from "../consts"
 
 const secure_fetch = (uri: string, token?: string) =>
   fetch(uri, { headers: token ? { Authorization: `token ${token}` } : {} })
@@ -37,7 +37,7 @@ const repo_resource = async (
 }
 
 const github_repo = (token?: string) => async (repo_data: any) => {
-  const { name, full_name, created_at, updated_at } = repo_data
+  const { name, full_name, html_url, created_at, updated_at } = repo_data
   const [read_me, config, spec] = await Promise.all([
     repo_resource(full_name, repo_resources.read_me, token),
     repo_resource(full_name, repo_resources.config, token),
@@ -46,14 +46,15 @@ const github_repo = (token?: string) => async (repo_data: any) => {
   if (!read_me || !config) {
     return undefined
   }
+  const repo_config: RepoConfig = parse(config)
   const repo: Repo = {
     build_spec: spec ? parse(spec) : undefined,
-    config: parse(config),
     name,
-    full_name,
+    html_url,
     created_at: new Date(created_at),
     updated_at: new Date(updated_at),
     read_me,
+    ...repo_config,
   }
   return repo
 }

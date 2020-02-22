@@ -1,5 +1,5 @@
-import { promises as fs } from "fs"
 import { dirname } from "path"
+import { promises as fs } from "fs"
 
 export const mkdir = (dir: string) => fs.mkdir(dir, { recursive: true })
 export const rmdir = (dir: string) => fs.rmdir(dir, { recursive: true })

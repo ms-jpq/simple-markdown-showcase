@@ -1,12 +1,19 @@
 #!/usr/bin/env ts-node
-import express from "express"
-import { extract } from "./github/api"
-import { hostname } from "os"
-import { map, unique_by } from "./domain_agnostic/list"
-import { mkdir, rmdir, slurp, spit } from "./domain_agnostic/fs"
-import { parse } from "./domain_agnostic/yaml"
-import { render } from "./render/render"
-import { RenderInstruction, static_config, StaticConfig } from "./consts"
+import cors from 'cors';
+import express from 'express';
+import { extract } from './github/api';
+import { hostname } from 'os';
+import { map, unique_by } from './domain_agnostic/list';
+import {
+  mkdir,
+  rmdir,
+  slurp,
+  spit
+  } from './domain_agnostic/fs';
+import { parse } from './domain_agnostic/yaml';
+import { render } from './render/render';
+import { RenderInstruction, static_config, StaticConfig } from './consts';
+
 
 const commit = async (instructions: RenderInstruction[]) => {
   await rmdir(static_config.out_dir)
@@ -22,9 +29,9 @@ const commit = async (instructions: RenderInstruction[]) => {
 }
 
 const srv = () => {
-  const files = express.static(static_config.out_dir)
   express()
-    .use(files)
+    .use(cors())
+    .use(express.static(static_config.out_dir))
     .listen(static_config.port)
   console.log(`Serving files at:  http://${hostname()}:${static_config.port}`)
 }

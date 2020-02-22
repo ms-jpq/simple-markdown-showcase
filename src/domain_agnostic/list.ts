@@ -1,3 +1,7 @@
+export const fst = <T>(elems: T[]) => (elems.length > 0 ? elems[0] : undefined)
+
+export const snd = <T>(elems: T[]) => (elems.length > 1 ? elems[1] : undefined)
+
 export const range = (begin: number, end: number, step = 1) => {
   const nums = []
   let nxt = begin
@@ -62,3 +66,15 @@ export const all = <T>(predicate: (_: T) => boolean, elems: T[]) =>
 
 export const some = <T>(predicate: (_: T) => boolean, elems: T[]) =>
   elems.some(predicate)
+
+export const take = <T>(n: number, elems: T[]) => elems.filter((_, i) => i < n)
+
+export const join = <T>(sep: string, elems: T[]) => elems.join(sep)
+
+export const generate = <T>(generator: () => T, n: number) => {
+  const lst = []
+  for (const _ of range(1, n)) {
+    lst.push(generator())
+  }
+  return lst
+}

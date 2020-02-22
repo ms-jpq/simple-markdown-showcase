@@ -1,5 +1,5 @@
-import { Render } from "../../consts"
 import { BodyProps } from "../layout/layout"
+import { Render } from "../../consts"
 
 export type RenderProps = {
   body: BodyProps

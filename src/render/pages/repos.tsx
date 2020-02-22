@@ -4,8 +4,7 @@ import { flat_map, map } from "../../domain_agnostic/list"
 import { id } from "../../domain_agnostic/prelude"
 import { Markdown } from "../layout/md"
 import { Render, Repo } from "../../consts"
-import { renderToString } from "react-dom/server"
-import { resources } from "../lib"
+import { resources, render_page } from "../lib"
 
 export type RepoProps = Pick<Repo, "read_me" | "updated_at">
 
@@ -33,12 +32,7 @@ const render_repo: Render<Repo & BodyProps> = async ({
       {[<Repo read_me={read_me} updated_at={updated_at} />]}
     </Page>
   )
-  const page_content = {
-    sub_path: `${name}/index.html`,
-    content: renderToString(page),
-  }
-
-  return [page_content, ...addendum]
+  return [render_page(page, name), ...addendum]
 }
 
 export type RenderProps = {

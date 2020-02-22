@@ -1,7 +1,7 @@
-import React from "react"
-import markdown from "markdown-it"
 import cn from "classnames"
+import markdown from "markdown-it"
 import parser from "react-html-parser"
+import React from "react"
 
 const md = markdown({})
 

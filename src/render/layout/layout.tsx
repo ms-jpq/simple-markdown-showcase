@@ -2,8 +2,9 @@ import React from "react"
 import { AsideAboutMe } from "./aside/00_about_me"
 import { AsideAssociations } from "./aside/02_associations"
 import { AsideNav } from "./aside/01_nav"
+import { ContactsConfig } from "../../consts"
 import { HeaderMenu } from "./header/00_menu"
-import { HeaderTitle } from "./header/01_title"
+import { HeaderTitle, TitleProps } from "./header/01_title"
 import { map } from "../../domain_agnostic/list"
 import { Parent } from "../../domain_agnostic/react"
 
@@ -34,39 +35,39 @@ const Head = ({ title, js, css }: HeadProps) => (
 )
 
 // Part of aside
-export type FooterProps = { description: string[] }
+export type FooterProps = { desc: string[] }
 
-const Footer = ({ description }: FooterProps) => (
+const Footer = ({ desc }: FooterProps) => (
   <footer>
     {map(
       (d) => (
         <p>{d}</p>
       ),
-      description,
+      desc,
     )}
   </footer>
 )
 
 // Invisble in mobile size
-export type AsideProps = {}
+export type AsideProps = { contacts: ContactsConfig }
 
 // Children is only <Footer />
-const Aside = ({ children }: AsideProps & Parent) => (
+const Aside = ({ contacts, children }: AsideProps & Parent) => (
   <aside>
     <AsideAboutMe />
     <AsideNav />
-    <AsideAssociations />
+    <AsideAssociations contacts={contacts} />
     {children}
   </aside>
 )
 
 // Invisible until mobile size
-export type HeaderProps = {}
+export type HeaderProps = {} & TitleProps
 
-const Header = ({}: HeaderProps) => (
+const Header = ({ title }: HeaderProps) => (
   <header>
     <HeaderMenu />
-    <HeaderTitle />
+    <HeaderTitle title={title} />
   </header>
 )
 
@@ -81,9 +82,9 @@ export type BodyProps = {
 
 const Body = ({ aside, header, footer, children }: BodyProps & Parent) => (
   <body>
-    <Aside>{[<Footer description={footer.description} />]}</Aside>
+    <Aside contacts={aside.contacts}>{[<Footer desc={footer.desc} />]}</Aside>
     <div>
-      <Header />
+      <Header title={header.title} />
       <Main>{children}</Main>
     </div>
   </body>

@@ -1,10 +1,11 @@
 import cn from "classnames"
 import React from "react"
 import { BodyProps, Page } from "../layout/layout"
+import { choice } from "../../domain_agnostic/rand"
+import { filter, fst, map } from "../../domain_agnostic/list"
 import { Parent } from "../../domain_agnostic/react"
 import { Render, Repo, StaticConfig } from "../../consts"
-import { renderToString } from "react-dom/server"
-import { resources } from "../lib"
+import { render_page, resources } from "../lib"
 // Use Cards with IMAGES
 
 export type Customization = {
@@ -34,7 +35,7 @@ const CardOverlay = ({}) => <div> </div>
 const PictureFigure = ({ images, children }: Picture & Parent) => (
   <div className={cn("picture")}>
     <a className={cn("content")}>
-      <img src={images[0]} />
+      <img src={fst(images)} />
     </a>
     <div className={cn("overlay")}>{children}</div>
   </div>
@@ -54,15 +55,20 @@ const DetailFigure = ({ desc }: Detail) => (
   </div>
 )
 
-const Card = ({ images, link, title, desc, hide_detail }: CardProps) => (
-  <figure className={cn("card")}>
-    <PictureFigure images={images}>
-      {[hide_detail ? <DetailFigure desc={desc} /> : <CardOverlay />]}
-    </PictureFigure>
-    <TitleFigure title={title} link={link} />
-    {hide_detail ? undefined : <DetailFigure desc={desc} />}
-  </figure>
-)
+const Card = ({ images, link, title, desc, hide_detail }: CardProps) => {
+  // TODO -- REMOVE THIS
+  images = images || []
+  const hide_detail_actual = hide_detail || images.length === 0
+  return (
+    <figure className={cn("card")}>
+      <PictureFigure images={images}>
+        {[hide_detail_actual ? <DetailFigure desc={desc} /> : <CardOverlay />]}
+      </PictureFigure>
+      <TitleFigure title={title} link={link} />
+      {hide_detail_actual ? undefined : <DetailFigure desc={desc} />}
+    </figure>
+  )
+}
 
 export type RenderProps = {
   body: BodyProps
@@ -71,20 +77,27 @@ export type RenderProps = {
 }
 
 export const render: Render<RenderProps> = async ({ config, repos, body }) => {
-  const showcase = repos
+  const showcase = filter((r) => r.showcase, repos)
   const title = config.title
   const js = [""]
   const css = ["css/layout.css"]
   const addendum = await resources([...css])
   const page = (
     <Page head={{ title, js, css }} body={body}>
-      {}
+      {map(
+        ({ title, images, html_url, desc }) => (
+          <Card
+            link={html_url}
+            images={images}
+            title={title}
+            desc={desc}
+            hide_detail={choice([true, false])}
+          />
+        ),
+        showcase,
+      )}
     </Page>
   )
-  const page_content = {
-    sub_path: `index.html`,
-    content: renderToString(page),
-  }
 
-  return [page_content, ...addendum]
+  return [render_page(page, ""), ...addendum]
 }

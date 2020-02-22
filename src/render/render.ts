@@ -18,9 +18,9 @@ export type RenderProps = {
 }
 
 export const render: Render<RenderProps> = async ({ config, repos }) => {
-  const footer: FooterProps = { description: [] }
-  const aside: AsideProps = {}
-  const header: HeaderProps = {}
+  const footer: FooterProps = { desc: config.footer.desc }
+  const aside: AsideProps = { contacts: config.aside.contacts }
+  const header: HeaderProps = { title: config.header.title }
   const body: BodyProps = {
     aside,
     header,

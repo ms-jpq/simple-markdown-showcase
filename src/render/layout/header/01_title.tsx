@@ -1,5 +1,10 @@
-import React from "react"
 import cn from "classnames"
+import React from "react"
 
-export type TitleProps = {}
-export const HeaderTitle = ({}: TitleProps) => <a></a>
+export type TitleProps = { title: string }
+
+export const HeaderTitle = ({ title }: TitleProps) => (
+  <a href="/">
+    <h3>{title}</h3>
+  </a>
+)

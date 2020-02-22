@@ -9,8 +9,14 @@ aside {
 }
 
 header {
-  display: flex;
+  display: none;
   flex-direction: row;
+}
+
+@media (max-width: 60em) {
+  header {
+    display: flex;
+  }
 }
 
 main {
