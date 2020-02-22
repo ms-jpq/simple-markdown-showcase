@@ -27,14 +27,14 @@ const srv = () => {
 
 const main = async () => {
   const yml = await slurp(static_config.config)
-  const { user, priority_repos }: StaticConfig = parse(yml)
+  const config: StaticConfig = parse(yml)
   const info = JSON.parse(await slurp(`${static_config.temp_dir}/info.json`))
-  // const info = await extract(user, static_config.github_token)
+  // const info = await extract(config.user, static_config.github_token)
   // await spit(
   //   JSON.stringify(info),
   //   `${static_config.temp_dir}/info.json`,
   // )
-  const instructions = render({ repos: info.repos })
+  const instructions = await render({ config, repos: info.repos })
   await commit(instructions)
   srv()
 }

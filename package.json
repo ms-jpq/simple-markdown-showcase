@@ -25,11 +25,16 @@
     "eslint-config-prettier": "*",
     "eslint-plugin-prettier": "*",
     "express": "*",
-    "ignore": "*",
+    "nodemon": "*",
     "prettier": "*",
     "ts-node": "*",
-    "typescript": "*",
-    "watch": "*"
+    "typescript": "*"
+  },
+  "nodemonConfig": {
+    "ignore": [
+      "temp/*",
+      "out/*"
+    ]
   },
   "homepage": "https://ms-jpq.github.io",
   "license": "MIT",

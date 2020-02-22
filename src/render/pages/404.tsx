@@ -1,4 +1,8 @@
-import { Render, additional_pages } from "../../consts"
-import {} from "../layout/layout"
+import { Render } from "../../consts"
+import { BodyProps } from "../layout/layout"
 
-export const render: Render<{}> = (spec) => []
+export type RenderProps = {
+  body: BodyProps
+}
+
+export const render: Render<RenderProps> = async ({}) => []

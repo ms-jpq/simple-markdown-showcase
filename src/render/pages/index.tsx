@@ -1,8 +1,10 @@
-// Use Cards with IMAGES
-import React from "react"
 import cn from "classnames"
+import React from "react"
+import { BodyProps, Page } from "../layout/layout"
 import { Parent } from "../../domain_agnostic/react"
-import { Render, additional_pages } from "../../consts"
+import { Render, Repo, StaticConfig } from "../../consts"
+import { renderToString } from "react-dom/server"
+// Use Cards with IMAGES
 
 export type Customization = {
   hide_detail: boolean
@@ -61,4 +63,23 @@ const Card = ({ images, link, title, desc, hide_detail }: CardProps) => (
   </figure>
 )
 
-export const render: Render<{}> = (spec) => []
+export type RenderProps = {
+  body: BodyProps
+  config: StaticConfig
+  repos: Repo[]
+}
+
+export const render: Render<RenderProps> = async ({ config, repos, body }) => {
+  const title = config.title
+  const js = [""]
+  const css = [""]
+  const page_subpath = `index.html`
+  const page = (
+    <Page head={{ title, js, css }} body={body}>
+      {}
+    </Page>
+  )
+  const page_content = renderToString(page)
+
+  return [{ sub_path: page_subpath, content: page_content }]
+}

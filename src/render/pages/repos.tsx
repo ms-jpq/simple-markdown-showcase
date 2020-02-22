@@ -40,7 +40,7 @@ export type RenderProps = {
   repos: Repo[]
 }
 
-export const render: Render<RenderProps> = ({ repos, body }) => {
+export const render: Render<RenderProps> = async ({ repos, body }) => {
   const pages = repos.flatMap((repo) => render_repo({ ...repo, ...body }))
   return pages
 }

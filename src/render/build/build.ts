@@ -1,3 +1,5 @@
 import { BuildSpec, Render } from "../../consts"
 
-export const render: Render<BuildSpec> = (spec) => []
+export type RenderProps = {} & BuildSpec
+
+export const render: Render<RenderProps> = async ({}) => []

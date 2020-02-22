@@ -1,5 +1,5 @@
 export const static_config = {
-  config: "projects.yml",
+  config: "_config.yml",
   out_dir: "out",
   temp_dir: "temp",
   port: 8080,
@@ -9,27 +9,30 @@ export const static_config = {
 export const repo_resources = {
   read_me: "README.md",
   build_spec: "_build_spec.yml",
+  config: static_config.config,
 }
 
 export const additional_pages = {
-  index: "pages/index.md",
   about_me: "pages/about_me.md",
   contact_me: "pages/contact_me.md",
 }
 
-export type RepoConfig = {
-  name: string
-}
-
 export type StaticConfig = {
   user: string
-  priority_repos: RepoConfig[]
+  title: string
+}
+
+export type RepoConfig = {
+  title: string
+  showcase: boolean
+  desc: string
 }
 
 export type BuildSpec = {}
 
 export type Repo = {
   build_spec?: BuildSpec
+  config: RepoConfig
   name: string
   full_name: string
   created_at: Date
@@ -42,4 +45,4 @@ export type RenderInstruction = {
   content: string
 }
 
-export type Render<T> = (args: T) => RenderInstruction[]
+export type Render<T> = (args: T) => Promise<RenderInstruction[]>

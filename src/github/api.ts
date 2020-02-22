@@ -28,7 +28,7 @@ const repo_resource = async (
       `https://raw.githubusercontent.com/${full_name}/master/${resource}`,
       token,
     )
-    return res.text()
+    return res.ok ? res.text() : undefined
   } catch {
     return undefined
   }
@@ -36,15 +36,17 @@ const repo_resource = async (
 
 const github_repo = (token?: string) => async (repo_data: any) => {
   const { name, full_name, created_at, updated_at } = repo_data
-  const [read_me, spec] = await Promise.all([
+  const [read_me, config, spec] = await Promise.all([
     repo_resource(full_name, repo_resources.read_me, token),
+    repo_resource(full_name, repo_resources.config, token),
     repo_resource(full_name, repo_resources.build_spec, token),
   ])
-  if (!read_me) {
+  if (!read_me || !config) {
     return undefined
   }
   const repo: Repo = {
     build_spec: spec ? parse(spec) : undefined,
+    config: parse(config),
     name,
     full_name,
     created_at: new Date(created_at),
