@@ -25,6 +25,7 @@
     "eslint-config-prettier": "*",
     "eslint-plugin-prettier": "*",
     "express": "*",
+    "ignore": "*",
     "prettier": "*",
     "ts-node": "*",
     "typescript": "*",
