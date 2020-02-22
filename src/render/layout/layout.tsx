@@ -1,4 +1,10 @@
-import * as React from "react"
+import React from "react"
+import { AsideAboutMe } from "./aside/00_about_me"
+import { AsideAssociations } from "./aside/02_associations"
+import { AsideNav } from "./aside/01_nav"
+import { HeaderMenu } from "./header/00_menu"
+import { HeaderTitle } from "./header/01_title"
+import { Parent } from "../../domain_agnostic/react"
 
 export type HeadProps = {
   title: string
@@ -17,40 +23,76 @@ const Head = ({ title, js, css }: HeadProps) => (
     {css.map((href) => (
       <link href={href} rel="stylesheet"></link>
     ))}
-    }
   </head>
 )
 
-export type HeaderProps = {}
+// Part of aside
+export type FooterProps = { description: string[] }
 
-const Header = ({}: HeaderProps) => <header></header>
+const Footer = ({ description }: FooterProps) => (
+  <footer>
+    {description.map((d) => (
+      <p>{d}</p>
+    ))}
+  </footer>
+)
 
-export type FooterProps = {}
+// Invisble in mobile size
+export type AsideProps = { footer: FooterProps }
 
-const Footer = ({}: FooterProps) => <footer> </footer>
-
-export type AsideProps = {}
-
-const Aside = ({}: AsideProps) => (
+const Aside = ({ footer }: AsideProps) => (
   <aside>
-    <section></section>
-    <section></section>
+    <AsideAboutMe />
+    <AsideNav />
+    <AsideAssociations />
+    <Footer description={footer.description} />
   </aside>
 )
 
-export type MainProps = {}
+// Invisible until mobile size
+export type HeaderProps = {}
 
-const Main = ({}: MainProps) => <main> </main>
+const Header = ({}: HeaderProps) => (
+  <header>
+    <HeaderMenu />
+    <HeaderTitle />
+  </header>
+)
 
-export type BodyProps = {}
+// Main drawing area
+export type MainProps = {} & Parent
 
-const Body = ({}: BodyProps) => (
+const Main = ({ children }: MainProps) => <main>{children}</main>
+
+export type BodyProps = {
+  aside: AsideProps
+  header: HeaderProps
+  main: MainProps
+  footer: FooterProps
+} & Parent
+
+const Body = ({ aside, header, footer, main, children }: BodyProps) => (
   <body>
-    <Header />
-    <Aside />
+    <Aside footer={footer} />
     <div>
-      <Main />
-      <Footer />
+      <Header />
+      <Main>{children}</Main>
     </div>
   </body>
+)
+
+export type PageProps = { head: HeadProps; body: BodyProps } & Parent
+
+export const Page = ({ head, body, children }: PageProps) => (
+  <html>
+    <Head title={head.title} js={head.js} css={head.css} />
+    <Body
+      header={body.header}
+      footer={body.footer}
+      aside={body.aside}
+      main={body.main}
+    >
+      {children}
+    </Body>
+  </html>
 )

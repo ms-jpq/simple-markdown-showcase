@@ -1,0 +1,19 @@
+footer {
+  display: flex;
+  flex-direction: column;
+}
+
+aside {
+  display: flex;
+  flex-direction: column;
+}
+
+header {
+  display: flex;
+  flex-direction: row;
+}
+
+main {
+  display: flex;
+  flex-direction: column;
+}

@@ -1,0 +1,22 @@
+.card {
+  display: flex;
+  flex-direction: column;
+}
+
+.card .picture {
+  display: grid;
+}
+
+.card .picture,
+.overlay {
+  grid-area: 1 / 1;
+}
+
+.card .title {
+  display: flex;
+  flex-direction: column;
+}
+
+.card detail {
+  display: flex;
+}

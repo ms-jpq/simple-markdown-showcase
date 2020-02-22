@@ -4,18 +4,17 @@ import { watchTree } from "watch"
 
 const run = (program: string, ...args: string[]) => {
   const { stdin, stdout, stderr } = process
-  const msg = `
-  ==================
-  killed sub_process
-  ==================
-  `
   let child: ChildProcess | undefined = undefined
   return async () => {
     if (child) {
       const dead = new Promise((resolve) => child!.once("exit", resolve))
       child.kill()
       await dead
-      console.warn(msg)
+      console.warn(`
+      ==================
+      killed sub_process
+      ==================
+      `)
     }
     child = spawn(program, args, {
       stdio: [stdin, stdout, stderr],

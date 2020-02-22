@@ -1,6 +1,7 @@
 export const static_config = {
   config: "projects.yml",
   out_dir: "out",
+  temp_dir: "temp",
   port: 8080,
   github_token: process.env["TOKEN"],
 }
