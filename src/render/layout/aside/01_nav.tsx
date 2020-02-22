@@ -4,7 +4,7 @@ import { map } from "../../../domain_agnostic/list"
 
 export type NavProps = { dests: { title: string; link: string }[] }
 export const AsideNav = ({ dests }: NavProps) => (
-  <section>
+  <section id="nav">
     <nav>
       <ul>
         {map(

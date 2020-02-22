@@ -1,19 +1,10 @@
 #!/usr/bin/env ts-node
-import cors from 'cors';
-import express from 'express';
-import { extract } from './github/api';
-import { hostname } from 'os';
-import { map, unique_by } from './domain_agnostic/list';
-import {
-  mkdir,
-  rmdir,
-  slurp,
-  spit
-  } from './domain_agnostic/fs';
-import { parse } from './domain_agnostic/yaml';
-import { render } from './render/render';
-import { RenderInstruction, static_config, StaticConfig } from './consts';
-
+import { extract } from "./github/api"
+import { map, unique_by } from "./domain_agnostic/list"
+import { mkdir, rmdir, slurp, spit } from "./domain_agnostic/fs"
+import { parse } from "./domain_agnostic/yaml"
+import { render } from "./render/render"
+import { RenderInstruction, static_config, StaticConfig } from "./consts"
 
 const commit = async (instructions: RenderInstruction[]) => {
   await rmdir(static_config.out_dir)
@@ -28,14 +19,6 @@ const commit = async (instructions: RenderInstruction[]) => {
   )
 }
 
-const srv = () => {
-  express()
-    .use(cors())
-    .use(express.static(static_config.out_dir))
-    .listen(static_config.port)
-  console.log(`Serving files at:  http://${hostname()}:${static_config.port}`)
-}
-
 const main = async () => {
   const yml = await slurp(static_config.config)
   const config: StaticConfig = parse(yml)
@@ -47,7 +30,6 @@ const main = async () => {
   // )
   const instructions = await render({ config, repos: info.repos })
   await commit(instructions)
-  srv()
 }
 
 main()

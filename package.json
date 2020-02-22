@@ -21,6 +21,7 @@
     "@types/cors": "*",
     "@types/express": "*",
     "@types/node": "*",
+    "@types/nodemon": "*",
     "@types/watch": "*",
     "cors": "*",
     "eslint": "*",
@@ -36,12 +37,6 @@
   "license": "MIT",
   "main": "src/entry.ts",
   "name": "ms-jpq.github.io",
-  "nodemonConfig": {
-    "ignore": [
-      "temp/*",
-      "out/*"
-    ]
-  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/ms-jpq/ms-jpq.github.io.git"

@@ -8,7 +8,7 @@ export type AssociationsProps = { contacts: ContactsConfig }
 export const AsideAssociations = ({
   contacts: { email, github },
 }: AssociationsProps) => (
-  <section>
+  <section id="associations">
     <a href={`mailto:${email}`}>TODO-EMAIL-ICON</a>
     <a href={`https://github.com/${github}`}>TODO-GITHUB-ICON</a>
   </section>
