@@ -2,17 +2,21 @@
 import express from "express"
 import { extract } from "./github/api"
 import { hostname } from "os"
+import { map, unique_by } from "./domain_agnostic/list"
+import { mkdir, rmdir, slurp, spit } from "./domain_agnostic/fs"
 import { parse } from "./domain_agnostic/yaml"
 import { render } from "./render/render"
-import { rmdir, mkdir, slurp, spit } from "./domain_agnostic/fs"
-import { static_config, StaticConfig, RenderInstruction } from "./consts"
+import { RenderInstruction, static_config, StaticConfig } from "./consts"
 
 const commit = async (instructions: RenderInstruction[]) => {
   await rmdir(static_config.out_dir)
   await mkdir(static_config.out_dir)
+  const unique = unique_by((i) => i.sub_path, instructions)
   await Promise.all(
-    instructions.map(({ sub_path, content }) =>
-      spit(content, `${static_config.out_dir}/${sub_path}`),
+    map(
+      ({ sub_path, content }) =>
+        spit(content, `${static_config.out_dir}/${sub_path}`),
+      unique,
     ),
   )
 }

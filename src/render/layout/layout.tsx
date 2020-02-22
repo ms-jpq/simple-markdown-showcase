@@ -4,6 +4,7 @@ import { AsideAssociations } from "./aside/02_associations"
 import { AsideNav } from "./aside/01_nav"
 import { HeaderMenu } from "./header/00_menu"
 import { HeaderTitle } from "./header/01_title"
+import { map } from "../../domain_agnostic/list"
 import { Parent } from "../../domain_agnostic/react"
 
 export type HeadProps = {
@@ -17,12 +18,18 @@ const Head = ({ title, js, css }: HeadProps) => (
     <meta charSet="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
-    {js.map((src) => (
-      <script src={src} async defer></script>
-    ))}
-    {css.map((href) => (
-      <link href={href} rel="stylesheet"></link>
-    ))}
+    {map(
+      (src) => (
+        <script src={src} async defer></script>
+      ),
+      js,
+    )}
+    {map(
+      (href) => (
+        <link href={href} rel="stylesheet"></link>
+      ),
+      css,
+    )}
   </head>
 )
 
@@ -31,9 +38,12 @@ export type FooterProps = { description: string[] }
 
 const Footer = ({ description }: FooterProps) => (
   <footer>
-    {description.map((d) => (
-      <p>{d}</p>
-    ))}
+    {map(
+      (d) => (
+        <p>{d}</p>
+      ),
+      description,
+    )}
   </footer>
 )
 

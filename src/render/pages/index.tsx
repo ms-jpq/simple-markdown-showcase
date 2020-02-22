@@ -4,6 +4,7 @@ import { BodyProps, Page } from "../layout/layout"
 import { Parent } from "../../domain_agnostic/react"
 import { Render, Repo, StaticConfig } from "../../consts"
 import { renderToString } from "react-dom/server"
+import { resources } from "../lib"
 // Use Cards with IMAGES
 
 export type Customization = {
@@ -70,16 +71,20 @@ export type RenderProps = {
 }
 
 export const render: Render<RenderProps> = async ({ config, repos, body }) => {
+  const showcase = repos
   const title = config.title
   const js = [""]
-  const css = [""]
-  const page_subpath = `index.html`
+  const css = ["css/layout.css"]
+  const addendum = await resources([...css])
   const page = (
     <Page head={{ title, js, css }} body={body}>
       {}
     </Page>
   )
-  const page_content = renderToString(page)
+  const page_content = {
+    sub_path: `index.html`,
+    content: renderToString(page),
+  }
 
-  return [{ sub_path: page_subpath, content: page_content }]
+  return [page_content, ...addendum]
 }

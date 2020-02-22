@@ -1,3 +1,5 @@
+import { flat_map } from "../domain_agnostic/list"
+import { id } from "../domain_agnostic/prelude"
 import { render as render_404 } from "./pages/404"
 import { render as render_index } from "./pages/index"
 import { render as render_repos } from "./pages/repos"
@@ -30,5 +32,5 @@ export const render: Render<RenderProps> = async ({ config, repos }) => {
     render_aboutme({ body }),
     render_repos({ body, repos }),
   ])
-  return pages.flatMap((a) => a)
+  return flat_map(id, pages)
 }

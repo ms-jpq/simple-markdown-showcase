@@ -1,5 +1,7 @@
-import fetch from "node-fetch"
 import assert from "assert"
+import fetch from "node-fetch"
+import { compact_map, map } from "../domain_agnostic/list"
+import { id } from "../domain_agnostic/prelude"
 import { parse } from "../domain_agnostic/yaml"
 import { Repo, repo_resources } from "../consts"
 
@@ -64,8 +66,8 @@ const github_repos = async (user: string, token?: string) => {
   const repo_data: any[] = await res.json()
   const seek = github_repo(token)
   try {
-    const repos = await Promise.all(repo_data.map(seek))
-    return repos.flatMap((r) => (r ? [r] : []))
+    const repos = await Promise.all(map(seek, repo_data))
+    return compact_map(id, repos)
   } catch (err) {
     console.error(err, repo_data)
     return []

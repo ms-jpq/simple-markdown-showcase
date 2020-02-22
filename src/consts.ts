@@ -1,5 +1,6 @@
 export const static_config = {
   config: "_config.yml",
+  src_dir: "src",
   out_dir: "out",
   temp_dir: "temp",
   port: 8080,
