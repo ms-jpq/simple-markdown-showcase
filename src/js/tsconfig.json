@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
-    "esModuleInterop": false,
-    "module": "ES2020"
+    "allowSyntheticDefaultImports": true,
+    "module": "AMD"
   },
-  "extends": "../../tsconfig.json"
+  "extends": "../../tsconfig.json",
+  "exclude": ["**/node_modules/**"],
+  "include": ["*.ts", "*.tsx", "*/**/*.ts", "*/**/*.tsx"]
 }

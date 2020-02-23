@@ -8,7 +8,9 @@ import { RenderPage, Repo } from "../../consts"
 export type RepoProps = Pick<Repo, "read_me" | "updated_at">
 
 const Repo = ({ read_me }: RepoProps) => (
-  <div>{<Markdown content={read_me} />}</div>
+  <div>
+    <Markdown content={read_me} />
+  </div>
 )
 
 const parse_title = (read_me: string) => {
@@ -32,7 +34,7 @@ const render_repo: RenderPage<Repo & BodyProps> = async ({
   const title = parse_title(read_me)
   const page = (
     <Page head={{ title, js, css }} body={body}>
-      {[<Repo read_me={read_me} updated_at={updated_at} />]}
+      <Repo read_me={read_me} updated_at={updated_at} />
     </Page>
   )
   const pages = [{ path: name, page }]

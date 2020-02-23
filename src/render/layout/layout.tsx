@@ -23,7 +23,7 @@ const Head = ({ title, js, css }: HeadProps) => (
     <title>{title}</title>
     {map(
       (src) => (
-        <script src={`${src}.js`} async defer></script>
+        <script src={`${src}.js`} defer></script>
       ),
       js,
     )}

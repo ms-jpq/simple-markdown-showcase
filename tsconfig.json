@@ -21,6 +21,6 @@
     "target": "esnext",
     "useDefineForClassFields": true
   },
-  "exclude": ["./node_modules/"],
+  "exclude": ["**/node_modules/**"],
   "include": ["*.ts", "*.tsx", "*/**/*.ts", "*/**/*.tsx"]
 }

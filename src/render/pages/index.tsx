@@ -65,10 +65,10 @@ const Card = ({ images, link, title, desc, hide_detail }: CardProps) => {
     ),
   )
   return (
-    <figure className={cn("card")}>
+    <figure className={cn("card", "grid-item")}>
       {images.length ? (
         <PictureFigure images={images} link={link}>
-          {[hide_detail ? <DetailFigure desc={desc} /> : <CardOverlay />]}
+          {hide_detail ? <DetailFigure desc={desc} /> : <CardOverlay />}
         </PictureFigure>
       ) : (
         undefined
@@ -87,7 +87,7 @@ export type RenderProps = {
 
 const local_js = ["js/layout"]
 const local_css = ["css/pages/index"]
-const npm_js = ["node_modules/masonry-layout/dist/masonry.pkgd"]
+const npm_js = ["node_modules/masonry-layout/dist/masonry.pkgd.min"]
 const npm_css = [] as string[]
 const js = [...npm_js, ...local_js]
 const css = [...npm_css, ...local_css]
@@ -101,18 +101,20 @@ export const render: RenderPage<RenderProps> = async ({
   const title = config.title
   const page = (
     <Page head={{ title, js, css }} body={body}>
-      {map(
-        ({ title, images, html_url, desc, display }) => (
-          <Card
-            link={html_url}
-            images={images}
-            title={title}
-            desc={desc}
-            hide_detail={(display || {}).hide_details}
-          />
-        ),
-        showcase,
-      )}
+      <div className={cn("grid")}>
+        {map(
+          ({ title, images, html_url, desc, display }) => (
+            <Card
+              link={html_url}
+              images={images}
+              title={title}
+              desc={desc}
+              hide_detail={(display || {}).hide_details}
+            />
+          ),
+          showcase,
+        )}
+      </div>
     </Page>
   )
 
