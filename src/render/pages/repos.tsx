@@ -3,8 +3,7 @@ import { BodyProps, Page } from "../layout/layout"
 import { flat_map, map } from "../../domain_agnostic/list"
 import { id } from "../../domain_agnostic/prelude"
 import { Markdown } from "../layout/md"
-import { Render, Repo } from "../../consts"
-import { render_css, render_js, render_page } from "../lib"
+import { RenderPage, Repo } from "../../consts"
 
 export type RepoProps = Pick<Repo, "read_me" | "updated_at">
 
@@ -17,26 +16,26 @@ const parse_title = (read_me: string) => {
   return title
 }
 
-const render_repo: Render<Repo & BodyProps> = async ({
+const local_js = ["layout"]
+const local_css = ["pages/repo"]
+const js = [...local_js]
+const css = [...local_css]
+
+const render_repo: RenderPage<Repo & BodyProps> = async ({
   name,
   read_me,
   updated_at,
   ...body
 }) => {
   const title = parse_title(read_me)
-  const [local_js, local_css] = await Promise.all([
-    render_js("layout"),
-    render_css("pages/repo"),
-  ])
-  const js = [...map((s) => s.sub_path, local_js)]
-  const css = [...map((s) => s.sub_path, local_css)]
   const page = (
     <Page head={{ title, js, css }} body={body}>
       {[<Repo read_me={read_me} updated_at={updated_at} />]}
     </Page>
   )
+  const pages = [{ path: name, page }]
 
-  return [render_page(page, ""), ...local_js, ...local_css]
+  return [{ local_js, local_css, pages }]
 }
 
 export type RenderProps = {
@@ -44,7 +43,7 @@ export type RenderProps = {
   repos: Repo[]
 }
 
-export const render: Render<RenderProps> = async ({ repos, body }) => {
+export const render: RenderPage<RenderProps> = async ({ repos, body }) => {
   const pages = await Promise.all(
     map((repo) => render_repo({ ...repo, ...body }), repos),
   )

@@ -2,12 +2,10 @@ import assert from "assert"
 import cn from "classnames"
 import React from "react"
 import { BodyProps, Page } from "../layout/layout"
-import { choice } from "../../domain_agnostic/rand"
 import { filter, flat_map, fst, map } from "../../domain_agnostic/list"
 import { id, big_print } from "../../domain_agnostic/prelude"
 import { Parent } from "../../domain_agnostic/react"
-import { Render, Repo, StaticConfig } from "../../consts"
-import { render_css, render_js, render_page } from "../lib"
+import { RenderPage, Repo, StaticConfig } from "../../consts"
 
 export type Customization = {
   hide_detail: boolean
@@ -87,17 +85,18 @@ export type RenderProps = {
   repos: Repo[]
 }
 
-export const render: Render<RenderProps> = async ({ config, repos, body }) => {
+const local_js = ["layout"]
+const local_css = ["pages/index"]
+const js = [...local_js]
+const css = [...local_css]
+
+export const render: RenderPage<RenderProps> = async ({
+  config,
+  repos,
+  body,
+}) => {
   const showcase = filter((r) => r.showcase, repos)
   const title = config.title
-
-  const [local_js, local_css] = await Promise.all([
-    render_js("layout"),
-    render_css("pages/index"),
-  ])
-  const js = [...map((s) => s.sub_path, local_js)]
-  const css = [...map((s) => s.sub_path, local_css)]
-
   const page = (
     <Page head={{ title, js, css }} body={body}>
       {map(
@@ -115,5 +114,6 @@ export const render: Render<RenderProps> = async ({ config, repos, body }) => {
     </Page>
   )
 
-  return [render_page(page, ""), ...local_js, ...local_css]
+  const pages = [{ path: "", page }]
+  return [{ local_js, local_css, pages }]
 }

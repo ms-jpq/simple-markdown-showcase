@@ -4,9 +4,9 @@ import { map, unique_by } from "./domain_agnostic/list"
 import { mkdir, rmdir, slurp, spit } from "./domain_agnostic/fs"
 import { parse } from "./domain_agnostic/yaml"
 import { render } from "./render/render"
-import { RenderInstruction, static_config, StaticConfig } from "./consts"
+import { CommitInstruction, static_config, StaticConfig } from "./consts"
 
-const commit = async (instructions: RenderInstruction[]) => {
+const commit = async (instructions: CommitInstruction[]) => {
   await rmdir(static_config.out_dir)
   await mkdir(static_config.out_dir)
   const unique = unique_by((i) => i.sub_path, instructions)
@@ -28,7 +28,9 @@ const main = async () => {
   //   JSON.stringify(info),
   //   `${static_config.temp_dir}/info.json`,
   // )
+  console.time("render")
   const instructions = await render({ config, repos: info.repos })
+  console.timeLog("render", "finished rendering")
   await commit(instructions)
 }
 

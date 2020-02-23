@@ -1,3 +1,5 @@
+import { ReactElement } from "react"
+
 export const static_config = {
   ts_config: "tsconfig.json",
   config: "build.yml",
@@ -69,9 +71,22 @@ export type Repo = {
   read_me: string
 } & RepoConfig
 
+export type RenderPageInstruction = {
+  path: string
+  page: ReactElement
+}
+
 export type RenderInstruction = {
+  local_js: string[]
+  local_css: string[]
+  pages: RenderPageInstruction[]
+}
+
+export type RenderPage<T> = (args: T) => Promise<RenderInstruction[]>
+
+export type CommitInstruction = {
   sub_path: string
   content: string
 }
 
-export type Render<T> = (args: T) => Promise<RenderInstruction[]>
+export type Render<T> = (args: T) => Promise<CommitInstruction[]>
