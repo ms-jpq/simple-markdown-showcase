@@ -23,13 +23,13 @@ const Head = ({ title, js, css }: HeadProps) => (
     <title>{title}</title>
     {map(
       (src) => (
-        <script src={`js/${src}.js`} async defer></script>
+        <script src={src} async defer></script>
       ),
       js,
     )}
     {map(
       (href) => (
-        <link href={`css/${href}.css`} rel="stylesheet"></link>
+        <link href={href} rel="stylesheet"></link>
       ),
       css,
     )}

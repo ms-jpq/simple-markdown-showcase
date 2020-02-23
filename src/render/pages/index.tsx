@@ -90,9 +90,14 @@ export type RenderProps = {
 export const render: Render<RenderProps> = async ({ config, repos, body }) => {
   const showcase = filter((r) => r.showcase, repos)
   const title = config.title
-  const js = ["layout"]
-  const css = ["pages/index"]
-  const assets = await Promise.all([render_css(css), render_js(js)])
+
+  const [local_js, local_css] = await Promise.all([
+    render_js("layout"),
+    render_css("pages/index"),
+  ])
+  const js = [...map((s) => s.sub_path, local_js)]
+  const css = [...map((s) => s.sub_path, local_css)]
+
   const page = (
     <Page head={{ title, js, css }} body={body}>
       {map(
@@ -110,5 +115,5 @@ export const render: Render<RenderProps> = async ({ config, repos, body }) => {
     </Page>
   )
 
-  return [render_page(page, ""), ...flat_map(id, assets)]
+  return [render_page(page, ""), ...local_js, ...local_css]
 }

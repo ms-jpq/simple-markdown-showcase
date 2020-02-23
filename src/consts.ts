@@ -1,4 +1,5 @@
 export const static_config = {
+  ts_config: "tsconfig.json",
   config: "build.yml",
   src_dir: "src",
   out_dir: "out",

@@ -24,16 +24,19 @@ const render_repo: Render<Repo & BodyProps> = async ({
   ...body
 }) => {
   const title = parse_title(read_me)
-  const js = ["layout"]
-  const css = ["pages/repo"]
-  const assets = await Promise.all([render_css(css), render_js(js)])
+  const [local_js, local_css] = await Promise.all([
+    render_js("layout"),
+    render_css("pages/repo"),
+  ])
+  const js = [...map((s) => s.sub_path, local_js)]
+  const css = [...map((s) => s.sub_path, local_css)]
   const page = (
     <Page head={{ title, js, css }} body={body}>
       {[<Repo read_me={read_me} updated_at={updated_at} />]}
     </Page>
   )
 
-  return [render_page(page, ""), ...flat_map(id, assets)]
+  return [render_page(page, ""), ...local_js, ...local_css]
 }
 
 export type RenderProps = {
