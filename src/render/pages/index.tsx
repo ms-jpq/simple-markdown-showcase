@@ -81,7 +81,7 @@ export const render: Render<RenderProps> = async ({ config, repos, body }) => {
   const showcase = filter((r) => r.showcase, repos)
   const title = config.title
   const js = ["layout"]
-  const css = ["layout", "pages/index"]
+  const css = ["pages/index"]
   const assets = await Promise.all([render_css(css), render_js(js)])
   const page = (
     <Page head={{ title, js, css }} body={body}>

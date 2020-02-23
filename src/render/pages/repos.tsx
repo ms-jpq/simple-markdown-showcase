@@ -25,7 +25,7 @@ const render_repo: Render<Repo & BodyProps> = async ({
 }) => {
   const title = parse_title(read_me)
   const js = ["layout"]
-  const css = ["layout"]
+  const css = ["pages/repo"]
   const assets = await Promise.all([render_css(css), render_js(js)])
   const page = (
     <Page head={{ title, js, css }} body={body}>

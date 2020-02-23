@@ -1,0 +1,81 @@
+@import "./variables";
+
+/********
+ * BODY *
+ ********/
+
+body {
+  display: flex;
+  flex-direction: row;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+/*********
+ * ASIDE *
+ *********/
+
+aside {
+  display: flex;
+  flex-direction: column;
+  #about-me {
+    display: flex;
+    flex-direction: column;
+  }
+  #nav {
+    margin-top: 5em;
+    display: flex;
+    flex-direction: column;
+  }
+  #associations {
+    margin-top: 5em;
+    display: flex;
+    flex-direction: row;
+  }
+}
+@media (max-width: $transition_width) {
+  aside {
+    display: none;
+  }
+}
+
+/**********
+ * HEADER *
+ **********/
+
+header {
+  display: none;
+  flex-direction: row;
+  align-items: flex-start;
+}
+@media (max-width: $transition_width) {
+  header {
+    display: flex;
+  }
+}
+
+/**********
+ * FOOTER *
+ **********/
+
+footer {
+  display: flex;
+  flex-direction: column;
+}
+
+/********
+ * MAIN *
+ ********/
+
+main {
+  display: flex;
+  flex-direction: column;
+}
+
+/********
+ * MISC *
+ ********/
+
+.page-title {
+  text-transform: uppercase;
+}
