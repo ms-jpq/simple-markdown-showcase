@@ -55,7 +55,7 @@ const Aside = ({
   nav,
   footer,
 }: AsideProps & { footer: FooterProps }) => (
-  <aside>
+  <aside id="left-panel">
     <AsideAboutMe title={about_me.title} desc={about_me.desc} />
     <AsideNav dests={nav} />
     <AsideAssociations contacts={contacts} />
@@ -90,7 +90,7 @@ const Body = ({ aside, header, footer, children }: BodyProps & Parent) => (
       contacts={aside.contacts}
       footer={footer}
     />
-    <div>
+    <div id="right-panel">
       <Header title={header.title} menu={header.menu} />
       <Main>{children}</Main>
     </div>

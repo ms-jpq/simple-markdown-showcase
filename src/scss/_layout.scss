@@ -7,8 +7,18 @@
 body {
   display: flex;
   flex-direction: row;
-  padding-top: 1em;
-  padding-bottom: 1em;
+  padding-top: $padding_vertical;
+  padding-bottom: $padding_vertical;
+  padding-left: $padding_horizontal;
+  padding-right: $padding_horizontal;
+
+  #left-panel {
+    flex-grow: 0.25;
+  }
+
+  #right-panel {
+    flex-grow: 1;
+  }
 }
 
 /*********
@@ -16,7 +26,6 @@ body {
  *********/
 
 aside {
-  display: flex;
   flex-direction: column;
   #about-me {
     display: flex;
@@ -33,41 +42,45 @@ aside {
     flex-direction: row;
   }
 }
+
+// BEGIN -- size
+aside {
+  display: flex;
+}
 @media (max-width: $transition_width) {
   aside {
     display: none;
   }
 }
+// END -- size
 
 /**********
  * HEADER *
  **********/
 
 header {
-  display: none;
+  flex-grow: 1;
   flex-direction: row;
   align-items: flex-start;
+  justify-content: space-between;
+}
+
+// BEGIN -- size
+header {
+  display: none;
 }
 @media (max-width: $transition_width) {
   header {
     display: flex;
   }
 }
+// END -- size
 
 /**********
  * FOOTER *
  **********/
 
 footer {
-  display: flex;
-  flex-direction: column;
-}
-
-/********
- * MAIN *
- ********/
-
-main {
   display: flex;
   flex-direction: column;
 }

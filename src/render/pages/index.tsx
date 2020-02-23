@@ -1,19 +1,20 @@
+import assert from "assert"
 import cn from "classnames"
 import React from "react"
 import { BodyProps, Page } from "../layout/layout"
 import { choice } from "../../domain_agnostic/rand"
 import { filter, flat_map, fst, map } from "../../domain_agnostic/list"
-import { id } from "../../domain_agnostic/prelude"
+import { id, big_print } from "../../domain_agnostic/prelude"
 import { Parent } from "../../domain_agnostic/react"
 import { Render, Repo, StaticConfig } from "../../consts"
 import { render_css, render_js, render_page } from "../lib"
-// Use Cards with IMAGES
 
 export type Customization = {
   hide_detail: boolean
 }
 
 export type Picture = {
+  link: string
   images: string[]
 }
 export type Title = {
@@ -33,19 +34,19 @@ export type CardProps = {
 const CardOverlay = ({}) => <div> </div>
 
 // https://stackoverflow.com/questions/2941189/how-to-overlay-one-div-over-another-div
-const PictureFigure = ({ images, children }: Picture & Parent) => (
+const PictureFigure = ({ images, link, children }: Picture & Parent) => (
   <div className={cn("picture")}>
-    <a className={cn("content")}>
+    <a className={cn("content")} href={link}>
       <img src={fst(images)} />
     </a>
     <div className={cn("overlay")}>{children}</div>
   </div>
 )
 
-const TitleFigure = ({ title }: Title) => (
-  <div className={cn("title")}>
-    <a>
-      <h6>{title}</h6>
+const TitleFigure = ({ title, link }: Title) => (
+  <div className={cn("figure-title")}>
+    <a href={link}>
+      <h4 className={cn("title-text")}>{title}</h4>
     </a>
   </div>
 )
@@ -59,14 +60,23 @@ const DetailFigure = ({ desc }: Detail) => (
 const Card = ({ images, link, title, desc, hide_detail }: CardProps) => {
   // TODO -- REMOVE THIS
   images = images || []
-  const hide_detail_actual = hide_detail || images.length === 0
+  assert(
+    !(hide_detail && images.length === 0),
+    big_print(
+      `${title} - 🈲️: hide_detail with no images - hide_detail: ${hide_detail}, images: ${images.length}`,
+    ),
+  )
   return (
     <figure className={cn("card")}>
-      <PictureFigure images={images}>
-        {[hide_detail_actual ? <DetailFigure desc={desc} /> : <CardOverlay />]}
-      </PictureFigure>
+      {images.length ? (
+        <PictureFigure images={images} link={link}>
+          {[hide_detail ? <DetailFigure desc={desc} /> : <CardOverlay />]}
+        </PictureFigure>
+      ) : (
+        undefined
+      )}
       <TitleFigure title={title} link={link} />
-      {hide_detail_actual ? undefined : <DetailFigure desc={desc} />}
+      {hide_detail ? undefined : <DetailFigure desc={desc} />}
     </figure>
   )
 }
@@ -86,13 +96,13 @@ export const render: Render<RenderProps> = async ({ config, repos, body }) => {
   const page = (
     <Page head={{ title, js, css }} body={body}>
       {map(
-        ({ title, images, html_url, desc }) => (
+        ({ title, images, html_url, desc, display }) => (
           <Card
             link={html_url}
             images={images}
             title={title}
             desc={desc}
-            hide_detail={choice([true, false])}
+            hide_detail={(display || {}).hide_details}
           />
         ),
         showcase,
