@@ -1,24 +1,10 @@
 #!/usr/bin/env ts-node
 import { big_print } from "./domain_agnostic/prelude"
-import { CommitInstruction, static_config, StaticConfig } from "./consts"
+import { static_config, StaticConfig } from "./consts"
 import { extract } from "./github/api"
-import { map, unique_by } from "./domain_agnostic/list"
-import { mkdir, rmdir, slurp, spit } from "./domain_agnostic/fs"
+import { slurp } from "./domain_agnostic/fs"
 import { parse } from "./domain_agnostic/yaml"
 import { render } from "./render/render"
-
-const commit = async (instructions: CommitInstruction[]) => {
-  await rmdir(static_config.out_dir)
-  await mkdir(static_config.out_dir)
-  const unique = unique_by((i) => i.sub_path, instructions)
-  await Promise.all(
-    map(
-      ({ sub_path, content }) =>
-        spit(content, `${static_config.out_dir}/${sub_path}`),
-      unique,
-    ),
-  )
-}
 
 const main = async () => {
   console.time("pre_render")
@@ -33,9 +19,9 @@ const main = async () => {
   console.timeLog("pre_render", big_print("finished pre-render"))
 
   console.time("render")
-  const instructions = await render({ config, repos: info.repos })
-  await commit(instructions)
+  await render({ config, repos: info.repos })
   console.timeLog("render", big_print("finished rendering"))
+  process.exit(0)
 }
 
 main()

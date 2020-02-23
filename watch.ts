@@ -31,10 +31,16 @@ const watch = (settings: Settings) =>
 
 const main = async () => {
   const git_ignore = (await fs.readFile(".gitignore")).toString()
+  const ignore = parse(git_ignore)
   watch({
     script: "src/entry.ts",
     ext: ["yml", "json", "ts", "tsx", "scss"].join(),
-    ignore: parse(git_ignore),
+    ignore,
+  })
+  watch({
+    exec: "tsm --nameFormat=none --listDifferent",
+    ext: ["scss"].join(),
+    ignore,
   })
   srv("out", 8080)
 }

@@ -73,17 +73,9 @@ export type Repo = {
   read_me: string
 } & RepoConfig
 
-export type RenderPageInstruction = {
+export type RenderInstruction = {
   path: string
   page: ReactElement
-}
-
-export type RenderInstruction = {
-  local_js: string[]
-  local_css: string[]
-  npm_js: string[]
-  npm_css: string[]
-  pages: RenderPageInstruction[]
 }
 
 export type RenderPage<T> = (args: T) => Promise<RenderInstruction[]>

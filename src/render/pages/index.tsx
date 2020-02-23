@@ -5,7 +5,7 @@ import { BodyProps, Page } from "../layout/layout"
 import { filter, flat_map, fst, map } from "../../domain_agnostic/list"
 import { id, big_print } from "../../domain_agnostic/prelude"
 import { Parent } from "../../domain_agnostic/react"
-import { RenderPage, Repo, StaticConfig } from "../../consts"
+import { RenderPage, Repo, StaticConfig, static_config } from "../../consts"
 
 export type Customization = {
   hide_detail: boolean
@@ -85,12 +85,7 @@ export type RenderProps = {
   repos: Repo[]
 }
 
-const local_js = ["js/layout"]
-const local_css = ["css/pages/index"]
-const npm_js = ["node_modules/masonry-layout/dist/masonry.pkgd.min"]
-const npm_css = [] as string[]
-const js = [...npm_js, ...local_js]
-const css = [...npm_css, ...local_css]
+const entry = `${static_config.src_dir}/js/layout.ts`
 
 export const render: RenderPage<RenderProps> = async ({
   config,
@@ -100,7 +95,7 @@ export const render: RenderPage<RenderProps> = async ({
   const showcase = filter((r) => r.showcase, repos)
   const title = config.title
   const page = (
-    <Page head={{ title, js, css }} body={body}>
+    <Page head={{ title, entry }} body={body}>
       <div className={cn("grid")}>
         {map(
           ({ title, images, html_url, desc, display }) => (
@@ -118,6 +113,5 @@ export const render: RenderPage<RenderProps> = async ({
     </Page>
   )
 
-  const pages = [{ path: "", page }]
-  return [{ local_js, local_css, npm_js, npm_css, pages }]
+  return [{ path: "", page }]
 }

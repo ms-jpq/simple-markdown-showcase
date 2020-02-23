@@ -5,3 +5,4 @@ out/
 node_modules/
 venv/
 package-lock.json
+*.scss.d.ts

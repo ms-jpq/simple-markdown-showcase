@@ -3,7 +3,7 @@ import { BodyProps, Page } from "../layout/layout"
 import { flat_map, map } from "../../domain_agnostic/list"
 import { id } from "../../domain_agnostic/prelude"
 import { Markdown } from "../layout/md"
-import { RenderPage, Repo } from "../../consts"
+import { RenderPage, Repo, static_config } from "../../consts"
 
 export type RepoProps = Pick<Repo, "read_me" | "updated_at">
 
@@ -18,12 +18,7 @@ const parse_title = (read_me: string) => {
   return title
 }
 
-const local_js = ["js/layout"]
-const local_css = ["css/pages/repo"]
-const npm_js = [] as string[]
-const npm_css = [] as string[]
-const js = [...npm_js, ...local_js]
-const css = [...npm_css, ...local_css]
+const entry = `${static_config.src_dir}/js/layout.ts`
 
 const render_repo: RenderPage<Repo & BodyProps> = async ({
   name,
@@ -33,13 +28,12 @@ const render_repo: RenderPage<Repo & BodyProps> = async ({
 }) => {
   const title = parse_title(read_me)
   const page = (
-    <Page head={{ title, js, css }} body={body}>
+    <Page head={{ title, entry }} body={body}>
       <Repo read_me={read_me} updated_at={updated_at} />
     </Page>
   )
-  const pages = [{ path: name, page }]
 
-  return [{ local_js, local_css, npm_js, npm_css, pages }]
+  return [{ path: name, page }]
 }
 
 export type RenderProps = {

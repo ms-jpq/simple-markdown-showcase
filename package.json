@@ -16,6 +16,7 @@
     "masonry-layout": "^4.2.2",
     "node-fetch": "^2.6.0",
     "node-sass": "^4.13.1",
+    "parcel": "^2.0.0-alpha.3.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-html-parser": "^2.0.2"
@@ -27,6 +28,8 @@
     "@types/node": "*",
     "@types/nodemon": "*",
     "@types/watch": "*",
+    "@typescript-eslint/eslint-plugin": "*",
+    "@typescript-eslint/parser": "*",
     "cors": "*",
     "eslint": "*",
     "eslint-config-prettier": "*",
@@ -36,6 +39,7 @@
     "parse-gitignore": "*",
     "prettier": "*",
     "ts-node": "*",
+    "typed-scss-modules": "*",
     "typescript": "*"
   },
   "homepage": "https://ms-jpq.github.io",
