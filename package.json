@@ -4,6 +4,7 @@
     "@types/classnames": "^2.2.9",
     "@types/js-yaml": "^3.12.2",
     "@types/markdown-it": "0.0.9",
+    "@types/masonry-layout": "^4.2.1",
     "@types/node-fetch": "^2.5.4",
     "@types/node-sass": "^4.11.0",
     "@types/react": "^16.9.21",

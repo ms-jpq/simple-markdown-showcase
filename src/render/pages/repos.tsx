@@ -16,10 +16,12 @@ const parse_title = (read_me: string) => {
   return title
 }
 
-const local_js = ["layout"]
-const local_css = ["pages/repo"]
-const js = [...local_js]
-const css = [...local_css]
+const local_js = ["js/layout"]
+const local_css = ["css/pages/repo"]
+const npm_js = [] as string[]
+const npm_css = [] as string[]
+const js = [...npm_js, ...local_js]
+const css = [...npm_css, ...local_css]
 
 const render_repo: RenderPage<Repo & BodyProps> = async ({
   name,
@@ -35,7 +37,7 @@ const render_repo: RenderPage<Repo & BodyProps> = async ({
   )
   const pages = [{ path: name, page }]
 
-  return [{ local_js, local_css, pages }]
+  return [{ local_js, local_css, npm_js, npm_css, pages }]
 }
 
 export type RenderProps = {

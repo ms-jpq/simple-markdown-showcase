@@ -85,10 +85,12 @@ export type RenderProps = {
   repos: Repo[]
 }
 
-const local_js = ["layout"]
-const local_css = ["pages/index"]
-const js = [...local_js]
-const css = [...local_css]
+const local_js = ["js/layout"]
+const local_css = ["css/pages/index"]
+const npm_js = ["node_modules/masonry-layout/dist/masonry.pkgd"]
+const npm_css = [] as string[]
+const js = [...npm_js, ...local_js]
+const css = [...npm_css, ...local_css]
 
 export const render: RenderPage<RenderProps> = async ({
   config,
@@ -115,5 +117,5 @@ export const render: RenderPage<RenderProps> = async ({
   )
 
   const pages = [{ path: "", page }]
-  return [{ local_js, local_css, pages }]
+  return [{ local_js, local_css, npm_js, npm_css, pages }]
 }

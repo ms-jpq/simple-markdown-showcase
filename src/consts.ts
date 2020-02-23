@@ -2,7 +2,9 @@ import { ReactElement } from "react"
 
 export const static_config = {
   ts_config: "tsconfig.json",
+  ts_config_web: "src/js/tsconfig.json",
   config: "build.yml",
+  npm_dir: "node_modules",
   src_dir: "src",
   out_dir: "out",
   temp_dir: "temp",
@@ -79,6 +81,8 @@ export type RenderPageInstruction = {
 export type RenderInstruction = {
   local_js: string[]
   local_css: string[]
+  npm_js: string[]
+  npm_css: string[]
   pages: RenderPageInstruction[]
 }
 

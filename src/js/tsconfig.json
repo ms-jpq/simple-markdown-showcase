@@ -1,3 +1,7 @@
 {
+  "compilerOptions": {
+    "esModuleInterop": false,
+    "module": "ES2020"
+  },
   "extends": "../../tsconfig.json"
 }
