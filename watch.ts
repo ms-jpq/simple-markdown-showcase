@@ -1,8 +1,12 @@
 #!/usr/bin/env ts-node
 import cors from "cors"
 import express from "express"
-import nodemon from "nodemon"
+import nodemon, { Settings } from "nodemon"
+//@ts-ignore
+import parse from "parse-gitignore"
+import { big_print } from "./src/domain_agnostic/prelude"
 import { hostname } from "os"
+import { promises as fs } from "fs"
 
 const srv = (dir: string, port: number) => {
   express()
@@ -12,19 +16,27 @@ const srv = (dir: string, port: number) => {
   console.log(`Serving files at:  http://${hostname()}:${port}`)
 }
 
-nodemon({
-  script: "src/entry.ts",
-  ext: ["yml", "json", "ts", "css"].join(),
-  ignore: ["temp/*", "out/*"],
-})
-  .on("start", () => {
-    console.log("App has started")
-  })
-  .on("quit", () => {
-    console.log("App has quit")
-  })
-  .on("restart", (files) => {
-    console.log("App restarted due to: ", files)
-  })
+const watch = (settings: Settings) =>
+  nodemon(settings)
+    .on("start", () => {
+      console.log(big_print("STARTED", "$"))
+    })
+    .on("quit", () => {
+      console.log(big_print("QUIT", "$"))
+    })
+    .on("restart", (files) => {
+      console.log(big_print("RESTARTED", "$"))
+      console.log(files)
+    })
 
-srv("out", 8080)
+const main = async () => {
+  const git_ignore = (await fs.readFile(".gitignore")).toString()
+  watch({
+    script: "src/entry.ts",
+    ext: ["yml", "json", "ts", "tsx", "scss"].join(),
+    ignore: parse(git_ignore),
+  })
+  srv("out", 8080)
+}
+
+main()

@@ -8,7 +8,7 @@ export const slurp = async (file: string) => {
   try {
     return (await fs.readFile(file)).toString()
   } catch (err) {
-    console.error(`Failed to read ${file}`, err)
+    console.error(`Failed to read ${file}`)
     throw err
   }
 }
@@ -18,7 +18,7 @@ export const spit = async (content: string | Blob, file: string) => {
     await mkdir(dirname(file))
     await fs.writeFile(file, content)
   } catch (err) {
-    console.error(`Failed to write ${file}`, err)
+    console.error(`Failed to write ${file}`)
     throw err
   }
 }

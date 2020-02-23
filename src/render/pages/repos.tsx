@@ -4,7 +4,7 @@ import { flat_map, map } from "../../domain_agnostic/list"
 import { id } from "../../domain_agnostic/prelude"
 import { Markdown } from "../layout/md"
 import { Render, Repo } from "../../consts"
-import { resources, render_page } from "../lib"
+import { render_css, render_js, render_page } from "../lib"
 
 export type RepoProps = Pick<Repo, "read_me" | "updated_at">
 
@@ -24,15 +24,16 @@ const render_repo: Render<Repo & BodyProps> = async ({
   ...body
 }) => {
   const title = parse_title(read_me)
-  const js = [""]
-  const css = ["css/layout.css"]
-  const addendum = await resources([...css])
+  const js = ["layout"]
+  const css = ["layout"]
+  const assets = await Promise.all([render_css(css), render_js(js)])
   const page = (
     <Page head={{ title, js, css }} body={body}>
       {[<Repo read_me={read_me} updated_at={updated_at} />]}
     </Page>
   )
-  return [render_page(page, name), ...addendum]
+
+  return [render_page(page, ""), ...flat_map(id, assets)]
 }
 
 export type RenderProps = {

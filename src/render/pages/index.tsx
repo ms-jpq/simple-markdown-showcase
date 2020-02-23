@@ -2,10 +2,11 @@ import cn from "classnames"
 import React from "react"
 import { BodyProps, Page } from "../layout/layout"
 import { choice } from "../../domain_agnostic/rand"
-import { filter, fst, map } from "../../domain_agnostic/list"
+import { filter, flat_map, fst, map } from "../../domain_agnostic/list"
+import { id } from "../../domain_agnostic/prelude"
 import { Parent } from "../../domain_agnostic/react"
 import { Render, Repo, StaticConfig } from "../../consts"
-import { render_page, resources } from "../lib"
+import { render_css, render_js, render_page } from "../lib"
 // Use Cards with IMAGES
 
 export type Customization = {
@@ -79,9 +80,9 @@ export type RenderProps = {
 export const render: Render<RenderProps> = async ({ config, repos, body }) => {
   const showcase = filter((r) => r.showcase, repos)
   const title = config.title
-  const js = [""]
-  const css = ["css/layout.css"]
-  const addendum = await resources([...css])
+  const js = ["layout"]
+  const css = ["layout", "pages/index"]
+  const assets = await Promise.all([render_css(css), render_js(js)])
   const page = (
     <Page head={{ title, js, css }} body={body}>
       {map(
@@ -99,5 +100,5 @@ export const render: Render<RenderProps> = async ({ config, repos, body }) => {
     </Page>
   )
 
-  return [render_page(page, ""), ...addendum]
+  return [render_page(page, ""), ...flat_map(id, assets)]
 }
