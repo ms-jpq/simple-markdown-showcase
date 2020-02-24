@@ -84,7 +84,7 @@ export type RenderProps = {
 }
 
 const js = ["pages/index"]
-const css: string[] = []
+const css = ["pages/index"]
 
 export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
   const showcase = filter((r) => r.showcase, repos)

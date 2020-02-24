@@ -7,6 +7,7 @@ export const static_config = {
   npm_dir: "node_modules",
   src_dir: "src",
   out_dir: "out",
+  dist_dir: "dist",
   temp_dir: "temp",
   port: 8080,
   github_token: process.env["TOKEN"],
@@ -82,10 +83,3 @@ export type RenderInstruction = {
 }
 
 export type RenderPage<T> = (args: T) => Promise<RenderInstruction[]>
-
-export type CommitInstruction = {
-  sub_path: string
-  content: string
-}
-
-export type Render<T> = (args: T) => Promise<CommitInstruction[]>

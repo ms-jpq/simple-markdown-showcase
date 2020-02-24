@@ -1,38 +1,17 @@
 import React from "react"
 import { BodyProps, Page } from "./layout/layout"
-import { compact_map, map, unique_by } from "../domain_agnostic/list"
 import { flat_map } from "../domain_agnostic/list"
 import { id } from "../domain_agnostic/prelude"
+import { map, unique_by } from "../domain_agnostic/list"
 import { mkdir, rmdir, slurp, spit } from "../domain_agnostic/fs"
+import { relative } from "path"
 import { render as render_404 } from "./pages/404"
 import { render as render_index } from "./pages/index"
 import { render as render_repos } from "./pages/repos"
 import { render as render_aboutme } from "./pages/about_me"
+import { RenderInstruction, Repo, static_config, StaticConfig } from "../consts"
 import { renderToStaticMarkup } from "react-dom/server"
-import { relative } from "path"
-import { run as run_webpack } from "./webpack"
 import { run as run_parcel } from "./parcel"
-import {
-  static_config,
-  CommitInstruction,
-  RenderInstruction,
-  Repo,
-  StaticConfig,
-} from "../consts"
-
-// const render_css: Render<string> = async (path) => {
-//   const file = `${static_config.src_dir}/scss/${path}.scss`
-//   const { css, map } = await new Promise<Result>((resolve, reject) =>
-//     render_scss({ file, sourceMap: true }, (err, res) =>
-//       err ? reject(err) : resolve(res),
-//     ),
-//   )
-//   const sub_path = `css/${path}.css`
-//   return compact_map(id, [
-//     { sub_path, content: css.toString() },
-//     map ? { sub_path: `${sub_path}.map`, content: map.toString() } : undefined,
-//   ])
-// }
 
 const render_page = ({
   js: local_js,
@@ -47,7 +26,10 @@ const render_page = ({
     (js) => relative(sub_path, `${static_config.src_dir}/js/${js}.ts`),
     local_js,
   )
-  const css = map((css) => `${css}`, local_css)
+  const css = map(
+    (css) => relative(sub_path, `${static_config.src_dir}/css/${css}.scss`),
+    local_css,
+  )
   const content = (
     <Page head={{ title, js, css }} body={body}>
       {page}
@@ -59,8 +41,16 @@ const render_page = ({
   }
 }
 
+type CommitInstruction = {
+  sub_path: string
+  content: string
+}
+
 const commit = async (instructions: CommitInstruction[]) => {
-  await rmdir(static_config.out_dir)
+  await Promise.all([
+    rmdir(static_config.out_dir),
+    rmdir(static_config.dist_dir),
+  ])
   await mkdir(static_config.out_dir)
   const unique = unique_by((i) => i.sub_path, instructions)
   await Promise.all(

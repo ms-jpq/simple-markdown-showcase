@@ -18,7 +18,7 @@ const parse_title = (read_me: string) => {
 }
 
 const js = ["pages/repo"]
-const css: string[] = []
+const css = ["pages/repo"]
 
 const render_repo: RenderPage<Repo> = async ({
   name: path,

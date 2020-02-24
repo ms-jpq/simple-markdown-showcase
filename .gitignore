@@ -2,6 +2,7 @@
 .vscode
 temp/
 out/
+dist/
 node_modules/
 venv/
 package-lock.json

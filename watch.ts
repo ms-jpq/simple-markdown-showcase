@@ -7,13 +7,14 @@ import parse from "parse-gitignore"
 import { big_print } from "./src/domain_agnostic/prelude"
 import { hostname } from "os"
 import { promises as fs } from "fs"
+import { static_config } from "./src/consts"
 
 const srv = (dir: string, port: number) => {
   express()
     .use(cors())
     .use(express.static(dir))
     .listen(port)
-  console.log(`Serving files at:  http://${hostname()}:${port}`)
+  console.log(`-- Serving files at:  http://${hostname()}:${port}`)
 }
 
 const watch = (settings: Settings) =>
@@ -39,7 +40,7 @@ const main = async () => {
     ignore,
     execMap,
   })
-  srv("out", 8080)
+  srv(static_config.dist_dir, static_config.port)
 }
 
 main()
