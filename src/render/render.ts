@@ -3,12 +3,13 @@ import { compact_map, map, unique_by } from "../domain_agnostic/list"
 import { flat_map } from "../domain_agnostic/list"
 import { id } from "../domain_agnostic/prelude"
 import { mkdir, rmdir, slurp, spit } from "../domain_agnostic/fs"
-import { relative } from "path"
 import { render as render_404 } from "./pages/404"
 import { render as render_index } from "./pages/index"
 import { render as render_repos } from "./pages/repos"
 import { render as render_aboutme } from "./pages/about_me"
 import { renderToStaticMarkup } from "react-dom/server"
+import { resolve } from "path"
+import { run } from "./package"
 import {
   static_config,
   CommitInstruction,
@@ -53,4 +54,9 @@ export const render = async ({ config, repos }: RenderProps) => {
   const instructions = flat_map(id, pages)
   const commits = map(render_page, instructions)
   await commit(commits)
+  const entry = unique_by(
+    id,
+    map((i) => resolve(`${static_config.src_dir}/js/${i.entry}`), instructions),
+  )
+  await run({ entry })
 }

@@ -85,7 +85,7 @@ export type RenderProps = {
   repos: Repo[]
 }
 
-const entry = `${static_config.src_dir}/js/layout.ts`
+const entry = "pages/index.ts"
 
 export const render: RenderPage<RenderProps> = async ({
   config,
@@ -113,5 +113,5 @@ export const render: RenderPage<RenderProps> = async ({
     </Page>
   )
 
-  return [{ path: "", page }]
+  return [{ entry, path: "", page }]
 }

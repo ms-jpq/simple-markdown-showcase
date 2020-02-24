@@ -74,6 +74,7 @@ export type Repo = {
 } & RepoConfig
 
 export type RenderInstruction = {
+  entry: string
   path: string
   page: ReactElement
 }

@@ -2,6 +2,7 @@
   "author": "_",
   "dependencies": {
     "@types/classnames": "^2.2.9",
+    "@types/highlight.js": "^9.12.3",
     "@types/js-yaml": "^3.12.2",
     "@types/markdown-it": "0.0.9",
     "@types/masonry-layout": "^4.2.1",
@@ -10,16 +11,19 @@
     "@types/react": "^16.9.21",
     "@types/react-dom": "^16.9.5",
     "@types/react-html-parser": "^2.0.1",
+    "@types/webpack": "^4.41.6",
+    "awesome-typescript-loader": "^5.2.1",
     "classnames": "^2.2.6",
+    "highlight.js": "^9.18.1",
     "js-yaml": "^3.13.1",
     "markdown-it": "^10.0.0",
     "masonry-layout": "^4.2.2",
     "node-fetch": "^2.6.0",
     "node-sass": "^4.13.1",
-    "parcel": "^2.0.0-alpha.3.2",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-html-parser": "^2.0.2"
+    "react-html-parser": "^2.0.2",
+    "webpack": "^4.41.6"
   },
   "description": "_",
   "devDependencies": {

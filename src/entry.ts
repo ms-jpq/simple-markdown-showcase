@@ -7,6 +7,7 @@ import { parse } from "./domain_agnostic/yaml"
 import { render } from "./render/render"
 
 const main = async () => {
+  console.log(big_print("render start"))
   console.time("pre_render")
   const yml = await slurp(static_config.config)
   const config: StaticConfig = parse(yml)
@@ -20,8 +21,7 @@ const main = async () => {
 
   console.time("render")
   await render({ config, repos: info.repos })
-  console.timeLog("render", big_print("finished rendering"))
-  process.exit(0)
+  console.timeLog("render", big_print("render end"))
 }
 
 main()

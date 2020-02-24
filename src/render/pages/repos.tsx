@@ -18,10 +18,10 @@ const parse_title = (read_me: string) => {
   return title
 }
 
-const entry = `${static_config.src_dir}/js/layout.ts`
+const entry = "pages/repo.ts"
 
 const render_repo: RenderPage<Repo & BodyProps> = async ({
-  name,
+  name: path,
   read_me,
   updated_at,
   ...body
@@ -33,7 +33,7 @@ const render_repo: RenderPage<Repo & BodyProps> = async ({
     </Page>
   )
 
-  return [{ path: name, page }]
+  return [{ entry, path, page }]
 }
 
 export type RenderProps = {

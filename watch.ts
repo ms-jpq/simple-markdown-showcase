@@ -21,9 +21,6 @@ const watch = (settings: Settings) =>
     .on("start", () => {
       console.log(big_print("STARTED", "$"))
     })
-    .on("quit", () => {
-      console.log(big_print("QUIT", "$"))
-    })
     .on("restart", (files) => {
       console.log(big_print("RESTARTED", "$"))
       console.log(files)
@@ -32,15 +29,15 @@ const watch = (settings: Settings) =>
 const main = async () => {
   const git_ignore = (await fs.readFile(".gitignore")).toString()
   const ignore = parse(git_ignore)
+  const execMap = {
+    main: "src/entry.ts",
+    scss: "tsm src --listDifferent",
+  }
   watch({
-    script: "src/entry.ts",
     ext: ["yml", "json", "ts", "tsx", "scss"].join(),
+    colours: true,
     ignore,
-  })
-  watch({
-    exec: "tsm --nameFormat=none --listDifferent",
-    ext: ["scss"].join(),
-    ignore,
+    execMap,
   })
   srv("out", 8080)
 }
