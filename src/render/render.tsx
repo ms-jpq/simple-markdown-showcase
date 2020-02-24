@@ -9,7 +9,9 @@ import { render as render_index } from "./pages/index"
 import { render as render_repos } from "./pages/repos"
 import { render as render_aboutme } from "./pages/about_me"
 import { renderToStaticMarkup } from "react-dom/server"
-import { run } from "./webpack"
+import { relative } from "path"
+import { run as run_webpack } from "./webpack"
+import { run as run_parcel } from "./parcel"
 import {
   static_config,
   CommitInstruction,
@@ -33,27 +35,28 @@ import {
 // }
 
 const render_page = ({
-  js,
-  css,
+  js: local_js,
+  css: local_css,
   title,
   path,
   page,
   body,
 }: RenderInstruction & { body: BodyProps }) => {
+  const sub_path = `${static_config.out_dir}/${path}`
+  const js = map(
+    (js) => relative(sub_path, `${static_config.src_dir}/js/${js}.ts`),
+    local_js,
+  )
+  const css = map((css) => `${css}`, local_css)
   const content = (
     <Page head={{ title, js, css }} body={body}>
       {page}
     </Page>
   )
   return {
-    sub_path: `${path}/index.html`,
+    sub_path: `${sub_path}/index.html`,
     content: renderToStaticMarkup(content),
   }
-}
-
-export type RenderProps = {
-  config: StaticConfig
-  repos: Repo[]
 }
 
 const commit = async (instructions: CommitInstruction[]) => {
@@ -61,12 +64,13 @@ const commit = async (instructions: CommitInstruction[]) => {
   await mkdir(static_config.out_dir)
   const unique = unique_by((i) => i.sub_path, instructions)
   await Promise.all(
-    map(
-      ({ sub_path, content }) =>
-        spit(content, `${static_config.out_dir}/${sub_path}`),
-      unique,
-    ),
+    map(({ sub_path, content }) => spit(content, sub_path), unique),
   )
+}
+
+export type RenderProps = {
+  config: StaticConfig
+  repos: Repo[]
 }
 
 export const render = async ({ config, repos }: RenderProps) => {
@@ -85,5 +89,5 @@ export const render = async ({ config, repos }: RenderProps) => {
     map((i) => ({ ...i, body }), instructions),
   )
   await commit(commits)
-  await run(instructions)
+  await run_parcel(instructions)
 }

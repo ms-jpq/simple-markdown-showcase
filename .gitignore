@@ -7,3 +7,4 @@ venv/
 package-lock.json
 yarn.lock
 *.scss.d.ts
+.cache
