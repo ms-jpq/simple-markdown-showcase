@@ -1,12 +1,15 @@
-import webpack, { Configuration, Stats } from "webpack"
+import webpack, { Configuration, Entry, Stats } from "webpack"
+import { id } from "../domain_agnostic/prelude"
+import { map, unique_by, flat_map } from "../domain_agnostic/list"
+import { of_list } from "../domain_agnostic/record"
+import { RenderInstruction, static_config } from "../consts"
 import { resolve } from "path"
-import { static_config } from "../consts"
 
 const mode = "development"
 
 const config: Configuration = {
   mode,
-  entry: [],
+  entry: {},
   resolve: {
     extensions: [".ts", ".tsx", ".js"],
   },
@@ -20,20 +23,26 @@ const config: Configuration = {
     ],
   },
   output: {
-    filename: "[name].js",
+    filename: "js/[name].js",
     path: resolve(static_config.out_dir),
   },
   optimization: {
     splitChunks: {
       chunks: "all",
     },
-    runtimeChunk: "multiple",
+    runtimeChunk: "single",
   },
 }
 
-export const run = async (conf: Configuration) => {
+export const run = async (instructions: RenderInstruction[]) => {
+  const entries = flat_map(
+    (i) =>
+      map((js) => [js, resolve(`${static_config.src_dir}/js/${js}.ts`)], i.js),
+    unique_by(id, instructions),
+  )
+  const entry = of_list<Entry>(entries as [string, string][])
   const stats = await new Promise<Stats>((resolve, reject) =>
-    webpack({ ...config, ...conf }).run((err, stats) =>
+    webpack({ ...config, entry }).run((err, stats) =>
       err ? reject(err) : resolve(stats),
     ),
   )

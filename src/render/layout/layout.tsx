@@ -12,15 +12,27 @@ import { Parent } from "../../domain_agnostic/react"
 
 export type HeadProps = {
   title: string
-  entry: string
+  js: string[]
+  css: string[]
 }
 
-const Head = ({ title, entry }: HeadProps) => (
+const Head = ({ title, js, css }: HeadProps) => (
   <head>
     <meta charSet="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{title}</title>
-    <script src={entry} defer></script>
+    {map(
+      (src) => (
+        <script src={`${src}.js`} defer></script>
+      ),
+      js,
+    )}
+    {map(
+      (href) => (
+        <link href={`${href}.css`} rel="stylesheet"></link>
+      ),
+      css,
+    )}
   </head>
 )
 
@@ -89,7 +101,7 @@ export type PageProps = { head: HeadProps; body: BodyProps } & Parent
 
 export const Page = ({ head, body, children }: PageProps) => (
   <html>
-    <Head title={head.title} entry={head.entry} />
+    <Head title={head.title} js={head.js} css={head.css} />
     <Body header={body.header} footer={body.footer} aside={body.aside}>
       {children}
     </Body>

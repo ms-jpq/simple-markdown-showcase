@@ -1,5 +1,4 @@
 import React from "react"
-import { BodyProps, Page } from "../layout/layout"
 import { flat_map, map } from "../../domain_agnostic/list"
 import { id } from "../../domain_agnostic/prelude"
 import { Markdown } from "../layout/md"
@@ -18,32 +17,26 @@ const parse_title = (read_me: string) => {
   return title
 }
 
-const entry = "pages/repo.ts"
+const js = ["pages/repo"]
+const css: string[] = []
 
-const render_repo: RenderPage<Repo & BodyProps> = async ({
+const render_repo: RenderPage<Repo> = async ({
   name: path,
   read_me,
   updated_at,
-  ...body
 }) => {
   const title = parse_title(read_me)
-  const page = (
-    <Page head={{ title, entry }} body={body}>
-      <Repo read_me={read_me} updated_at={updated_at} />
-    </Page>
-  )
-
-  return [{ entry, path, page }]
+  const page = <Repo read_me={read_me} updated_at={updated_at} />
+  return [{ js, css, title, path, page }]
 }
 
 export type RenderProps = {
-  body: BodyProps
   repos: Repo[]
 }
 
-export const render: RenderPage<RenderProps> = async ({ repos, body }) => {
+export const render: RenderPage<RenderProps> = async ({ repos }) => {
   const pages = await Promise.all(
-    map((repo) => render_repo({ ...repo, ...body }), repos),
+    map((repo) => render_repo({ ...repo }), repos),
   )
   const renderings = flat_map(id, pages)
   return renderings

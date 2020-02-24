@@ -1,6 +1,6 @@
 import { map } from "./list"
 
-export const from_list = <T>(elems: [string, any][]) => {
+export const of_list = <T>(elems: [string, any][]) => {
   const obj = {}
   for (const [k, v] of elems) {
     obj[k] = v
@@ -14,7 +14,7 @@ export const is_array = (thing: any) => thing && constructor(thing) === Array
 
 export const reconciliate = <T>(lhs: any, rhs: any, replace = false): T => {
   if (is_object(lhs) && is_object(rhs)) {
-    const append = from_list<any>(
+    const append = of_list<any>(
       map(
         ([k, v]) => [k, reconciliate(lhs[k], v, replace)],
         Object.entries(rhs),

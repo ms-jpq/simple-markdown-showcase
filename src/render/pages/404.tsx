@@ -1,8 +1,5 @@
-import { BodyProps } from "../layout/layout"
 import { RenderPage } from "../../consts"
 
-export type RenderProps = {
-  body: BodyProps
-}
+export type RenderProps = {}
 
 export const render: RenderPage<RenderProps> = async ({}) => []

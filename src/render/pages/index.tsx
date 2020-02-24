@@ -1,11 +1,10 @@
 import assert from "assert"
 import cn from "classnames"
 import React from "react"
-import { BodyProps, Page } from "../layout/layout"
-import { filter, flat_map, fst, map } from "../../domain_agnostic/list"
-import { id, big_print } from "../../domain_agnostic/prelude"
+import { big_print } from "../../domain_agnostic/prelude"
+import { filter, fst, map } from "../../domain_agnostic/list"
 import { Parent } from "../../domain_agnostic/react"
-import { RenderPage, Repo, StaticConfig, static_config } from "../../consts"
+import { RenderPage, Repo, static_config, StaticConfig } from "../../consts"
 
 export type Customization = {
   hide_detail: boolean
@@ -80,38 +79,32 @@ const Card = ({ images, link, title, desc, hide_detail }: CardProps) => {
 }
 
 export type RenderProps = {
-  body: BodyProps
   config: StaticConfig
   repos: Repo[]
 }
 
-const entry = "pages/index.ts"
+const js = ["pages/index"]
+const css: string[] = []
 
-export const render: RenderPage<RenderProps> = async ({
-  config,
-  repos,
-  body,
-}) => {
+export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
   const showcase = filter((r) => r.showcase, repos)
-  const title = config.title
+
   const page = (
-    <Page head={{ title, entry }} body={body}>
-      <div className={cn("grid")}>
-        {map(
-          ({ title, images, html_url, desc, display }) => (
-            <Card
-              link={html_url}
-              images={images}
-              title={title}
-              desc={desc}
-              hide_detail={(display || {}).hide_details}
-            />
-          ),
-          showcase,
-        )}
-      </div>
-    </Page>
+    <div className={cn("grid")}>
+      {map(
+        ({ title, images, html_url, desc, display }) => (
+          <Card
+            link={html_url}
+            images={images}
+            title={title}
+            desc={desc}
+            hide_detail={(display || {}).hide_details}
+          />
+        ),
+        showcase,
+      )}
+    </div>
   )
 
-  return [{ entry, path: "", page }]
+  return [{ js, css, title: config.title, path: "", page }]
 }
