@@ -4,7 +4,7 @@ import React from "react"
 import { big_print } from "../../domain_agnostic/prelude"
 import { filter, fst, map } from "../../domain_agnostic/list"
 import { Parent } from "../../domain_agnostic/react"
-import { RenderPage, Repo, static_config, StaticConfig } from "../../consts"
+import { RenderPage, Repo, StaticConfig } from "../../consts"
 
 export type Customization = {
   hide_detail: boolean
@@ -90,7 +90,7 @@ export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
   const showcase = filter((r) => r.showcase, repos)
 
   const page = (
-    <div className={cn("grid")}>
+    <div className={cn("card-container", "grid")}>
       {map(
         ({ title, images, html_url, desc, display }) => (
           <Card

@@ -85,7 +85,7 @@ export type RenderInstruction = {
   css: string[]
   title: string
   path: string
-  page: ReactElement
+  page: ReactElement | ReactElement[]
 }
 
 export type RenderPage<T> = (args: T) => Promise<RenderInstruction[]>

@@ -1,6 +1,6 @@
 import { $, $$ } from "../../domain_agnostic/dom"
-import Masonry from "masonry-layout"
+// import Masonry from "masonry-layout"
 
-const masonry = new Masonry($(`.grid`)!, {
-  itemSelector: `.grid-item`,
-})
+// const masonry = new Masonry($(`.grid`)!, {
+//   itemSelector: `.grid-item`,
+// })
