@@ -127,7 +127,6 @@ const commit = async (instructions: CommitInstruction[]) => {
     rmdir(static_config.out_dir),
     rmdir(static_config.dist_dir),
   ])
-  await mkdir(static_config.out_dir)
   const unique = unique_by((i) => i.sub_path, instructions)
   await Promise.all(
     map(({ sub_path, content }) => spit(content, sub_path), unique),

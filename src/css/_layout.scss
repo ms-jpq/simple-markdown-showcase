@@ -5,8 +5,13 @@
  ********/
 
 body {
+  width: 100vw;
+  overflow-x: hidden;
+
   display: flex;
   flex-direction: row;
+  flex-wrap: wrap;
+
   padding-top: $padding_vertical;
   padding-bottom: $padding_vertical;
   padding-left: $padding_horizontal;
@@ -26,6 +31,8 @@ body {
  *********/
 
 aside {
+  width: 15%;
+  max-width: 20vw;
   flex-direction: column;
   #about-me {
     display: flex;

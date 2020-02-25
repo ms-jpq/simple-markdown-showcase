@@ -2,52 +2,52 @@
 
 $card_padding: 0.5em;
 
-.card-container {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-content: space-between;
-  align-items: center;
+// .card-container {
+//   display: flex;
+//   flex-direction: row;
+//   flex-wrap: wrap;
+//   justify-content: center;
+//   align-content: space-between;
+//   align-items: center;
+// }
 
-  .card {
+.card {
+  display: flex;
+  flex-direction: column;
+
+  .figure-title,
+  .detail {
+    padding-left: $card_padding;
+    padding-right: $card_padding;
+  }
+  .figure-title {
     display: flex;
     flex-direction: column;
+    .title-text {
+      text-transform: uppercase;
+      text-align: center;
+    }
+  }
+  .detail {
+    display: flex;
+  }
 
-    .figure-title,
-    .detail {
-      padding-left: $card_padding;
-      padding-right: $card_padding;
+  .picture {
+    display: grid;
+    img {
+      max-width: 100%;
+      max-height: 100%;
     }
-    .figure-title {
-      display: flex;
-      flex-direction: column;
-      .title-text {
-        text-transform: uppercase;
-        text-align: center;
-      }
-    }
-    .detail {
-      display: flex;
-    }
-
-    .picture {
-      display: grid;
-      img {
-        max-width: 100%;
-        max-height: 100%;
-      }
-    }
-    .picture,
-    .overlay {
-      grid-area: 1 / 1;
-    }
+  }
+  .picture,
+  .overlay {
+    grid-area: 1 / 1;
   }
 }
 
-.card {
-  width: 20em;
-}
+// .card {
+//   width: 20em;
+// }
 
 // DEBUG
 .card {
