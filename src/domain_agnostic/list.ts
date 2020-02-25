@@ -1,6 +1,9 @@
-export const fst = <T>(elems: T[]) => elems[0] ?? undefined
-export const snd = <T>(elems: T[]) => elems[1] ?? undefined
-export const last = <T>(elems: T[]) => elems[elems.length - 1] ?? undefined
+export const fst = <T>(elems: T[]) =>
+  elems[0] === undefined ? undefined : elems[0]
+export const snd = <T>(elems: T[]) =>
+  elems[1] === undefined ? undefined : elems[1]
+export const last = <T>(elems: T[]) =>
+  elems[elems.length - 1] === undefined ? undefined : elems[elems.length - 1]
 
 export const range = (begin: number, end: number, step = 1) => {
   const nums = []

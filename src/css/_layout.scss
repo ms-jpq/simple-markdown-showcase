@@ -73,6 +73,10 @@ header {
   flex-direction: row;
   align-items: flex-start;
   justify-content: space-between;
+  #header-menu {
+    display: flex;
+    flex-direction: row;
+  }
 }
 
 // BEGIN -- size

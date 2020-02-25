@@ -2,7 +2,7 @@ import fetch from "node-fetch"
 import md5 from "crypto-js/md5"
 import React from "react"
 import sharp from "sharp"
-import { any, filter, flat_map, join } from "../domain_agnostic/list"
+import { any, filter, flat_map, join, last } from "../domain_agnostic/list"
 import { basename, dirname, extname } from "path"
 import { BodyProps, Page } from "./layout/layout"
 import { exists, rmdir, sip, spit } from "../domain_agnostic/fs"
@@ -66,7 +66,8 @@ const cache_image = (sub_path: string) => async (img: HTMLImageElement) => {
     await spit(image, path)
   }
   const new_sizes = await resize_image(path)
-  img.src = relative(sub_path, path)
+  const src = last(new_sizes)
+  img.src = relative(sub_path, src!.new_name)
   img.srcset = join(
     ",",
     map((s) => `${relative(sub_path, s.new_name)} ${s.width}w`, new_sizes),
