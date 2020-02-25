@@ -61,11 +61,11 @@ export const unique_by = <T>(key_by: (_: T) => any, elems: T[]) => {
   return unique
 }
 
+export const any = <T>(predicate: (_: T) => boolean, elems: T[]) =>
+  elems.some(predicate)
+
 export const all = <T>(predicate: (_: T) => boolean, elems: T[]) =>
   elems.every(predicate)
-
-export const some = <T>(predicate: (_: T) => boolean, elems: T[]) =>
-  elems.some(predicate)
 
 export const take = <T>(n: number, elems: T[]) => elems.filter((_, i) => i < n)
 

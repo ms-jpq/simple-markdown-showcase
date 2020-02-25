@@ -2,10 +2,10 @@ import fetch from "node-fetch"
 import md5 from "crypto-js/md5"
 import React from "react"
 import sharp from "sharp"
-import { basename, extname } from "path"
+import { any, filter, flat_map, join } from "../domain_agnostic/list"
+import { basename, dirname, extname } from "path"
 import { BodyProps, Page } from "./layout/layout"
 import { exists, mkdir, rmdir, sip, spit } from "../domain_agnostic/fs"
-import { filter, flat_map, join } from "../domain_agnostic/list"
 import { id } from "../domain_agnostic/prelude"
 import { imageSize } from "image-size"
 import { JSDOM } from "jsdom"
@@ -15,11 +15,15 @@ import { render as render_404 } from "./pages/404"
 import { render as render_index } from "./pages/index"
 import { render as render_repos } from "./pages/repos"
 import { render as render_aboutme } from "./pages/about_me"
-import { RenderInstruction, Repo, static_config, StaticConfig } from "../consts"
 import { renderToStaticMarkup } from "react-dom/server"
 import { run as run_parcel } from "./parcel"
-
-const target_widths = [200, 400, 600, 800]
+import {
+  img_config,
+  RenderInstruction,
+  Repo,
+  static_config,
+  StaticConfig,
+} from "../consts"
 
 const resize_image = async (path: string) => {
   const buffer = await sip(path)
@@ -28,17 +32,28 @@ const resize_image = async (path: string) => {
     throw new Error("missing image")
   }
   const ext = extname(path)
-  const name = basename(path, ext)
-  const widths = filter((s) => s < width, target_widths)
-  return Promise.all(
-    map(async (width) => {
-      const buff = await sharp(buffer)
-        .resize({ width })
-        .toBuffer()
-      const new_name = `${name}-w${width}${ext}`
-      return { new_name, width, buff }
-    }, widths),
+  const widths = filter((s) => s < width, img_config.target_widths)
+  const src_set = await Promise.all(
+    map(
+      async (width) => ({
+        new_name: `${dirname(path)}/${basename(path)}-${width}w${ext}`,
+        width,
+      }),
+      widths,
+    ),
   )
+  await Promise.all(
+    map(async (s) => {
+      const has = await exists(s.new_name)
+      if (!has) {
+        const buff = await sharp(buffer)
+          .resize({ width })
+          .toBuffer()
+        await spit(buff, s.new_name)
+      }
+    }, src_set),
+  )
+  return src_set
 }
 
 const cache_image = (sub_path: string) => async (img: HTMLImageElement) => {
@@ -51,15 +66,24 @@ const cache_image = (sub_path: string) => async (img: HTMLImageElement) => {
     await spit(image, path)
   }
   const new_sizes = await resize_image(path)
-
   img.src = relative(sub_path, path)
+  img.srcset = join(
+    " ",
+    map((s) => `${relative(sub_path, s.new_name)} ${s.width}w`, new_sizes),
+  )
+}
+
+const filter_localize = ({ src }: HTMLImageElement) => {
+  const uri = new URL(src)
+  return any((u) => u === uri.host, img_config.localize_domains)
 }
 
 const localize_image = async (sub_path: string, html: string) => {
   const cache = cache_image(sub_path)
   const dom = new JSDOM(html)
   const images = [...dom.window.document.querySelectorAll("img")]
-  await Promise.all(map(cache, images))
+  const target_images = filter(filter_localize, images)
+  await Promise.all(map(cache, target_images))
   return dom.serialize()
 }
 

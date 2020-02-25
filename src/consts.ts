@@ -25,6 +25,11 @@ export const additional_pages = {
   contact_me: "pages/contact_me.md",
 }
 
+export const img_config = {
+  localize_domains: ["raw.githubusercontent.com", "github.com"],
+  target_widths: [200, 400, 600, 800],
+}
+
 export type ContactsConfig = {
   email: string
   github: string
