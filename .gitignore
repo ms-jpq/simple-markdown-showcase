@@ -10,3 +10,4 @@ yarn.lock
 *.scss.d.ts
 .cache
 img_cache/
+tsc/

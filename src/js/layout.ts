@@ -1,3 +1,3 @@
-console.log(":D")
+import "@fortawesome/fontawesome-free"
 
 export const _ = ""

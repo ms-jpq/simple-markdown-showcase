@@ -32,7 +32,7 @@ const resize_image = async (path: string) => {
     throw new Error("missing image")
   }
   const ext = extname(path)
-  const widths = filter((s) => s < width, img_config.target_widths)
+  const widths = filter((s) => s <= width, [...img_config.target_widths, width])
   const src_set = await Promise.all(
     map(
       async (width) => ({

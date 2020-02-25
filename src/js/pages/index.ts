@@ -1,8 +1,8 @@
-import { $, $$ } from "../../domain_agnostic/dom"
-import Masonry from "masonry-layout"
-import { map } from "../../domain_agnostic/list"
 import img_loaded from "imagesloaded"
-import { resolve } from "dns"
+import Masonry from "masonry-layout"
+import { $, $$ } from "../../domain_agnostic/dom"
+import { map } from "../../domain_agnostic/list"
+import "../layout"
 
 const main = async () => {
   const grid = $(`main`)

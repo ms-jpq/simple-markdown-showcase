@@ -1,4 +1,4 @@
-#!/usr/bin/env ts-node
+#!/usr/bin/env ts-node --transpile-only
 import { big_print } from "./domain_agnostic/prelude"
 import { static_config, StaticConfig } from "./consts"
 import { extract } from "./github/api"

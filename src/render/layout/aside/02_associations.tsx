@@ -10,6 +10,8 @@ export const AsideAssociations = ({
 }: AssociationsProps) => (
   <section id="associations">
     <a href={`mailto:${email}`}>TODO-EMAIL-ICON</a>
-    <a href={`https://github.com/${github}`}>TODO-GITHUB-ICON</a>
+    <a href={`https://github.com/${github}`}>
+      <i className="fab fa-github"></i>
+    </a>
   </section>
 )

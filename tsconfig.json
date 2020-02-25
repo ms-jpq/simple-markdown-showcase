@@ -13,6 +13,7 @@
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
+    "outDir": "tsc",
     "removeComments": true,
     "resolveJsonModule": true,
     "sourceMap": true,
