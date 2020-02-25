@@ -7,14 +7,17 @@ export const exists = (path: string) =>
 export const mkdir = (dir: string) => fs.mkdir(dir, { recursive: true })
 export const rmdir = (dir: string) => fs.rmdir(dir, { recursive: true })
 
-export const slurp = async (file: string) => {
+const _slurp = async (file: string): Promise<Buffer> => {
   try {
-    return (await fs.readFile(file)).toString()
+    return fs.readFile(file)
   } catch (err) {
     console.error(`Failed to read ${file}`)
     throw err
   }
 }
+
+export const sip = _slurp
+export const slurp = async (file: string) => (await _slurp(file)).toString()
 
 export const spit = async (content: string | Buffer, file: string) => {
   try {

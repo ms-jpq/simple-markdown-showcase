@@ -1,11 +1,13 @@
 import fetch from "node-fetch"
 import md5 from "crypto-js/md5"
 import React from "react"
-import { basename } from "path"
+import sharp from "sharp"
+import { basename, extname } from "path"
 import { BodyProps, Page } from "./layout/layout"
-import { exists, mkdir, rmdir, spit } from "../domain_agnostic/fs"
-import { flat_map } from "../domain_agnostic/list"
+import { exists, mkdir, rmdir, sip, spit } from "../domain_agnostic/fs"
+import { filter, flat_map, join } from "../domain_agnostic/list"
 import { id } from "../domain_agnostic/prelude"
+import { imageSize } from "image-size"
 import { JSDOM } from "jsdom"
 import { map, unique_by } from "../domain_agnostic/list"
 import { relative } from "path"
@@ -17,6 +19,28 @@ import { RenderInstruction, Repo, static_config, StaticConfig } from "../consts"
 import { renderToStaticMarkup } from "react-dom/server"
 import { run as run_parcel } from "./parcel"
 
+const target_widths = [200, 400, 600, 800]
+
+const resize_image = async (path: string) => {
+  const buffer = await sip(path)
+  const { width } = imageSize(buffer)
+  if (width === undefined) {
+    throw new Error("missing image")
+  }
+  const ext = extname(path)
+  const name = basename(path, ext)
+  const widths = filter((s) => s < width, target_widths)
+  return Promise.all(
+    map(async (width) => {
+      const buff = await sharp(buffer)
+        .resize({ width })
+        .toBuffer()
+      const new_name = `${name}-w${width}${ext}`
+      return { new_name, width, buff }
+    }, widths),
+  )
+}
+
 const cache_image = (sub_path: string) => async (img: HTMLImageElement) => {
   const path = `${static_config.img_cache_dir}/${md5(
     img.src,
@@ -24,8 +48,10 @@ const cache_image = (sub_path: string) => async (img: HTMLImageElement) => {
   const img_exists = await exists(path)
   if (!img_exists) {
     const image = await (await fetch(img.src)).buffer()
-    spit(image, path)
+    await spit(image, path)
   }
+  const new_sizes = await resize_image(path)
+
   img.src = relative(sub_path, path)
 }
 
