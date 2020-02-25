@@ -34,7 +34,7 @@ const CardOverlay = ({}) => <div> </div>
 const PictureFigure = ({ images, link, children }: Picture & Parent) => (
   <div className={cn("picture")}>
     <a className={cn("content")} href={link}>
-      <img src={fst(images)} />
+      <img className={cn("hidden")} src={fst(images)} />
     </a>
     <div className={cn("overlay")}>{children}</div>
   </div>
@@ -64,7 +64,7 @@ const Card = ({ images, link, title, desc, hide_detail }: CardProps) => {
     ),
   )
   return (
-    <figure className={cn("card", "grid-item")}>
+    <figure className={cn("card")}>
       {images.length ? (
         <PictureFigure images={images} link={link}>
           {hide_detail ? <DetailFigure desc={desc} /> : <CardOverlay />}
@@ -89,21 +89,17 @@ const css = ["pages/index"]
 export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
   const showcase = filter((r) => r.showcase, repos)
 
-  const page = (
-    <div className={cn("card-container", "grid")}>
-      {map(
-        ({ title, images, html_url, desc, display }) => (
-          <Card
-            link={html_url}
-            images={images}
-            title={title}
-            desc={desc}
-            hide_detail={(display || {}).hide_details}
-          />
-        ),
-        showcase,
-      )}
-    </div>
+  const page = map(
+    ({ title, images, html_url, desc, display }) => (
+      <Card
+        link={html_url}
+        images={images}
+        title={title}
+        desc={desc}
+        hide_detail={(display || {}).hide_details}
+      />
+    ),
+    showcase,
   )
 
   return [{ js, css, title: config.title, path: "", page }]

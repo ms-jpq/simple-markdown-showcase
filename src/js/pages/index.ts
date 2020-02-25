@@ -1,35 +1,24 @@
 import { $, $$ } from "../../domain_agnostic/dom"
 import Masonry from "masonry-layout"
 import { map } from "../../domain_agnostic/list"
+import img_loaded from "imagesloaded"
+import { resolve } from "dns"
 
 const main = async () => {
-  const grid = $(`.grid`)
+  const grid = $(`main`)
   const images = $$<HTMLImageElement>(`img`)
   const masonry = new Masonry(grid!, {
-    itemSelector: `.grid-item`,
-    initLayout: false,
-    fitWidth: true,
+    itemSelector: `.card`,
     percentPosition: true,
-    gutter: 10,
-
-
+    transitionDuration: "0.6s",
   })
-
-  await Promise.all(
-    map(
-      (image) =>
-        new Promise((resolve, reject) => {
-          if (image.complete) {
-            resolve()
-          } else {
-            image.onload = resolve
-            image.onerror = reject
-          }
-        }),
-      images,
-    ),
-  )
-  requestAnimationFrame(() => (masonry.masonry ?? (() => 0))())
+  for (const image of images) {
+    ;(async () => {
+      await new Promise((resolve) => img_loaded(image, resolve))
+      image.classList.remove("hidden")
+      masonry.layout!()
+    })()
+  }
 }
 
 main()
