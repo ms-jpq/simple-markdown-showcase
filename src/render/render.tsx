@@ -47,7 +47,7 @@ const resize_image = async (path: string) => {
       const has = await exists(s.new_name)
       if (!has) {
         const buff = await sharp(buffer)
-          .resize({ width })
+          .resize({ width: s.width })
           .toBuffer()
         await spit(buff, s.new_name)
       }
@@ -68,7 +68,7 @@ const cache_image = (sub_path: string) => async (img: HTMLImageElement) => {
   const new_sizes = await resize_image(path)
   img.src = relative(sub_path, path)
   img.srcset = join(
-    " ",
+    ",",
     map((s) => `${relative(sub_path, s.new_name)} ${s.width}w`, new_sizes),
   )
 }
