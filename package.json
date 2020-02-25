@@ -1,9 +1,12 @@
 {
   "author": "_",
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.12.1",
     "@types/classnames": "^2.2.9",
+    "@types/crypto-js": "^3.1.43",
     "@types/highlight.js": "^9.12.3",
     "@types/js-yaml": "^3.12.2",
+    "@types/jsdom": "^16.1.0",
     "@types/markdown-it": "0.0.9",
     "@types/masonry-layout": "^4.2.1",
     "@types/node-fetch": "^2.5.4",
@@ -13,8 +16,10 @@
     "@types/react-dom": "^16.9.5",
     "@types/react-html-parser": "^2.0.1",
     "classnames": "^2.2.6",
+    "crypto-js": "^4.0.0",
     "highlight.js": "^9.18.1",
     "js-yaml": "^3.13.1",
+    "jsdom": "^16.2.0",
     "markdown-it": "^10.0.0",
     "masonry-layout": "^4.2.2",
     "node-fetch": "^2.6.0",

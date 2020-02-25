@@ -1,5 +1,8 @@
 import { dirname } from "path"
-import { promises as fs } from "fs"
+import { exists as exists_cb, promises as fs } from "fs"
+
+export const exists = (path: string) =>
+  new Promise<boolean>((resolve) => exists_cb(path, resolve))
 
 export const mkdir = (dir: string) => fs.mkdir(dir, { recursive: true })
 export const rmdir = (dir: string) => fs.rmdir(dir, { recursive: true })
@@ -13,7 +16,7 @@ export const slurp = async (file: string) => {
   }
 }
 
-export const spit = async (content: string | Blob, file: string) => {
+export const spit = async (content: string | Buffer, file: string) => {
   try {
     await mkdir(dirname(file))
     await fs.writeFile(file, content)
@@ -22,3 +25,5 @@ export const spit = async (content: string | Blob, file: string) => {
     throw err
   }
 }
+
+export const cp = (src: string, dest: string) => fs.copyFile(src, dest)

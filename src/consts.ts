@@ -9,6 +9,7 @@ export const static_config = {
   out_dir: "out",
   dist_dir: "dist",
   temp_dir: "temp",
+  img_cache_dir: "img_cache",
   port: 8080,
   github_token: process.env["TOKEN"],
 }

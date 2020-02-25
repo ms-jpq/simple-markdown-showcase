@@ -7,7 +7,7 @@ const options: ParcelOptions = {
   outFile: "index.html",
   publicUrl: "/",
   watch: false,
-  cache: true
+  cache: true,
 }
 
 export const run = async (instructions: RenderInstruction[]) => {
