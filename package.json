@@ -1,5 +1,8 @@
 {
   "author": "_",
+  "browserslist": [
+    "last 5 Chrome versions"
+  ],
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.12.1",
     "@types/classnames": "^2.2.9",

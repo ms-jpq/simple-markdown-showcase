@@ -7,10 +7,12 @@ const main = async () => {
   const images = $$<HTMLImageElement>(`img`)
   const masonry = new Masonry(grid!, {
     itemSelector: `.grid-item`,
-    columnWidth: 200,
-    // gutter: 10,
-    fitWidth: true,
     initLayout: false,
+    fitWidth: true,
+    percentPosition: true,
+    gutter: 10,
+
+
   })
 
   await Promise.all(
@@ -27,7 +29,7 @@ const main = async () => {
       images,
     ),
   )
-  ;(masonry.masonry || (() => 0))()
+  requestAnimationFrame(() => (masonry.masonry ?? (() => 0))())
 }
 
 main()

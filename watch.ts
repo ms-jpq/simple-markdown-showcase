@@ -23,6 +23,7 @@ const watch = (settings: Settings) =>
       console.log(big_print("STARTED", "$"))
     })
     .on("restart", (files) => {
+      console.log("\x07")
       console.log(big_print("RESTARTED", "$"))
       console.log(files)
     })

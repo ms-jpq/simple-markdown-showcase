@@ -2,14 +2,14 @@
 
 $card_padding: 0.5em;
 
-// .card-container {
-//   display: flex;
-//   flex-direction: row;
-//   flex-wrap: wrap;
-//   justify-content: center;
-//   align-content: space-between;
-//   align-items: center;
-// }
+.card-container {
+  // display: flex;
+  // flex-direction: row;
+  // flex-wrap: wrap;
+  // justify-content: center;
+  // align-content: space-between;
+  // align-items: center;
+}
 
 .card {
   display: flex;
@@ -45,9 +45,9 @@ $card_padding: 0.5em;
   }
 }
 
-// .card {
-//   width: 20em;
-// }
+.card {
+  width: 20%;
+}
 
 // DEBUG
 .card {
