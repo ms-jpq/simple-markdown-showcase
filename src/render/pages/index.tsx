@@ -41,11 +41,9 @@ const PictureFigure = ({ images, link, children }: Picture & Parent) => (
 )
 
 const TitleFigure = ({ title, link }: Title) => (
-  <div className={cn("figure-title")}>
-    <a href={link}>
-      <h4 className={cn("title-text")}>{title}</h4>
-    </a>
-  </div>
+  <h4 className={cn("figure-title")}>
+    <a href={link}>{title}</a>
+  </h4>
 )
 
 const DetailFigure = ({ desc }: Detail) => (
@@ -90,9 +88,9 @@ export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
   const showcase = filter((r) => r.showcase, repos)
 
   const page = map(
-    ({ title, images, html_url, desc, display }) => (
+    ({ title, images, name, desc, display }) => (
       <Card
-        link={html_url}
+        link={name}
         images={images}
         title={title}
         desc={desc}
