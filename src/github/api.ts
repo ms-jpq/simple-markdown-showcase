@@ -76,13 +76,9 @@ const github_repos = async (user: string, token?: string) => {
 }
 
 export const extract = async (user_name: string, token?: string) => {
-  const [avatar, repos] = await Promise.all([
-    github_avatar(user_name, token),
-    github_repos(user_name, token),
-  ])
+  const repos = await github_repos(user_name, token)
   return {
     user_name,
-    avatar,
     repos,
   }
 }

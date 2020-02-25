@@ -23,7 +23,7 @@ const cache_image = (sub_path: string) => async (img: HTMLImageElement) => {
   ).toString()}-${basename(img.src)}`
   const img_exists = await exists(path)
   if (!img_exists) {
-    const image = await (await fetch(img.src)).blob()
+    const image = await (await fetch(img.src)).buffer()
     spit(image, path)
   }
   img.src = relative(sub_path, path)
