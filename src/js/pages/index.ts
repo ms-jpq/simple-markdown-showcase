@@ -4,6 +4,7 @@ import { map } from "../../domain_agnostic/list"
 
 const main = async () => {
   const grid = $(`.grid`)
+  const images = $$<HTMLImageElement>(`img`)
   const masonry = new Masonry(grid!, {
     itemSelector: `.grid-item`,
     columnWidth: 200,
@@ -23,10 +24,10 @@ const main = async () => {
             image.onerror = reject
           }
         }),
-      $$<HTMLImageElement>(`img`),
+      images,
     ),
   )
-  ;(masonry.masonry ?? (() => 0))()
+  ;(masonry.masonry || (() => 0))()
 }
 
 main()
