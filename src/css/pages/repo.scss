@@ -1,2 +1,16 @@
 @import "../layout";
 @import "../colour";
+
+$article_padding_vertical: 2em;
+$article_padding_horizontal: 2em;
+
+main {
+  background-color: var(--background-colour-light);
+  article {
+    width: 100%;
+    padding-top: $article_padding_vertical;
+    padding-bottom: $article_padding_vertical;
+    padding-left: $article_padding_horizontal;
+    padding-right: $article_padding_horizontal;
+  }
+}

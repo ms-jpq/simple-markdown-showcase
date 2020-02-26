@@ -1,3 +1,8 @@
 .markdown {
-
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  align-content: flex-start;
+  overflow-x: hidden;
 }

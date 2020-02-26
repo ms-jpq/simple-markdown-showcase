@@ -1,23 +1,35 @@
 :root {
-  --background-colour: rgb(245, 245, 245);
+  --background-colour-dark: rgb(245, 245, 245);
+  --background-colour-light: rgb(250, 250, 250);
   --highlight-colour: rgb(240, 80, 130);
-  --desc-colour: rgb(150, 150, 150);
+  --desc-colour: #999999;
 }
 
 body {
-  background-color: var(--background-colour);
+  background-color: var(--background-colour-dark);
 }
 
 a {
-  color: inherit;
-  text-decoration: none;
+  all: unset;
+  cursor: pointer;
+  :active,
+  :focus,
+  :hover {
+    text-decoration: dotted;
+    text-decoration-color: var(--highlight-colour);
+  }
 }
 
-a:active {
-  text-decoration: dotted;
-  text-decoration-color: var(--highlight-colour);
-}
-
-p {
-  color: var(--desc-colour);
+button {
+  all: unset;
+  color: var(--highlight-colour);
+  border-style: solid;
+  border-width: thin;
+  border-color: var(--highlight-colour);
+  cursor: pointer;
+  :active,
+  :focus,
+  :hover {
+    filter: invert(100%);
+  }
 }

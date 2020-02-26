@@ -12,7 +12,7 @@ import { static_config } from "./src/consts"
 const srv = (dir: string, port: number) => {
   express()
     .use(cors())
-    .use(express.static(dir))
+    .use(express.static(dir, {}))
     .listen(port)
   console.log(`-- Serving files at:  http://${hostname()}:${port}`)
 }

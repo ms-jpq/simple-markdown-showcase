@@ -4,7 +4,7 @@ import React from "react"
 export type TitleProps = { title: string }
 
 export const Title = ({ title }: TitleProps) => (
-  <a href="/">
-    <h4 className={cn("page-title")}>{title}</h4>
-  </a>
+  <h4 className={cn("page-title")}>
+    <a href="/">{title}</a>
+  </h4>
 )

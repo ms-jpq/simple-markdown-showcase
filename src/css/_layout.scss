@@ -7,6 +7,9 @@ $padding_horizontal: 1em;
 $padding_vertical: 1em;
 $nav_padding: 3em;
 
+$menu_padding_horizontal: 0.7em;
+$menu_padding_vertical: 0.6em;
+
 /********
  * BODY *
  ********/
@@ -71,11 +74,14 @@ aside {
 header {
   flex-grow: 1;
   flex-direction: row;
-  align-items: flex-start;
   justify-content: space-between;
   #header-menu {
-    display: flex;
-    flex-direction: row;
+    align-self: center;
+    padding-left: $menu_padding_horizontal;
+    padding-right: $menu_padding_horizontal;
+    padding-top: $menu_padding_vertical;
+    padding-bottom: $menu_padding_vertical;
+    text-transform: capitalize;
   }
 }
 
@@ -104,6 +110,7 @@ footer {
  ********/
 
 .page-title {
+  align-self: flex-start;
   text-transform: uppercase;
 }
 
