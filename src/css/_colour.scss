@@ -8,28 +8,3 @@
 body {
   background-color: var(--background-colour-dark);
 }
-
-a {
-  all: unset;
-  cursor: pointer;
-  :active,
-  :focus,
-  :hover {
-    text-decoration: dotted;
-    text-decoration-color: var(--highlight-colour);
-  }
-}
-
-button {
-  all: unset;
-  color: var(--highlight-colour);
-  border-style: solid;
-  border-width: thin;
-  border-color: var(--highlight-colour);
-  cursor: pointer;
-  :active,
-  :focus,
-  :hover {
-    filter: invert(100%);
-  }
-}

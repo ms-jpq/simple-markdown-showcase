@@ -3,7 +3,6 @@
  ********/
 
 $transition_width: 60em;
-$left_panel_width: 30%;
 
 $nav_padding: 3em;
 
@@ -19,11 +18,11 @@ body {
   flex-direction: row;
 
   #left-panel {
-    width: $left_panel_width;
+    width: unquote('min(30%, 30em)');
   }
 
   #right-panel {
-    width: (100% - $left_panel_width);
+    flex-grow: 1;
     overflow-x: hidden;
   }
   @media (max-width: $transition_width) {
@@ -52,6 +51,9 @@ aside {
   #associations {
     display: flex;
     flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-content: space-around;
   }
 }
 
@@ -75,12 +77,23 @@ header {
   flex-direction: row;
   justify-content: space-between;
   #header-menu {
+    all: unset;
     align-self: center;
     padding-left: $menu_padding_horizontal;
     padding-right: $menu_padding_horizontal;
     padding-top: $menu_padding_vertical;
     padding-bottom: $menu_padding_vertical;
     text-transform: capitalize;
+    color: var(--highlight-colour);
+    border-style: solid;
+    border-width: thin;
+    border-color: var(--highlight-colour);
+    cursor: pointer;
+    &:active,
+    &:hover {
+      color: var(--background-colour-light);
+      background-color: var(--highlight-colour);
+    }
   }
 }
 
@@ -119,4 +132,14 @@ footer {
 
 .hidden {
   display: none;
+}
+
+a {
+  all: unset;
+  cursor: pointer;
+  &:active,
+  &:hover {
+    text-decoration: dotted;
+    text-decoration-color: var(--highlight-colour);
+  }
 }
