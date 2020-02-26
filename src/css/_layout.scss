@@ -3,8 +3,8 @@
  ********/
 
 $transition_width: 60em;
-$padding_horizontal: 1em;
-$padding_vertical: 1em;
+$left_panel_width: 30%;
+
 $nav_padding: 3em;
 
 $menu_padding_horizontal: 0.7em;
@@ -15,22 +15,21 @@ $menu_padding_vertical: 0.6em;
  ********/
 
 body {
-  width: 100vw;
-
   display: flex;
   flex-direction: row;
 
-  padding-top: $padding_vertical;
-  padding-bottom: $padding_vertical;
-  padding-left: $padding_horizontal;
-  padding-right: $padding_horizontal;
-
   #left-panel {
-    flex-grow: 0.15;
+    width: $left_panel_width;
   }
 
   #right-panel {
-    flex-grow: 1;
+    width: (100% - $left_panel_width);
+    overflow-x: hidden;
+  }
+  @media (max-width: $transition_width) {
+    #right-panel {
+      width: 100%;
+    }
   }
 }
 
@@ -72,7 +71,7 @@ aside {
  **********/
 
 header {
-  flex-grow: 1;
+  width: 100%;
   flex-direction: row;
   justify-content: space-between;
   #header-menu {

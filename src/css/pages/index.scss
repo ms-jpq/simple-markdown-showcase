@@ -4,8 +4,8 @@
 $card_padding: 0.5em;
 $card_title_margin: 0.2em;
 
-
-
+$padding_vertical: 1em;
+$padding_horizontal: 1em;
 
 main {
   display: flex;
@@ -14,6 +14,10 @@ main {
   justify-content: center;
   align-content: space-between;
   align-items: center;
+  padding-top: $padding_vertical;
+  padding-bottom: $padding_vertical;
+  padding-left: $padding_horizontal;
+  padding-right: $padding_horizontal;
 }
 
 .card {
@@ -44,7 +48,7 @@ main {
     display: grid;
     img {
       max-width: 100%;
-      max-height: 100%;
+      height: auto;
     }
   }
   .picture,
