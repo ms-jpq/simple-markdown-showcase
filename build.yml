@@ -10,9 +10,10 @@ aside:
     title: Creative Portfolio
     desc:
       - >-
-        PLACE HOLDER DESC LINE 1
+        I am a polyglot programmer and software engineer with more than 5 years
+        of experience.
       - >-
-        PLACE HOLDER DESC LINE 2
+        Professional interests: functional design, metaprogramming.
 
   nav:
     - title: PLACE_HOLDER_NAV_1
@@ -28,6 +29,5 @@ aside:
 
 footer:
   desc:
-    - PLACE HOLDER DESC 1
-    - PLACE HOLDER DESC 2
-    - PLACE HOLDER DESC 3
+    - >-
+      © 2020 ms-jpq | 

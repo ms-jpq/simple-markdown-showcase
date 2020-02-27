@@ -9,6 +9,8 @@ $nav_padding: 3em;
 $menu_padding_horizontal: 0.7em;
 $menu_padding_vertical: 0.6em;
 
+$associations_margin: 0.3em;
+
 /********
  * BODY *
  ********/
@@ -18,17 +20,13 @@ body {
   flex-direction: row;
 
   #left-panel {
-    width: unquote('min(30%, 30em)');
+    flex-shrink: 0;
+    width: unquote("min(30%, 30em)");
   }
 
   #right-panel {
     flex-grow: 1;
     overflow-x: hidden;
-  }
-  @media (max-width: $transition_width) {
-    #right-panel {
-      width: 100%;
-    }
   }
 }
 
@@ -54,6 +52,10 @@ aside {
     flex-wrap: wrap;
     justify-content: flex-start;
     align-content: space-around;
+    > * {
+      margin-left: $associations_margin;
+      margin-right: $associations_margin;
+    }
   }
 }
 
@@ -132,14 +134,4 @@ footer {
 
 .hidden {
   display: none;
-}
-
-a {
-  all: unset;
-  cursor: pointer;
-  &:active,
-  &:hover {
-    text-decoration: dotted;
-    text-decoration-color: var(--highlight-colour);
-  }
 }

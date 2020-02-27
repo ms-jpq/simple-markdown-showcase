@@ -7,9 +7,9 @@ import { RenderPage, Repo, static_config } from "../../consts"
 export type RepoProps = Pick<Repo, "read_me" | "updated_at">
 
 const Repo = ({ read_me }: RepoProps) => (
-  <div>
+  <React.Fragment>
     <Markdown content={read_me} />
-  </div>
+  </React.Fragment>
 )
 
 const parse_title = (read_me: string) => {
