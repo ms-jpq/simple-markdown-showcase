@@ -46,10 +46,11 @@ const Footer = ({ desc }: FooterProps) => (
 )
 
 // Invisble in mobile size
-export type AsideProps = {} & AsideConfig
+export type AsideProps = { dest: string } & AsideConfig
 
 // Children is only <Footer />
 const Aside = ({
+  dest,
   about_me,
   contacts,
   nav,
@@ -57,7 +58,7 @@ const Aside = ({
 }: AsideProps & { footer: FooterProps }) => (
   <aside id="left-panel">
     <AsideAboutMe title={about_me.title} desc={about_me.desc} />
-    <AsideNav dests={nav} />
+    <AsideNav dests={nav} dest={dest} />
     <AsideAssociations contacts={contacts} />
     <Footer desc={footer.desc} />
   </aside>
@@ -85,6 +86,7 @@ export type BodyProps = {
 const Body = ({ aside, header, footer, children }: BodyProps & Parent) => (
   <body>
     <Aside
+      dest={aside.dest}
       about_me={aside.about_me}
       nav={aside.nav}
       contacts={aside.contacts}

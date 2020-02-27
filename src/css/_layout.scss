@@ -8,9 +8,10 @@ $transition_width: 60em;
   --background-colour-dark: rgb(245, 245, 245);
   --background-colour-light: rgb(255, 255, 255);
   --highlight-colour: rgb(240, 80, 130);
+  --nav-colour: #555555;
   --desc-colour: #999999;
 
-  --nav-padding: 3em;
+  --section-padding: 2em;
 
   --menu-padding-horizontal: 0.7em;
   --menu-padding-vertical: 0.6em;
@@ -51,6 +52,11 @@ aside {
   padding-right: var(--aside-padding-horizontal);
 
   flex-direction: column;
+
+  > * {
+    margin-bottom: var(--section-padding);
+  }
+
   #about-me {
     display: flex;
     flex-direction: column;
@@ -59,10 +65,16 @@ aside {
     }
   }
   #nav {
-    padding-top: var(--nav-padding);
-    padding-bottom: var(--nav-padding);
     display: flex;
     flex-direction: column;
+    li {
+      color: var(--nav-colour);
+      text-transform: capitalize;
+      &.active {
+        font-weight: bold;
+        color: var(--highlight-colour);
+      }
+    }
   }
   #associations {
     display: flex;
@@ -161,9 +173,11 @@ footer {
 
 ul {
   list-style: none;
-  padding-left: 0;
+  padding-left: 0.5em;
 
   li {
+    line-height: 175%;
+
     &:before {
       content: ">";
       padding-right: 0.2em;

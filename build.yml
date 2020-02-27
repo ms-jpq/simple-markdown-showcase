@@ -16,12 +16,12 @@ aside:
         Professional interests: functional design, metaprogramming.
 
   nav:
-    - title: PLACE_HOLDER_NAV_1
-      link: about:blank
-    - title: PLACE_HOLDER_NAV_2
-      link: about:blank
-    - title: PLACE_HOLDER_NAV_3
-      link: about:blank
+    - title: home
+      link: ""
+    - title: about
+      link: about-me
+    - title: get in touch
+      link: contact
 
   contacts:
     email: github@bigly.dog

@@ -140,9 +140,6 @@ export type RenderProps = {
 }
 
 export const render = async ({ config, repos }: RenderProps) => {
-  const body: BodyProps = {
-    ...config,
-  }
   const pages = await Promise.all([
     render_404({}),
     render_index({ config, repos }),
@@ -153,7 +150,13 @@ export const render = async ({ config, repos }: RenderProps) => {
   const commits = await Promise.all(
     map(
       render_page,
-      map((i) => ({ ...i, body }), instructions),
+      map(
+        (i) => ({
+          ...i,
+          body: { ...config, aside: { ...config.aside, dest: i.path } },
+        }),
+        instructions,
+      ),
     ),
   )
   await commit(commits)
