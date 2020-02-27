@@ -9,6 +9,7 @@ $nav_padding: 3em;
 $menu_padding_horizontal: 0.7em;
 $menu_padding_vertical: 0.6em;
 
+$associations_size: 1.5em;
 $associations_margin: 0.3em;
 
 /********
@@ -53,8 +54,21 @@ aside {
     justify-content: flex-start;
     align-content: space-around;
     > * {
+      width: $associations_size;
+      height: $associations_size;
       margin-left: $associations_margin;
       margin-right: $associations_margin;
+
+      border-radius: 50%;
+      border-style: solid;
+      border-width: thin;
+
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      align-content: center;
     }
   }
 }
