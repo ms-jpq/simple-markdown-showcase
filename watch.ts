@@ -6,7 +6,7 @@ import nodemon, { Settings } from "nodemon"
 import parse from "parse-gitignore"
 import { big_print } from "./src/domain_agnostic/prelude"
 import { hostname } from "os"
-import { promises as fs } from "fs"
+import { slurp } from "./src/domain_agnostic/fs"
 import { static_config } from "./src/consts"
 
 const srv = (dir: string, port: number) => {
@@ -23,17 +23,15 @@ const watch = (settings: Settings) =>
       console.log(big_print("STARTED", "$"))
     })
     .on("restart", (files) => {
-      console.log("\x07")
       console.log(big_print("RESTARTED", "$"))
       console.log(files)
     })
 
 const main = async () => {
-  const git_ignore = (await fs.readFile(".gitignore")).toString()
+  const git_ignore = await slurp(".gitignore")
   const ignore = parse(git_ignore)
   const execMap = {
     main: "src/entry.ts",
-    scss: "tsm src --listDifferent",
   }
   watch({
     ext: ["yml", "json", "ts", "tsx", "scss"].join(),

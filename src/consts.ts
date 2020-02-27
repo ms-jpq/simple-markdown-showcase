@@ -32,7 +32,9 @@ export const img_config = {
 
 export type ContactsConfig = {
   email: string
+  linkedin: string
   github: string
+  stackoverflow: string
 }
 
 export type AsideConfig = {

@@ -4,6 +4,7 @@
  ********/
 
 $transition_width: 60em;
+$font_free: "Font Awesome 5 Free";
 
 :root {
   --background-colour-dark: rgb(245, 245, 245);
@@ -19,8 +20,9 @@ $transition_width: 60em;
 
   --aside-padding-horizontal: 0.2em;
 
-  --associations-size: 2.1em;
-  --associations-margin: 0.4em;
+  --associations-size: 2.5em;
+  --associations-margin-horizontal: 0.3em;
+  --associations-margin-vertical: 0.2em;
 }
 
 /********
@@ -86,8 +88,10 @@ aside {
     > * {
       width: var(--associations-size);
       height: var(--associations-size);
-      margin-left: var(--associations-margin);
-      margin-right: var(--associations-margin);
+      margin-left: var(--associations-margin-horizontal);
+      margin-right: var(--associations-margin-horizontal);
+      margin-top: var(--associations-margin-vertical);
+      margin-bottom: var(--associations-margin-vertical);
 
       border-radius: 50%;
       border-style: solid;
@@ -100,6 +104,8 @@ aside {
       justify-content: center;
       align-items: center;
       align-content: center;
+
+      color: var(--desc-colour);
     }
   }
 }
@@ -180,9 +186,13 @@ ul {
     line-height: 175%;
 
     &:before {
-      font-family: "FontAwesome";
-      content: "\f054";
-      padding-right: 0.2em;
+      padding-right: 0.3em;
+
+      font-family: $font_free;
+      font-weight: 600;
+      content: "\f105";
+
+      color: var(--desc-colour);
     }
   }
 }
