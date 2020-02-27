@@ -4,12 +4,12 @@ import { map } from "../../../domain_agnostic/list"
 
 export type DescProps = { desc: string[] }
 export const FooterDesc = ({ desc }: DescProps) => (
-  <div>
+  <React.Fragment>
     {map(
       (d) => (
         <p>{d}</p>
       ),
       desc,
     )}
-  </div>
+  </React.Fragment>
 )

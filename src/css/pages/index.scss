@@ -1,11 +1,14 @@
 @import "../layout";
-@import "../colour";
 
-$card_padding: 0.5em;
-$card_title_margin: 0.2em;
+:root {
+  --card-padding: 0.5em;
+  --card-title-margin: 0.2em;
 
-$padding_vertical: 1em;
-$padding_horizontal: 1em;
+  --padding-vertical: 1em;
+  --padding-horizontal: 1em;
+
+  --card-shadow: #ccc;
+}
 
 main {
   display: flex;
@@ -14,10 +17,10 @@ main {
   justify-content: center;
   align-content: space-between;
   align-items: center;
-  padding-top: $padding_vertical;
-  padding-bottom: $padding_vertical;
-  padding-left: $padding_horizontal;
-  padding-right: $padding_horizontal;
+  padding-top: var(--padding-vertical);
+  padding-bottom: var(--padding-vertical);
+  padding-left: var(--padding-horizontal);
+  padding-right: var(--padding-horizontal);
 }
 
 .card {
@@ -25,17 +28,19 @@ main {
   display: flex;
   flex-direction: column;
 
+  box-shadow: 0 0 5px var(--card-shadow);
+
   .figure-title,
   .detail {
-    padding-left: $card_padding;
-    padding-right: $card_padding;
+    padding-left: var(--card-padding);
+    padding-right: var(--card-padding);
     overflow: hidden;
     text-overflow: ellipsis;
   }
 
   .figure-title {
-    margin-top: $card_title_margin;
-    margin-bottom: $card_title_margin;
+    margin-top: var(--card-title-margin);
+    margin-bottom: var(--card-title-margin);
     text-transform: uppercase;
     text-align: center;
   }

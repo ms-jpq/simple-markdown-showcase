@@ -4,13 +4,22 @@
 
 $transition_width: 60em;
 
-$nav_padding: 3em;
+:root {
+  --background-colour-dark: rgb(245, 245, 245);
+  --background-colour-light: rgb(255, 255, 255);
+  --highlight-colour: rgb(240, 80, 130);
+  --desc-colour: #999999;
 
-$menu_padding_horizontal: 0.7em;
-$menu_padding_vertical: 0.6em;
+  --nav-padding: 3em;
 
-$associations_size: 1.5em;
-$associations_margin: 0.3em;
+  --menu-padding-horizontal: 0.7em;
+  --menu-padding-vertical: 0.6em;
+
+  --aside-padding-horizontal: 0.2em;
+
+  --associations-size: 2.1em;
+  --associations-margin: 0.4em;
+}
 
 /********
  * BODY *
@@ -20,9 +29,11 @@ body {
   display: flex;
   flex-direction: row;
 
+  background-color: var(--background-colour-dark);
+
   #left-panel {
     flex-shrink: 0;
-    width: unquote("min(30%, 30em)");
+    width: 21%;
   }
 
   #right-panel {
@@ -36,16 +47,31 @@ body {
  *********/
 
 aside {
+  padding-left: var(--aside-padding-horizontal);
+  padding-right: var(--aside-padding-horizontal);
+
   flex-direction: column;
   #about-me {
     display: flex;
     flex-direction: column;
+    p {
+      color: var(--desc-colour);
+    }
   }
   #nav {
-    padding-top: $nav_padding;
-    padding-bottom: $nav_padding;
+    padding-top: var(--nav-padding);
+    padding-bottom: var(--nav-padding);
     display: flex;
     flex-direction: column;
+
+    ul li {
+      all: unset;
+    }
+    ul {
+      padding-left: 0;
+      display: flex;
+      flex-direction: column;
+    }
   }
   #associations {
     display: flex;
@@ -54,14 +80,15 @@ aside {
     justify-content: flex-start;
     align-content: space-around;
     > * {
-      width: $associations_size;
-      height: $associations_size;
-      margin-left: $associations_margin;
-      margin-right: $associations_margin;
+      width: var(--associations-size);
+      height: var(--associations-size);
+      margin-left: var(--associations-margin);
+      margin-right: var(--associations-margin);
 
       border-radius: 50%;
       border-style: solid;
       border-width: thin;
+      border-color: var(--desc-colour);
 
       text-align: center;
       display: flex;
@@ -95,10 +122,10 @@ header {
   #header-menu {
     all: unset;
     align-self: center;
-    padding-left: $menu_padding_horizontal;
-    padding-right: $menu_padding_horizontal;
-    padding-top: $menu_padding_vertical;
-    padding-bottom: $menu_padding_vertical;
+    padding-left: var(--menu-padding-horizontal);
+    padding-right: var(--menu-padding-horizontal);
+    padding-top: var(--menu-padding-vertical);
+    padding-bottom: var(--menu-padding-vertical);
     text-transform: capitalize;
     color: var(--highlight-colour);
     border-style: solid;
@@ -131,20 +158,35 @@ header {
 footer {
   display: flex;
   flex-direction: column;
+  p {
+    color: var(--desc-colour);
+    text-align: center;
+  }
 }
 
 /********
  * MISC *
  ********/
 
+a {
+  all: unset;
+  cursor: pointer;
+  &:active,
+  &:hover {
+    text-decoration: dotted;
+    text-decoration-color: var(--highlight-colour);
+  }
+}
+
 .page-title {
   align-self: flex-start;
   text-transform: uppercase;
+  &:active,
+  &:hover {
+    text-decoration: dotted;
+    text-decoration-color: var(--highlight-colour);
+  }
 }
-
-/**********
- * SHARED *
- **********/
 
 .hidden {
   display: none;
