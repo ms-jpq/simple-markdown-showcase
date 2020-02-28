@@ -5,7 +5,7 @@ import { ContactsConfig } from "../../../consts"
 export type AssociationsProps = { contacts: ContactsConfig }
 
 export const AsideAssociations = ({
-  contacts: { email, linkedin, github, stackoverflow },
+  contacts: { email, linkedin, github, dockerhub, stackoverflow },
 }: AssociationsProps) => (
   <section
     id="associations"
@@ -28,6 +28,12 @@ export const AsideAssociations = ({
       href={`https://github.com/${github}`}
     >
       <i className="fab fa-github"></i>
+    </a>
+    <a
+      className={cn("border-thin", "border-circle", "flex-col")}
+      href={`https://hub.docker.com/u/${dockerhub}`}
+    >
+      <i className="fab fa-docker"></i>
     </a>
     <a
       className={cn("border-thin", "border-circle", "flex-col")}

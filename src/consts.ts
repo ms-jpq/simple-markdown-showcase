@@ -34,6 +34,7 @@ export type ContactsConfig = {
   email: string
   linkedin: string
   github: string
+  dockerhub: string
   stackoverflow: string
 }
 

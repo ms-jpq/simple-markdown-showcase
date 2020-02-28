@@ -1,13 +1,13 @@
 import React from "react"
 import { RenderPage } from "../../consts"
 
-const js: string[] = []
-const css: string[] = []
+const js = ["pages/about_me"]
+const css = ["pages/about_me"]
 
 export type RenderProps = {}
 
 export const render: RenderPage<RenderProps> = async ({}) => {
-  const title = "404"
+  const title = "About:Me"
   const page = <main></main>
-  return [{ path: "_", title, js, css, page }]
+  return [{ path: "about-me", title, js, css, page }]
 }

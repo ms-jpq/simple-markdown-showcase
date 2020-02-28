@@ -15,6 +15,7 @@ import { render as render_404 } from "./pages/404"
 import { render as render_index } from "./pages/index"
 import { render as render_repos } from "./pages/repos"
 import { render as render_aboutme } from "./pages/about_me"
+import { render as render_contactme } from "./pages/contact_me"
 import { renderToStaticMarkup } from "react-dom/server"
 import { run as run_parcel } from "./parcel"
 import {
@@ -144,6 +145,7 @@ export const render = async ({ config, repos }: RenderProps) => {
     render_404({}),
     render_index({ config, repos }),
     render_aboutme({}),
+    render_contactme({}),
     render_repos({ repos }),
   ])
   const instructions = flat_map(id, pages)
