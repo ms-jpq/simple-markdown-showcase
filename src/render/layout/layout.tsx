@@ -40,7 +40,7 @@ const Head = ({ title, js, css }: HeadProps) => (
 export type FooterProps = {} & FooterConfig
 
 const Footer = ({ desc }: FooterProps) => (
-  <footer>
+  <footer className={cn("flex-col")}>
     <FooterDesc desc={desc} />
   </footer>
 )
@@ -75,7 +75,9 @@ const Header = ({ title, menu }: HeaderProps) => (
 )
 
 // Main drawing area
-const Main = ({ children }: Parent) => <main>{children}</main>
+const Main = ({ children }: Parent) => (
+  <React.Fragment>{children}</React.Fragment>
+)
 
 export type BodyProps = {
   aside: AsideProps
@@ -83,29 +85,27 @@ export type BodyProps = {
   footer: FooterProps
 }
 
-const Body = ({ aside, header, footer, children }: BodyProps & Parent) => (
-  <body>
-    <Aside
-      dest={aside.dest}
-      about_me={aside.about_me}
-      nav={aside.nav}
-      contacts={aside.contacts}
-      footer={footer}
-    />
-    <div id="right-panel">
-      <Header title={header.title} menu={header.menu} />
-      <Main>{children}</Main>
-    </div>
-  </body>
-)
-
 export type PageProps = { head: HeadProps; body: BodyProps } & Parent
 
-export const Page = ({ head, body, children }: PageProps) => (
+export const Page = ({
+  head,
+  body: { aside, header, footer },
+  children,
+}: PageProps) => (
   <html>
     <Head title={head.title} js={head.js} css={head.css} />
-    <Body header={body.header} footer={body.footer} aside={body.aside}>
-      {children}
-    </Body>
+    <body className={cn("flex-row", "vw100")}>
+      <Aside
+        dest={aside.dest}
+        about_me={aside.about_me}
+        nav={aside.nav}
+        contacts={aside.contacts}
+        footer={footer}
+      />
+      <div id="right-panel">
+        <Header title={header.title} menu={header.menu} />
+        <Main>{children}</Main>
+      </div>
+    </body>
   </html>
 )

@@ -1,0 +1,79 @@
+/********
+ * View *
+ ********/
+
+.vw100 {
+  width: 100vw;
+}
+
+.vh100 {
+  width: 100vh;
+}
+
+/***********
+ * Display *
+ ***********/
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-wrap {
+  flex-wrap: wrap;
+}
+
+.overflow-hide-x {
+  overflow-x: hidden;
+}
+
+/**********
+ * Border *
+ **********/
+
+.border-thin {
+  border: solid;
+  border-width: thin;
+}
+
+.border-circle {
+  border-radius: 50%;
+}
+
+/********
+ * Text *
+ ********/
+
+.text-capitalize {
+  text-transform: capitalize;
+}
+
+.text-uppercase {
+  text-transform: uppercase;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.text-left {
+  text-align: left;
+}
+
+.text-centre {
+  text-align: center;
+}
+
+.text-justify {
+  text-align: justify;
+}
+
+.text-right {
+  text-align: right;
+}

@@ -11,12 +11,10 @@
 }
 
 main {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
   justify-content: center;
   align-content: space-between;
   align-items: center;
+
   padding-top: var(--padding-vertical);
   padding-bottom: var(--padding-vertical);
   padding-left: var(--padding-horizontal);
@@ -25,39 +23,33 @@ main {
 
 .card {
   background-color: var(--background-colour-light);
-  display: flex;
-  flex-direction: column;
+
 
   box-shadow: 0 0 5px var(--card-shadow);
 
   .figure-title,
-  .detail {
+  .figure-detail {
     padding-left: var(--card-padding);
     padding-right: var(--card-padding);
-    overflow: hidden;
-    text-overflow: ellipsis;
   }
 
   .figure-title {
     margin-top: var(--card-title-margin);
     margin-bottom: var(--card-title-margin);
-    text-transform: uppercase;
-    text-align: center;
   }
 
-  .detail {
+  .figure-detail {
     display: flex;
   }
 
-  .picture {
+  .figure-picture {
     display: grid;
     img {
       max-width: 100%;
-      height: auto;
     }
   }
-  .picture,
-  .overlay {
+  .figure-picture,
+  .figure-overlay {
     grid-area: 1 / 1;
   }
 }

@@ -1,7 +1,10 @@
 import cn from "classnames"
 import React from "react"
-import { Title } from "../title"
 
 export type TitleProps = { title: string }
 
-export const HeaderTitle = ({ title }: TitleProps) => <Title title={title} />
+export const HeaderTitle = ({ title }: TitleProps) => (
+  <h4 className={cn("text-uppercase", "text-right")}>
+    <a href="/">{title}</a>
+  </h4>
+)

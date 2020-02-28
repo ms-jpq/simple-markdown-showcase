@@ -26,7 +26,7 @@ const render_repo: RenderPage<Repo> = async ({
   updated_at,
 }) => {
   const title = parse_title(read_me)
-  const page = <Repo read_me={read_me} updated_at={updated_at} />
+  const page = <main>{<Repo read_me={read_me} updated_at={updated_at} />}</main>
   return [{ js, css, title, path, page }]
 }
 

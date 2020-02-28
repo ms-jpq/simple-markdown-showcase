@@ -1,3 +1,4 @@
+@import "./classes";
 @import "../../../node_modules/@fortawesome/fontawesome-free/css/all.css";
 /********
  * VARS *
@@ -10,6 +11,7 @@ $font_free: "Font Awesome 5 Free";
   --background-colour-dark: rgb(245, 245, 245);
   --background-colour-light: rgb(255, 255, 255);
   --highlight-colour: rgb(240, 80, 130);
+  --image-placeholder-color: rgb(200, 200, 200);
   --nav-colour: #555555;
   --desc-colour: #999999;
 
@@ -18,7 +20,7 @@ $font_free: "Font Awesome 5 Free";
   --menu-padding-horizontal: 0.7em;
   --menu-padding-vertical: 0.6em;
 
-  --aside-padding-horizontal: 0.2em;
+  --side-padding-horizontal: 1em;
 
   --associations-size: 2.5em;
   --associations-margin-horizontal: 0.3em;
@@ -30,19 +32,19 @@ $font_free: "Font Awesome 5 Free";
  ********/
 
 body {
-  display: flex;
-  flex-direction: row;
+  padding: 0;
+  margin: 0;
 
   background-color: var(--background-colour-dark);
 
   #left-panel {
     flex-shrink: 0;
     width: 21%;
+    max-width: 30em;
   }
 
   #right-panel {
     flex-grow: 1;
-    overflow-x: hidden;
   }
 }
 
@@ -51,8 +53,8 @@ body {
  *********/
 
 aside {
-  padding-left: var(--aside-padding-horizontal);
-  padding-right: var(--aside-padding-horizontal);
+  padding-left: var(--side-padding-horizontal);
+  padding-right: var(--side-padding-horizontal);
 
   flex-direction: column;
 
@@ -61,18 +63,13 @@ aside {
   }
 
   #about-me {
-    display: flex;
-    flex-direction: column;
     p {
       color: var(--desc-colour);
     }
   }
   #nav {
-    display: flex;
-    flex-direction: column;
     li {
       color: var(--nav-colour);
-      text-transform: capitalize;
       &.active {
         font-weight: bold;
         color: var(--highlight-colour);
@@ -80,27 +77,19 @@ aside {
     }
   }
   #associations {
-    display: flex;
-    flex-direction: row;
-    flex-wrap: wrap;
     justify-content: flex-start;
     align-content: space-around;
     > * {
       width: var(--associations-size);
       height: var(--associations-size);
+
       margin-left: var(--associations-margin-horizontal);
       margin-right: var(--associations-margin-horizontal);
       margin-top: var(--associations-margin-vertical);
       margin-bottom: var(--associations-margin-vertical);
 
-      border-radius: 50%;
-      border-style: solid;
-      border-width: thin;
       border-color: var(--desc-colour);
 
-      text-align: center;
-      display: flex;
-      flex-direction: column;
       justify-content: center;
       align-items: center;
       align-content: center;
@@ -126,21 +115,29 @@ aside {
  **********/
 
 header {
-  width: 100%;
+  max-width: 100vw;
+
+  padding-left: var(--side-padding-horizontal);
+  padding-right: var(--side-padding-horizontal);
+
   flex-direction: row;
   justify-content: space-between;
+
   #header-menu {
     all: unset;
     align-self: center;
+
     padding-left: var(--menu-padding-horizontal);
     padding-right: var(--menu-padding-horizontal);
     padding-top: var(--menu-padding-vertical);
     padding-bottom: var(--menu-padding-vertical);
-    text-transform: capitalize;
+
     color: var(--highlight-colour);
+
     border-style: solid;
     border-width: thin;
     border-color: var(--highlight-colour);
+
     cursor: pointer;
     &:active,
     &:hover {
@@ -166,17 +163,18 @@ header {
  **********/
 
 footer {
-  display: flex;
-  flex-direction: column;
   p {
     color: var(--desc-colour);
-    text-align: center;
   }
 }
 
 /********
  * MISC *
  ********/
+
+img {
+  background-color: var(--image-placeholder-color);
+}
 
 ul {
   list-style: none;
@@ -205,22 +203,4 @@ a {
     text-decoration: dotted;
     text-decoration-color: var(--highlight-colour);
   }
-}
-
-/***********
- * CLASSES *
- ********J**/
-
-.page-title {
-  align-self: flex-start;
-  text-transform: uppercase;
-  &:active,
-  &:hover {
-    text-decoration: dotted;
-    text-decoration-color: var(--highlight-colour);
-  }
-}
-
-.hidden {
-  display: none;
 }

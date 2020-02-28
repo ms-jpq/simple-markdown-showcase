@@ -7,12 +7,12 @@ export type NavProps = {
   dests: { title: string; link: string }[]
 }
 export const AsideNav = ({ dest, dests }: NavProps) => (
-  <section id="nav">
+  <section id="nav" className={cn("flex-col")}>
     <nav>
       <ul>
         {map(
           (d) => (
-            <li className={cn({ active: d.link === dest })}>
+            <li className={cn("text-capitalize", { active: d.link === dest })}>
               <a href={`/${d.link}`}>{d.title}</a>
             </li>
           ),

@@ -32,23 +32,23 @@ const CardOverlay = ({}) => <div> </div>
 
 // https://stackoverflow.com/questions/2941189/how-to-overlay-one-div-over-another-div
 const PictureFigure = ({ images, link, children }: Picture & Parent) => (
-  <div className={cn("picture")}>
-    <a className={cn("content")} href={link}>
+  <div className={cn("figure-picture")}>
+    <a href={link}>
       <img className={cn("hidden")} src={fst(images)} />
     </a>
-    <div className={cn("overlay")}>{children}</div>
+    <div className={cn("figure-overlay")}>{children}</div>
   </div>
 )
 
 const TitleFigure = ({ title, link }: Title) => (
-  <h4 className={cn("figure-title")}>
+  <h4 className={cn("figure-title", "text-uppercase", "text-ellipsis")}>
     <a href={link}>{title}</a>
   </h4>
 )
 
 const DetailFigure = ({ desc }: Detail) => (
-  <div className={cn("detail")}>
-    <p>{desc}</p>
+  <div className={cn("figure-detail")}>
+    <p className={"text-ellipsis"}>{desc}</p>
   </div>
 )
 
@@ -62,7 +62,7 @@ const Card = ({ images, link, title, desc, hide_detail }: CardProps) => {
     ),
   )
   return (
-    <figure className={cn("card")}>
+    <figure className={cn("card", "flex-col", "overflow-hide-x")}>
       {images.length ? (
         <PictureFigure images={images} link={link}>
           {hide_detail ? <DetailFigure desc={desc} /> : <CardOverlay />}
@@ -87,17 +87,21 @@ const css = ["pages/index"]
 export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
   const showcase = filter((r) => r.showcase, repos)
 
-  const page = map(
-    ({ title, images, name, desc, display }) => (
-      <Card
-        link={name}
-        images={images}
-        title={title}
-        desc={desc}
-        hide_detail={(display || {}).hide_details}
-      />
-    ),
-    showcase,
+  const page = (
+    <main className={cn("flex-row", "flex-wrap")}>
+      {map(
+        ({ title, images, name, desc, display }) => (
+          <Card
+            link={name}
+            images={images}
+            title={title}
+            desc={desc}
+            hide_detail={(display || {}).hide_details}
+          />
+        ),
+        showcase,
+      )}
+    </main>
   )
 
   return [{ js, css, title: config.title, path: "", page }]

@@ -7,7 +7,7 @@ export const FooterDesc = ({ desc }: DescProps) => (
   <React.Fragment>
     {map(
       (d) => (
-        <p>{d}</p>
+        <p className={cn("text-centre")}>{d}</p>
       ),
       desc,
     )}
