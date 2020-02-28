@@ -8,6 +8,7 @@ import { BodyProps, Page } from "./layout/layout"
 import { exists, rmdir, sip, spit } from "../domain_agnostic/fs"
 import { id } from "../domain_agnostic/prelude"
 import { imageSize } from "image-size"
+import { join as path_join } from "path"
 import { JSDOM } from "jsdom"
 import { map, unique_by } from "../domain_agnostic/list"
 import { relative } from "path"
@@ -37,7 +38,7 @@ const resize_image = async (path: string) => {
   const src_set = await Promise.all(
     map(
       async (width) => ({
-        new_name: `${dirname(path)}/${basename(path)}-${width}w${ext}`,
+        new_name: path_join(dirname(path), `${basename(path)}-${width}w${ext}`),
         width,
       }),
       widths,
@@ -58,9 +59,10 @@ const resize_image = async (path: string) => {
 }
 
 const cache_image = (sub_path: string) => async (img: HTMLImageElement) => {
-  const path = `${static_config.img_cache_dir}/${md5(
-    img.src,
-  ).toString()}-${basename(img.src)}`
+  const path = path_join(
+    static_config.img_cache_dir,
+    `${md5(img.src).toString()}-${basename(img.src)}`,
+  )
   const img_exists = await exists(path)
   if (!img_exists) {
     const image = await (await fetch(img.src)).buffer()
@@ -95,15 +97,21 @@ const render_page = async ({
   title,
   path,
   page,
+  page_name,
   body,
 }: RenderInstruction & { body: BodyProps }) => {
-  const sub_path = `${static_config.out_dir}/${path}`
+  const sub_path = path_join(static_config.out_dir, path)
   const js = map(
-    (js) => relative(sub_path, `${static_config.src_dir}/js/${js}.ts`),
+    (js) =>
+      relative(sub_path, path_join(static_config.src_dir, "js", `${js}.ts`)),
     local_js,
   )
   const css = map(
-    (css) => relative(sub_path, `${static_config.src_dir}/css/${css}.scss`),
+    (css) =>
+      relative(
+        sub_path,
+        path_join(static_config.src_dir, "css", `${css}.scss`),
+      ),
     local_css,
   )
   const content = (
@@ -114,7 +122,7 @@ const render_page = async ({
   const html = renderToStaticMarkup(content)
   const optimized = await localize_image(sub_path, html)
   return {
-    sub_path: `${sub_path}/index.html`,
+    sub_path: path_join(sub_path, page_name),
     content: optimized,
   }
 }
@@ -125,10 +133,10 @@ type CommitInstruction = {
 }
 
 const commit = async (instructions: CommitInstruction[]) => {
-  // await Promise.all([
-  //   rmdir(static_config.out_dir),
-  //   rmdir(static_config.dist_dir),
-  // ])
+  await Promise.all([
+    rmdir(static_config.out_dir),
+    rmdir(static_config.dist_dir),
+  ])
   const unique = unique_by((i) => i.sub_path, instructions)
   await Promise.all(
     map(({ sub_path, content }) => spit(content, sub_path), unique),

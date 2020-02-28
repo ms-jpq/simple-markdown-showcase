@@ -1,4 +1,3 @@
-import assert from "assert"
 import fetch from "node-fetch"
 import { compact_map, map } from "../domain_agnostic/list"
 import { id } from "../domain_agnostic/prelude"
@@ -7,18 +6,6 @@ import { Repo, repo_resources, RepoConfig } from "../consts"
 
 const secure_fetch = (uri: string, token?: string) =>
   fetch(uri, { headers: token ? { Authorization: `token ${token}` } : {} })
-
-const github_avatar = async (user: string, token?: string) => {
-  const res = await secure_fetch(
-    `https://avatars.githubusercontent.com/${user}`,
-    token,
-  )
-  const data = await res.blob()
-  const type = ((data as unknown) as File).type
-  assert(type.includes("image/"))
-  const ext = type.replace("image/", "")
-  return { ext, data }
-}
 
 const repo_resource = async (
   full_name: string,

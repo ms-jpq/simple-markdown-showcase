@@ -3,11 +3,12 @@ import { RenderPage } from "../../consts"
 
 const js = ["pages/about_me"]
 const css = ["pages/about_me"]
+const page_name = "index.html"
 
 export type RenderProps = {}
 
 export const render: RenderPage<RenderProps> = async ({}) => {
   const title = "About:Me"
   const page = <main></main>
-  return [{ path: "about-me", title, js, css, page }]
+  return [{ path: "about-me", page_name, title, js, css, page }]
 }

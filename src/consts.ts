@@ -88,6 +88,7 @@ export type RenderInstruction = {
   css: string[]
   title: string
   path: string
+  page_name: string
   page: ReactElement | ReactElement[]
 }
 

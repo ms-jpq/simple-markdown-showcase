@@ -1,6 +1,7 @@
 #!/usr/bin/env ts-node --transpile-only
 import { big_print } from "./domain_agnostic/prelude"
 import { extract } from "./github/api"
+import { join } from "path"
 import { parse } from "./domain_agnostic/yaml"
 import { render } from "./render/render"
 import { slurp, spit } from "./domain_agnostic/fs"
@@ -11,9 +12,11 @@ const main = async () => {
   console.time("pre_render")
   const yml = await slurp(static_config.config)
   const config: StaticConfig = parse(yml)
-  const info = JSON.parse(await slurp(`${static_config.temp_dir}/info.json`))
+  const info = JSON.parse(
+    await slurp(join(static_config.temp_dir, "info.json")),
+  )
   // const info = await extract(config.user, static_config.github_token)
-  // await spit(JSON.stringify(info), `${static_config.temp_dir}/info.json`)
+  // await spit(JSON.stringify(info), join(static_config.temp_dir, "info.json"))
   console.timeLog("pre_render", big_print("finished pre-render"))
 
   console.time("render")

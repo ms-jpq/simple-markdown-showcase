@@ -19,6 +19,7 @@ const parse_title = (read_me: string) => {
 
 const js = ["pages/repo"]
 const css = ["pages/repo"]
+const page_name = "index.html"
 
 const render_repo: RenderPage<Repo> = async ({
   name: path,
@@ -27,7 +28,7 @@ const render_repo: RenderPage<Repo> = async ({
 }) => {
   const title = parse_title(read_me)
   const page = <main>{<Repo read_me={read_me} updated_at={updated_at} />}</main>
-  return [{ js, css, title, path, page }]
+  return [{ js, css, title, path, page_name, page }]
 }
 
 export type RenderProps = {
