@@ -5,7 +5,6 @@ import { RenderInstruction, static_config } from "../consts"
 
 const options: ParcelOptions = {
   outDir: `${static_config.dist_dir}`,
-  outFile: "index.html",
   publicUrl: "/",
   detailedReport: false,
   watch: false,
