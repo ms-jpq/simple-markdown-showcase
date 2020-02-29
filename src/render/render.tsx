@@ -34,11 +34,15 @@ const resize_image = async (path: string) => {
     throw new Error("missing image")
   }
   const ext = extname(path)
+  const file_name = path_join(dirname(path), basename(path)).replace(
+    new RegExp(`\\${ext}$`),
+    "",
+  )
   const widths = filter((s) => s <= width, [...img_config.target_widths, width])
   const src_set = await Promise.all(
     map(
       async (width) => ({
-        new_name: path_join(dirname(path), `${basename(path)}-${width}w${ext}`),
+        new_name: `${file_name}-${width}w${ext}`,
         width,
       }),
       widths,
