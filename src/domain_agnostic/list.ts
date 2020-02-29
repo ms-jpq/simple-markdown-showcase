@@ -1,9 +1,6 @@
-export const fst = <T>(elems: T[]) =>
-  elems[0] === undefined ? undefined : elems[0]
-export const snd = <T>(elems: T[]) =>
-  elems[1] === undefined ? undefined : elems[1]
-export const last = <T>(elems: T[]) =>
-  elems[elems.length - 1] === undefined ? undefined : elems[elems.length - 1]
+export const fst = <T>(elems: T[]): T | undefined => elems[0]
+export const snd = <T>(elems: T[]): T | undefined => elems[1]
+export const last = <T>(elems: T[]): T | undefined => elems[elems.length - 1]
 
 export const range = (begin: number, end: number, step = 1) => {
   const nums = []
@@ -71,6 +68,17 @@ export const all = <T>(predicate: (_: T) => boolean, elems: T[]) =>
   elems.every(predicate)
 
 export const take = <T>(n: number, elems: T[]) => elems.filter((_, i) => i < n)
+
+export const chunk = <T>(n: number, elems: T[]) => {
+  const res: T[][] = []
+  for (const [idx, elem] of enumerate(elems)) {
+    if (idx % n === 0) {
+      res.push([])
+    }
+    last(res)!.push(elem)
+  }
+  return res
+}
 
 export const join = <T>(sep: string, elems: T[]) => elems.join(sep)
 
