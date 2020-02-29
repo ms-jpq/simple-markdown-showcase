@@ -34,7 +34,7 @@ const CardOverlay = ({}) => <div> </div>
 const PictureFigure = ({ images, link, children }: Picture & Parent) => (
   <div className={cn("figure-picture")}>
     <a href={link}>
-      <img className={cn("hidden")} src={fst(images)} />
+      <img className={cn("hidden", "img-responsive")} src={fst(images)} />
     </a>
     <div className={cn("figure-overlay")}>{children}</div>
   </div>

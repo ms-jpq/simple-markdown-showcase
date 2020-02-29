@@ -1,15 +1,14 @@
+@import "../../../node_modules/highlight.js/styles/github-gist.css";
 .markdown {
   margin: auto;
+
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   align-content: flex-start;
 
   img {
-    max-width: 80%;
-  }
-
-  pre {
-    background-color: lightpink;
+    max-width: 100%;
+    height: auto;
   }
 }

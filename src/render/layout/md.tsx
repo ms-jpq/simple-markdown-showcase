@@ -6,7 +6,8 @@ import React from "react"
 
 const highlight = (str: string, lang: string) => {
   if (lang && hljs.getLanguage(lang)) {
-    return hljs.highlight(lang, str).value
+    const highlight = hljs.highlight(lang, str)
+    return highlight.value.replace("\n", "<br>")
   } else {
     return ""
   }
