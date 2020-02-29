@@ -12,6 +12,7 @@ export const static_config = {
   img_cache_dir: "img_cache",
   port: 8080,
   github_token: process.env["TOKEN"],
+  parallelism: 3,
 }
 
 export const repo_resources = {

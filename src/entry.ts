@@ -1,5 +1,5 @@
 #!/usr/bin/env ts-node --transpile-only
-import { big_print } from "./domain_agnostic/prelude"
+import { big_print, set_defaults } from "./domain_agnostic/prelude"
 import { extract } from "./github/api"
 import { join } from "path"
 import { parse } from "./domain_agnostic/yaml"
@@ -24,4 +24,5 @@ const main = async () => {
   console.timeLog("render", big_print("render end"))
 }
 
+set_defaults()
 main()

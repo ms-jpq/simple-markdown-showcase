@@ -1,4 +1,8 @@
 @import "../../../node_modules/highlight.js/styles/github-gist.css";
+:root {
+  --code-colour: rgb(240, 240, 240);
+}
+
 .markdown {
   margin: auto;
 
@@ -6,6 +10,18 @@
   flex-direction: column;
   align-items: flex-start;
   align-content: flex-start;
+
+  pre {
+    width: 100%;
+    overflow-x: scroll;
+    > code {
+      
+    }
+  }
+
+  code {
+    background-color: var(--code-colour) !important;
+  }
 
   img {
     max-width: 100%;

@@ -137,10 +137,6 @@ type CommitInstruction = {
 }
 
 const commit = async (instructions: CommitInstruction[]) => {
-  await Promise.all([
-    rmdir(static_config.out_dir),
-    rmdir(static_config.dist_dir),
-  ])
   const unique = unique_by((i) => i.sub_path, instructions)
   await Promise.all(
     map(({ sub_path, content }) => spit(content, sub_path), unique),
@@ -173,6 +169,10 @@ export const render = async ({ config, repos }: RenderProps) => {
       ),
     ),
   )
+  // await Promise.all([
+  //   rmdir(static_config.out_dir),
+  //   rmdir(static_config.dist_dir),
+  // ])
   await commit(commits)
   await run_parcel(instructions)
 }
