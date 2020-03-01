@@ -8,6 +8,8 @@ venv/
 package-lock.json
 yarn.lock
 *.scss.d.ts
+*.js
+*.css
 .cache
 img_cache/
 tsc/

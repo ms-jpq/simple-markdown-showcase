@@ -28,7 +28,11 @@ export type CardProps = {
   Detail &
   Customization
 
-const CardOverlay = ({}) => <div> </div>
+const CardOverlay = ({}) => (
+  <span>
+    <i className="fas fa-chevron-right"> </i>
+  </span>
+)
 
 // https://stackoverflow.com/questions/2941189/how-to-overlay-one-div-over-another-div
 const PictureFigure = ({ images, link, children }: Picture & Parent) => (
