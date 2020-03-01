@@ -9,8 +9,8 @@ const main = async () => {
   const images = $$<HTMLImageElement>(`img`)
   const masonry = new Masonry(grid!, {
     itemSelector: `.card`,
-    percentPosition: true,
     transitionDuration: "0.6s",
+    initLayout: false,
   })
   for (const image of images) {
     ;(async () => {
