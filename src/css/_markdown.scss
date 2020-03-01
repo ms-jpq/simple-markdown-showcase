@@ -1,6 +1,6 @@
 @import "../../../node_modules/highlight.js/styles/github-gist.css";
 :root {
-  --code-colour: rgba(240, 240, 240, 0.8);
+  --code-colour: rgb(250, 250, 250);
 }
 
 @mixin md_border($colour) {
@@ -23,14 +23,31 @@
     height: auto;
   }
 
-  pre {
-    @include md_border(var(--code-colour));
-
-    width: 100%;
-    overflow-x: scroll;
+  li::before {
+    color: var(--highlight-colour);
   }
 
-  pre,
+  pre {
+    width: 100%;
+    overflow-x: scroll;
+
+    display: flex;
+    flex-direction: row;
+
+    &::before {
+      content: "";
+      background-color: var(--highlight-colour);
+
+      width: 0.3em;
+      margin-right: 0.5em;
+    }
+
+    > code {
+      flex-grow: 1;
+      @include md_border(var(--code-colour));
+    }
+  }
+
   code {
     background-color: var(--code-colour);
   }
