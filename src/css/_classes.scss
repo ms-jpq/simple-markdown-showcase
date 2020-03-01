@@ -14,28 +14,8 @@
  * Display *
  ***********/
 
-.flex-row {
-  display: flex;
-  flex-direction: row;
-}
-
-.flex-row-rev {
-  display: flex;
-  flex-direction: row-reverse;
-}
-
-.flex-col {
-  display: flex;
-  flex-direction: column;
-}
-
-.flex-col-rev {
-  display: flex;
-  flex-direction: column-reverse;
-}
-
-.flex-wrap {
-  flex-wrap: wrap;
+.grid {
+  display: grid;
 }
 
 .overflow-hide-x {

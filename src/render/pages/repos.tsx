@@ -12,17 +12,17 @@ export type RepoProps = Pick<
 
 const Repo = ({ read_me, html_url, created_at, updated_at }: RepoProps) => (
   <React.Fragment>
-    <section className={cn("repo-header", "flex-row")}>
+    <section className={cn("repo-header", "grid")}>
       <a href={html_url} className={cn("invis-link")}>
         <button className={cn("big-button")}>
           View on Github <i className="fab fa-github"></i>
         </button>
       </a>
     </section>
-    <section className={cn("repo-markdown", "flex-row")}>
+    <section className={cn("repo-markdown", "grid")}>
       <Markdown content={read_me} />
     </section>
-    <section className={cn("repo-footer", "flex-row", "hidden")}>
+    <section className={cn("repo-footer", "grid", "hidden")}>
       <span>
         Created at:{" "}
         <time dateTime={str(created_at)}>
@@ -57,14 +57,12 @@ const render_repo: RenderPage<Repo> = async ({
 }) => {
   const title = parse_title(read_me)
   const page = (
-    <main className={cn("flex-col")}>
-      <Repo
-        read_me={read_me}
-        html_url={html_url}
-        created_at={created_at}
-        updated_at={updated_at}
-      />
-    </main>
+    <Repo
+      read_me={read_me}
+      html_url={html_url}
+      created_at={created_at}
+      updated_at={updated_at}
+    />
   )
   return [{ js, css, title, path, page_name, page }]
 }

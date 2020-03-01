@@ -5,6 +5,7 @@
  * VARS *
  ********/
 
+// $max_aside_size: 30em;
 $transition_width: 60em;
 $font_free: "Font Awesome 5 Free";
 
@@ -85,19 +86,70 @@ p {
  ********/
 
 body {
+  > header {
+    grid-area: header;
+    display: grid;
+  }
+  > main {
+    grid-area: main;
+  }
+  > footer {
+    grid-area: footer;
+  }
+  > aside {
+    grid-area: aside;
+    display: none;
+  }
+
+  grid-template-columns: 1fr;
+  grid-template-rows: auto auto auto auto;
+  grid-template-areas:
+    "header"
+    "main"
+    "footer"
+    "aside";
+
+  @media (min-width: $transition_width) {
+    grid-template-columns: 1fr 3fr;
+    grid-template-rows: auto auto auto;
+    grid-template-areas:
+      "aside  main"
+      "footer main"
+      "header header";
+    > aside {
+      display: grid;
+    }
+    > header {
+      display: none;
+    }
+  }
+
   padding: 0;
   margin: 0;
 
   background-color: var(--background-colour-dark);
+}
 
-  #left-panel {
-    flex-shrink: 0;
-    width: 21%;
-    max-width: 30em;
-  }
+/**********
+ * HEADER *
+ **********/
 
-  #right-panel {
-    flex-grow: 1;
+header {
+  grid-template-rows: 1fr;
+  grid-template-columns: auto auto;
+  justify-content: space-between;
+
+  padding-left: $side_padding_h;
+  padding-right: $side_padding_h;
+}
+
+/**********
+ * FOOTER *
+ **********/
+
+footer {
+  p {
+    color: var(--desc-colour);
   }
 }
 
@@ -106,22 +158,23 @@ body {
  *********/
 
 aside {
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+
   padding-left: $side_padding_h;
   padding-right: $side_padding_h;
-
-  flex-direction: column;
 
   > * {
     $section_padding: 2em;
     margin-bottom: $section_padding;
   }
 
-  #about-me {
+  > #about-me {
     p {
       color: var(--desc-colour);
     }
   }
-  #nav {
+  > #nav {
     li {
       color: var(--nav-colour);
       &::active {
@@ -139,7 +192,7 @@ aside {
       }
     }
   }
-  #associations {
+  > #associations {
     justify-content: flex-start;
     align-content: space-around;
 
@@ -166,52 +219,6 @@ aside {
     }
 
     @include associations();
-  }
-}
-
-// BEGIN -- size
-aside {
-  display: flex;
-}
-@media (max-width: $transition_width) {
-  aside {
-    display: none;
-  }
-}
-// END -- size
-
-/**********
- * HEADER *
- **********/
-
-header {
-  max-width: 100vw;
-
-  padding-left: $side_padding_h;
-  padding-right: $side_padding_h;
-
-  flex-direction: row;
-  justify-content: space-between;
-}
-
-// BEGIN -- size
-header {
-  display: none;
-}
-@media (max-width: $transition_width) {
-  header {
-    display: flex;
-  }
-}
-// END -- size
-
-/**********
- * FOOTER *
- **********/
-
-footer {
-  p {
-    color: var(--desc-colour);
   }
 }
 

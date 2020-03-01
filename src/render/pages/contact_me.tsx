@@ -9,6 +9,6 @@ export type RenderProps = {}
 
 export const render: RenderPage<RenderProps> = async ({}) => {
   const title = "Contact:Me"
-  const page = <main></main>
+  const page = <React.Fragment></React.Fragment>
   return [{ path: "contact", page_name, title, js, css, page }]
 }

@@ -28,43 +28,6 @@ export type CardProps = {
   Detail &
   Customization
 
-const CardOverlay = ({}) => (
-  <span>
-    <i className="fas fa-chevron-right"> </i>
-  </span>
-)
-
-// https://stackoverflow.com/questions/2941189/how-to-overlay-one-div-over-another-div
-const PictureFigure = ({ images, link, children }: Picture & Parent) => (
-  <div className={cn("figure-picture")}>
-    <a href={link}>
-      <img className={cn("hidden", "img-responsive")} src={fst(images)} />
-    </a>
-    <div className={cn("figure-overlay")}>{children}</div>
-  </div>
-)
-
-const TitleFigure = ({ title, link }: Title) => (
-  <h6
-    className={cn(
-      "figure-title",
-      "text-uppercase",
-      "text-centre",
-      "text-ellipsis",
-    )}
-  >
-    <a href={link} className={cn("invis-link")}>
-      {title}
-    </a>
-  </h6>
-)
-
-const DetailFigure = ({ desc }: Detail) => (
-  <div className={cn("figure-detail")}>
-    <p className={"text-ellipsis"}>{desc}</p>
-  </div>
-)
-
 const Card = ({ images, link, title, desc, hide_detail }: CardProps) => {
   // TODO -- REMOVE THIS
   images = images || []
@@ -75,16 +38,25 @@ const Card = ({ images, link, title, desc, hide_detail }: CardProps) => {
     ),
   )
   return (
-    <figure className={cn("card", "flex-col", "overflow-hide-x")}>
-      {images.length ? (
-        <PictureFigure images={images} link={link}>
-          {hide_detail ? <DetailFigure desc={desc} /> : <CardOverlay />}
-        </PictureFigure>
-      ) : (
-        undefined
-      )}
-      <TitleFigure title={title} link={link} />
-      {hide_detail ? undefined : <DetailFigure desc={desc} />}
+    <figure className={cn("card", "grid", "overflow-hide-x")}>
+      <a href={link}>
+        <img className={cn("hidden", "img-responsive")} src={fst(images)} />
+      </a>
+      <h6
+        className={cn(
+          "figure-title",
+          "text-uppercase",
+          "text-centre",
+          "text-ellipsis",
+        )}
+      >
+        <a href={link} className={cn("invis-link")}>
+          {title}
+        </a>
+      </h6>
+      <figcaption className={cn("figure-detail")}>
+        <p className={"text-ellipsis"}>{desc}</p>
+      </figcaption>
     </figure>
   )
 }
@@ -101,21 +73,17 @@ const page_name = "index.html"
 export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
   const showcase = filter((r) => r.showcase, repos)
 
-  const page = (
-    <main className={cn("flex-row", "flex-wrap")}>
-      {map(
-        ({ title, images, name, desc, display }) => (
-          <Card
-            link={name}
-            images={images}
-            title={title}
-            desc={desc}
-            hide_detail={(display || {}).hide_details}
-          />
-        ),
-        showcase,
-      )}
-    </main>
+  const page = map(
+    ({ title, images, name, desc, display }) => (
+      <Card
+        link={name}
+        images={images}
+        title={title}
+        desc={desc}
+        hide_detail={(display || {}).hide_details}
+      />
+    ),
+    showcase,
   )
 
   return [{ js, css, page_name, title: config.title, path: "", page }]

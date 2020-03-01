@@ -82,8 +82,14 @@ const cache_image = (sub_path: string) => async (img: HTMLImageElement) => {
 }
 
 const filter_localize = ({ src }: HTMLImageElement) => {
-  const uri = new URL(src)
-  return any((u) => u === uri.host, img_config.localize_domains)
+  try {
+    const uri = new URL(src)
+    return any((u) => u === uri.host, img_config.localize_domains)
+  } catch (err) {
+    console.error(err)
+    console.log(src)
+    return false
+  }
 }
 
 const localize_image = async (sub_path: string, html: string) => {

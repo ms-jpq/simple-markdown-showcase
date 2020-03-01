@@ -36,48 +36,35 @@ const Head = ({ title, js, css }: HeadProps) => (
   </head>
 )
 
-// Part of aside
-export type FooterProps = {} & FooterConfig
-
-const Footer = ({ desc }: FooterProps) => (
-  <footer className={cn("flex-col")}>
-    <FooterDesc desc={desc} />
-  </footer>
-)
-
-// Invisble in mobile size
-export type AsideProps = { dest: string; off: boolean } & AsideConfig
-
-// Children is only <Footer />
-const Aside = ({
-  dest,
-  off,
-  about_me,
-  contacts,
-  nav,
-  footer,
-}: AsideProps & { footer: FooterProps }) => (
-  <aside id="left-panel">
-    <AsideAboutMe title={about_me.title} desc={about_me.desc} />
-    <AsideNav off={off} dests={nav} dest={dest} />
-    <AsideAssociations contacts={contacts} />
-    <Footer desc={footer.desc} />
-  </aside>
-)
-
-// Invisible until mobile size
 export type HeaderProps = {} & HeaderConfig
 
 const Header = ({ title, menu }: HeaderProps) => (
-  <header>
+  <header className={cn("grid")}>
     <HeaderMenu menu_title={menu} />
     <HeaderTitle title={title} />
   </header>
 )
 
-// Main drawing area
 const Main = ({ children }: Parent) => (
-  <React.Fragment>{children}</React.Fragment>
+  <main className={cn("grid")}>{children}</main>
+)
+
+export type FooterProps = {} & FooterConfig
+
+const Footer = ({ desc }: FooterProps) => (
+  <footer className={cn("grid")}>
+    <FooterDesc desc={desc} />
+  </footer>
+)
+
+export type AsideProps = { dest: string; off: boolean } & AsideConfig
+
+const Aside = ({ dest, off, about_me, contacts, nav }: AsideProps) => (
+  <aside id="left-panel">
+    <AsideAboutMe title={about_me.title} desc={about_me.desc} />
+    <AsideNav off={off} dests={nav} dest={dest} />
+    <AsideAssociations contacts={contacts} />
+  </aside>
 )
 
 export type BodyProps = {
@@ -95,19 +82,17 @@ export const Page = ({
 }: PageProps) => (
   <html>
     <Head title={head.title} js={head.js} css={head.css} />
-    <body className={cn("flex-row", "vw100")}>
+    <body className={cn("grid", "vw100")}>
+      <Header title={header.title} menu={header.menu} />
+      <Main>{children}</Main>
       <Aside
         off={aside.off}
         dest={aside.dest}
         about_me={aside.about_me}
         nav={aside.nav}
         contacts={aside.contacts}
-        footer={footer}
       />
-      <div id="right-panel">
-        <Header title={header.title} menu={header.menu} />
-        <Main>{children}</Main>
-      </div>
+      <Footer desc={footer.desc} />
     </body>
   </html>
 )
