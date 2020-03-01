@@ -14,7 +14,7 @@ const Repo = ({ read_me, html_url, created_at, updated_at }: RepoProps) => (
   <React.Fragment>
     <section className={cn("repo-header", "flex-row")}>
       <a href={html_url}>
-        <button>
+        <button className={cn("big-button")}>
           View on Github <i className="fab fa-github"></i>
         </button>
       </a>

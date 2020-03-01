@@ -126,29 +126,6 @@ header {
 
   flex-direction: row;
   justify-content: space-between;
-
-  #header-menu {
-    all: unset;
-    align-self: center;
-
-    padding-left: var(--menu-padding-horizontal);
-    padding-right: var(--menu-padding-horizontal);
-    padding-top: var(--menu-padding-vertical);
-    padding-bottom: var(--menu-padding-vertical);
-
-    color: var(--highlight-colour);
-
-    border-style: solid;
-    border-width: thin;
-    border-color: var(--highlight-colour);
-
-    cursor: pointer;
-    &::active,
-    &::hover {
-      color: var(--background-colour-light);
-      background-color: var(--highlight-colour);
-    }
-  }
 }
 
 // BEGIN -- size
@@ -215,5 +192,32 @@ a {
   &::hover {
     text-decoration: dotted;
     text-decoration-color: var(--highlight-colour);
+  }
+}
+
+/***********
+ * Classes *
+ ***********/
+
+.big-button {
+  all: unset;
+  align-self: center;
+
+  padding-left: var(--menu-padding-horizontal);
+  padding-right: var(--menu-padding-horizontal);
+  padding-top: var(--menu-padding-vertical);
+  padding-bottom: var(--menu-padding-vertical);
+
+  color: var(--highlight-colour);
+
+  border-style: solid;
+  border-width: thin;
+  border-color: var(--highlight-colour);
+
+  cursor: pointer;
+  &::active,
+  &::hover {
+    color: var(--background-colour-light);
+    background-color: var(--highlight-colour);
   }
 }
