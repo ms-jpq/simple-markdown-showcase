@@ -1,30 +1,37 @@
 @import "../../../node_modules/highlight.js/styles/github-gist.css";
 :root {
-  --code-colour: rgb(240, 240, 240);
+  --code-colour: rgba(240, 240, 240, 0.8);
+}
+
+@mixin md_border($colour) {
+  border-style: solid;
+  border-width: thin;
+  border-radius: 0.2em;
+  border-color: $colour;
 }
 
 .markdown {
-  margin: auto;
-
   display: flex;
   flex-direction: column;
   align-items: flex-start;
   align-content: flex-start;
 
-  pre {
-    width: 100%;
-    overflow-x: scroll;
-    > code {
-      
-    }
-  }
-
-  code {
-    background-color: var(--code-colour) !important;
-  }
-
   img {
+    @include md_border(transparent);
+
     max-width: 100%;
     height: auto;
+  }
+
+  pre {
+    @include md_border(var(--code-colour));
+
+    width: 100%;
+    overflow-x: scroll;
+  }
+
+  pre,
+  code {
+    background-color: var(--code-colour);
   }
 }

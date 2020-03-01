@@ -19,9 +19,19 @@
   flex-direction: row;
 }
 
+.flex-row-rev {
+  display: flex;
+  flex-direction: row-reverse;
+}
+
 .flex-col {
   display: flex;
   flex-direction: column;
+}
+
+.flex-col-rev {
+  display: flex;
+  flex-direction: column-reverse;
 }
 
 .flex-wrap {
@@ -32,12 +42,16 @@
   overflow-x: hidden;
 }
 
+.hidden {
+  display: none;
+}
+
 /**********
  * Border *
  **********/
 
 .border-thin {
-  border: solid;
+  border-style: solid;
   border-width: thin;
 }
 

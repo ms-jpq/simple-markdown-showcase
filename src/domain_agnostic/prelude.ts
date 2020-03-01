@@ -12,6 +12,8 @@ export const sleep = (ms: number) =>
 
 export const id = <T>(x: T) => x
 
+export const str = (thing: object) => thing.toString()
+
 export const big_print = (str: string, top = " ", btm = " ") => {
   const { columns } = process.stdout
   return `

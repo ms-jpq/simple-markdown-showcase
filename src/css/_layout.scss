@@ -1,5 +1,6 @@
 @import "./classes";
 @import "../../../node_modules/@fortawesome/fontawesome-free/css/all.css";
+@import "../../../node_modules/roboto-fontface/css/roboto/roboto-fontface.css";
 /********
  * VARS *
  ********/
@@ -8,6 +9,8 @@ $transition_width: 60em;
 $font_free: "Font Awesome 5 Free";
 
 :root {
+  --page-font: "Roboto", sans-serif;
+
   --background-colour-dark: rgb(245, 245, 245);
   --background-colour-light: rgb(255, 255, 255);
   --highlight-colour: rgb(240, 80, 130);
@@ -35,6 +38,7 @@ body {
   padding: 0;
   margin: 0;
 
+  font-family: var(--page-font);
   background-color: var(--background-colour-dark);
 
   #left-panel {
@@ -70,7 +74,7 @@ aside {
   #nav {
     li {
       color: var(--nav-colour);
-      &.active {
+      &::active {
         font-weight: bold;
         color: var(--highlight-colour);
       }
@@ -139,8 +143,8 @@ header {
     border-color: var(--highlight-colour);
 
     cursor: pointer;
-    &:active,
-    &:hover {
+    &::active,
+    &::hover {
       color: var(--background-colour-light);
       background-color: var(--highlight-colour);
     }
@@ -177,13 +181,11 @@ img {
 }
 
 ul {
-  list-style: none;
+  list-style-type: none;
   padding-left: 0.5em;
 
   li {
-    line-height: 175%;
-
-    &:before {
+    &::before {
       padding-right: 0.3em;
 
       font-family: $font_free;
@@ -198,8 +200,8 @@ ul {
 a {
   all: unset;
   cursor: pointer;
-  &:active,
-  &:hover {
+  &::active,
+  &::hover {
     text-decoration: dotted;
     text-decoration-color: var(--highlight-colour);
   }
