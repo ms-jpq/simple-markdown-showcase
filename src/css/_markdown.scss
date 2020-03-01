@@ -12,8 +12,9 @@
 }
 
 .markdown {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
 
   h2,
   h3,
@@ -24,10 +25,10 @@
   }
 
   img {
-    @include md_border(transparent);
-
     max-width: 100%;
     height: auto;
+
+    @include md_border(transparent);
   }
 
   li::before {
@@ -35,22 +36,24 @@
   }
 
   pre {
-    width: 100%;
-    overflow-x: scroll;
+    $col_thic: 0.3em;
+    $col_gap: 0.5em;
 
-    display: flex;
-    flex-direction: row;
+    width: 100%;
+
+    display: grid;
+    grid-template-columns: $col_thic 1fr;
+    grid-template-rows: 1fr;
+    grid-column-gap: $col_gap;
+
+    overflow-x: scroll;
 
     &::before {
       content: "";
       background-color: var(--highlight-colour);
-
-      width: 0.3em;
-      margin-right: 0.5em;
     }
 
     > code {
-      flex-grow: 1;
       background-color: unset;
       @include md_border(var(--code-colour));
     }

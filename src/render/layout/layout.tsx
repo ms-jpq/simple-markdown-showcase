@@ -1,9 +1,8 @@
 import cn from "classnames"
 import React from "react"
-import { AsideAboutMe } from "./aside/00_about_me"
-import { AsideAssociations } from "./aside/02_associations"
+import { AsideAssociations } from "./aside/01_associations"
 import { AsideConfig, FooterConfig, HeaderConfig } from "../../consts"
-import { AsideNav } from "./aside/01_nav"
+import { AsideNav } from "./aside/00_nav"
 import { FooterDesc } from "./footer/00_desc"
 import { HeaderMenu } from "./header/00_menu"
 import { HeaderTitle } from "./header/01_title"
@@ -61,7 +60,6 @@ export type AsideProps = { dest: string; off: boolean } & AsideConfig
 
 const Aside = ({ dest, off, about_me, contacts, nav }: AsideProps) => (
   <aside id="left-panel">
-    <AsideAboutMe desc={about_me.desc} />
     <AsideNav off={off} dests={nav} dest={dest} />
     <AsideAssociations contacts={contacts} />
   </aside>
