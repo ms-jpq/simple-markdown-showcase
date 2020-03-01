@@ -49,7 +49,9 @@ const TitleFigure = ({ title, link }: Title) => (
       "text-ellipsis",
     )}
   >
-    <a href={link}>{title}</a>
+    <a href={link} className={cn("invis-link")}>
+      {title}
+    </a>
   </h6>
 )
 

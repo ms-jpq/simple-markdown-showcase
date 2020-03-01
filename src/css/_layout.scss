@@ -14,12 +14,29 @@ $font_free: "Font Awesome 5 Free";
   --background-colour-dark: rgb(245, 245, 245);
   --background-colour-light: rgb(255, 255, 255);
   --highlight-colour: rgb(240, 80, 130);
+  --link-colour: rgba(240, 80, 130, 0.7);
   --image-placeholder-color: rgb(200, 200, 200);
   --nav-colour: #555555;
   --desc-colour: #999999;
 }
 
 $side_padding_h: 1em;
+
+/**********
+ * MIXINS *
+ **********/
+
+@mixin associations() {
+  .association-circle {
+    text-decoration: unset;
+    &:active,
+    &:hover,
+    &:focus {
+      color: var(--highlight-colour);
+      border-color: var(--highlight-colour);
+    }
+  }
+}
 
 /*********
  * FONTS *
@@ -60,6 +77,8 @@ h6,
 p {
   margin-top: 0.5em;
   margin-bottom: 0.5em;
+  text-decoration: dotted;
+  text-decoration-color: var(--highlight-colour);
 }
 
 /********
@@ -111,10 +130,20 @@ aside {
         color: var(--highlight-colour);
       }
     }
+    a {
+      text-decoration: unset;
+      &:active,
+      &:hover,
+      &:focus {
+        color: var(--highlight-colour);
+        font-weight: bold;
+      }
+    }
   }
   #associations {
     justify-content: flex-start;
     align-content: space-around;
+
     > * {
       $association_size: 2.5em;
       $association_margin_h: 0.3em;
@@ -136,6 +165,8 @@ aside {
 
       color: var(--desc-colour);
     }
+
+    @include associations();
   }
 }
 
@@ -225,7 +256,11 @@ ul {
  * CLASSES *
  ***********/
 
-.big-button {
+a {
+  color: unset;
+}
+
+button.big-button {
   all: unset;
   align-self: center;
 
@@ -244,19 +279,24 @@ ul {
   border-color: var(--highlight-colour);
 
   cursor: pointer;
-  &::active,
-  &::hover {
+
+  &:active,
+  &:hover,
+  &:focus {
     color: var(--background-colour-light);
     background-color: var(--highlight-colour);
   }
 }
 
-a {
+a.invis-link {
   all: unset;
   cursor: pointer;
-  &::active,
-  &::hover {
-    text-decoration: dotted;
+
+  &:active,
+  &:hover,
+  &:focus {
+    text-decoration-line: underline;
+    text-decoration-style: dotted;
     text-decoration-color: var(--highlight-colour);
   }
 }

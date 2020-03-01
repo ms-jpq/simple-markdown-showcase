@@ -2,6 +2,22 @@ import cn from "classnames"
 import React from "react"
 import { ContactsConfig } from "../../../consts"
 
+export type CircleProps = { href: string; class_name: string }
+
+const Circle = ({ href, class_name }: CircleProps) => (
+  <a
+    className={cn(
+      "association-circle",
+      "border-thin",
+      "border-circle",
+      "flex-col",
+    )}
+    href={href}
+  >
+    <i className={class_name}></i>
+  </a>
+)
+
 export type AssociationsProps = { contacts: ContactsConfig }
 
 export const AsideAssociations = ({
@@ -11,35 +27,18 @@ export const AsideAssociations = ({
     id="associations"
     className={cn("flex-row", "flex-wrap", "text-centre")}
   >
-    <a
-      className={cn("border-thin", "border-circle", "flex-col")}
-      href={`mailto:${email}`}
-    >
-      <i className="far fa-envelope"></i>
-    </a>
-    <a
-      className={cn("border-thin", "border-circle", "flex-col")}
+    <Circle href={`mailto:${email}`} class_name={"far fa-envelope"} />
+    <Circle
       href={`https://www.linkedin.com/in/${linkedin}`}
-    >
-      <i className="fab fa-linkedin-in"></i>
-    </a>
-    <a
-      className={cn("border-thin", "border-circle", "flex-col")}
+      class_name={"fab fa-linkedin-in"}
+    />
+    <Circle
       href={`https://github.com/${github}`}
-    >
-      <i className="fab fa-github"></i>
-    </a>
-    <a
-      className={cn("border-thin", "border-circle", "flex-col")}
-      href={`https://hub.docker.com/u/${dockerhub}`}
-    >
-      <i className="fab fa-docker"></i>
-    </a>
-    <a
-      className={cn("border-thin", "border-circle", "flex-col")}
+      class_name={"fab fa-github"}
+    />
+    <Circle
       href={`https://stackexchange.com/users/${stackoverflow}`}
-    >
-      <i className="fab fa-stack-overflow"></i>
-    </a>
+      class_name={"fab fa-stack-overflow"}
+    />
   </section>
 )

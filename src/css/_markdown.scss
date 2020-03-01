@@ -57,4 +57,20 @@
   code {
     background-color: var(--code-colour);
   }
+
+  a {
+    all: unset;
+    color: var(--link-colour);
+    cursor: pointer;
+
+    text-decoration-line: underline;
+    text-decoration-style: solid;
+    text-decoration-color: var(--highlight-colour);
+
+    &:active,
+    &:hover,
+    &:focus {
+      text-decoration-style: dashed;
+    }
+  }
 }

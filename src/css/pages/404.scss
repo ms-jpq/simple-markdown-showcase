@@ -1,11 +1,16 @@
 @import "../layout";
 
+body {
+  height: 100vh;
+  overflow-y: hidden;
+}
+
 main {
   background-color: var(--background-colour-light);
 
   height: 100vh;
 
-  justify-items: center;
+  justify-content: center;
   align-items: center;
 
   > h1 {

@@ -48,14 +48,14 @@ main {
 }
 
 .card {
-  width: 25%;
-  // @media (max-width: 40em) {
-  //   width: 25%;
-  // }
-  // @media (max-width: 40em) {
-  // }
-  // @media (max-width: 40em) {
-  // }
-  // @media (max-width: 40em) {
-  // }
+  width: 15%;
+  @media (max-width: 20em) {
+    width: 80%;
+  }
+  @media (max-width: 40em) {
+    width: 25%;
+  }
+  @media (max-width: 60em) {
+    width: 25%
+  }
 }
