@@ -31,8 +31,10 @@
     @include md_border(transparent);
   }
 
-  li::before {
-    color: var(--highlight-colour);
+  ul > li {
+    &::before {
+      color: var(--highlight-colour);
+    }
   }
 
   pre {

@@ -2,7 +2,8 @@
 @import "../markdown";
 
 main {
-  background-color: var(--background-colour-light);
+  grid-template-columns: minmax(1fr, 100vw);
+  grid-template-rows: auto;
 
   $article_padding_v: 2em;
   $article_padding_h: 2em;
@@ -13,8 +14,8 @@ main {
   padding-right: $article_padding_h;
 
   > section {
-    $max_md_w: 60em;
     width: 100%;
+    $max_md_w: 60em;
     max-width: $max_md_w;
     margin: auto;
   }
@@ -24,12 +25,9 @@ main {
   }
 
   .repo-footer {
-    margin-top: 2em;
-
     justify-content: end;
-
-    > * {
-      margin-left: 1em;
-    }
+    grid-column-gap: 1em;
   }
+
+  background-color: var(--background-colour-light);
 }

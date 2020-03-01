@@ -18,6 +18,7 @@ $font_free: "Font Awesome 5 Free";
   --image-placeholder-color: rgb(200, 200, 200);
   --nav-colour: #555555;
   --desc-colour: #999999;
+  --font-color: black;
 }
 
 $side_padding_h: 1em;
@@ -45,6 +46,7 @@ $side_padding_v: 2em;
 
 body {
   font-family: var(--page-font);
+  color: var(--font-color);
 }
 
 h1 {
@@ -87,7 +89,9 @@ p {
  ********/
 
 body {
-  grid-template-rows: auto;
+  $row_gap: 10em;
+
+  grid-template-rows: auto auto 1fr;
 
   > header {
     grid-area: header;
@@ -108,8 +112,7 @@ body {
   grid-template-areas:
     "header"
     "main"
-    "footer"
-    "aside";
+    "footer";
 
   @media (min-width: $transition_width) {
     grid-template-columns: 1fr 3fr;
@@ -117,6 +120,8 @@ body {
       "header main"
       "aside  main"
       "footer main";
+    grid-row-gap: $row_gap;
+
     > aside {
       display: grid;
     }
@@ -171,9 +176,6 @@ body > footer {
 body > aside {
   grid-template-columns: 1fr;
   grid-template-rows: auto;
-
-  align-content: start;
-  align-items: start;
 
   grid-column-gap: $side_padding_v;
 
@@ -239,11 +241,12 @@ ul {
   list-style-type: none;
   padding-left: 0.5em;
 
-  li {
-    display: flex;
-    flex-direction: row;
-    align-items: baseline;
-    align-content: center;
+  > li {
+    display: list-item;
+
+    * {
+      display: inline;
+    }
 
     &::before {
       padding-right: 0.3em;
@@ -253,12 +256,6 @@ ul {
       content: "\f105";
 
       color: var(--desc-colour);
-    }
-
-    &.active {
-      &::before {
-        color: var(--highlight-colour);
-      }
     }
   }
 }
@@ -278,7 +275,10 @@ button.big-button {
   padding-left: $menu_padding_h;
   padding-right: $menu_padding_h;
 
+  cursor: pointer;
+
   color: var(--highlight-colour);
+  background-color: transparent;
 
   border-style: solid;
   border-width: thin;
@@ -300,4 +300,8 @@ a.invis-link {
     text-decoration-style: dotted;
     text-decoration-color: var(--highlight-colour);
   }
+}
+
+li.active::before {
+  color: var(--highlight-colour);
 }
