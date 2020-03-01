@@ -1,12 +1,6 @@
 @import "../layout";
 
 :root {
-  --card-padding: 0.5em;
-  --card-title-margin: 0.2em;
-
-  --padding-vertical: 1em;
-  --padding-horizontal: 1em;
-
   --card-shadow: #ccc;
 }
 
@@ -15,10 +9,13 @@ main {
   align-content: space-between;
   align-items: center;
 
-  padding-top: var(--padding-vertical);
-  padding-bottom: var(--padding-vertical);
-  padding-left: var(--padding-horizontal);
-  padding-right: var(--padding-horizontal);
+  $padding_v: 1em;
+  $padding_h: 1em;
+
+  padding-top: $padding_v;
+  padding-bottom: $padding_v;
+  padding-left: $padding_h;
+  padding-right: $padding_h;
 }
 
 .card {
@@ -31,19 +28,14 @@ main {
     margin-bottom: 0.1em;
   }
 
-  .figure-title,
-  .figure-detail {
-    padding-left: var(--card-padding);
-    padding-right: var(--card-padding);
-  }
-
-  .figure-title {
-    margin-top: var(--card-title-margin);
-    margin-bottom: var(--card-title-margin);
-  }
-
   .figure-detail {
     display: flex;
+  }
+
+  .figure-title,
+  .figure-detail {
+    margin: auto;
+    width: 85%;
   }
 
   .figure-picture {

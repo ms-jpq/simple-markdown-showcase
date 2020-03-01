@@ -17,17 +17,49 @@ $font_free: "Font Awesome 5 Free";
   --image-placeholder-color: rgb(200, 200, 200);
   --nav-colour: #555555;
   --desc-colour: #999999;
+}
 
-  --section-padding: 2em;
+$side_padding_h: 1em;
 
-  --menu-padding-horizontal: 0.7em;
-  --menu-padding-vertical: 0.6em;
+/*********
+ * FONTS *
+ *********/
 
-  --side-padding-horizontal: 1em;
+body {
+  font-family: var(--page-font);
+}
 
-  --associations-size: 2.5em;
-  --associations-margin-horizontal: 0.3em;
-  --associations-margin-vertical: 0.2em;
+h1 {
+  font-size: 250%;
+}
+h2 {
+  font-size: 225%;
+}
+h3 {
+  font-size: 200%;
+}
+h4 {
+  font-size: 175%;
+}
+h5 {
+  font-size: 150%;
+}
+h6 {
+  font-size: 125%;
+}
+p {
+  font-size: 100%;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+  margin-top: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 /********
@@ -56,13 +88,14 @@ body {
  *********/
 
 aside {
-  padding-left: var(--side-padding-horizontal);
-  padding-right: var(--side-padding-horizontal);
+  padding-left: $side_padding_h;
+  padding-right: $side_padding_h;
 
   flex-direction: column;
 
   > * {
-    margin-bottom: var(--section-padding);
+    $section_padding: 2em;
+    margin-bottom: $section_padding;
   }
 
   #about-me {
@@ -83,13 +116,17 @@ aside {
     justify-content: flex-start;
     align-content: space-around;
     > * {
-      width: var(--associations-size);
-      height: var(--associations-size);
+      $association_size: 2.5em;
+      $association_margin_h: 0.3em;
+      $association_margin_v: 0.2em;
 
-      margin-left: var(--associations-margin-horizontal);
-      margin-right: var(--associations-margin-horizontal);
-      margin-top: var(--associations-margin-vertical);
-      margin-bottom: var(--associations-margin-vertical);
+      width: $association_size;
+      height: $association_size;
+
+      margin-top: $association_margin_v;
+      margin-bottom: $association_margin_v;
+      margin-left: $association_margin_h;
+      margin-right: $association_margin_h;
 
       border-color: var(--desc-colour);
 
@@ -120,8 +157,8 @@ aside {
 header {
   max-width: 100vw;
 
-  padding-left: var(--side-padding-horizontal);
-  padding-right: var(--side-padding-horizontal);
+  padding-left: $side_padding_h;
+  padding-right: $side_padding_h;
 
   flex-direction: row;
   justify-content: space-between;
@@ -192,10 +229,13 @@ ul {
   all: unset;
   align-self: center;
 
-  padding-left: var(--menu-padding-horizontal);
-  padding-right: var(--menu-padding-horizontal);
-  padding-top: var(--menu-padding-vertical);
-  padding-bottom: var(--menu-padding-vertical);
+  $menu_padding_v: 0.6em;
+  $menu_padding_h: 0.7em;
+
+  padding-top: $menu_padding_v;
+  padding-bottom: $menu_padding_v;
+  padding-left: $menu_padding_h;
+  padding-right: $menu_padding_h;
 
   color: var(--highlight-colour);
 
@@ -219,34 +259,4 @@ a {
     text-decoration: dotted;
     text-decoration-color: var(--highlight-colour);
   }
-}
-
-/*********
- * FONTS *
- *********/
-
-body {
-  font-family: var(--page-font);
-}
-
-h1 {
-  font-size: 250%;
-}
-h2 {
-  font-size: 225%;
-}
-h3 {
-  font-size: 200%;
-}
-h4 {
-  font-size: 175%;
-}
-h5 {
-  font-size: 150%;
-}
-h6 {
-  font-size: 125%;
-}
-p {
-  font-size: 100%;
 }
