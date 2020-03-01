@@ -11,7 +11,7 @@ export type RepoProps = Pick<
 >
 
 const Repo = ({ read_me, html_url, created_at, updated_at }: RepoProps) => (
-  <div className="repo">
+  <React.Fragment>
     <section className={cn("repo-header", "flex-row")}>
       <a href={html_url}>
         <button>
@@ -36,7 +36,7 @@ const Repo = ({ read_me, html_url, created_at, updated_at }: RepoProps) => (
         </time>
       </span>
     </section>
-  </div>
+  </React.Fragment>
 )
 
 const parse_title = (read_me: string) => {
