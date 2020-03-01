@@ -199,6 +199,12 @@ ul {
 
       color: var(--desc-colour);
     }
+
+    &.active {
+      &::before {
+        color: var(--highlight-colour);
+      }
+    }
   }
 }
 

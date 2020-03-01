@@ -163,7 +163,14 @@ export const render = async ({ config, repos }: RenderProps) => {
       map(
         (i) => ({
           ...i,
-          body: { ...config, aside: { ...config.aside, dest: i.path } },
+          body: {
+            ...config,
+            aside: {
+              ...config.aside,
+              dest: i.path,
+              off: i.page_name !== "index.html",
+            },
+          },
         }),
         instructions,
       ),
