@@ -5,6 +5,29 @@
 }
 
 main {
+  grid-template-rows: auto;
+
+  $card_width: 40em;
+
+  grid-template-columns: repeat(1, 1fr);
+  @media (min-width: $card_width * 1) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: $card_width * 2) {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (min-width: $card_width * 3) {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  $col_gap: 2em;
+  $row_gap: 2em;
+
+  grid-column-gap: $col_gap;
+  grid-row-gap: $row_gap;
+
+  align-items: start;
+
   $padding_v: 1em;
   $padding_h: 1em;
 
@@ -14,7 +37,33 @@ main {
   padding-right: $padding_h;
 }
 
-.card {
+main > .card {
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+
+  $desc_padding: 1em;
+  > .figure-img {
+    grid-area: img;
+  }
+  > .figure-title {
+    grid-area: title;
+    padding-left: $desc_padding;
+    padding-right: $desc_padding;
+  }
+  > .figure-detail {
+    grid-area: detail;
+    padding-left: $desc_padding;
+    padding-right: $desc_padding;
+  }
+
+  grid-template-areas:
+    "img"
+    "title"
+    "detail";
+
   box-shadow: 0 0 0.2em var(--card-shadow);
   background-color: var(--background-colour-light);
+}
+
+main > .card > .figure-img {
 }

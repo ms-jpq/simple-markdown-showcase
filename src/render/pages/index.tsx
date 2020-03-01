@@ -37,11 +37,16 @@ const Card = ({ images, link, title, desc, hide_detail }: CardProps) => {
       `${title} - 🈲️: hide_detail with no images - hide_detail: ${hide_detail}, images: ${images.length}`,
     ),
   )
+  const image = fst(images)
   return (
     <figure className={cn("card", "grid", "overflow-hide-x")}>
-      <a href={link}>
-        <img className={cn("hidden", "img-responsive")} src={fst(images)} />
-      </a>
+      {image ? (
+        <a href={link} className={cn("figure-img", "mp0")}>
+          <img className={cn("img-responsive")} src={image} />
+        </a>
+      ) : (
+        <span className={cn("figure-img")}></span>
+      )}
       <h6
         className={cn(
           "figure-title",
@@ -54,8 +59,8 @@ const Card = ({ images, link, title, desc, hide_detail }: CardProps) => {
           {title}
         </a>
       </h6>
-      <figcaption className={cn("figure-detail")}>
-        <p className={"text-ellipsis"}>{desc}</p>
+      <figcaption className={cn("figure-detail", "text-ellipsis")}>
+        {desc}
       </figcaption>
     </figure>
   )

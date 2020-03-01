@@ -80,7 +80,7 @@ export const Page = ({
 }: PageProps) => (
   <html>
     <Head title={head.title} js={head.js} css={head.css} />
-    <body className={cn("grid", "vw100")}>
+    <body className={cn("grid", "vw100", "mp0")}>
       <Header title={header.title} menu={header.menu} />
       <Main>{children}</Main>
       <Aside

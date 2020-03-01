@@ -15,10 +15,9 @@ const main = async () => {
   for (const image of images) {
     ;(async () => {
       await new Promise((resolve) => img_loaded(image, resolve))
-      image.classList.remove("hidden")
       masonry.layout!()
     })()
   }
 }
 
-main()
+// main()

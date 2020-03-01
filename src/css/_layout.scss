@@ -88,6 +88,7 @@ p {
 
 body {
   grid-template-rows: auto;
+
   > header {
     grid-area: header;
     display: grid;
@@ -170,6 +171,9 @@ body > footer {
 body > aside {
   grid-template-columns: 1fr;
   grid-template-rows: auto;
+
+  align-content: start;
+  align-items: start;
 
   grid-column-gap: $side_padding_v;
 
