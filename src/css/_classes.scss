@@ -18,6 +18,10 @@
   display: grid;
 }
 
+.grid-centre {
+  place-self: center;
+}
+
 .overflow-hide-x {
   overflow-x: hidden;
 }

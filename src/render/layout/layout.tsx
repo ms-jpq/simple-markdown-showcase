@@ -61,7 +61,7 @@ export type AsideProps = { dest: string; off: boolean } & AsideConfig
 
 const Aside = ({ dest, off, about_me, contacts, nav }: AsideProps) => (
   <aside id="left-panel">
-    <AsideAboutMe title={about_me.title} desc={about_me.desc} />
+    <AsideAboutMe desc={about_me.desc} />
     <AsideNav off={off} dests={nav} dest={dest} />
     <AsideAssociations contacts={contacts} />
   </aside>

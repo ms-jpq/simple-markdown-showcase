@@ -39,15 +39,6 @@ export type ContactsConfig = {
   stackoverflow: string
 }
 
-export type AsideConfig = {
-  contacts: ContactsConfig
-  nav: {
-    title: string
-    link: string
-  }[]
-  about_me: { title: string; desc: string[] }
-}
-
 export type HeaderConfig = {
   title: string
   menu: string
@@ -55,6 +46,15 @@ export type HeaderConfig = {
 
 export type FooterConfig = {
   desc: string[]
+}
+
+export type AsideConfig = {
+  contacts: ContactsConfig
+  nav: {
+    title: string
+    link: string
+  }[]
+  about_me: { desc: string[] }
 }
 
 export type StaticConfig = {

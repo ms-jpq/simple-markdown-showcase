@@ -21,6 +21,7 @@ $font_free: "Font Awesome 5 Free";
 }
 
 $side_padding_h: 1em;
+$side_padding_v: 2em;
 
 /**********
  * MIXINS *
@@ -28,7 +29,7 @@ $side_padding_h: 1em;
 
 @mixin associations() {
   .association-circle {
-    text-decoration: unset;
+    text-decoration: inherit;
     &:active,
     &:hover,
     &:focus {
@@ -86,6 +87,7 @@ p {
  ********/
 
 body {
+  grid-template-rows: auto;
   > header {
     grid-area: header;
     display: grid;
@@ -102,7 +104,6 @@ body {
   }
 
   grid-template-columns: 1fr;
-  grid-template-rows: auto auto auto auto;
   grid-template-areas:
     "header"
     "main"
@@ -111,11 +112,10 @@ body {
 
   @media (min-width: $transition_width) {
     grid-template-columns: 1fr 3fr;
-    grid-template-rows: auto auto auto;
     grid-template-areas:
+      "header main"
       "aside  main"
-      "footer main"
-      "header header";
+      "footer main";
     > aside {
       display: grid;
     }
@@ -134,10 +134,20 @@ body {
  * HEADER *
  **********/
 
-header {
+body > header {
   grid-template-rows: 1fr;
-  grid-template-columns: auto auto;
+  grid-template-columns: auto;
+  grid-auto-flow: column;
+
   justify-content: space-between;
+
+  @media (min-width: $transition_width) {
+    justify-content: start;
+
+    > #header-menu {
+      display: none;
+    }
+  }
 
   padding-left: $side_padding_h;
   padding-right: $side_padding_h;
@@ -147,7 +157,7 @@ header {
  * FOOTER *
  **********/
 
-footer {
+body > footer {
   p {
     color: var(--desc-colour);
   }
@@ -157,17 +167,14 @@ footer {
  * ASIDE *
  *********/
 
-aside {
+body > aside {
   grid-template-columns: 1fr;
   grid-template-rows: auto;
 
+  grid-column-gap: $side_padding_v;
+
   padding-left: $side_padding_h;
   padding-right: $side_padding_h;
-
-  > * {
-    $section_padding: 2em;
-    margin-bottom: $section_padding;
-  }
 
   > #about-me {
     p {
@@ -193,28 +200,17 @@ aside {
     }
   }
   > #associations {
-    justify-content: flex-start;
-    align-content: space-around;
+    $association_size: 2.5em;
+    $association_padding: 0.7em;
 
-    > * {
-      $association_size: 2.5em;
-      $association_margin_h: 0.3em;
-      $association_margin_v: 0.2em;
+    grid-auto-columns: $association_size;
+    grid-auto-rows: $association_size;
+    grid-auto-flow: column;
+    grid-column-gap: $association_padding;
+    grid-row-gap: $association_padding;
 
-      width: $association_size;
-      height: $association_size;
-
-      margin-top: $association_margin_v;
-      margin-bottom: $association_margin_v;
-      margin-left: $association_margin_h;
-      margin-right: $association_margin_h;
-
+    > .association-circle {
       border-color: var(--desc-colour);
-
-      justify-content: center;
-      align-items: center;
-      align-content: center;
-
       color: var(--desc-colour);
     }
 
@@ -225,6 +221,11 @@ aside {
 /********
  * MISC *
  ********/
+
+a {
+  all: inherit;
+  cursor: pointer;
+}
 
 img {
   background-color: var(--image-placeholder-color);
@@ -262,12 +263,7 @@ ul {
  * CLASSES *
  ***********/
 
-a {
-  color: unset;
-}
-
 button.big-button {
-  all: unset;
   align-self: center;
 
   $menu_padding_v: 0.6em;
@@ -284,8 +280,6 @@ button.big-button {
   border-width: thin;
   border-color: var(--highlight-colour);
 
-  cursor: pointer;
-
   &:active,
   &:hover,
   &:focus {
@@ -295,9 +289,6 @@ button.big-button {
 }
 
 a.invis-link {
-  all: unset;
-  cursor: pointer;
-
   &:active,
   &:hover,
   &:focus {
