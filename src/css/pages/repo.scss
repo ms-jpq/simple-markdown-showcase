@@ -1,22 +1,22 @@
 @import "../layout";
 @import "../markdown";
 
-$article_padding_vertical: 2em;
-$article_padding_horizontal: 2em;
-
 :root {
   --max-md-w: 60em;
+  --article-padding-vertical: 2em;
+  --article-padding-horizontal: 2em;
 }
 
 main {
   background-color: var(--background-colour-light);
-  padding-top: $article_padding_vertical;
-  padding-bottom: $article_padding_vertical;
-  padding-left: $article_padding_horizontal;
-  padding-right: $article_padding_horizontal;
+
+  padding-top: var(--article-padding-vertical);
+  padding-bottom: var(--article-padding-vertical);
+  padding-left: var(--article-padding-horizontal);
+  padding-right: var(--article-padding-horizontal);
 
   > section {
-    width: 90%;
+    width: 100%;
     max-width: var(--max-md-w);
     margin: auto;
   }

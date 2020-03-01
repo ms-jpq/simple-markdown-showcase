@@ -1,3 +1,4 @@
+import cn from "classnames"
 import React from "react"
 import { RenderPage } from "../../consts"
 
@@ -9,6 +10,17 @@ export type RenderProps = {}
 
 export const render: RenderPage<RenderProps> = async ({}) => {
   const title = "404"
-  const page = <main></main>
+  const page = (
+    <main className={cn("flex-col")}>
+      <h1>404</h1>
+      <h6>The page you're looking for doesn't exist</h6>
+      <h4>
+        <a href="/">
+          <i className="fas fa-dog"></i> take me home.{" "}
+          <i className="fas fa-dog"></i>
+        </a>
+      </h4>
+    </main>
+  )
   return [{ path: "", page_name, title, js, css, page }]
 }

@@ -41,9 +41,16 @@ const PictureFigure = ({ images, link, children }: Picture & Parent) => (
 )
 
 const TitleFigure = ({ title, link }: Title) => (
-  <h4 className={cn("figure-title", "text-uppercase", "text-ellipsis")}>
+  <h6
+    className={cn(
+      "figure-title",
+      "text-uppercase",
+      "text-centre",
+      "text-ellipsis",
+    )}
+  >
     <a href={link}>{title}</a>
-  </h4>
+  </h6>
 )
 
 const DetailFigure = ({ desc }: Detail) => (

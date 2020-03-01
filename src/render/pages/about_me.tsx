@@ -9,6 +9,16 @@ export type RenderProps = {}
 
 export const render: RenderPage<RenderProps> = async ({}) => {
   const title = "About:Me"
-  const page = <main></main>
+  const page = (
+    <main>
+      <h1>h1</h1>
+      <h2>h2</h2>
+      <h3>h3</h3>
+      <h4>h4</h4>
+      <h5>h5</h5>
+      <h6>h6</h6>
+      <p>p</p>
+    </main>
+  )
   return [{ path: "about-me", page_name, title, js, css, page }]
 }

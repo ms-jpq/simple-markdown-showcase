@@ -38,7 +38,6 @@ body {
   padding: 0;
   margin: 0;
 
-  font-family: var(--page-font);
   background-color: var(--background-colour-dark);
 
   #left-panel {
@@ -185,18 +184,8 @@ ul {
   }
 }
 
-a {
-  all: unset;
-  cursor: pointer;
-  &::active,
-  &::hover {
-    text-decoration: dotted;
-    text-decoration-color: var(--highlight-colour);
-  }
-}
-
 /***********
- * Classes *
+ * CLASSES *
  ***********/
 
 .big-button {
@@ -220,4 +209,44 @@ a {
     color: var(--background-colour-light);
     background-color: var(--highlight-colour);
   }
+}
+
+a {
+  all: unset;
+  cursor: pointer;
+  &::active,
+  &::hover {
+    text-decoration: dotted;
+    text-decoration-color: var(--highlight-colour);
+  }
+}
+
+/*********
+ * FONTS *
+ *********/
+
+body {
+  font-family: var(--page-font);
+}
+
+h1 {
+  font-size: 250%;
+}
+h2 {
+  font-size: 225%;
+}
+h3 {
+  font-size: 200%;
+}
+h4 {
+  font-size: 175%;
+}
+h5 {
+  font-size: 150%;
+}
+h6 {
+  font-size: 125%;
+}
+p {
+  font-size: 100%;
 }

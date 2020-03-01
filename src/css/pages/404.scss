@@ -1,4 +1,19 @@
 @import "../layout";
 
 main {
+  background-color: var(--background-colour-light);
+
+  height: 100vh;
+
+  justify-items: center;
+  align-items: center;
+
+  > h1 {
+    color: var(--desc-colour);
+    font-size: 600%;
+  }
+
+  i {
+    color: var(--highlight-colour);
+  }
 }

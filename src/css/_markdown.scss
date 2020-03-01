@@ -1,4 +1,4 @@
-@import "../../../node_modules/highlight.js/styles/github-gist.css";
+@import "../../../node_modules/highlight.js/styles/github.css";
 :root {
   --code-colour: rgb(250, 250, 250);
 }
@@ -13,8 +13,16 @@
 .markdown {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  align-content: flex-start;
+
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-weight: normal;
+    margin-top: 0.3em;
+    margin-bottom: 0.1em;
+  }
 
   img {
     @include md_border(transparent);

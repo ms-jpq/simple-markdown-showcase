@@ -24,8 +24,12 @@ main {
 .card {
   background-color: var(--background-colour-light);
 
-
   box-shadow: 0 0 5px var(--card-shadow);
+
+  .figure-title {
+    font-size: 100%;
+    margin-bottom: 0.1em;
+  }
 
   .figure-title,
   .figure-detail {
@@ -52,5 +56,14 @@ main {
 }
 
 .card {
-  width: 15%;
+  width: 25%;
+  // @media (max-width: 40em) {
+  //   width: 25%;
+  // }
+  // @media (max-width: 40em) {
+  // }
+  // @media (max-width: 40em) {
+  // }
+  // @media (max-width: 40em) {
+  // }
 }
