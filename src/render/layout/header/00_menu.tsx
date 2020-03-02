@@ -1,5 +1,5 @@
-import cn from "classnames"
 import React from "react"
+import { cn } from "../../../domain_agnostic/isomorphic/dom"
 
 export type MenuProps = { menu_title: string }
 export const HeaderMenu = ({ menu_title }: MenuProps) => (

@@ -1,11 +1,6 @@
-import { join } from "../isomorphic/list"
-import { ReactNode } from "react"
+import { join } from "./list"
 
-export type Parent = {
-  children: ReactNode | ReactNode[]
-}
-
-export const classes = (...classes: (string | Record<string, boolean>)[]) => {
+export const cn = (...classes: (string | Record<string, boolean>)[]) => {
   const classlist = []
 
   for (const c of classes) {

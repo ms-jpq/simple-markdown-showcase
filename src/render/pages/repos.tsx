@@ -1,5 +1,5 @@
-import cn from "classnames"
 import React from "react"
+import { cn } from "../../domain_agnostic/isomorphic/dom"
 import { flat_map, map } from "../../domain_agnostic/isomorphic/list"
 import { id, str } from "../../domain_agnostic/isomorphic/prelude"
 import { Markdown } from "../layout/md"

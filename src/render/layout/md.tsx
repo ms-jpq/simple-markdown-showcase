@@ -1,7 +1,7 @@
-import cn from "classnames"
 import hljs from "highlight.js"
 import markdown from "markdown-it"
 import React from "react"
+import { cn } from "../../domain_agnostic/isomorphic/dom"
 
 const highlight = (str: string, lang: string) => {
   if (lang && hljs.getLanguage(lang)) {

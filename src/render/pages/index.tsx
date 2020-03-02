@@ -1,7 +1,7 @@
 import assert from "assert"
-import cn from "classnames"
 import React from "react"
 import { big_print } from "../../domain_agnostic/node/prelude"
+import { cn } from "../../domain_agnostic/isomorphic/dom"
 import { filter, fst, map } from "../../domain_agnostic/isomorphic/list"
 import { RenderPage, Repo, StaticConfig } from "../../consts"
 

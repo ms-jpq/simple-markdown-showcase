@@ -2,7 +2,6 @@ import fetch from "node-fetch"
 import md5 from "crypto-js/md5"
 import React from "react"
 import sharp from "sharp"
-import { any, filter, flat_map, join, last } from "../domain_agnostic/isomorphic/list"
 import { basename, dirname, extname } from "path"
 import { BodyProps, Page } from "./layout/layout"
 import { exists, rmdir, sip, spit } from "../domain_agnostic/node/fs"
@@ -19,6 +18,13 @@ import { render as render_aboutme } from "./pages/about_me"
 import { render as render_contactme } from "./pages/contact_me"
 import { renderToStaticMarkup } from "react-dom/server"
 import { run as run_parcel } from "./parcel"
+import {
+  any,
+  filter,
+  flat_map,
+  join,
+  last,
+} from "../domain_agnostic/isomorphic/list"
 import {
   img_config,
   RenderInstruction,

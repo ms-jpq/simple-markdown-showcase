@@ -1,5 +1,5 @@
-import cn from "classnames"
 import React from "react"
+import { cn } from "../../../domain_agnostic/isomorphic/dom"
 import { ContactsConfig } from "../../../consts"
 
 export type CircleProps = { href: string; class_name: string }

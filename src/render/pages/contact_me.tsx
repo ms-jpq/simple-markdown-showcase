@@ -1,4 +1,5 @@
 import React from "react"
+import { cn } from "../../domain_agnostic/isomorphic/dom"
 import { RenderPage } from "../../consts"
 
 const js = ["pages/contact_me"]

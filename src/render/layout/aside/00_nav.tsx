@@ -1,5 +1,5 @@
-import cn from "classnames"
 import React from "react"
+import { cn } from "../../../domain_agnostic/isomorphic/dom"
 import { map } from "../../../domain_agnostic/isomorphic/list"
 
 export type NavProps = {

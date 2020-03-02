@@ -2,7 +2,7 @@
 import { big_print, set_defaults } from "./domain_agnostic/node/prelude"
 import { extract } from "./github/api"
 import { join } from "path"
-import { parse } from "./domain_agnostic/node/yaml"
+import { parse } from "./domain_agnostic/vender/yaml"
 import { render } from "./render/render"
 import { slurp, spit } from "./domain_agnostic/node/fs"
 import { static_config, StaticConfig } from "./consts"

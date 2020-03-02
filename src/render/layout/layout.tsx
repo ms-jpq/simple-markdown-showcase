@@ -1,13 +1,13 @@
-import cn from "classnames"
 import React from "react"
 import { AsideAssociations } from "./aside/01_associations"
 import { AsideConfig, FooterConfig, HeaderConfig } from "../../consts"
 import { AsideNav } from "./aside/00_nav"
+import { cn } from "../../domain_agnostic/isomorphic/dom"
 import { FooterDesc } from "./footer/00_desc"
 import { HeaderMenu } from "./header/00_menu"
 import { HeaderTitle } from "./header/01_title"
 import { map } from "../../domain_agnostic/isomorphic/list"
-import { Parent } from "../../domain_agnostic/isomorphic/react"
+import { Parent } from "../../domain_agnostic/vender/react"
 
 export type HeadProps = {
   title: string
