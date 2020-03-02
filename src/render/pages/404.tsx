@@ -2,7 +2,7 @@ import React from "react"
 import { cn } from "../../domain_agnostic/isomorphic/dom"
 import { RenderPage } from "../../consts"
 
-const js = ["pages/404"]
+const js: string[] = []
 const css = ["pages/404"]
 const page_name = "404.html"
 

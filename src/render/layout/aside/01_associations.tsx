@@ -18,7 +18,10 @@ export type AssociationsProps = { contacts: ContactsConfig }
 export const AsideAssociations = ({
   contacts: { email, linkedin, github, dockerhub, stackoverflow },
 }: AssociationsProps) => (
-  <section id="associations" className={cn("grid", "text-centre")}>
+  <section
+    id="associations"
+    className={cn("associations", "grid", "text-centre")}
+  >
     <Circle href={`mailto:${email}`} class_name={"far fa-envelope"} />
     <Circle
       href={`https://www.linkedin.com/in/${linkedin}`}

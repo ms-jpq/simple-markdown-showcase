@@ -165,7 +165,7 @@ export const render = async ({ config, repos }: RenderProps) => {
     render_404({}),
     render_index({ config, repos }),
     render_aboutme({}),
-    render_contactme({}),
+    render_contactme({ contacts: config.aside.contacts }),
     render_repos({ repos }),
   ])
   const instructions = flat_map(id, pages)

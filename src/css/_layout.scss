@@ -188,13 +188,15 @@ body > aside {
     }
   }
   > #nav {
-    li {
+
+    ul > li {
       color: var(--nav-colour);
-      &::active {
+      &.active {
         font-weight: bold;
         color: var(--highlight-colour);
       }
     }
+
     a {
       text-decoration: unset;
       &:active,
@@ -205,23 +207,28 @@ body > aside {
       }
     }
   }
-  > #associations {
-    $association_size: 2.5em;
-    $association_padding: 0.7em;
+}
 
-    grid-auto-columns: $association_size;
-    grid-auto-rows: $association_size;
-    grid-auto-flow: column;
-    grid-column-gap: $association_padding;
-    grid-row-gap: $association_padding;
+/**************
+ * COMPONENTS *
+ **************/
 
-    > .association-circle {
-      border-color: var(--desc-colour);
-      color: var(--desc-colour);
-    }
+.associations {
+  $association_size: 2.5em;
+  $association_padding: 0.7em;
 
-    @include associations();
+  grid-auto-columns: $association_size;
+  grid-auto-rows: $association_size;
+  grid-auto-flow: column;
+  grid-column-gap: $association_padding;
+  grid-row-gap: $association_padding;
+
+  > .association-circle {
+    border-color: var(--desc-colour);
+    color: var(--desc-colour);
   }
+
+  @include associations();
 }
 
 /********
