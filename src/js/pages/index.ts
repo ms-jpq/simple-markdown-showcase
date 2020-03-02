@@ -1,7 +1,7 @@
 import img_loaded from "imagesloaded"
 import Masonry from "masonry-layout"
-import { $, $$ } from "../../domain_agnostic/dom"
-import { map } from "../../domain_agnostic/list"
+import { $, $$ } from "../../domain_agnostic/browser/dom"
+import { map } from "../../domain_agnostic/isomorphic/list"
 import "../layout"
 
 const main = async () => {

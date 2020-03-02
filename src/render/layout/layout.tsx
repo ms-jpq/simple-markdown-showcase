@@ -6,8 +6,8 @@ import { AsideNav } from "./aside/00_nav"
 import { FooterDesc } from "./footer/00_desc"
 import { HeaderMenu } from "./header/00_menu"
 import { HeaderTitle } from "./header/01_title"
-import { map } from "../../domain_agnostic/list"
-import { Parent } from "../../domain_agnostic/react"
+import { map } from "../../domain_agnostic/isomorphic/list"
+import { Parent } from "../../domain_agnostic/isomorphic/react"
 
 export type HeadProps = {
   title: string

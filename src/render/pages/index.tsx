@@ -1,9 +1,8 @@
 import assert from "assert"
 import cn from "classnames"
 import React from "react"
-import { big_print } from "../../domain_agnostic/prelude"
-import { filter, fst, map } from "../../domain_agnostic/list"
-import { Parent } from "../../domain_agnostic/react"
+import { big_print } from "../../domain_agnostic/node/prelude"
+import { filter, fst, map } from "../../domain_agnostic/isomorphic/list"
 import { RenderPage, Repo, StaticConfig } from "../../consts"
 
 export type Customization = {

@@ -1,10 +1,10 @@
 #!/usr/bin/env ts-node --transpile-only
-import { big_print, set_defaults } from "./domain_agnostic/prelude"
+import { big_print, set_defaults } from "./domain_agnostic/node/prelude"
 import { extract } from "./github/api"
 import { join } from "path"
-import { parse } from "./domain_agnostic/yaml"
+import { parse } from "./domain_agnostic/node/yaml"
 import { render } from "./render/render"
-import { slurp, spit } from "./domain_agnostic/fs"
+import { slurp, spit } from "./domain_agnostic/node/fs"
 import { static_config, StaticConfig } from "./consts"
 
 const main = async () => {

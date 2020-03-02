@@ -1,7 +1,7 @@
 import cn from "classnames"
 import React from "react"
-import { flat_map, map } from "../../domain_agnostic/list"
-import { id, str } from "../../domain_agnostic/prelude"
+import { flat_map, map } from "../../domain_agnostic/isomorphic/list"
+import { id, str } from "../../domain_agnostic/isomorphic/prelude"
 import { Markdown } from "../layout/md"
 import { RenderPage, Repo } from "../../consts"
 

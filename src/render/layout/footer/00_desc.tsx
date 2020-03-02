@@ -1,6 +1,6 @@
 import cn from "classnames"
 import React from "react"
-import { map } from "../../../domain_agnostic/list"
+import { map } from "../../../domain_agnostic/isomorphic/list"
 
 export type DescProps = { desc: string[] }
 export const FooterDesc = ({ desc }: DescProps) => (
