@@ -13,6 +13,10 @@ export const static_config = {
   port: 8080,
   github_token: process.env["TOKEN"],
   parallelism: 3,
+  img: {
+    localize_domains: ["raw.githubusercontent.com", "github.com"],
+    target_widths: [200, 400, 600, 800],
+  },
 }
 
 export const repo_resources = {
@@ -24,11 +28,6 @@ export const repo_resources = {
 export const additional_pages = {
   about_me: "pages/about_me.md",
   contact_me: "pages/contact_me.md",
-}
-
-export const img_config = {
-  localize_domains: ["raw.githubusercontent.com", "github.com"],
-  target_widths: [200, 400, 600, 800],
 }
 
 export type ContactsConfig = {
@@ -66,6 +65,7 @@ export type StaticConfig = {
 }
 
 export type RepoConfig = {
+  idx: number
   title: string
   showcase: boolean
   desc: string
