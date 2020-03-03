@@ -40,11 +40,14 @@ const Card = ({ images, link, title, desc, hide_detail }: CardProps) => {
   return (
     <figure className={cn("card", "grid", "overflow-hide-x")}>
       {image ? (
-        <a href={link} className={cn("figure-img", "mp0")}>
+        <a href={link} className={cn("figure-img", "grid", "mp0")}>
           <img className={cn("img-responsive")} src={image} />
+          <div className={cn("figure-facade", "grid")}>
+            <i className="fas fa-chevron-right"></i>
+          </div>
         </a>
       ) : (
-        <span className={cn("figure-img")}></span>
+        undefined
       )}
       <h6
         className={cn(
@@ -58,7 +61,9 @@ const Card = ({ images, link, title, desc, hide_detail }: CardProps) => {
           {title}
         </a>
       </h6>
-      <figcaption className={cn("figure-detail", "text-ellipsis")}>
+      <figcaption
+        className={cn("figure-detail", "text-ellipsis", "text-justify")}
+      >
         {desc}
       </figcaption>
     </figure>
