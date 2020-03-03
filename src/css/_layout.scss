@@ -24,22 +24,6 @@ $font_free: "Font Awesome 5 Free";
 $side_padding_h: 1em;
 $side_padding_v: 1em;
 
-/**********
- * MIXINS *
- **********/
-
-@mixin associations() {
-  .association-circle {
-    text-decoration: inherit;
-    &:active,
-    &:hover,
-    &:focus {
-      color: var(--highlight-colour);
-      border-color: var(--highlight-colour);
-    }
-  }
-}
-
 /*********
  * FONTS *
  *********/
@@ -243,9 +227,16 @@ body > aside {
   > .association-circle {
     border-color: var(--desc-colour);
     color: var(--desc-colour);
-  }
 
-  @include associations();
+    text-decoration: inherit;
+
+    &:active,
+    &:hover,
+    &:focus {
+      color: var(--highlight-colour);
+      border-color: var(--highlight-colour);
+    }
+  }
 }
 
 /********
