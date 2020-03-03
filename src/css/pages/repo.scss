@@ -24,6 +24,11 @@ main {
 
   .repo-header {
     justify-content: end;
+    .big-button {
+      border-style: dashed;
+
+      color: var(--text-color);
+    }
   }
 
   .repo-footer {
