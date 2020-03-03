@@ -4,6 +4,7 @@ import { flat_map, map } from "../../domain_agnostic/isomorphic/list"
 import { id, str } from "../../domain_agnostic/isomorphic/prelude"
 import { Markdown } from "../layout/md"
 import { RenderPage, Repo } from "../../consts"
+import { BigButton } from "../layout/components/big_button"
 
 export type RepoProps = Pick<
   Repo,
@@ -14,9 +15,9 @@ const Repo = ({ read_me, html_url, created_at, updated_at }: RepoProps) => (
   <React.Fragment>
     <section className={cn("repo-header", "grid")}>
       <a href={html_url} className={cn("invis-link")}>
-        <button className={cn("big-button")}>
+        <BigButton>
           View on Github <i className="fab fa-github"></i>
-        </button>
+        </BigButton>
       </a>
     </section>
     <section className={cn("repo-markdown", "grid")}>

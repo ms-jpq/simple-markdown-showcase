@@ -89,7 +89,7 @@ p {
  ********/
 
 body {
-  grid-template-rows: auto auto 1fr;
+  grid-template-rows: auto 1fr auto;
 
   > header {
     grid-area: header;
@@ -128,9 +128,6 @@ body {
     }
   }
 
-  padding: 0;
-  margin: 0;
-
   background-color: var(--background-colour-dark);
 }
 
@@ -150,7 +147,7 @@ body > header {
   @media (min-width: $transition_width) {
     justify-content: start;
 
-    > #header-menu {
+    > button {
       display: none;
     }
   }
@@ -164,6 +161,13 @@ body > header {
  **********/
 
 body > footer {
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+
+  $footer_padding_v: 1em;
+  padding-top: $footer_padding_v;
+
   p {
     color: var(--desc-colour);
   }
@@ -177,7 +181,9 @@ body > aside {
   grid-template-columns: 1fr;
   grid-template-rows: auto;
 
-  justify-content: space-between;
+  justify-content: start;
+  align-content: start;
+  align-items: start;
 
   grid-row-gap: $side_padding_h;
 
@@ -185,6 +191,9 @@ body > aside {
   padding-right: $side_padding_h;
 
   > #about-me {
+    justify-content: start;
+    align-content: start;
+    align-items: start;
     p {
       color: var(--desc-colour);
     }
@@ -298,6 +307,8 @@ button.big-button {
   border-style: solid;
   border-width: thin;
   border-color: var(--highlight-colour);
+
+  font-size: 100%;
 
   &:active,
   &:hover,
