@@ -74,6 +74,7 @@ const cleanup = () =>
 
 export const render = async ({ config, repos, md_strings }: RenderProps) => {
   await cleanup()
+
   const sorted = sort_by((r) => r.idx, repos)
   const pages = await Promise.all([
     render_404({}),
