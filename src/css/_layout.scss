@@ -176,8 +176,7 @@ body > header {
  **********/
 
 body > footer {
-  justify-content: center;
-  align-content: center;
+  justify-items: center;
   align-items: center;
 
   p {
@@ -193,9 +192,7 @@ body > aside {
   grid-template-columns: 1fr;
   grid-template-rows: auto;
 
-  justify-content: start;
   align-content: start;
-  align-items: start;
 
   grid-row-gap: $side_padding_h;
 
@@ -203,9 +200,6 @@ body > aside {
   padding-right: $side_padding_h;
 
   > #about-me {
-    justify-content: start;
-    align-content: start;
-    align-items: start;
     p {
       color: var(--desc-colour);
     }
@@ -246,7 +240,7 @@ body > aside {
   grid-auto-rows: $association_size;
   grid-auto-flow: column;
 
-  align-content: center;
+  justify-items: center;
   align-items: center;
 
   grid-column-gap: $association_padding;

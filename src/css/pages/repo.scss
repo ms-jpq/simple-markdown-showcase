@@ -23,7 +23,7 @@ main {
   }
 
   .repo-header {
-    justify-content: end;
+    justify-items: end;
     .big-button {
       border-style: dashed;
 
@@ -32,7 +32,7 @@ main {
   }
 
   .repo-footer {
-    justify-content: end;
+    justify-items: end;
     grid-column-gap: 1em;
   }
 }
