@@ -46,7 +46,7 @@ const Header = ({ title, menu }: HeaderProps) => (
 )
 
 const Main = ({ children }: Parent) => (
-  <main className={cn("grid", "h100")}>{children}</main>
+  <main className={cn("grid")}>{children}</main>
 )
 
 export type FooterProps = {} & FooterConfig
@@ -82,7 +82,7 @@ export const Page = ({
 }: PageProps) => (
   <html>
     <Head title={head.title} js={head.js} css={head.css} />
-    <body className={cn("grid", "h100", "vw100", "mp0")}>
+    <body className={cn("grid", "vw100", "mp0")}>
       <Header title={header.title} menu={header.menu} />
       <Main>{children}</Main>
       <Aside
