@@ -5,9 +5,18 @@ import { extract } from "./github/api"
 import { join } from "./domain_agnostic/node/path"
 import { parse } from "./domain_agnostic/vender/yaml"
 import { render } from "./render/render"
-import { slurp, spit } from "./domain_agnostic/node/fs"
+import { rmdir, slurp, spit } from "./domain_agnostic/node/fs"
+
+const cleanup = () =>
+  Promise.all([
+    rmdir(static_config.img_cache_dir),
+    rmdir(static_config.out_dir),
+    rmdir(static_config.dist_dir),
+  ])
 
 const main = async () => {
+  // await cleanup()
+
   console.log(big_print("render start"))
   console.time("pre_render")
 

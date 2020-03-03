@@ -28,29 +28,29 @@ const resize = async ({ src, new_name, width, height }: ResizeOpts) => {
   if (!has) {
     const ext = extname(new_name)
     const conf = sharp(src).resize({ width, height })
-    const out = await (async () => {
-      switch (ext) {
-        case ".jpg":
-        case ".jpeg":
-          return conf.jpeg().toBuffer()
-        case ".png":
-          return conf.png().toBuffer()
-        case ".gif":
-          const [stdout, stderr] = await pipe({
-            cmd: "gifsicle",
-            args: `--resize ${width}x${height}`.split(" "),
-            stdin: src,
-          })
-          const err = stderr.toString()
-          if (err) {
-            console.error(err)
-          }
-          return stdout
-        default:
-          throw new Error(`unrecognized format: ${basename(new_name)}`)
-      }
-    })()
-    await spit(out, new_name)
+    switch (ext) {
+      case ".jpg":
+      case ".jpeg":
+        await conf.jpeg().toFile(new_name)
+        break
+      case ".png":
+        await conf.png().toFile(new_name)
+        break
+      case ".gif":
+        const args = `--resize ${width}x${height} -o ${new_name}`
+        const [stdout, stderr] = await pipe({
+          cmd: "gifsicle",
+          args: args.split(" "),
+          stdin: src,
+        })
+        const err = stderr.toString()
+        if (err) {
+          console.error(err)
+        }
+        break
+      default:
+        throw new Error(`unrecognized format: ${basename(new_name)}`)
+    }
   }
 }
 

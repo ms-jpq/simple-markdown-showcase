@@ -1,6 +1,5 @@
 import assert from "assert"
 import { execFile, spawn } from "child_process"
-import { Readable, Writable } from "stream"
 
 export const run = async (cmd: string, ...args: string[]) => {
   const { stdout, stderr } = await new Promise<{
@@ -31,17 +30,19 @@ export const pipe = async ({ cmd, args, stdin }: PipeArgs) => {
   let stderr: Buffer | undefined = undefined
 
   stream.stdout.on("data", (chunk) => out_buf.push(chunk))
-  stream.stdout.on("end", () => (stdout = Buffer.concat(out_buf)))
+  stream.stdout.on("close", () => (stdout = Buffer.concat(out_buf)))
 
   stream.stderr.on("data", (chunk) => err_buf.push(chunk))
-  stream.stderr.on("end", () => (stderr = Buffer.concat(err_buf)))
+  stream.stderr.on("close", () => (stderr = Buffer.concat(err_buf)))
 
   if (stdin !== undefined) {
-    await new Promise((resolve, reject) =>
-      stream.stdin.write(stdin, (err) => (err ? reject(err) : resolve())),
-    )
+    await new Promise((resolve, reject) => {
+      stream.stdin.write(stdin, (err) => (err ? reject(err) : resolve()))
+      stream.stdin.end()
+    })
   }
 
   await done
+  assert(stdout !== undefined && stderr !== undefined)
   return [stdout!, stderr!]
 }

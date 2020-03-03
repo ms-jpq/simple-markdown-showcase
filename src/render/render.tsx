@@ -12,8 +12,8 @@ import { render as render_aboutme } from "./pages/about_me"
 import { render as render_contactme } from "./pages/contact_me"
 import { RenderInstruction, Repo, static_config, StaticConfig } from "../consts"
 import { renderToStaticMarkup } from "react-dom/server"
-import { rmdir, spit } from "../domain_agnostic/node/fs"
 import { run as run_parcel } from "./parcel"
+import { spit } from "../domain_agnostic/node/fs"
 
 const render_page = async ({
   js: local_js,
@@ -65,16 +65,7 @@ export type RenderProps = {
   md_strings: { about_me: string; contact_me: string }
 }
 
-const cleanup = () =>
-  Promise.all([
-    rmdir(static_config.img_cache_dir),
-    rmdir(static_config.out_dir),
-    rmdir(static_config.dist_dir),
-  ])
-
 export const render = async ({ config, repos, md_strings }: RenderProps) => {
-  await cleanup()
-
   const sorted = sort_by((r) => r.idx, repos)
   const pages = await Promise.all([
     render_404({}),
