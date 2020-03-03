@@ -1,11 +1,11 @@
 #!/usr/bin/env ts-node --transpile-only
+import { additional_pages, static_config, StaticConfig } from "./consts"
 import { big_print, set_defaults } from "./domain_agnostic/node/prelude"
 import { extract } from "./github/api"
-import { join } from "path"
+import { join } from "./domain_agnostic/node/path"
 import { parse } from "./domain_agnostic/vender/yaml"
 import { render } from "./render/render"
 import { slurp, spit } from "./domain_agnostic/node/fs"
-import { static_config, StaticConfig, additional_pages } from "./consts"
 
 const main = async () => {
   console.log(big_print("render start"))

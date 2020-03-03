@@ -2,10 +2,9 @@ import React from "react"
 import { BodyProps, Page } from "./layout/layout"
 import { flat_map } from "../domain_agnostic/isomorphic/list"
 import { id } from "../domain_agnostic/isomorphic/prelude"
-import { join as path_join } from "path"
+import { join, relative } from "../domain_agnostic/node/path"
 import { localize_image } from "./imagemin"
 import { map, sort_by, unique_by } from "../domain_agnostic/isomorphic/list"
-import { relative } from "path"
 import { render as render_404 } from "./pages/404"
 import { render as render_index } from "./pages/index"
 import { render as render_repos } from "./pages/repos"
@@ -25,18 +24,14 @@ const render_page = async ({
   page_name,
   body,
 }: RenderInstruction & { body: BodyProps }) => {
-  const sub_path = path_join(static_config.out_dir, path)
+  const sub_path = join(static_config.out_dir, path)
   const js = map(
-    (js) =>
-      relative(sub_path, path_join(static_config.src_dir, "js", `${js}.ts`)),
+    (js) => relative(sub_path, join(static_config.src_dir, "js", `${js}.ts`)),
     local_js,
   )
   const css = map(
     (css) =>
-      relative(
-        sub_path,
-        path_join(static_config.src_dir, "css", `${css}.scss`),
-      ),
+      relative(sub_path, join(static_config.src_dir, "css", `${css}.scss`)),
     local_css,
   )
   const content = (
@@ -47,7 +42,7 @@ const render_page = async ({
   const html = renderToStaticMarkup(content)
   const optimized = await localize_image(sub_path, html)
   return {
-    sub_path: path_join(sub_path, page_name),
+    sub_path: join(sub_path, page_name),
     content: optimized,
   }
 }

@@ -1,4 +1,4 @@
-import { dirname } from "path"
+import { dirname } from "./path"
 import { exists as exists_cb, promises as fs } from "fs"
 
 export const exists = (path: string) =>
