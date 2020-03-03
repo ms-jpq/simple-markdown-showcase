@@ -1,6 +1,5 @@
 import Masonry from "masonry-layout"
 import { $, $$, img_loaded } from "../../domain_agnostic/browser/dom"
-import { map } from "../../domain_agnostic/isomorphic/list"
 import { sleep } from "../../domain_agnostic/isomorphic/prelude"
 
 const main = async () => {
@@ -21,7 +20,9 @@ const main = async () => {
     ;(async () => {
       try {
         await img_loaded(image)
-      } catch {}
+      } catch (err) {
+        console.error(err)
+      }
       masonry.layout!()
     })()
   }
