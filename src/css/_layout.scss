@@ -92,23 +92,39 @@ body {
   background-color: var(--background-colour-dark);
 }
 
+@mixin show_header_menu() {
+  > header {
+    justify-content: space-between;
+    > button {
+      display: initial;
+    }
+  }
+}
+
+@mixin hide_header_menu() {
+  > header {
+    justify-content: start;
+    > button {
+      display: none;
+    }
+  }
+}
+
 @mixin col1_view() {
   grid-template-columns: 1fr;
   grid-template-areas:
     "header"
     "main"
     "footer";
-  grid-row-gap: initial;
+  row-gap: initial;
 
   > aside {
     display: none;
   }
 
-  > header {
-    justify-content: space-between;
-    > button {
-      display: initial;
-    }
+  @include show_header_menu();
+  @media not scripting {
+    @include hide_header_menu();
   }
 }
 
@@ -118,18 +134,13 @@ body {
     "header main"
     "aside  main"
     "footer main";
-  grid-row-gap: $side_padding_h;
+  row-gap: $side_padding_h;
 
   > aside {
     display: grid;
   }
 
-  > header {
-    justify-content: start;
-    > button {
-      display: none;
-    }
-  }
+  @include hide_header_menu();
 }
 
 @mixin col2_view_short() {
@@ -138,7 +149,7 @@ body {
     "aside  header"
     "aside  main"
     "footer footer";
-  grid-row-gap: $side_padding_h;
+  row-gap: $side_padding_h;
 
   > aside {
     display: grid;
@@ -194,7 +205,7 @@ body > aside {
 
   align-content: start;
 
-  grid-row-gap: $side_padding_h;
+  row-gap: $side_padding_h;
 
   padding-left: $side_padding_h;
   padding-right: $side_padding_h;
@@ -243,8 +254,8 @@ body > aside {
   justify-items: center;
   align-items: center;
 
-  grid-column-gap: $association_padding;
-  grid-row-gap: $association_padding;
+  column-gap: $association_padding;
+  row-gap: $association_padding;
 
   > .association-circle {
     border-color: var(--desc-colour);

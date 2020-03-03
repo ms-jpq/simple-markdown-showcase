@@ -4,29 +4,51 @@
   --card-shadow: #ccc;
 }
 
+$col_gap: 1em;
+$row_gap: 1em;
+
+/********
+ * MAIN *
+ ********/
+
 main {
-  grid-template-rows: auto;
-
-  $card_width: 45em;
-
-  grid-template-columns: repeat(1, 1fr);
-  @media (min-width: $card_width * 1) {
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @media (min-width: $card_width * 2) {
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @media (min-width: $card_width * 3) {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  $col_gap: 2em;
-  $row_gap: 2em;
-
-  grid-column-gap: $col_gap;
-  grid-row-gap: $row_gap;
+  column-gap: $col_gap;
+  row-gap: $row_gap;
 
   align-items: start;
+
+  > .card-gutter-sizer {
+    width: $col_gap;
+  }
+
+  > .card {
+    margin-top: ($row_gap / 2);
+    margin-bottom: ($row_gap / 2);
+  }
+
+  $card_width: 25em;
+  grid-template-columns: repeat(1, 1fr);
+  > .card-sizer {
+    width: $card_width - $col_gap * 2;
+  }
+  @media (min-width: $card_width * 2) {
+    > .card-sizer {
+      width: $card_width - $col_gap * 3;
+    }
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media (min-width: $card_width * 3) {
+    > .card-sizer {
+      width: $card_width - $col_gap * 4;
+    }
+    grid-template-columns: repeat(3, 1fr);
+  }
+  @media (min-width: $card_width * 4) {
+    > .card-sizer {
+      width: $card_width - $col_gap * 5;
+    }
+    grid-template-columns: repeat(4, 1fr);
+  }
 
   $padding_v: 1em;
   $padding_h: 1em;
@@ -36,6 +58,27 @@ main {
   padding-left: $padding_h;
   padding-right: $padding_h;
 }
+
+main {
+  > .card {
+    margin-top: initial;
+    margin-bottom: initial;
+  }
+}
+
+@media scripting {
+  main {
+    display: initial !important;
+    > .card {
+      margin-top: ($row_gap / 2);
+      margin-bottom: ($row_gap / 2);
+    }
+  }
+}
+
+/********
+ * CARD *
+ ********/
 
 main > .card {
   grid-template-columns: 1fr;
@@ -66,7 +109,4 @@ main > .card {
 
   box-shadow: 0 0 0.2em var(--card-shadow);
   background-color: var(--background-colour-light);
-}
-
-main > .card > .figure-img {
 }
