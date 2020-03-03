@@ -15,6 +15,7 @@ main {
   column-gap: $col_gap;
   row-gap: $row_gap;
 
+  justify-items: center;
   align-items: start;
 
   > .card-gutter-sizer {
@@ -59,21 +60,30 @@ main {
   padding-right: $padding_h;
 }
 
-main {
+@mixin noscript_layout() {
   > .card {
-    margin-top: initial;
-    margin-bottom: initial;
+    width: 100%;
   }
 }
 
-@media scripting {
-  main {
-    display: initial !important;
-    > .card {
-      margin-top: ($row_gap / 2);
-      margin-bottom: ($row_gap / 2);
-    }
+@mixin script_layout() {
+  display: initial !important;
+  > .card {
+    width: initial;
+    margin-top: ($row_gap / 2);
+    margin-bottom: ($row_gap / 2);
   }
+}
+
+main {
+  @include noscript_layout();
+  @media scripting {
+    @include script_layout();
+  }
+}
+
+main.scripting {
+  @include script_layout();
 }
 
 /********

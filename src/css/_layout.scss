@@ -129,7 +129,7 @@ body {
 }
 
 @mixin col2_view() {
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: minmax(min-content, 1fr) 3fr;
   grid-template-areas:
     "header main"
     "aside  main"
@@ -144,7 +144,7 @@ body {
 }
 
 @mixin col2_view_short() {
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: minmax(min-content, 1fr) 3fr;
   grid-template-areas:
     "aside  header"
     "aside  main"
