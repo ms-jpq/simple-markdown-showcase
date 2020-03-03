@@ -158,14 +158,18 @@ const commit = async (instructions: CommitInstruction[]) => {
 export type RenderProps = {
   config: StaticConfig
   repos: Repo[]
+  md_strings: { about_me: string; contact_me: string }
 }
 
-export const render = async ({ config, repos }: RenderProps) => {
+export const render = async ({ config, repos, md_strings }: RenderProps) => {
   const pages = await Promise.all([
     render_404({}),
     render_index({ config, repos }),
-    render_aboutme({}),
-    render_contactme({ contacts: config.aside.contacts }),
+    render_aboutme({ md_line: md_strings.about_me }),
+    render_contactme({
+      contacts: config.aside.contacts,
+      md_line: md_strings.contact_me,
+    }),
     render_repos({ repos }),
   ])
   const instructions = flat_map(id, pages)

@@ -1,21 +1,26 @@
 import React from "react"
 import { cn } from "../../domain_agnostic/isomorphic/dom"
+import { Markdown } from "../layout/md"
 import { RenderPage } from "../../consts"
 import {
   AsideAssociations,
   AssociationsProps,
-} from "../layout/aside/01_associations"
+} from "../layout/aside/02_associations"
 
 const js = ["pages/contact_me"]
 const css = ["pages/contact_me"]
 const page_name = "index.html"
 
-export type RenderProps = {} & AssociationsProps
+export type RenderProps = { md_line: string } & AssociationsProps
 
-export const render: RenderPage<RenderProps> = async ({ contacts }) => {
+export const render: RenderPage<RenderProps> = async ({
+  contacts,
+  md_line,
+}) => {
   const title = "Contact:Me"
   const page = (
     <React.Fragment>
+      <Markdown content={md_line} />
       <AsideAssociations contacts={contacts} />
     </React.Fragment>
   )

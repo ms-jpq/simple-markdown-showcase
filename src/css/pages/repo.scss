@@ -2,7 +2,7 @@
 @import "../markdown";
 
 main {
-  grid-template-columns: minmax(1fr, 100vw);
+  grid-template-columns: 1fr;
   grid-template-rows: auto;
 
   $article_padding_v: 2em;
@@ -12,6 +12,8 @@ main {
   padding-bottom: $article_padding_v;
   padding-left: $article_padding_h;
   padding-right: $article_padding_h;
+
+  background-color: var(--background-colour-light);
 
   > section {
     width: 100%;
@@ -28,6 +30,4 @@ main {
     justify-content: end;
     grid-column-gap: 1em;
   }
-
-  background-color: var(--background-colour-light);
 }

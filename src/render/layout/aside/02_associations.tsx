@@ -9,7 +9,7 @@ const Circle = ({ href, class_name }: CircleProps) => (
     className={cn("association-circle", "border-thin", "border-circle", "grid")}
     href={href}
   >
-    <i className={cn("grid-centre", class_name)}></i>
+    <i className={class_name}></i>
   </a>
 )
 

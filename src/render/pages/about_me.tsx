@@ -1,24 +1,19 @@
 import React from "react"
 import { cn } from "../../domain_agnostic/isomorphic/dom"
 import { RenderPage } from "../../consts"
+import { Markdown } from "../layout/md"
 
 const js: string[] = []
 const css = ["pages/about_me"]
 const page_name = "index.html"
 
-export type RenderProps = {}
+export type RenderProps = { md_line: string }
 
-export const render: RenderPage<RenderProps> = async ({}) => {
+export const render: RenderPage<RenderProps> = async ({ md_line }) => {
   const title = "About:Me"
   const page = (
     <React.Fragment>
-      <h1>h1</h1>
-      <h2>h2</h2>
-      <h3>h3</h3>
-      <h4>h4</h4>
-      <h5>h5</h5>
-      <h6>h6</h6>
-      <p>p</p>
+      <Markdown content={md_line} />
     </React.Fragment>
   )
   return [{ path: "about-me", page_name, title, js, css, page }]

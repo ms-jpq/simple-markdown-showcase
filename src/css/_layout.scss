@@ -22,7 +22,7 @@ $font_free: "Font Awesome 5 Free";
 }
 
 $side_padding_h: 1em;
-$side_padding_v: 2em;
+$side_padding_v: 1em;
 
 /**********
  * MIXINS *
@@ -89,8 +89,6 @@ p {
  ********/
 
 body {
-  $row_gap: 10em;
-
   grid-template-rows: auto auto 1fr;
 
   > header {
@@ -120,7 +118,7 @@ body {
       "header main"
       "aside  main"
       "footer main";
-    grid-row-gap: $row_gap;
+    grid-row-gap: $side_padding_h;
 
     > aside {
       display: grid;
@@ -141,6 +139,8 @@ body {
  **********/
 
 body > header {
+  padding-top: 1em;
+
   grid-template-rows: 1fr;
   grid-template-columns: auto;
   grid-auto-flow: column;
@@ -177,7 +177,9 @@ body > aside {
   grid-template-columns: 1fr;
   grid-template-rows: auto;
 
-  grid-column-gap: $side_padding_v;
+  justify-content: space-between;
+
+  grid-row-gap: $side_padding_h;
 
   padding-left: $side_padding_h;
   padding-right: $side_padding_h;
@@ -188,7 +190,9 @@ body > aside {
     }
   }
   > #nav {
-
+    ul {
+      line-height: 2em;
+    }
     ul > li {
       color: var(--nav-colour);
       &.active {
@@ -220,6 +224,10 @@ body > aside {
   grid-auto-columns: $association_size;
   grid-auto-rows: $association_size;
   grid-auto-flow: column;
+
+  align-content: center;
+  align-items: center;
+
   grid-column-gap: $association_padding;
   grid-row-gap: $association_padding;
 

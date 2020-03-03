@@ -42,6 +42,8 @@ main > .card {
   grid-template-rows: auto;
 
   $desc_padding: 1em;
+  $desc_padding_v: 1em;
+
   > .figure-img {
     grid-area: img;
   }
@@ -54,6 +56,7 @@ main > .card {
     grid-area: detail;
     padding-left: $desc_padding;
     padding-right: $desc_padding;
+    padding-bottom: $desc_padding_v;
   }
 
   grid-template-areas:

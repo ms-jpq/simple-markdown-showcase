@@ -1,17 +1,13 @@
 @import "../layout";
 
-body {
-  height: 100vh;
-  overflow-y: hidden;
-}
-
 main {
+  justify-content: center;
+  align-content: center;
+  align-items: center;
+
   background-color: var(--background-colour-light);
 
-  height: 100vh;
-
-  justify-content: center;
-  align-items: center;
+  text-align: center;
 
   > h1 {
     color: var(--desc-colour);

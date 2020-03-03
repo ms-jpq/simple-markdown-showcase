@@ -1,13 +1,14 @@
 import React from "react"
-import { AsideAssociations } from "./aside/01_associations"
+import { AsideAssociations } from "./aside/02_associations"
 import { AsideConfig, FooterConfig, HeaderConfig } from "../../consts"
-import { AsideNav } from "./aside/00_nav"
+import { AsideNav } from "./aside/01_nav"
 import { cn } from "../../domain_agnostic/isomorphic/dom"
 import { FooterDesc } from "./footer/00_desc"
 import { HeaderMenu } from "./header/00_menu"
 import { HeaderTitle } from "./header/01_title"
 import { map } from "../../domain_agnostic/isomorphic/list"
 import { Parent } from "../../domain_agnostic/vender/react"
+import { AsideAbout } from "./aside/00_about_me"
 
 export type HeadProps = {
   title: string
@@ -45,7 +46,7 @@ const Header = ({ title, menu }: HeaderProps) => (
 )
 
 const Main = ({ children }: Parent) => (
-  <main className={cn("grid")}>{children}</main>
+  <main className={cn("grid", "h100")}>{children}</main>
 )
 
 export type FooterProps = {} & FooterConfig
@@ -60,6 +61,7 @@ export type AsideProps = { dest: string; off: boolean } & AsideConfig
 
 const Aside = ({ dest, off, about_me, contacts, nav }: AsideProps) => (
   <aside id="left-panel">
+    <AsideAbout desc={about_me.desc} />
     <AsideNav off={off} dests={nav} dest={dest} />
     <AsideAssociations contacts={contacts} />
   </aside>
@@ -80,7 +82,7 @@ export const Page = ({
 }: PageProps) => (
   <html>
     <Head title={head.title} js={head.js} css={head.css} />
-    <body className={cn("grid", "vw100", "mp0")}>
+    <body className={cn("grid", "h100", "vw100", "mp0")}>
       <Header title={header.title} menu={header.menu} />
       <Main>{children}</Main>
       <Aside
