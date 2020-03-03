@@ -77,17 +77,23 @@ const page_name = "index.html"
 export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
   const showcase = filter((r) => r.showcase, repos)
 
-  const page = map(
-    ({ title, images, name, desc, display }) => (
-      <Card
-        link={name}
-        images={images}
-        title={title}
-        desc={desc}
-        hide_detail={(display || {}).hide_details}
-      />
-    ),
-    showcase,
+  const page = (
+    <React.Fragment>
+      {map(
+        ({ title, images, name, desc, display }) => (
+          <Card
+            link={name}
+            images={images}
+            title={title}
+            desc={desc}
+            hide_detail={(display || {}).hide_details}
+          />
+        ),
+        showcase,
+      )}
+      <div className={cn("card-sizer")}></div>
+      <div className={cn("card-gutter-sizer")}></div>
+    </React.Fragment>
   )
 
   return [{ js, css, page_name, title: config.title, path: "", page }]

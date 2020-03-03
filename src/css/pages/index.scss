@@ -28,10 +28,10 @@ main {
   }
 
   $card_width: 25em;
-  grid-template-columns: repeat(1, 1fr);
   > .card-sizer {
     width: $card_width - $col_gap * 2;
   }
+  grid-template-columns: repeat(1, 1fr);
   @media (min-width: $card_width * 2) {
     > .card-sizer {
       width: $card_width - $col_gap * 3;

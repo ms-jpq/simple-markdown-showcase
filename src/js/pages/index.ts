@@ -1,22 +1,30 @@
-import img_loaded from "imagesloaded"
 import Masonry from "masonry-layout"
-import { $, $$ } from "../../domain_agnostic/browser/dom"
+import { $, $$, img_loaded } from "../../domain_agnostic/browser/dom"
 import { map } from "../../domain_agnostic/isomorphic/list"
+import { sleep } from "../../domain_agnostic/isomorphic/prelude"
 
 const main = async () => {
   const grid = $(`main`)
   const images = $$<HTMLImageElement>(`img`)
+  grid?.classList.add("scripting")
+
   const masonry = new Masonry(grid!, {
     itemSelector: `.card`,
+    columnWidth: `.card-sizer`,
+    gutter: `.card-gutter-sizer`,
+    fitWidth: true,
     transitionDuration: "0.6s",
-    initLayout: false,
+    initLayout: true,
   })
+
   for (const image of images) {
     ;(async () => {
-      await new Promise((resolve) => img_loaded(image, resolve))
+      try {
+        await img_loaded(image)
+      } catch {}
       masonry.layout!()
     })()
   }
 }
 
-// main()
+main()
