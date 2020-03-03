@@ -72,6 +72,26 @@ p {
  * BODY *
  ********/
 
+body {
+  grid-template-rows: auto 1fr auto;
+
+  > header {
+    grid-area: header;
+    display: grid;
+  }
+  > main {
+    grid-area: main;
+  }
+  > footer {
+    grid-area: footer;
+  }
+  > aside {
+    grid-area: aside;
+  }
+
+  background-color: var(--background-colour-dark);
+}
+
 @mixin col1_view() {
   grid-template-columns: 1fr;
   grid-template-areas:
@@ -124,26 +144,6 @@ p {
     display: grid;
     padding-top: $side_padding_h;
   }
-}
-
-body {
-  grid-template-rows: auto 1fr auto;
-
-  > header {
-    grid-area: header;
-    display: grid;
-  }
-  > main {
-    grid-area: main;
-  }
-  > footer {
-    grid-area: footer;
-  }
-  > aside {
-    grid-area: aside;
-  }
-
-  background-color: var(--background-colour-dark);
 }
 
 body {
