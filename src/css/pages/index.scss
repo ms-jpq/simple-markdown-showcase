@@ -147,9 +147,7 @@ main > .card > .figure-img {
     background-color: var(--facade-background);
   }
 
-  &:active,
-  &:hover,
-  &:focus {
+  &:hover {
     > .figure-facade {
       display: grid;
     }

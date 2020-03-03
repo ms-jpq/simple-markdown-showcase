@@ -229,9 +229,7 @@ body > aside {
 
     a {
       text-decoration: unset;
-      &:active,
-      &:hover,
-      &:focus {
+      &:hover {
         color: var(--highlight-colour);
         font-weight: bold;
       }
@@ -263,9 +261,7 @@ body > aside {
 
     text-decoration: inherit;
 
-    &:active,
-    &:hover,
-    &:focus {
+    &:hover {
       color: var(--highlight-colour);
       border-color: var(--highlight-colour);
     }
@@ -284,9 +280,7 @@ a {
   text-decoration-style: solid;
   text-decoration-color: var(--highlight-colour);
 
-  &:active,
-  &:hover,
-  &:focus {
+  &:hover {
     text-decoration-style: dashed;
   }
 }
@@ -344,9 +338,7 @@ button.big-button {
 
   font-size: 100%;
 
-  &:active,
-  &:hover,
-  &:focus {
+  &:hover {
     color: var(--background-colour-light);
     background-color: var(--highlight-colour);
   }
@@ -355,9 +347,7 @@ button.big-button {
 a.invis-link {
   text-decoration: none;
 
-  &:active,
-  &:hover,
-  &:focus {
+  &:hover {
     text-decoration-line: underline;
     text-decoration-style: dotted;
     text-decoration-color: var(--highlight-colour);
