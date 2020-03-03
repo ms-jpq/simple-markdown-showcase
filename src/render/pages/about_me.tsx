@@ -3,7 +3,7 @@ import { cn } from "../../domain_agnostic/isomorphic/dom"
 import { RenderPage } from "../../consts"
 import { Markdown } from "../layout/md"
 
-const js: string[] = []
+const js = ["layout"]
 const css = ["pages/about_me"]
 const page_name = "index.html"
 

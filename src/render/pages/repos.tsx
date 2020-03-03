@@ -40,7 +40,7 @@ const Repo = ({ read_me, html_url, created_at, updated_at }: RepoProps) => (
   </React.Fragment>
 )
 
-const js = ["pages/repo"]
+const js = ["layout"]
 const css = ["pages/repo"]
 const page_name = "index.html"
 
