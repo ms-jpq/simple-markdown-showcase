@@ -117,7 +117,7 @@ body {
   grid-template-areas:
     "header main"
     "aside  main"
-    "footer footer";
+    "footer main";
   grid-row-gap: $side_padding_h;
 
   > aside {
@@ -179,9 +179,6 @@ body > footer {
   justify-content: center;
   align-content: center;
   align-items: center;
-
-  $footer_padding_v: 1em;
-  padding-top: $footer_padding_v;
 
   p {
     color: var(--desc-colour);
@@ -277,6 +274,16 @@ body > aside {
 a {
   all: inherit;
   cursor: pointer;
+
+  text-decoration-line: underline;
+  text-decoration-style: solid;
+  text-decoration-color: var(--highlight-colour);
+
+  &:active,
+  &:hover,
+  &:focus {
+    text-decoration-style: dashed;
+  }
 }
 
 img {
@@ -341,6 +348,8 @@ button.big-button {
 }
 
 a.invis-link {
+  text-decoration: none;
+
   &:active,
   &:hover,
   &:focus {

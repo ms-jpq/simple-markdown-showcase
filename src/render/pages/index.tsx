@@ -70,7 +70,7 @@ export type RenderProps = {
   repos: Repo[]
 }
 
-const js = ["pages/index"]
+const js = ["layout", "pages/index"]
 const css = ["pages/index"]
 const page_name = "index.html"
 

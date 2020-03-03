@@ -7,7 +7,7 @@ import {
   AssociationsProps,
 } from "../layout/aside/02_associations"
 
-const js = ["pages/contact_me"]
+const js = ["layout", "pages/contact_me"]
 const css = ["pages/contact_me"]
 const page_name = "index.html"
 
