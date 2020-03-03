@@ -83,12 +83,19 @@ p {
   > aside {
     display: none;
   }
+
+  > header {
+    justify-content: space-between;
+    > button {
+      display: initial;
+    }
+  }
 }
 
 @mixin col2_view() {
   grid-template-columns: 1fr 3fr;
   grid-template-areas:
-    "header header"
+    "header main"
     "aside  main"
     "footer main";
   grid-row-gap: $side_padding_h;
@@ -99,12 +106,16 @@ p {
 
   > header {
     justify-content: start;
-
     > button {
       display: none;
     }
   }
 }
+
+@mixin col2_view_short() {
+
+}
+
 
 body {
   grid-template-rows: auto 1fr auto;
@@ -123,16 +134,17 @@ body {
     grid-area: aside;
   }
 
-  @include col1_view();
-  @media (min-width: $transition_width) {
-    @include col2_view();
-  }
-
   background-color: var(--background-colour-dark);
 }
 
-body.col2 {
+body {
   @include col2_view();
+  @media (max-width: $transition_width) {
+    @include col1_view();
+    &.col2 {
+      @include col2_view_short();
+    }
+  }
 }
 
 /**********
@@ -145,8 +157,6 @@ body > header {
   grid-template-rows: 1fr;
   grid-template-columns: auto;
   grid-auto-flow: column;
-
-  justify-content: space-between;
 
   padding-left: $side_padding_h;
   padding-right: $side_padding_h;
