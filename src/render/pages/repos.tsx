@@ -20,7 +20,7 @@ const Repo = ({ read_me, html_url, created_at, updated_at }: RepoProps) => (
         </BigButton>
       </a>
     </section>
-    <section className={cn("repo-markdown", "grid")}>
+    <section className={cn("repo-body", "grid")}>
       <Markdown content={read_me} />
     </section>
     <section className={cn("repo-footer", "grid", "hidden")}>

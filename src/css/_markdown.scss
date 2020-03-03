@@ -11,6 +11,8 @@
 }
 
 .markdown {
+  max-width: 90vw;
+
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
@@ -53,13 +55,13 @@
     $col_gap: 0.5em;
 
     width: 100%;
+    max-width: inherit;
+    overflow-x: scroll;
 
     display: grid;
     grid-template-columns: $col_thic 1fr;
     grid-template-rows: 1fr;
     column-gap: $col_gap;
-
-    overflow-x: scroll;
 
     &::before {
       content: "";

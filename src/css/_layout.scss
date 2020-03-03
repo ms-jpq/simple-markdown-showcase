@@ -18,7 +18,7 @@ $font_free: "Font Awesome 5 Free";
   --image-placeholder-color: rgb(200, 200, 200);
   --nav-colour: #555555;
   --desc-colour: #999999;
-  --text-color: black;
+  --text-color: rgb(20, 20, 20);
 }
 
 $side_padding_h: 1em;
@@ -50,9 +50,6 @@ h5 {
 }
 h6 {
   font-size: 125%;
-}
-p {
-  font-size: 100%;
 }
 
 h1,
