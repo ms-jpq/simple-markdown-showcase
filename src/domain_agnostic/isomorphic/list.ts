@@ -87,6 +87,7 @@ export const all = <T>(predicate: (_: T) => boolean, lst: T[]) =>
   lst.every(predicate)
 
 export const take = <T>(n: number, lst: T[]) => lst.filter((_, i) => i < n)
+export const drop = <T>(n: number, lst: T[]) => lst.filter((_, i) => i >= n)
 
 export const chunk = <T>(n: number, lst: T[]) => {
   const res: T[][] = []

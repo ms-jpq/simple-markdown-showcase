@@ -1,3 +1,1 @@
 # Simple Markdown Showcase
-
-

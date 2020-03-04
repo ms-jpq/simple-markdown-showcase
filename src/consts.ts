@@ -8,6 +8,7 @@ export const static_config = {
   src_dir: "src",
   out_dir: "out",
   dist_dir: "dist",
+  release_dir: "ms-jpq.github.io/docs",
   temp_dir: "temp",
   img_cache_dir: "img_cache",
   port: 8080,

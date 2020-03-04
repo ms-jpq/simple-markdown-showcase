@@ -1,6 +1,7 @@
-#!/usr/bin/env ts-node --transpile-only
+#!/usr/bin/env ts-node
 import { additional_pages, static_config, StaticConfig } from "./consts"
 import { big_print } from "./domain_agnostic/node/prelude"
+import { drop, fst } from "./domain_agnostic/isomorphic/list"
 import { extract } from "./github/api"
 import { join } from "./domain_agnostic/node/path"
 import { parse } from "./domain_agnostic/vender/yaml"
@@ -8,14 +9,15 @@ import { render } from "./render/render"
 import { rmdir, slurp, spit } from "./domain_agnostic/node/fs"
 
 const cleanup = () =>
-  Promise.all([
-    rmdir(static_config.img_cache_dir),
-    rmdir(static_config.out_dir),
-    rmdir(static_config.dist_dir),
-  ])
+  Promise.all([rmdir(static_config.out_dir), rmdir(static_config.dist_dir)])
 
 const main = async () => {
-  // await cleanup()
+  const argv = drop(2, process.argv)
+
+  if (fst(argv) === "clean") {
+    console.log("cleaning up...")
+    await cleanup()
+  }
 
   console.log(big_print("render start"))
   console.time("pre_render")
