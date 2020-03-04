@@ -1,6 +1,6 @@
 import React from "react"
 import { AsideAssociations } from "./aside/02_associations"
-import { AsideConfig, FooterConfig, HeaderConfig } from "../../consts"
+import { AsideConfig, HeaderConfig } from "../../consts"
 import { AsideNav } from "./aside/01_nav"
 import { cn } from "../../domain_agnostic/isomorphic/dom"
 import { FooterDesc } from "./footer/00_desc"
@@ -49,19 +49,23 @@ const Main = ({ children }: Parent) => (
   <main className={cn("grid")}>{children}</main>
 )
 
-export type FooterProps = {} & FooterConfig
+export type FooterProps = { md_line: string }
 
-const Footer = ({ desc }: FooterProps) => (
+const Footer = ({ md_line }: FooterProps) => (
   <footer className={cn("grid")}>
-    <FooterDesc desc={desc} />
+    <FooterDesc md_line={md_line} />
   </footer>
 )
 
-export type AsideProps = { dest: string; off: boolean } & AsideConfig
+export type AsideProps = {
+  md_line: string
+  dest: string
+  off: boolean
+} & AsideConfig
 
-const Aside = ({ dest, off, about_me, contacts, nav }: AsideProps) => (
+const Aside = ({ dest, off, md_line, contacts, nav }: AsideProps) => (
   <aside id="left-panel">
-    <AsideAbout desc={about_me.desc} />
+    <AsideAbout md_line={md_line} />
     <AsideNav off={off} dests={nav} dest={dest} />
     <AsideAssociations contacts={contacts} />
   </aside>
@@ -88,11 +92,11 @@ export const Page = ({
       <Aside
         off={aside.off}
         dest={aside.dest}
-        about_me={aside.about_me}
+        md_line={aside.md_line}
         nav={aside.nav}
         contacts={aside.contacts}
       />
-      <Footer desc={footer.desc} />
+      <Footer md_line={footer.md_line} />
     </body>
   </html>
 )

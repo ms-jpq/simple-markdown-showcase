@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node --transpile-only
 import { additional_pages, static_config, StaticConfig } from "./consts"
-import { big_print, set_defaults } from "./domain_agnostic/node/prelude"
+import { big_print } from "./domain_agnostic/node/prelude"
 import { extract } from "./github/api"
 import { join } from "./domain_agnostic/node/path"
 import { parse } from "./domain_agnostic/vender/yaml"
@@ -20,8 +20,10 @@ const main = async () => {
   console.log(big_print("render start"))
   console.time("pre_render")
 
-  const [yml, about_me, contact_me] = await Promise.all([
+  const [yml, aside, footer, about_me, contact_me] = await Promise.all([
     slurp(static_config.config),
+    slurp(additional_pages._aside),
+    slurp(additional_pages._footer),
     slurp(additional_pages.about_me),
     slurp(additional_pages.contact_me),
   ])
@@ -38,10 +40,9 @@ const main = async () => {
   await render({
     config,
     repos: info.repos,
-    md_strings: { about_me, contact_me },
+    md_strings: { about_me, contact_me, aside, footer },
   })
   console.timeLog("render", big_print("render end"))
 }
 
-set_defaults()
 main()

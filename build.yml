@@ -6,14 +6,6 @@ header:
   menu: Menu
 
 aside:
-  about_me:
-    desc:
-      - >-
-        I am a polyglot programmer and software engineer with more than 5 years
-        of experience.
-      - >-
-        Professional interests: functional design, metaprogramming.
-
   nav:
     - title: home
       link: ""
@@ -28,8 +20,3 @@ aside:
     github: ms-jpq
     dockerhub: msjpq
     stackoverflow: 15744711
-
-footer:
-  desc:
-    - >-
-      © 2020 ms-jpq

@@ -28,13 +28,14 @@ const watch = (settings: Settings) =>
     })
 
 const main = async () => {
+  const exts = ["yml", "json", "md", "ts", "tsx", "scss"]
   const git_ignore = await slurp(".gitignore")
   const ignore = parse(git_ignore)
   const execMap = {
     main: "src/entry.ts",
   }
   watch({
-    ext: ["yml", "json", "ts", "tsx", "scss"].join(),
+    ext: exts.join(),
     colours: true,
     ignore,
     execMap,

@@ -26,6 +26,8 @@ export const repo_resources = {
 }
 
 export const additional_pages = {
+  _aside: "pages/_aside.md",
+  _footer: "pages/_footer.md",
   about_me: "pages/about_me.md",
   contact_me: "pages/contact_me.md",
 }
@@ -43,17 +45,12 @@ export type HeaderConfig = {
   menu: string
 }
 
-export type FooterConfig = {
-  desc: string[]
-}
-
 export type AsideConfig = {
   contacts: ContactsConfig
   nav: {
     title: string
     link: string
   }[]
-  about_me: { desc: string[] }
 }
 
 export type StaticConfig = {
@@ -61,7 +58,6 @@ export type StaticConfig = {
   title: string
   aside: AsideConfig
   header: HeaderConfig
-  footer: FooterConfig
 }
 
 export type RepoConfig = {

@@ -62,7 +62,12 @@ const commit = async (instructions: CommitInstruction[]) => {
 export type RenderProps = {
   config: StaticConfig
   repos: Repo[]
-  md_strings: { about_me: string; contact_me: string }
+  md_strings: {
+    aside: string
+    footer: string
+    about_me: string
+    contact_me: string
+  }
 }
 
 export const render = async ({ config, repos, md_strings }: RenderProps) => {
@@ -88,8 +93,12 @@ export const render = async ({ config, repos, md_strings }: RenderProps) => {
             ...config,
             aside: {
               ...config.aside,
+              md_line: md_strings.aside,
               dest: i.path,
               off: i.page_name !== "index.html",
+            },
+            footer: {
+              md_line: md_strings.footer,
             },
           },
         }),

@@ -1,17 +1,12 @@
 import React from "react"
 import { cn } from "../../../domain_agnostic/isomorphic/dom"
-import { map } from "../../../domain_agnostic/isomorphic/list"
+import { Markdown } from "../markdown"
 
 export type AboutMeProps = {
-  desc: string[]
+  md_line: string
 }
-export const AsideAbout = ({ desc }: AboutMeProps) => (
+export const AsideAbout = ({ md_line }: AboutMeProps) => (
   <section id="about-me" className={cn("grid")}>
-    {map(
-      (d) => (
-        <p>{d}</p>
-      ),
-      desc,
-    )}
+    <Markdown content={md_line} />
   </section>
 )

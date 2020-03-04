@@ -11,10 +11,6 @@ export type RenderProps = { md_line: string }
 
 export const render: RenderPage<RenderProps> = async ({ md_line }) => {
   const title = "About:Me"
-  const page = (
-    <React.Fragment>
-      <Markdown content={md_line} />
-    </React.Fragment>
-  )
+  const page = <Markdown content={md_line} />
   return [{ path: "about-me", page_name, title, js, css, page }]
 }
