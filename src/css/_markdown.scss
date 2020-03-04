@@ -11,7 +11,8 @@
 }
 
 .markdown {
-  max-width: 85vw;
+  $max_width: 85vw;
+  max-width: $max_width;
 
   display: grid;
   grid-template-columns: 1fr;
@@ -53,6 +54,7 @@
     $col_gap: 0.5em;
 
     width: 100%;
+    max-width: inherit;
     overflow-x: scroll;
 
     display: grid;
