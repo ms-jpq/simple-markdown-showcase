@@ -1,8 +1,8 @@
 ---
 title: Simple Markdown Showcase
 
-showcase: False
+showcase: True
 images: []
 
 desc: >-
-  PLACE HOLDER DESC
+  Generate responsive personal protofilo with Github pages and markdown

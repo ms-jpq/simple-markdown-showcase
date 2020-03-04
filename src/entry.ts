@@ -31,11 +31,11 @@ const main = async () => {
   ])
 
   const config: StaticConfig = parse(yml)
-  const info = JSON.parse(
-    await slurp(join(static_config.temp_dir, "info.json")),
-  )
-  // const info = await extract(config.user, static_config.github_token)
-  // await spit(JSON.stringify(info), join(static_config.temp_dir, "info.json"))
+  // const info = JSON.parse(
+  //   await slurp(join(static_config.temp_dir, "info.json")),
+  // )
+  const info = await extract(config.user, static_config.github_token)
+  await spit(JSON.stringify(info), join(static_config.temp_dir, "info.json"))
   console.timeLog("pre_render", big_print("finished pre-render"))
 
   console.time("render")
