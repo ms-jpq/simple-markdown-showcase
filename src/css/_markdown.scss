@@ -1,13 +1,13 @@
 @import "../../../node_modules/highlight.js/styles/github.css";
 :root {
-  --code-colour: rgb(250, 250, 250);
+  --code-colour: rgb(245, 245, 245);
 }
 
-@mixin md_border($colour) {
+@mixin md_border() {
   border-style: solid;
   border-width: thin;
   border-radius: 0.2em;
-  border-color: $colour;
+  border-color: transparent;
 }
 
 .markdown {
@@ -23,23 +23,11 @@
 
   align-content: start;
 
-  h1,
-  h2,
-  h3,
-  h4,
-  h5,
-  h6,
-  p {
-    > * {
-      display: inline;
-    }
-  }
-
   img {
     max-width: 100%;
     height: auto;
 
-    @include md_border(transparent);
+    @include md_border();
   }
 
   ul > li {
@@ -69,8 +57,7 @@
   }
 
   pre > code {
-    background-color: inherit;
-    @include md_border(var(--code-colour));
+    @include md_border();
   }
 
   code {
