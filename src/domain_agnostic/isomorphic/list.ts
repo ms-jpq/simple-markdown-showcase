@@ -102,6 +102,18 @@ export const chunk = <T>(n: number, lst: T[]) => {
 
 export const join = <T>(sep: string, lst: T[]) => lst.join(sep)
 
+export const partition = <T, U extends keyof any>(
+  key_by: (_: T) => U,
+  lst: T[],
+): Record<U, T[] | undefined> => {
+  const res = Object.create(null)
+  for (const ele of lst) {
+    const key = key_by(ele)
+    ;(res[key] || (res[key] = [])).push(ele)
+  }
+  return res
+}
+
 export const generate = <T>(generator: () => T, n: number) => {
   const lst = []
   for (const _ of range(1, n)) {
