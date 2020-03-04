@@ -45,7 +45,7 @@ const resize = async ({ src, new_name, width, height }: ResizeOpts) => {
         })
         const err = stderr.toString()
         if (err) {
-          console.error(err)
+          throw new Error(err)
         }
         break
       default:

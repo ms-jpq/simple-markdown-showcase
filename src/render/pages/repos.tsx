@@ -2,7 +2,7 @@ import React from "react"
 import { cn } from "../../domain_agnostic/isomorphic/dom"
 import { flat_map, map } from "../../domain_agnostic/isomorphic/list"
 import { id, str } from "../../domain_agnostic/isomorphic/prelude"
-import { Markdown } from "../layout/md"
+import { Markdown } from "../layout/markdown"
 import { RenderPage, Repo } from "../../consts"
 import { BigButton } from "../layout/components/big_button"
 
@@ -13,17 +13,17 @@ export type RepoProps = Pick<
 
 const Repo = ({ read_me, html_url, created_at, updated_at }: RepoProps) => (
   <React.Fragment>
-    <section className={cn("repo-header", "grid")}>
+    <section className={cn("repo-header", "grid", "m-auto")}>
       <a href={html_url} className={cn("invis-link")}>
         <BigButton>
           View on Github <i className="fab fa-github"></i>
         </BigButton>
       </a>
     </section>
-    <section className={cn("repo-body", "grid")}>
+    <section className={cn("repo-body", "grid", "m-auto")}>
       <Markdown content={read_me} />
     </section>
-    <section className={cn("repo-footer", "grid", "hidden")}>
+    <section className={cn("repo-footer", "grid", "m-auto", "hidden")}>
       <span>
         Created at:{" "}
         <time dateTime={str(created_at)}>

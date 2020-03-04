@@ -1,7 +1,7 @@
 import React from "react"
 import { cn } from "../../domain_agnostic/isomorphic/dom"
 import { RenderPage } from "../../consts"
-import { Markdown } from "../layout/md"
+import { Markdown } from "../layout/markdown"
 
 const js = ["layout"]
 const css = ["pages/about_me"]

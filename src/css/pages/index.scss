@@ -4,6 +4,7 @@
   --card-shadow: #ccc;
   --facade-colour: rgb(140, 140, 140);
   --facade-background: rgba(250, 250, 250, 0.8);
+  --image-placeholder-color: rgb(200, 200, 200);
 }
 
 $col_gap: 1em;
@@ -101,6 +102,9 @@ main > .card {
 
   > .figure-img {
     grid-area: img;
+    img {
+      background-color: var(--image-placeholder-color);
+    }
   }
   > .figure-title {
     grid-area: title;

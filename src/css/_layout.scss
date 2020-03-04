@@ -15,7 +15,6 @@ $font_free: "Font Awesome 5 Free";
   --background-colour-dark: rgb(245, 245, 245);
   --background-colour-light: rgb(255, 255, 255);
   --highlight-colour: rgb(240, 80, 130);
-  --image-placeholder-color: rgb(200, 200, 200);
   --nav-colour: #555555;
   --desc-colour: #999999;
   --text-color: rgb(20, 20, 20);
@@ -282,9 +281,7 @@ a {
   }
 }
 
-img {
-  background-color: var(--image-placeholder-color);
-}
+
 
 ul {
   list-style-type: none;

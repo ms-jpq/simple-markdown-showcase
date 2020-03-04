@@ -1,6 +1,6 @@
 import React from "react"
 import { cn } from "../../domain_agnostic/isomorphic/dom"
-import { Markdown } from "../layout/md"
+import { Markdown } from "../layout/markdown"
 import { RenderPage } from "../../consts"
 import {
   AsideAssociations,

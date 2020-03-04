@@ -11,11 +11,16 @@
 }
 
 .markdown {
-  max-width: 90vw;
+  max-width: 85vw;
 
   display: grid;
   grid-template-columns: 1fr;
   grid-template-rows: auto;
+
+  justify-items: start;
+  align-items: start;
+
+  align-content: start;
 
   h1,
   h2,
@@ -50,12 +55,12 @@
     }
   }
 
-  pre {
+  pre,
+  blockquote {
     $col_thic: 0.3em;
     $col_gap: 0.5em;
 
     width: 100%;
-    max-width: inherit;
     overflow-x: scroll;
 
     display: grid;
@@ -67,11 +72,11 @@
       content: "";
       background-color: var(--highlight-colour);
     }
+  }
 
-    > code {
-      background-color: unset;
-      @include md_border(var(--code-colour));
-    }
+  pre > code {
+    background-color: inherit;
+    @include md_border(var(--code-colour));
   }
 
   code {
