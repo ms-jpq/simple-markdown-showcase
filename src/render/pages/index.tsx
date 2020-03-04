@@ -49,7 +49,7 @@ const Card = ({ images, link, title, desc, hide_detail }: CardProps) => {
       ) : (
         undefined
       )}
-      <h6
+      <h4
         className={cn(
           "figure-title",
           "text-uppercase",
@@ -60,7 +60,7 @@ const Card = ({ images, link, title, desc, hide_detail }: CardProps) => {
         <a href={link} className={cn("invis-link")}>
           {title}
         </a>
-      </h6>
+      </h4>
       <figcaption
         className={cn("figure-detail", "text-ellipsis", "text-justify")}
       >

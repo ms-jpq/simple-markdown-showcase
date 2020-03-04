@@ -16,8 +16,8 @@ const md = markdown({ highlight })
 export type MarkDownProps = { content: string }
 
 export const Markdown = ({ content }: MarkDownProps) => (
-  <article
+  <div
     className={cn("markdown")}
     dangerouslySetInnerHTML={{ __html: md.render(content) }}
-  ></article>
+  ></div>
 )

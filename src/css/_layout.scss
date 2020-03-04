@@ -1,7 +1,7 @@
+@import "../../../node_modules/bootstrap/dist/css/bootstrap-reboot.css";
+@import "../../../node_modules/@fortawesome/fontawesome-free/css/all.css";
 @import "./classes";
 @import "./markdown";
-@import "../../../node_modules/@fortawesome/fontawesome-free/css/all.css";
-@import "../../../node_modules/roboto-fontface/css/roboto/roboto-fontface.css";
 /********
  * VARS *
  ********/
@@ -11,7 +11,6 @@ $transition_width: 60em;
 $font_free: "Font Awesome 5 Free";
 
 :root {
-  --page-font: "Roboto", sans-serif;
 
   --background-colour-dark: rgb(245, 245, 245);
   --background-colour-light: rgb(255, 255, 255);
@@ -29,40 +28,7 @@ $side_padding_v: 1em;
  *********/
 
 body {
-  font-family: var(--page-font);
   color: var(--text-color);
-}
-
-h1 {
-  font-size: 250%;
-}
-h2 {
-  font-size: 225%;
-}
-h3 {
-  font-size: 200%;
-}
-h4 {
-  font-size: 175%;
-}
-h5 {
-  font-size: 150%;
-}
-h6 {
-  font-size: 125%;
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-p {
-  margin-top: 0.5em;
-  margin-bottom: 0.5em;
-  text-decoration: dotted;
-  text-decoration-color: var(--highlight-colour);
 }
 
 /********
