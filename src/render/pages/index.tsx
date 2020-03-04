@@ -28,8 +28,7 @@ export type CardProps = {
   Customization
 
 const Card = ({ images, link, title, desc, hide_detail }: CardProps) => {
-  // TODO -- REMOVE THIS
-  images = images || []
+  assert(images !== undefined, `no images: ${title}`)
   assert(
     !(hide_detail && images.length === 0),
     big_print(
