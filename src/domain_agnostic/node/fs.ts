@@ -1,7 +1,6 @@
-import assert from "assert"
-import { dirname, join } from "./path"
+import { dirname, join, relative } from "./path"
 import { exists as exists_cb, promises as fs } from "fs"
-import { map, partition, flat_map } from "../isomorphic/list"
+import { flat_map, map, partition } from "../isomorphic/list"
 
 export const exists = (path: string) =>
   new Promise<boolean>((resolve) => exists_cb(path, resolve))
@@ -60,4 +59,23 @@ export const readdir = async (
   return { dirs, files }
 }
 
-export const cp = async (src: string, dest: string) => {}
+export const cp = async (src: string, dest: string) => {
+  const stat = await fs.lstat(src)
+  if (stat.isFile()) {
+    await mkdir(dirname(dest))
+    await fs.copyFile(src, dest)
+  } else if (stat.isDirectory()) {
+    const info = await readdir(Infinity, src)
+
+    const dest_dirs = map((d) => join(dest, relative(src, d)), info.dirs)
+    const dest_files = map(
+      (f) => ({ s: f, d: join(dest, relative(src, f)) }),
+      info.files,
+    )
+
+    await Promise.all([mkdir(dest), ...map(mkdir, dest_dirs)])
+    await Promise.all(map((f) => fs.copyFile(f.s, f.d), dest_files))
+  } else {
+    throw new Error(`Not dir or file :: ${src}`)
+  }
+}
