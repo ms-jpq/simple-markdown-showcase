@@ -38,11 +38,11 @@ const Card = ({ images, link, title, desc, hide_detail }: CardProps) => {
   )
   const image = fst(images)
   return (
-    <figure className={cn("card", "grid", "overflow-hide-x")}>
+    <figure className={cn("card", "d-grid")}>
       {image ? (
-        <a href={link} className={cn("figure-img", "grid", "mp0")}>
+        <a href={link} className={cn("figure-img", "d-grid", "mp-0")}>
           <img className={cn("img-responsive")} src={image} />
-          <div className={cn("figure-facade", "grid")}>
+          <div className={cn("figure-facade", "d-grid")}>
             <i className="fas fa-chevron-right"></i>
           </div>
         </a>

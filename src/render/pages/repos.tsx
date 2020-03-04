@@ -13,17 +13,17 @@ export type RepoProps = Pick<
 
 const Repo = ({ read_me, html_url, created_at, updated_at }: RepoProps) => (
   <React.Fragment>
-    <section className={cn("repo-header", "grid", "m-auto")}>
+    <section className={cn("repo-header", "d-grid", "m-auto")}>
       <a href={html_url} className={cn("invis-link")}>
         <BigButton>
           View on Github <i className="fab fa-github"></i>
         </BigButton>
       </a>
     </section>
-    <section className={cn("repo-body", "grid", "m-auto")}>
+    <section className={cn("repo-body", "d-grid", "m-auto")}>
       <Markdown content={read_me} />
     </section>
-    <section className={cn("repo-footer", "grid", "m-auto", "hidden")}>
+    <section className={cn("repo-footer", "d-grid", "m-auto", "hidden")}>
       <span>
         Created at:{" "}
         <time dateTime={str(created_at)}>

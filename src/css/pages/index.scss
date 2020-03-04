@@ -94,6 +94,8 @@ main.scripting {
  ********/
 
 main > .card {
+  overflow-x: hidden;
+
   grid-template-columns: 1fr;
   grid-template-rows: auto;
 

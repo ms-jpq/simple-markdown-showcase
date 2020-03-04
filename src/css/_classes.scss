@@ -2,31 +2,31 @@
  * View *
  ********/
 
-.w100 {
+.w-100 {
   width: 100%;
 }
 
-.h100 {
+.h-100 {
   height: 100%;
 }
 
-.vw100 {
+.vw-100 {
   width: 100vw;
 }
 
-.vh100 {
+.vh-100 {
   width: 100vh;
 }
 
-.m0 {
+.m-0 {
   margin: 0;
 }
 
-.p0 {
+.p-0 {
   padding: 0;
 }
 
-.mp0 {
+.mp-0 {
   margin: 0;
   padding: 0;
 }
@@ -40,12 +40,8 @@
  * Display *
  ***********/
 
-.grid {
+.d-grid {
   display: grid;
-}
-
-.overflow-hide-x {
-  overflow-x: hidden;
 }
 
 .hidden {

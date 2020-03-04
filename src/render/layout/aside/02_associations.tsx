@@ -6,7 +6,12 @@ export type CircleProps = { href: string; class_name: string }
 
 const Circle = ({ href, class_name }: CircleProps) => (
   <a
-    className={cn("association-circle", "border-thin", "border-circle", "grid")}
+    className={cn(
+      "association-circle",
+      "border-thin",
+      "border-circle",
+      "d-grid",
+    )}
     href={href}
   >
     <i className={class_name}></i>
@@ -20,7 +25,7 @@ export const AsideAssociations = ({
 }: AssociationsProps) => (
   <section
     id="associations"
-    className={cn("associations", "grid", "text-centre")}
+    className={cn("associations", "d-grid", "text-centre")}
   >
     <Circle href={`mailto:${email}`} class_name={"far fa-envelope"} />
     <Circle

@@ -39,20 +39,20 @@ const Head = ({ title, js, css }: HeadProps) => (
 export type HeaderProps = {} & HeaderConfig
 
 const Header = ({ title, menu }: HeaderProps) => (
-  <header className={cn("grid")}>
+  <header className={cn("d-grid")}>
     <HeaderMenu menu_title={menu} />
     <HeaderTitle title={title} />
   </header>
 )
 
 const Main = ({ children }: Parent) => (
-  <main className={cn("grid")}>{children}</main>
+  <main className={cn("d-grid")}>{children}</main>
 )
 
 export type FooterProps = { md_line: string }
 
 const Footer = ({ md_line }: FooterProps) => (
-  <footer className={cn("grid")}>
+  <footer className={cn("d-grid")}>
     <FooterDesc md_line={md_line} />
   </footer>
 )
@@ -86,7 +86,7 @@ export const Page = ({
 }: PageProps) => (
   <html>
     <Head title={head.title} js={head.js} css={head.css} />
-    <body className={cn("grid", "vw100", "mp0")}>
+    <body className={cn("d-grid", "vw-100", "mp-0")}>
       <Header title={header.title} menu={header.menu} />
       <Main>{children}</Main>
       <Aside
