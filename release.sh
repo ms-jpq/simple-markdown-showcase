@@ -1,6 +1,18 @@
 #!/usr/bin/env bash
 
+PATH="$PWD/node_modules/.bin:$PATH"
 ./src/entry.ts clean
 
-rm -r ms-jpq.github.io/docs
-cp -r dist ms-jpq.github.io/docs
+(
+  cd ./artifacts || exit
+  ls -1 | xargs -l rm -r
+)
+
+rsync -a dist/ templates/ artifacts/
+
+(
+  cd ./artifacts || exit
+  git add .
+  git commit -m "build - $(date)"
+  git push
+)

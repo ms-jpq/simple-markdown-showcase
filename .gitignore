@@ -13,4 +13,4 @@ yarn.lock
 .cache
 img_cache/
 tsc/
-ms-jpq.github.io/
+artifacts/
