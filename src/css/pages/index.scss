@@ -99,24 +99,31 @@ main > .card {
   grid-template-columns: 1fr;
   grid-template-rows: auto;
 
-  $desc_padding: 1em;
+  $title_padding_v: 0.5em;
+  $desc_padding_h: 1em;
   $desc_padding_v: 1em;
 
   > .figure-img {
     grid-area: img;
+
     img {
       background-color: var(--image-placeholder-color);
     }
   }
   > .figure-title {
     grid-area: title;
-    padding-left: $desc_padding;
-    padding-right: $desc_padding;
+
+    margin-top: $title_padding_v;
+    margin-bottom: $title_padding_v;
+
+    padding-left: $desc_padding_h;
+    padding-right: $desc_padding_h;
   }
   > .figure-detail {
     grid-area: detail;
-    padding-left: $desc_padding;
-    padding-right: $desc_padding;
+
+    padding-left: $desc_padding_h;
+    padding-right: $desc_padding_h;
     padding-bottom: $desc_padding_v;
   }
 

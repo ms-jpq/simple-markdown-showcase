@@ -11,13 +11,11 @@ $transition_width: 60em;
 $font_free: "Font Awesome 5 Free";
 
 :root {
-
   --background-colour-dark: rgb(245, 245, 245);
   --background-colour-light: rgb(255, 255, 255);
   --highlight-colour: rgb(240, 80, 130);
   --nav-colour: #555555;
   --desc-colour: #999999;
-  --text-color: rgb(20, 20, 20);
 }
 
 $side_padding_h: 1em;
@@ -26,10 +24,6 @@ $side_padding_v: 1em;
 /*********
  * FONTS *
  *********/
-
-body {
-  color: var(--text-color);
-}
 
 /********
  * BODY *
@@ -212,13 +206,16 @@ body > aside {
   grid-auto-rows: $association_size;
   grid-auto-flow: column;
 
-  justify-items: center;
-  align-items: center;
-
   column-gap: $association_padding;
   row-gap: $association_padding;
 
   > .association-circle {
+    width: $association_size;
+    height: $association_size;
+
+    justify-items: center;
+    align-items: center;
+
     border-color: var(--desc-colour);
     color: var(--desc-colour);
 
@@ -236,15 +233,18 @@ body > aside {
  ********/
 
 a {
-  all: inherit;
-  cursor: pointer;
+  color: inherit;
 
   text-decoration-line: underline;
   text-decoration-style: solid;
   text-decoration-color: var(--highlight-colour);
 
-  &:hover {
+  &:active,
+  &:hover,
+  &:focus {
+    color: inherit;
     text-decoration-style: dashed;
+    text-decoration-color: var(--highlight-colour);
   }
 }
 
