@@ -32,6 +32,8 @@ $side_padding_v: 1em;
 body {
   grid-template-rows: auto 1fr auto;
 
+  row-gap: $side_padding_h;
+
   > header {
     grid-area: header;
     display: grid;
@@ -73,7 +75,6 @@ body {
     "header"
     "main"
     "footer";
-  row-gap: initial;
 
   > aside {
     display: none;
@@ -91,7 +92,6 @@ body {
     "header main"
     "aside  main"
     "footer main";
-  row-gap: $side_padding_h;
 
   > aside {
     display: grid;
@@ -106,7 +106,6 @@ body {
     "aside  header"
     "aside  main"
     "footer footer";
-  row-gap: $side_padding_h;
 
   > aside {
     display: grid;
