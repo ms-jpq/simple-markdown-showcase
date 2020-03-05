@@ -1,8 +1,10 @@
 import Masonry from "masonry-layout"
 import { $, $$, img_loaded } from "../../domain_agnostic/browser/dom"
-import { sleep } from "../../domain_agnostic/isomorphic/prelude"
+import { counter, sleep } from "../../domain_agnostic/isomorphic/prelude"
+import { map } from "../../domain_agnostic/isomorphic/list"
 
 const main = async () => {
+  console.time("t")
   const grid = $(`.masonry`)
   const images = $$<HTMLImageElement>(`img`)
   grid?.classList.add("scripting")
@@ -14,19 +16,27 @@ const main = async () => {
     initLayout: true,
   })
 
-  for (const image of images) {
-    ;(async () => {
+  const all_loaded = Promise.all(
+    map(async (image) => {
       try {
         await img_loaded(image)
       } catch (err) {
         console.error(err)
       }
       masonry.layout!()
-    })()
-  }
+    }, images),
+  )
 
-  for (const t of [100, 250, 500, 1000]) {
-    await sleep(t)
+  const inc = counter()
+  let flag = true
+  ;(async () => {
+    await all_loaded
+    flag = false
+    console.timeLog("t", "✨ - Images loaded - ✨")
+  })()
+
+  while (flag && inc() < 25) {
+    await sleep(250)
     masonry.layout!()
   }
 }

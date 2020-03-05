@@ -80,35 +80,6 @@ main {
 
   > .figure-img {
     grid-area: img;
-
-    text-decoration: none;
-    font-size: 250%;
-
-    img {
-      background-color: var(--image-placeholder-color);
-    }
-
-    > img,
-    .figure-facade {
-      grid-row: 1;
-      grid-column: 1;
-    }
-
-    > .figure-facade {
-      display: none;
-
-      justify-items: center;
-      align-items: center;
-
-      color: var(--facade-colour);
-      background-color: var(--facade-background);
-    }
-
-    &:hover {
-      > .figure-facade {
-        display: grid;
-      }
-    }
   }
 
   > .figure-title {
@@ -133,11 +104,50 @@ main {
     "img"
     "title"
     "detail";
-
-  box-shadow: 0 0 0.2em var(--card-shadow);
-  background-color: var(--background-colour-light);
 }
 
-/**********
- * FACADE *
- **********/
+.masonry > .card {
+  box-shadow: 0 0 0.2em var(--card-shadow);
+  background-color: var(--background-colour-light);
+
+  &:hover,
+  &:focus,
+  &:active {
+    box-shadow: 0 0 0.5em var(--card-shadow);
+  }
+}
+
+/*******
+ * IMG *
+ *******/
+
+.card > .figure-img {
+  text-decoration: none;
+  font-size: 250%;
+
+  img {
+    background-color: var(--image-placeholder-color);
+  }
+
+  > img,
+  .figure-facade {
+    grid-row: 1;
+    grid-column: 1;
+  }
+
+  > .figure-facade {
+    display: none;
+
+    justify-items: center;
+    align-items: center;
+
+    color: var(--facade-colour);
+    background-color: var(--facade-background);
+  }
+
+  &:hover {
+    > .figure-facade {
+      display: grid;
+    }
+  }
+}

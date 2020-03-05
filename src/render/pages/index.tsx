@@ -2,8 +2,13 @@ import assert from "assert"
 import React from "react"
 import { big_print } from "../../domain_agnostic/node/prelude"
 import { cn } from "../../domain_agnostic/isomorphic/dom"
-import { filter, fst, map } from "../../domain_agnostic/isomorphic/list"
 import { RenderPage, Repo, StaticConfig } from "../../consts"
+import {
+  filter,
+  fst,
+  map,
+  sort_by_keys,
+} from "../../domain_agnostic/isomorphic/list"
 
 export type Customization = {
   hide_detail: boolean
@@ -80,7 +85,10 @@ const page_name = "index.html"
 
 export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
   const showcase = filter((r) => r.showcase, repos)
-
+  const sorted = sort_by_keys(
+    (s) => [s.idx, new Date(s.updated_at).valueOf() * -1],
+    showcase,
+  )
   const page = (
     <div className={cn("masonry", "d-grid")}>
       {map(
@@ -93,7 +101,7 @@ export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
             hide_detail={(display || {}).hide_details}
           />
         ),
-        showcase,
+        sorted,
       )}
       <div className={cn("col-gap-sizer")}></div>
     </div>

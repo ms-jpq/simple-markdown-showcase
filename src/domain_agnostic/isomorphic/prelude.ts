@@ -4,3 +4,5 @@ export const str = (thing: object) => thing.toString()
 
 export const sleep = (ms: number) =>
   new Promise<void>((resolve) => setTimeout(resolve, ms))
+
+export const counter = () => ((i) => () => (i += 1))(0)

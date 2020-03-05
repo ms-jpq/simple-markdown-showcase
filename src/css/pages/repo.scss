@@ -18,7 +18,6 @@ main {
 
   > section {
     width: 100%;
-    $max_md_w: 65em;
     max-width: $max_md_w;
   }
 
@@ -34,6 +33,7 @@ main {
   .repo-body {
     > .markdown {
       width: 100%;
+      max-width: 85vw;
     }
   }
 

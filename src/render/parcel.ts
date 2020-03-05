@@ -17,11 +17,11 @@ export const run = async (instructions: RenderInstruction[]) => {
     instructions,
   )
 
-  const bundler = new Bundler(entry, options)
-  bundler.on("buildError", (err) => {
-    throw err
-  })
-  await bundler.bundle()
+  // const bundler = new Bundler(entry, options)
+  // bundler.on("buildError", (err) => {
+  //   throw err
+  // })
+  // await bundler.bundle()
 
   /*
    * TODO -- Maybe parcel 2.0 will fix this
@@ -31,16 +31,17 @@ export const run = async (instructions: RenderInstruction[]) => {
    * We need to chunk the entries or else Parcel gets stuck
    * Parcel also renders single file to the wrong location...
    */
-  // const entries = chunk(static_config.parallelism, entry)
-  // console.log(entries)
-  // for (const lst of entries) {
-  //   if (lst.length === 1) {
-  //     lst.push("out/index.html")
-  //   }
-  //   const bundler = new Bundler(lst, options)
-  //   bundler.on("buildError", (err) => {
-  //     throw err
-  //   })
-  //   await bundler.bundle()
-  // }
+
+  const entries = chunk(static_config.parallelism, entry)
+  console.log(entries)
+  for (const lst of entries) {
+    if (lst.length === 1) {
+      lst.push("out/index.html")
+    }
+    const bundler = new Bundler(lst, options)
+    bundler.on("buildError", (err) => {
+      throw err
+    })
+    await bundler.bundle()
+  }
 }

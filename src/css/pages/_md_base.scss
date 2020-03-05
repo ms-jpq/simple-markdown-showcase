@@ -13,4 +13,8 @@ main {
   align-content: start;
 
   background-color: var(--background-colour-light);
+
+  .markdown {
+    max-width: $max_md_w;
+  }
 }
