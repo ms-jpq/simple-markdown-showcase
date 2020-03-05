@@ -15,22 +15,28 @@ $row_gap: 1em;
  ********/
 
 main {
+  $padding_v: 1em;
+  $padding_h: 1em;
+
+  padding-top: $padding_v;
+  padding-bottom: $padding_v;
+  padding-left: $padding_h;
+  padding-right: $padding_h;
+
   column-gap: $col_gap;
   row-gap: $row_gap;
 
   justify-items: center;
   align-items: start;
+}
+
+main {
+  $card_width: 25em;
 
   > .card-gutter-sizer {
     width: $col_gap;
   }
 
-  > .card {
-    margin-top: ($row_gap / 2);
-    margin-bottom: ($row_gap / 2);
-  }
-
-  $card_width: 25em;
   > .card-sizer {
     width: $card_width - $col_gap * 2;
   }
@@ -53,14 +59,6 @@ main {
     }
     grid-template-columns: repeat(4, 1fr);
   }
-
-  $padding_v: 1em;
-  $padding_h: 1em;
-
-  padding-top: $padding_v;
-  padding-bottom: $padding_v;
-  padding-left: $padding_h;
-  padding-right: $padding_h;
 }
 
 @mixin noscript_layout() {
@@ -72,7 +70,6 @@ main {
 @mixin script_layout() {
   display: initial !important;
   > .card {
-    width: initial;
     margin-top: ($row_gap / 2);
     margin-bottom: ($row_gap / 2);
   }
