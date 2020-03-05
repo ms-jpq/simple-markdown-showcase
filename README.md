@@ -2,6 +2,8 @@
 
 Generates responsive personal portfolio pages using Github APIs.
 
+Clean room port of the [hugo-creative-portfolio-theme](https://github.com/kishaningithub/hugo-creative-portfolio-theme).
+
 ## Preview
 
 ### Desktop
