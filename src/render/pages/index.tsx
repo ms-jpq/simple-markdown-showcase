@@ -95,8 +95,7 @@ export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
         ),
         showcase,
       )}
-      <div className={cn("card-sizer")}></div>
-      <div className={cn("card-gutter-sizer")}></div>
+      <div className={cn("col-gap-sizer")}></div>
     </React.Fragment>
   )
 

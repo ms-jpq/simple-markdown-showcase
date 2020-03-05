@@ -9,6 +9,7 @@
 
 $col_gap: 1em;
 $row_gap: 1em;
+$card_width: 25em;
 
 /********
  * MAIN *
@@ -31,59 +32,36 @@ main {
 }
 
 main {
-  $card_width: 25em;
-
-  > .card-gutter-sizer {
-    width: $col_gap;
+  &.scripting {
+    display: initial !important;
   }
-
-  > .card-sizer {
-    width: $card_width - $col_gap * 2;
-  }
-  grid-template-columns: repeat(1, 1fr);
-  @media (min-width: $card_width * 2) {
-    > .card-sizer {
-      width: $card_width - $col_gap * 3;
-    }
-    grid-template-columns: repeat(2, 1fr);
-  }
-  @media (min-width: $card_width * 3) {
-    > .card-sizer {
-      width: $card_width - $col_gap * 4;
-    }
-    grid-template-columns: repeat(3, 1fr);
-  }
-  @media (min-width: $card_width * 4) {
-    > .card-sizer {
-      width: $card_width - $col_gap * 5;
-    }
-    grid-template-columns: repeat(4, 1fr);
-  }
-}
-
-@mixin noscript_layout() {
   > .card {
     width: 100%;
   }
-}
 
-@mixin script_layout() {
-  display: initial !important;
-  > .card {
-    margin-top: ($row_gap / 2);
-    margin-bottom: ($row_gap / 2);
+  &.scripting {
+    > .col-gap-sizer {
+      width: $col_gap;
+    }
+    > .card {
+      margin-top: ($row_gap / 2);
+      margin-bottom: ($row_gap / 2);
+    }
   }
-}
 
-main {
-  @include noscript_layout();
-  @media scripting {
-    @include script_layout();
+  @mixin size_col($cols) {
+    grid-template-columns: repeat($cols, 1fr);
+    &.scripting > .card {
+      width: calc(100% / #{$cols} - #{$cols * $col_gap});
+    }
   }
-}
-
-main.scripting {
-  @include script_layout();
+  $max_cols: 4;
+  @include size_col(1);
+  @for $i from 2 through $max_cols {
+    @media (min-width: $card_width * $i) {
+      @include size_col($i);
+    }
+  }
 }
 
 /********

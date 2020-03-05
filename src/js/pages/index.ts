@@ -1,6 +1,5 @@
 import Masonry from "masonry-layout"
 import { $, $$, img_loaded } from "../../domain_agnostic/browser/dom"
-import { sleep } from "../../domain_agnostic/isomorphic/prelude"
 
 const main = async () => {
   const grid = $(`main`)
@@ -9,10 +8,8 @@ const main = async () => {
 
   const masonry = new Masonry(grid!, {
     itemSelector: `.card`,
-    columnWidth: `.card-sizer`,
-    gutter: `.card-gutter-sizer`,
-    fitWidth: true,
-    transitionDuration: "0.6s",
+    gutter: `.col-gap-sizer`,
+    transitionDuration: "0.5s",
     initLayout: true,
   })
 
@@ -28,4 +25,4 @@ const main = async () => {
   }
 }
 
-// main()
+main()
