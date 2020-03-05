@@ -62,7 +62,12 @@ const github_repos = async (user: string, token?: string) => {
   }
 }
 
-export const extract = async (user_name: string, token?: string) => {
+export type GithubInfo = { user_name: string; repos: Repo[] }
+
+export const extract = async (
+  user_name: string,
+  token?: string,
+): Promise<GithubInfo> => {
   const repos = await github_repos(user_name, token)
   return {
     user_name,
