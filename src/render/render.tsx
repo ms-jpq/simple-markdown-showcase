@@ -80,7 +80,7 @@ export const render = async ({ config, repos, md_strings }: RenderProps) => {
       contacts: config.aside.contacts,
       md_line: md_strings.contact_me,
     }),
-    render_repos({ repos: sorted }),
+    render_repos({ repos: sorted, shim: config.repo_shim }),
   ])
   const instructions = flat_map(id, pages)
   const commits = await Promise.all(

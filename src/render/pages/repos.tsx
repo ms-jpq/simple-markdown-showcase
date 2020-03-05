@@ -44,14 +44,18 @@ const js = ["layout"]
 const css = ["pages/repo"]
 const page_name = "index.html"
 
-const render_repo: RenderPage<Repo> = async ({
+export type ShimProps = { shim: string }
+
+const render_repo: RenderPage<Repo & ShimProps> = async ({
   title,
-  name: path,
+  shim,
+  name,
   read_me,
   html_url,
   created_at,
   updated_at,
 }) => {
+  const path = `${shim}${name}`
   const page = (
     <Repo
       read_me={read_me}
@@ -65,11 +69,11 @@ const render_repo: RenderPage<Repo> = async ({
 
 export type RenderProps = {
   repos: Repo[]
-}
+} & ShimProps
 
-export const render: RenderPage<RenderProps> = async ({ repos }) => {
+export const render: RenderPage<RenderProps> = async ({ repos, shim }) => {
   const pages = await Promise.all(
-    map((repo) => render_repo({ ...repo }), repos),
+    map((repo) => render_repo({ ...repo, shim }), repos),
   )
   const renderings = flat_map(id, pages)
   return renderings

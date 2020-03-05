@@ -58,6 +58,7 @@ export type AsideConfig = {
 export type StaticConfig = {
   user: string
   title: string
+  repo_shim: string
   aside: AsideConfig
   header: HeaderConfig
 }

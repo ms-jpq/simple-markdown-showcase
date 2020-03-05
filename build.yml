@@ -1,6 +1,8 @@
 ---
 user: ms-jpq
 
+repo_shim: /r/
+
 header:
   title: Creative Portfolio
   menu: Menu
