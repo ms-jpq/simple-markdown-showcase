@@ -40,7 +40,6 @@ main {
   }
 
   &.scripting {
-    display: initial;
     > .col-gap-sizer {
       width: $col_gap;
     }
@@ -53,7 +52,7 @@ main {
   @mixin size_col($cols) {
     grid-template-columns: repeat($cols, 1fr);
     &.scripting > .card {
-      width: calc(100% / #{$cols} - #{($cols - 1) * $col_gap});
+      width: calc((100% - #{($cols - 1) * $col_gap}) / #{$cols});
     }
   }
   $max_cols: 4;
