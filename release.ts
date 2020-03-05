@@ -8,7 +8,7 @@ const main = async () => {
   const { stdout, stderr } = await run("./src/entry.ts", "clean")
   console.error(stderr)
   console.log(stdout)
-  const prev = await readdir(Infinity, static_config.artifacts_dir)
+  const prev = await readdir(1, static_config.artifacts_dir)
   const prev__artifacts = filter((n) => !n.startsWith(".git"), [
     ...prev.dirs,
     ...prev.files,
