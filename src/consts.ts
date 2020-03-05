@@ -17,7 +17,7 @@ export const static_config = {
   parallelism: 3,
   img: {
     localize_domains: ["raw.githubusercontent.com", "github.com"],
-    target_widths: [200, 400, 600, 800],
+    target_widths: [200, 400, 600, 800, 1000],
   },
 }
 
