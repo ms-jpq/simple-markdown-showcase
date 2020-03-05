@@ -4,9 +4,9 @@ import express from "express"
 import nodemon, { Settings } from "nodemon"
 //@ts-ignore
 import parse from "parse-gitignore"
-import { big_print } from "./src/domain_agnostic/node/prelude"
+import { big_print } from "nda/dist/node/prelude"
 import { hostname } from "os"
-import { slurp } from "./src/domain_agnostic/node/fs"
+import { slurp } from "nda/dist/node/fs"
 import { static_config } from "./src/consts"
 
 const srv = (dir: string, port: number) => {

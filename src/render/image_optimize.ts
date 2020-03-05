@@ -1,12 +1,12 @@
 import fetch from "node-fetch"
 import md5 from "crypto-js/md5"
 import sharp from "sharp"
-import { any, filter, join, last } from "../domain_agnostic/isomorphic/list"
-import { exists, sip, spit } from "../domain_agnostic/node/fs"
+import { any, filter, join, last } from "nda/dist/isomorphic/list"
+import { exists, sip, spit } from "nda/dist/node/fs"
 import { imageSize } from "image-size"
 import { JSDOM } from "jsdom"
-import { map } from "../domain_agnostic/isomorphic/list"
-import { pipe } from "../domain_agnostic/node/sub_process"
+import { map } from "nda/dist/isomorphic/list"
+import { pipe } from "nda/dist/node/sub_process"
 import { static_config } from "../consts"
 import {
   basename,
@@ -14,7 +14,7 @@ import {
   join as path_join,
   relative,
   fn_ext,
-} from "../domain_agnostic/node/path"
+} from "nda/dist/node/path"
 
 export type ResizeOpts = {
   src: Buffer

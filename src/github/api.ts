@@ -1,7 +1,7 @@
 import fetch from "node-fetch"
-import { compact_map, map } from "../domain_agnostic/isomorphic/list"
-import { id } from "../domain_agnostic/isomorphic/prelude"
-import { parse } from "../domain_agnostic/vender/yaml"
+import { compact_map, map } from "nda/dist/isomorphic/list"
+import { id } from "nda/dist/isomorphic/prelude"
+import { parse } from "../vender/yaml"
 import { Repo, repo_resources, RepoConfig } from "../consts"
 
 const secure_fetch = (uri: string, token?: string) =>

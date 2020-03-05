@@ -1,6 +1,6 @@
 import React from "react"
-import { cn } from "../../../domain_agnostic/isomorphic/dom"
-import { Parent } from "../../../domain_agnostic/vender/react"
+import { cn } from "nda/dist/isomorphic/dom"
+import { Parent } from "../../../vender/react"
 
 export type ButtonProps = {} & Parent
 export const BigButton = ({ children }: ButtonProps) => (

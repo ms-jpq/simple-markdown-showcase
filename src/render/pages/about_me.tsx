@@ -1,5 +1,5 @@
 import React from "react"
-import { cn } from "../../domain_agnostic/isomorphic/dom"
+import { cn } from "nda/dist/isomorphic/dom"
 import { RenderPage } from "../../consts"
 import { Markdown } from "../layout/markdown"
 

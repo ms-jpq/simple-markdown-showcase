@@ -1,7 +1,7 @@
 import Masonry from "masonry-layout"
-import { $, $$, img_loaded } from "../../domain_agnostic/browser/dom"
-import { counter, sleep } from "../../domain_agnostic/isomorphic/prelude"
-import { map } from "../../domain_agnostic/isomorphic/list"
+import { $, $$, img_loaded } from "nda/dist/browser/dom"
+import { counter, sleep } from "nda/dist/isomorphic/prelude"
+import { map } from "nda/dist/isomorphic/list"
 
 const main = async () => {
   console.time("t")

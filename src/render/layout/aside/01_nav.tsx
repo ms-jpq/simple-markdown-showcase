@@ -1,6 +1,6 @@
 import React from "react"
-import { cn } from "../../../domain_agnostic/isomorphic/dom"
-import { map } from "../../../domain_agnostic/isomorphic/list"
+import { cn } from "nda/dist/isomorphic/dom"
+import { map } from "nda/dist/isomorphic/list"
 
 export type NavProps = {
   off: boolean

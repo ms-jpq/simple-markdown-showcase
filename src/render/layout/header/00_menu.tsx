@@ -1,5 +1,5 @@
 import React from "react"
-import { cn } from "../../../domain_agnostic/isomorphic/dom"
+import { cn } from "nda/dist/isomorphic/dom"
 import { BigButton } from "../components/big_button"
 
 export type MenuProps = { menu_title: string }

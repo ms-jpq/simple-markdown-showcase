@@ -1,6 +1,6 @@
 import Bundler, { ParcelOptions } from "parcel-bundler"
-import { chunk, map } from "../domain_agnostic/isomorphic/list"
-import { join } from "../domain_agnostic/node/path"
+import { chunk, map } from "nda/dist/isomorphic/list"
+import { join } from "nda/dist/node/path"
 import { RenderInstruction, static_config } from "../consts"
 
 const options: ParcelOptions = {

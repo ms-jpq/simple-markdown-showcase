@@ -1,12 +1,12 @@
 #!/usr/bin/env ts-node
 import { additional_pages, static_config, StaticConfig } from "./consts"
-import { big_print } from "./domain_agnostic/node/prelude"
-import { drop, fst } from "./domain_agnostic/isomorphic/list"
+import { big_print } from "nda/dist/node/prelude"
+import { drop, fst } from "nda/dist/isomorphic/list"
 import { extract, GithubInfo } from "./github/api"
-import { join } from "./domain_agnostic/node/path"
-import { parse } from "./domain_agnostic/vender/yaml"
+import { join } from "nda/dist/node/path"
+import { parse } from "./vender/yaml"
 import { render } from "./render/render"
-import { rm, slurp, spit } from "./domain_agnostic/node/fs"
+import { rm, slurp, spit } from "nda/dist/node/fs"
 
 const cleanup = () =>
   Promise.all([rm(static_config.out_dir), rm(static_config.dist_dir)])

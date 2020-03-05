@@ -1,10 +1,10 @@
 import React from "react"
 import { BodyProps, Page } from "./layout/layout"
-import { flat_map } from "../domain_agnostic/isomorphic/list"
-import { id } from "../domain_agnostic/isomorphic/prelude"
-import { join, relative } from "../domain_agnostic/node/path"
+import { flat_map } from "nda/dist/isomorphic/list"
+import { id } from "nda/dist/isomorphic/prelude"
+import { join, relative } from "nda/dist/node/path"
 import { localize_image } from "./image_optimize"
-import { map, sort_by, unique_by } from "../domain_agnostic/isomorphic/list"
+import { map, sort_by, unique_by } from "nda/dist/isomorphic/list"
 import { render as render_404 } from "./pages/404"
 import { render as render_index } from "./pages/index"
 import { render as render_repos } from "./pages/repos"
@@ -13,7 +13,7 @@ import { render as render_contactme } from "./pages/contact_me"
 import { RenderInstruction, Repo, static_config, StaticConfig } from "../consts"
 import { renderToStaticMarkup } from "react-dom/server"
 import { run as run_parcel } from "./parcel"
-import { spit } from "../domain_agnostic/node/fs"
+import { spit } from "nda/dist/node/fs"
 
 const render_page = async ({
   js: local_js,

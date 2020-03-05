@@ -1,14 +1,9 @@
 import assert from "assert"
 import React from "react"
-import { big_print } from "../../domain_agnostic/node/prelude"
-import { cn } from "../../domain_agnostic/isomorphic/dom"
+import { big_print } from "nda/dist/node/prelude"
+import { cn } from "nda/dist/isomorphic/dom"
 import { RenderPage, Repo, StaticConfig } from "../../consts"
-import {
-  filter,
-  fst,
-  map,
-  sort_by_keys,
-} from "../../domain_agnostic/isomorphic/list"
+import { filter, fst, map, sort_by_keys } from "nda/dist/isomorphic/list"
 
 export type Customization = {
   hide_detail: boolean
