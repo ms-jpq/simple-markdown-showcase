@@ -24,22 +24,23 @@ main {
   padding-left: $padding_h;
   padding-right: $padding_h;
 
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+}
+
+.masonry {
   column-gap: $col_gap;
   row-gap: $row_gap;
 
   justify-items: center;
   align-items: start;
-}
 
-main {
-  &.scripting {
-    display: initial !important;
-  }
   > .card {
     width: 100%;
   }
 
   &.scripting {
+    display: initial;
     > .col-gap-sizer {
       width: $col_gap;
     }
@@ -52,7 +53,7 @@ main {
   @mixin size_col($cols) {
     grid-template-columns: repeat($cols, 1fr);
     &.scripting > .card {
-      width: calc(100% / #{$cols} - #{$cols * $col_gap});
+      width: calc(100% / #{$cols} - #{($cols - 1) * $col_gap});
     }
   }
   $max_cols: 4;
@@ -68,7 +69,7 @@ main {
  * CARD *
  ********/
 
-main > .card {
+.masonry > .card {
   overflow-x: hidden;
 
   grid-template-columns: 1fr;
@@ -81,10 +82,36 @@ main > .card {
   > .figure-img {
     grid-area: img;
 
+    text-decoration: none;
+    font-size: 250%;
+
     img {
       background-color: var(--image-placeholder-color);
     }
+
+    > img,
+    .figure-facade {
+      grid-row: 1;
+      grid-column: 1;
+    }
+
+    > .figure-facade {
+      display: none;
+
+      justify-items: center;
+      align-items: center;
+
+      color: var(--facade-colour);
+      background-color: var(--facade-background);
+    }
+
+    &:hover {
+      > .figure-facade {
+        display: grid;
+      }
+    }
   }
+
   > .figure-title {
     grid-area: title;
 
@@ -94,6 +121,7 @@ main > .card {
     padding-left: $desc_padding_h;
     padding-right: $desc_padding_h;
   }
+
   > .figure-detail {
     grid-area: detail;
 
@@ -114,30 +142,3 @@ main > .card {
 /**********
  * FACADE *
  **********/
-
-main > .card > .figure-img {
-  text-decoration: none;
-  font-size: 250%;
-
-  > img,
-  .figure-facade {
-    grid-row: 1;
-    grid-column: 1;
-  }
-
-  > .figure-facade {
-    display: none;
-
-    justify-items: center;
-    align-items: center;
-
-    color: var(--facade-colour);
-    background-color: var(--facade-background);
-  }
-
-  &:hover {
-    > .figure-facade {
-      display: grid;
-    }
-  }
-}

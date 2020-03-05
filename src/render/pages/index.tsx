@@ -82,7 +82,7 @@ export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
   const showcase = filter((r) => r.showcase, repos)
 
   const page = (
-    <React.Fragment>
+    <div className={cn("masonry", "d-grid")}>
       {map(
         ({ title, images, name, desc, display }) => (
           <Card
@@ -96,7 +96,7 @@ export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
         showcase,
       )}
       <div className={cn("col-gap-sizer")}></div>
-    </React.Fragment>
+    </div>
   )
 
   return [{ js, css, page_name, title: config.title, path: "", page }]
