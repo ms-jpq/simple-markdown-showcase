@@ -42,10 +42,10 @@
       content: "";
       background-color: var(--highlight-colour);
     }
-  }
 
-  pre > code {
-    @include md_border();
+    > *:only-child {
+      @include md_border();
+    }
   }
 
   code {

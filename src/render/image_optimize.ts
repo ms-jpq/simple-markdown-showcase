@@ -93,6 +93,7 @@ const cache_image = (sub_path: string) => async (img: HTMLImageElement) => {
   const src = last(new_sizes)
   img.src = relative(sub_path, src!.new_name)
   img.width = src!.width
+  img.height = src!.height
   img.srcset = join(
     ",",
     map((s) => `${relative(sub_path, s.new_name)} ${s.width}w`, new_sizes),
