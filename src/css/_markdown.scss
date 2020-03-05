@@ -11,15 +11,6 @@
 }
 
 .markdown {
-  display: grid;
-  grid-template-columns: 1fr;
-  grid-template-rows: auto;
-
-  justify-items: start;
-  align-items: start;
-
-  align-content: start;
-
   img {
     max-width: 100%;
     height: auto;
