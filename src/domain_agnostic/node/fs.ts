@@ -5,8 +5,26 @@ import { flat_map, map, partition } from "../isomorphic/list"
 export const exists = (path: string) =>
   new Promise<boolean>((resolve) => exists_cb(path, resolve))
 
-export const mkdir = (dir: string) => fs.mkdir(dir, { recursive: true })
-export const rmdir = (dir: string) => fs.rmdir(dir, { recursive: true })
+export const isfile = async (path: string) =>
+  (await exists(path)) && (await fs.lstat(path)).isFile()
+
+export const isdir = async (path: string) =>
+  (await exists(path)) && (await fs.lstat(path)).isDirectory()
+
+export const mkdir = (path: string) => fs.mkdir(path, { recursive: true })
+
+export const rm = async (path: string) => {
+  const ok = await exists(path)
+  if (ok) {
+    return
+  }
+  const stat = fs.lstat(path)
+  if ((await stat).isDirectory()) {
+    return fs.rmdir(path, { recursive: true })
+  } else {
+    return fs.unlink(path)
+  }
+}
 
 const _slurp = async (file: string): Promise<Buffer> => {
   try {
@@ -29,12 +47,6 @@ export const spit = async (content: string | Buffer, file: string) => {
     throw err
   }
 }
-
-export const isfile = async (path: string) =>
-  (await exists(path)) && (await fs.lstat(path)).isFile()
-
-export const isdir = async (path: string) =>
-  (await exists(path)) && (await fs.lstat(path)).isDirectory()
 
 export type DirContent = { dirs: string[]; files: string[] }
 

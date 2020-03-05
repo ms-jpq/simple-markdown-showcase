@@ -6,10 +6,10 @@ import { extract } from "./github/api"
 import { join } from "./domain_agnostic/node/path"
 import { parse } from "./domain_agnostic/vender/yaml"
 import { render } from "./render/render"
-import { rmdir, slurp, spit } from "./domain_agnostic/node/fs"
+import { rm, slurp, spit } from "./domain_agnostic/node/fs"
 
 const cleanup = () =>
-  Promise.all([rmdir(static_config.out_dir), rmdir(static_config.dist_dir)])
+  Promise.all([rm(static_config.out_dir), rm(static_config.dist_dir)])
 
 const main = async () => {
   const argv = drop(2, process.argv)
