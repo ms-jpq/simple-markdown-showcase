@@ -9,6 +9,7 @@ const options: ParcelOptions = {
   detailedReport: false,
   watch: false,
   cache: true,
+  logLevel: 1,
 }
 
 export const run = async (instructions: RenderInstruction[]) => {
