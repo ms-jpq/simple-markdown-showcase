@@ -31,14 +31,12 @@ const main = async () => {
   const exts = ["yml", "json", "md", "ts", "tsx", "scss"]
   const git_ignore = await slurp(".gitignore")
   const ignore = parse(git_ignore)
-  const execMap = {
-    main: "src/entry.ts",
-  }
+  const exec = "src/entry.ts"
   watch({
     ext: exts.join(),
     colours: true,
     ignore,
-    execMap,
+    exec,
   })
   srv(static_config.dist_dir, static_config.port)
 }
