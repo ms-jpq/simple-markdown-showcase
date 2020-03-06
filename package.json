@@ -27,10 +27,10 @@
     "masonry-layout": "^4.2.2",
     "nda": "git+https://github.com/ms-jpq/nda.git",
     "node-fetch": "^2.6.0",
-    "node-sass": "^4.13.1",
     "parcel-bundler": "^1.12.4",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
+    "sass": "^1.26.2",
     "sharp": "^0.24.1"
   },
   "description": "_",

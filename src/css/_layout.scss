@@ -190,9 +190,6 @@ body > header {
  **********/
 
 body > footer {
-  justify-items: center;
-  align-items: center;
-
   p {
     color: var(--desc-colour);
   }
@@ -205,8 +202,6 @@ body > footer {
 body > aside {
   grid-template-columns: 1fr;
   grid-template-rows: auto;
-
-  align-content: start;
 
   row-gap: $side_padding_h;
 
@@ -258,9 +253,6 @@ body > aside {
   > .association-circle {
     width: $association_size;
     height: $association_size;
-
-    justify-items: center;
-    align-items: center;
 
     border-color: var(--desc-colour);
     color: var(--desc-colour);

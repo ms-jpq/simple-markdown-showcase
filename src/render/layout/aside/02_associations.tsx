@@ -11,6 +11,8 @@ const Circle = ({ href, class_name }: CircleProps) => (
       "border-thin",
       "border-circle",
       "d-grid",
+      "ai-centre",
+      "ji-centre",
     )}
     href={href}
   >

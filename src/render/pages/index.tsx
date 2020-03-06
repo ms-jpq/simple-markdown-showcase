@@ -85,7 +85,7 @@ export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
     showcase,
   )
   const page = (
-    <div className={cn("masonry", "d-grid")}>
+    <div className={cn("masonry", "d-grid", "ai-end", "ji-centre")}>
       {map(
         ({ title, images, name, desc, display }) => (
           <Card

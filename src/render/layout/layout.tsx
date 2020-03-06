@@ -52,7 +52,7 @@ const Main = ({ children }: Parent) => (
 export type FooterProps = { md_line: string }
 
 const Footer = ({ md_line }: FooterProps) => (
-  <footer className={cn("d-grid")}>
+  <footer className={cn("d-grid", "ji-centre", "ai-centre")}>
     <FooterDesc md_line={md_line} />
   </footer>
 )
@@ -64,7 +64,7 @@ export type AsideProps = {
 } & AsideConfig
 
 const Aside = ({ dest, off, md_line, contacts, nav }: AsideProps) => (
-  <aside id="left-panel">
+  <aside id="left-panel" className={cn("grid", "ac-start")}>
     <AsideAbout md_line={md_line} />
     <AsideNav off={off} dests={nav} dest={dest} />
     <AsideAssociations contacts={contacts} />

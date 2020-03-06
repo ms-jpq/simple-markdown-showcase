@@ -13,11 +13,11 @@ const highlight = (str: string, lang: string) => {
 
 const md = markdown({ highlight })
 
-export type MarkDownProps = { content: string }
+export type MarkDownProps = { content: string; classname?: string }
 
-export const Markdown = ({ content }: MarkDownProps) => (
+export const Markdown = ({ content, classname = "" }: MarkDownProps) => (
   <div
-    className={cn("markdown")}
+    className={cn("markdown", classname)}
     dangerouslySetInnerHTML={{ __html: md.render(content) }}
   ></div>
 )

@@ -32,9 +32,6 @@ main {
   column-gap: $col_gap;
   row-gap: $row_gap;
 
-  justify-items: center;
-  align-items: start;
-
   > .card {
     width: 100%;
   }
