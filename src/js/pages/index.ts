@@ -1,12 +1,14 @@
 import Masonry from "masonry-layout"
-import { $, $$, img_loaded } from "nda/dist/browser/dom"
+import { $, $$, img_loaded, wait_frame } from "nda/dist/browser/dom"
 import { counter, sleep } from "nda/dist/isomorphic/prelude"
 import { map } from "nda/dist/isomorphic/list"
 
+const grid = $(`.masonry`)
+const images = $$<HTMLImageElement>(`img`)
+const header_menu = $<HTMLButtonElement>(`header > button`)!
+
 const main = async () => {
   console.time("t")
-  const grid = $(`.masonry`)
-  const images = $$<HTMLImageElement>(`img`)
   grid?.classList.add("scripting")
 
   const masonry = new Masonry(grid!, {
@@ -14,6 +16,11 @@ const main = async () => {
     gutter: `.col-gap-sizer`,
     transitionDuration: "0.5s",
     initLayout: true,
+  })
+
+  header_menu.addEventListener("click", async () => {
+    await wait_frame()
+    masonry.layout!()
   })
 
   const all_loaded = Promise.all(
