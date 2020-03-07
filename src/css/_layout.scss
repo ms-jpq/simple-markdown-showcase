@@ -104,6 +104,9 @@ body {
     > button {
       display: initial;
     }
+    #header-title {
+      text-align: right;
+    }
   }
 }
 
@@ -128,9 +131,6 @@ body {
   }
 
   @include show_header_menu();
-  @media not scripting {
-    @include hide_header_menu();
-  }
 }
 
 @mixin col2_view() {
