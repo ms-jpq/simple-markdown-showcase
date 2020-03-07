@@ -16,6 +16,8 @@ $card_width: 25em;
  ********/
 
 main {
+  margin-top: -$side_padding_v;
+
   $padding_v: 1em;
   $padding_h: 1em;
 
