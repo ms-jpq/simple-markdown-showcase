@@ -2,8 +2,7 @@
 title: SMS - Simple Markdown Showcase
 
 showcase: True
-images:
-  - https://raw.githubusercontent.com/ms-jpq/simple-markdown-showcase/master/preview/big.png
+images: []
 
 desc: >-
   Responsive personal portfolio pages using Github APIs
