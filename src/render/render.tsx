@@ -43,7 +43,7 @@ const render_page = async ({
   const optimized = await localize_image(sub_path, html)
   return {
     sub_path: join(sub_path, page_name),
-    content: optimized,
+    content: `<!DOCTYPE html>${optimized}`,
   }
 }
 
