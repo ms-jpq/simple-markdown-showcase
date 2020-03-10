@@ -12,14 +12,16 @@ import { AsideAbout } from "./aside/00_about_me"
 
 export type HeadProps = {
   title: string
+  desc: string
   js: string[]
   css: string[]
 }
 
-const Head = ({ title, js, css }: HeadProps) => (
+const Head = ({ title, desc, js, css }: HeadProps) => (
   <head>
     <meta charSet="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={desc} />
     <title>{title}</title>
     {map(
       (src) => (
@@ -85,7 +87,7 @@ export const Page = ({
   children,
 }: PageProps) => (
   <html>
-    <Head title={head.title} js={head.js} css={head.css} />
+    <Head title={head.title} desc={head.desc} js={head.js} css={head.css} />
     <body className={cn("d-grid", "vw-100", "mp-0")}>
       <Header title={header.title} menu={header.menu} />
       <Main>{children}</Main>

@@ -5,6 +5,7 @@ import { RenderPage } from "../../consts"
 const js = ["layout"]
 const css = ["pages/404"]
 const page_name = "404.html"
+const desc = "404 error"
 
 export type RenderProps = {}
 
@@ -22,5 +23,5 @@ export const render: RenderPage<RenderProps> = async ({}) => {
       </h4>
     </React.Fragment>
   )
-  return [{ path: "", page_name, title, js, css, page }]
+  return [{ path: "", page_name, title, desc, js, css, page }]
 }

@@ -10,6 +10,7 @@ import {
 const js = ["layout", "pages/contact_me"]
 const css = ["pages/contact_me"]
 const page_name = "index.html"
+const desc = "contact me"
 
 export type RenderProps = { md_line: string } & AssociationsProps
 
@@ -24,5 +25,5 @@ export const render: RenderPage<RenderProps> = async ({
       <AsideAssociations contacts={contacts} />
     </React.Fragment>
   )
-  return [{ path: "contact", page_name, title, js, css, page }]
+  return [{ path: "contact", page_name, title, desc, js, css, page }]
 }

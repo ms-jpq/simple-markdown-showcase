@@ -50,6 +50,7 @@ export type ShimProps = { shim: string }
 
 const render_repo: RenderPage<Repo & ShimProps> = async ({
   title,
+  desc,
   shim,
   name,
   read_me,
@@ -66,7 +67,7 @@ const render_repo: RenderPage<Repo & ShimProps> = async ({
       updated_at={updated_at}
     />
   )
-  return [{ js, css, title, path, page_name, page }]
+  return [{ js, css, title, desc, path, page_name, page }]
 }
 
 export type RenderProps = {

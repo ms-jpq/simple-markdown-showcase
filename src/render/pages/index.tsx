@@ -102,5 +102,15 @@ export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
     </div>
   )
 
-  return [{ js, css, page_name, title: config.title, path: "", page }]
+  return [
+    {
+      js,
+      css,
+      page_name,
+      title: config.title,
+      desc: config.title,
+      path: "",
+      page,
+    },
+  ]
 }

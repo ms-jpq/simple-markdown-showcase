@@ -19,6 +19,7 @@ const render_page = async ({
   js: local_js,
   css: local_css,
   title,
+  desc,
   path,
   page,
   page_name,
@@ -35,7 +36,7 @@ const render_page = async ({
     local_css,
   )
   const content = (
-    <Page head={{ title, js, css }} body={body}>
+    <Page head={{ title, desc, js, css }} body={body}>
       {page}
     </Page>
   )
