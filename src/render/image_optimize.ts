@@ -89,7 +89,15 @@ const cache_image = (sub_path: string) => async (img: HTMLImageElement) => {
     const image = await (await fetch(img.src)).buffer()
     await spit(image, path)
   }
-  const new_sizes = await resize_image(path)
+  const new_sizes = await (async () => {
+    try {
+      const res = await resize_image(path)
+      return res
+    } catch (err) {
+      console.error(`failed to resize - ${img.src}`)
+      throw err
+    }
+  })()
   const src = last(new_sizes)
   img.src = relative(sub_path, src!.new_name)
   img.width = src!.width
