@@ -33,9 +33,9 @@ I am one of those weirdos that actually like programming. `:>`
 
 In particular, I enjoy writing `macros`, `libraries`, and `frameworks`, in that order; which is to say I love authoring code that others depend on.
 
-My favourite languages are: [`Clojure`](https://clojure.org/), [`Prolog`](https://www.swi-prolog.org/), and of course [`Haskell`](https://www.haskell.org/).
+My favourite languages are: `Clojure`, `Prolog`, and of course `Haskell`.
 
-Though my weapons of choice are a bit more practical, that is to say: [`FSharp`](https://fsharp.org/), [`Typescript`](https://www.typescriptlang.org/), and [`Python`](https://www.python.org/).
+Though my weapons of choice are a bit more practical, that is to say: `FSharp`, `Typescript`, and `Python`.
 
 ---
 
