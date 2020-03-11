@@ -1,19 +1,34 @@
 import React from "react"
+import { BigButton } from "../layout/components/big_button"
 import { cn } from "nda/dist/isomorphic/dom"
 import { flat_map, map } from "nda/dist/isomorphic/list"
+import { GithubForks, GithubStars } from "../layout/components/github"
 import { id, str } from "nda/dist/isomorphic/prelude"
 import { Markdown } from "../layout/markdown"
 import { RenderPage, Repo } from "../../consts"
-import { BigButton } from "../layout/components/big_button"
 
 export type RepoProps = Pick<
   Repo,
-  "read_me" | "html_url" | "updated_at" | "created_at"
+  | "read_me"
+  | "html_url"
+  | "updated_at"
+  | "created_at"
+  | "stargazers_count"
+  | "forks_count"
 >
 
-const Repo = ({ read_me, html_url, created_at, updated_at }: RepoProps) => (
+const Repo = ({
+  read_me,
+  html_url,
+  created_at,
+  updated_at,
+  stargazers_count,
+  forks_count,
+}: RepoProps) => (
   <React.Fragment>
     <section className={cn("repo-header", "d-grid", "ji-end", "m-auto")}>
+      <GithubStars stars={stargazers_count} />
+      <GithubForks forks={forks_count} />
       <a href={html_url} className={cn("invis-link")}>
         <BigButton>
           View on Github <i className="fab fa-github"></i>
@@ -57,6 +72,8 @@ const render_repo: RenderPage<Repo & ShimProps> = async ({
   html_url,
   created_at,
   updated_at,
+  stargazers_count,
+  forks_count,
 }) => {
   const path = `${shim}${name}`
   const page = (
@@ -65,6 +82,8 @@ const render_repo: RenderPage<Repo & ShimProps> = async ({
       html_url={html_url}
       created_at={created_at}
       updated_at={updated_at}
+      stargazers_count={stargazers_count}
+      forks_count={forks_count}
     />
   )
   return [{ js, css, title, desc, path, page_name, page }]

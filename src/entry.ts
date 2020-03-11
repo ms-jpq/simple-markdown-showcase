@@ -5,7 +5,7 @@ import { extract, GithubInfo } from "./github/api"
 import { join } from "nda/dist/node/path"
 import { parse } from "./vender/yaml"
 import { render } from "./render/render"
-import { rm, slurp, spit } from "nda/dist/node/fs"
+import { rm, slurp, spit, exists } from "nda/dist/node/fs"
 
 const cleanup = () =>
   Promise.all([rm(static_config.out_dir), rm(static_config.dist_dir)])
@@ -29,15 +29,17 @@ const main = async () => {
   }
 
   const info: GithubInfo = await (async () => {
-    if (args.prod) {
+    const cache_file = join(static_config.temp_dir, "info.json")
+    const cached = await exists(cache_file)
+    const pull = async () => {
       const fresh = await extract(config.user, static_config.github_token)
-      await spit(
-        JSON.stringify(fresh),
-        join(static_config.temp_dir, "info.json"),
-      )
+      await spit(JSON.stringify(fresh), cache_file)
       return fresh
+    }
+    if (args.prod || !cached) {
+      return pull()
     } else {
-      const cached = await slurp(join(static_config.temp_dir, "info.json"))
+      const cached = await slurp(cache_file)
       return JSON.parse(cached)
     }
   })()

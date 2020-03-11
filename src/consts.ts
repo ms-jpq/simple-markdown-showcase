@@ -89,6 +89,10 @@ export type Repo = {
   created_at: Date
   updated_at: Date
   read_me: string
+  stargazers_count: number
+  forks_count: number
+  language: string
+  colour: string
 } & RepoConfig
 
 export type RenderInstruction = {

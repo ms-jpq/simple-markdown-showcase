@@ -1,6 +1,8 @@
+import assert from "assert"
 import fetch from "node-fetch"
 import { compact_map, map } from "nda/dist/isomorphic/list"
 import { id } from "nda/dist/isomorphic/prelude"
+import { of_list } from "nda/dist/isomorphic/record"
 import { parse } from "../vender/yaml"
 import { Repo, repo_resources, RepoConfig } from "../consts"
 
@@ -23,8 +25,32 @@ const repo_resource = async (
   }
 }
 
-const github_repo = (token?: string) => async (repo_data: any) => {
-  const { name, full_name, html_url, created_at, updated_at } = repo_data
+const github_color = async () => {
+  const data = await (
+    await fetch(
+      "https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml",
+    )
+  ).text()
+  const yml = parse(data)
+  const record = of_list<Record<string, string>>(
+    map(([k, v]) => [k, (v as any)["color"]], Object.entries(yml)),
+  )
+  return record
+}
+
+const github_repo = (colours: Record<string, string>, token?: string) => async (
+  repo_data: any,
+) => {
+  const {
+    name,
+    full_name,
+    html_url,
+    created_at,
+    updated_at,
+    stargazers_count,
+    forks_count,
+    language,
+  } = repo_data
   const [read_me, config, spec] = await Promise.all([
     repo_resource(full_name, repo_resources.read_me, token),
     repo_resource(full_name, repo_resources.config, token),
@@ -33,11 +59,17 @@ const github_repo = (token?: string) => async (repo_data: any) => {
   if (!read_me || !config) {
     return undefined
   }
+  const colour = colours[language]
+  assert(colour !== undefined)
   const repo_config: RepoConfig = parse(config)
   const repo: Repo = {
     build_spec: spec ? parse(spec) : undefined,
     name,
     html_url,
+    stargazers_count,
+    forks_count,
+    language,
+    colour,
     created_at: new Date(created_at),
     updated_at: new Date(updated_at),
     read_me,
@@ -47,12 +79,13 @@ const github_repo = (token?: string) => async (repo_data: any) => {
 }
 
 const github_repos = async (user: string, token?: string) => {
+  const colors = await github_color()
   const res = await secure_fetch(
     `https://api.github.com/users/${user}/repos`,
     token,
   )
   const repo_data: any[] = await res.json()
-  const seek = github_repo(token)
+  const seek = github_repo(colors, token)
   try {
     const repos = await Promise.all(map(seek, repo_data))
     return compact_map(id, repos)

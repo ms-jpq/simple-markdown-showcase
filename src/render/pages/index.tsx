@@ -2,8 +2,13 @@ import assert from "assert"
 import React from "react"
 import { big_print } from "nda/dist/node/prelude"
 import { cn } from "nda/dist/isomorphic/dom"
-import { RenderPage, Repo, StaticConfig } from "../../consts"
 import { filter, fst, map, sort_by_keys } from "nda/dist/isomorphic/list"
+import { RenderPage, Repo, StaticConfig } from "../../consts"
+import {
+  GithubLang,
+  GithubStars,
+  GithubForks,
+} from "../layout/components/github"
 
 export type Customization = {
   hide_detail: boolean
@@ -20,14 +25,31 @@ export type Title = {
 export type Detail = {
   desc: string
 }
+export type Meta = {
+  language: string
+  colour: string
+  stars: number
+  forks: number
+}
 export type CardProps = {
   link: string
 } & Picture &
   Title &
   Detail &
+  Meta &
   Customization
 
-const Card = ({ images, link, title, desc, hide_detail }: CardProps) => {
+const Card = ({
+  images,
+  link,
+  title,
+  desc,
+  hide_detail,
+  stars,
+  language,
+  forks,
+  colour,
+}: CardProps) => {
   assert(images !== undefined, `no images: ${title}`)
   assert(
     !(hide_detail && images.length === 0),
@@ -60,6 +82,11 @@ const Card = ({ images, link, title, desc, hide_detail }: CardProps) => {
           {title}
         </a>
       </h4>
+      <div className={cn("figure-meta")}>
+        <GithubLang lang={language} colour={colour} />
+        <GithubStars stars={stars} />
+        <GithubForks forks={forks} />
+      </div>
       <figcaption
         className={cn("figure-detail", "text-ellipsis", "text-justify")}
       >
@@ -87,12 +114,26 @@ export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
   const page = (
     <div className={cn("masonry", "d-grid", "ai-end", "ji-centre")}>
       {map(
-        ({ title, images, name, desc, display }) => (
+        ({
+          title,
+          images,
+          name,
+          desc,
+          display,
+          stargazers_count,
+          forks_count,
+          language,
+          colour,
+        }) => (
           <Card
             link={name}
             images={images}
             title={title}
             desc={desc}
+            language={language}
+            colour={colour}
+            stars={stargazers_count}
+            forks={forks_count}
             hide_detail={(display || {}).hide_details}
           />
         ),
