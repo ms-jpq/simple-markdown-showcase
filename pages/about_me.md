@@ -23,7 +23,7 @@ Authored [templating framework](http://ms-jpq.github.io/jinja2pp) for kubernetes
 
 ### Functional Design
 
-Developed modular, reusable components. Including a minimalistic typesafe [React in 70 lines](http://ms-jpq.github.io/noact).
+Developed many modular, domain agnostic and generic components. Including a typesafe [React in 70 lines](http://ms-jpq.github.io/noact), and [Redux in Swift](http://ms-jpq.github.io/simple-reeducks).
 
 ---
 
