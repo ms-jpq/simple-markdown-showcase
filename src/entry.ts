@@ -1,7 +1,6 @@
 #!/usr/bin/env ts-node
-import { additional_pages, static_config, StaticConfig } from "./consts"
+import { additional_pages, args, static_config, StaticConfig } from "./consts"
 import { big_print } from "nda/dist/node/prelude"
-import { drop, fst } from "nda/dist/isomorphic/list"
 import { extract, GithubInfo } from "./github/api"
 import { join } from "nda/dist/node/path"
 import { parse } from "./vender/yaml"
@@ -24,15 +23,13 @@ const main = async () => {
 
   const config: StaticConfig = parse(yml)
 
-  const argv = drop(2, process.argv)
-
-  if (fst(argv) === "clean") {
+  if (args.prod) {
     console.log("cleaning up...")
     await cleanup()
   }
 
   const info: GithubInfo = await (async () => {
-    if (fst(argv) === "clean") {
+    if (args.prod) {
       const fresh = await extract(config.user, static_config.github_token)
       await spit(
         JSON.stringify(fresh),

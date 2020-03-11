@@ -1,4 +1,12 @@
+import { drop, fst } from "nda/dist/isomorphic/list"
 import { ReactElement } from "react"
+
+export const args = (() => {
+  const argv = drop(2, process.argv)
+  return {
+    prod: fst(argv) === "clean",
+  }
+})()
 
 export const static_config = {
   ts_config: "tsconfig.json",

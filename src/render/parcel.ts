@@ -1,7 +1,7 @@
 import Bundler, { ParcelOptions } from "parcel-bundler"
+import { args, RenderInstruction, static_config } from "../consts"
 import { chunk, map } from "nda/dist/isomorphic/list"
 import { join } from "nda/dist/node/path"
-import { RenderInstruction, static_config } from "../consts"
 
 const options: ParcelOptions = {
   outDir: `${static_config.dist_dir}`,
@@ -10,6 +10,7 @@ const options: ParcelOptions = {
   watch: false,
   cache: true,
   logLevel: 1,
+  minify: args.prod,
 }
 
 export const run = async (instructions: RenderInstruction[]) => {
