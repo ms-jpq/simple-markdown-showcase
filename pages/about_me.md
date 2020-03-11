@@ -1,13 +1,43 @@
 # About Me
 
-Eet vulputate mauris finibus quis. In in dignissim magna. Aenean neque nisi, rhoncus pharetra ipsum et, luctus varius felis. Fusce vehicula purus eget placerat egestas. Praesent mollis dictum mauris, eu dapibus tellus pulvinar id.
-
-
 ## Education
 
 ### University of British Columbia
 
-Combined Major in Statistics and Computer Science
+Combined Major in Statistics and Computer Science (BSc.)
+
+_Vancouer, BC_
+
+---
+
+## Skills
+
+### Microservices
+
+Opensourced multiple [kubernetes native](https://ms-jpq.github.io/simple-traefik-dash), [dockerized](https://ms-jpq.github.io/simple-traefik-identity) [services](https://ms-jpq.github.io/kde-in-docker) for the self hosting community.
+Over 20k docker pulls in total.
+
+### Devops
+
+Authored [templating framework](http://ms-jpq.github.io/jinja2pp) for kubernetes , ansible deployment pipelines, and integration of Azure Devops CI.
+
+### Functional Design
+
+Developed modular, reusable components. Including a minimalistic typesafe [React in 60 lines](http://ms-jpq.github.io/noact).
+
+---
+
+## Interests
+
+I am one of those weirdos that actually like programming. `:>`
+
+In particular, I enjoy writing `macros`, `libraries`, and `frameworks`, in that order; which is to say I love authoring code that others depend on.
+
+My favourite languages are: [`Clojure`](https://clojure.org/), [`Prolog`](https://www.swi-prolog.org/), and of course [`Haskell`](https://www.haskell.org/).
+
+Though my weapons of choice are a bit more practical, that is to say: [`FSharp`](https://fsharp.org/), [`Typescript`](https://www.typescriptlang.org/), and [`Python`](https://www.python.org/).
+
+---
 
 ## Dog!
 

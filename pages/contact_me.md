@@ -1,5 +1,11 @@
 # Get in touch
 
-Eet vulputate mauris finibus quis. In in dignissim magna. Aenean neque nisi, rhoncus pharetra ipsum et, luctus varius felis. Fusce vehicula purus eget placerat egestas. Praesent mollis dictum mauris, eu dapibus tellus pulvinar id.
+I am actually on the lookout for a new job right now! :D
+
+Please get in touch with me if you like what you see in my portfolio!
+
+I am Canadian, so there shouldn't be any VISA issues. (fingers crossed for California weather 🌞)
+
+Email: [jobs@bigly.dog](mailto://jobs@bigly.dog)
 
 ## You can find me also on
