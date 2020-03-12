@@ -14,7 +14,7 @@
     "newLine": "LF",
     "noFallthroughCasesInSwitch": true,
     "noImplicitReturns": true,
-    "outDir": "dist",
+    "outDir": "tsc",
     "removeComments": true,
     "resolveJsonModule": true,
     "sourceMap": true,
