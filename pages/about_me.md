@@ -19,7 +19,7 @@ Over 20k docker pulls in total.
 
 ### Devops
 
-Authored [templating framework](http://ms-jpq.github.io/jinja2pp) for kubernetes , ansible deployment pipelines, and integration of Azure Devops CI.
+Authored [templating framework](http://ms-jpq.github.io/jinja2pp) for kubernetes, ansible deployment pipelines, and integration of Azure Devops CI.
 
 ### Functional Design
 
