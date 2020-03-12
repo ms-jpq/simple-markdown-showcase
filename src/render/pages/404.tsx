@@ -14,13 +14,13 @@ export const render: RenderPage<RenderProps> = async ({}) => {
   const page = (
     <React.Fragment>
       <h1>404</h1>
-      <h6>The page you're looking for doesn't exist</h6>
-      <h4>
+      <h3>The page you're looking for doesn't exist</h3>
+      <h2>
         <a href="/">
           <i className="fas fa-dog"></i> take me home.{" "}
           <i className="fas fa-dog"></i>
         </a>
-      </h4>
+      </h2>
     </React.Fragment>
   )
   return [{ path: "", page_name, title, desc, js, css, page }]
