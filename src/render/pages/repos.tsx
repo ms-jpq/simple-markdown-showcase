@@ -29,8 +29,8 @@ const Repo = ({
     <section
       className={cn(
         "repo-header",
-        "d-flex",
-        "fiex-col",
+        "d-grid",
+        "grid-col",
         "jc-end",
         "ai-centre",
         "m-auto",

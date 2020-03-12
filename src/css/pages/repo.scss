@@ -22,14 +22,12 @@ main {
   }
 
   .repo-header {
-    $header_padding: 1em;
+    $header_padding_h: 1em;
+    column-gap: $header_padding_h;
 
     .big-button {
       border-style: dashed;
       color: var(--text-color);
-    }
-    > * {
-      padding-left: $header_padding;
     }
   }
 

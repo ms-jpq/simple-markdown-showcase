@@ -82,7 +82,7 @@ const Card = ({
           {title}
         </a>
       </h4>
-      <div className={cn("figure-meta", "d-grid", "grid-col", "ji-start")}>
+      <div className={cn("figure-meta", "d-grid", "grid-col", "jc-start")}>
         <GithubLang lang={language} colour={colour} />
         <GithubStars stars={stars} />
         <GithubForks forks={forks} />
