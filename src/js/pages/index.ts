@@ -2,6 +2,7 @@ import Masonry from "masonry-layout"
 import { $, $$, img_loaded, wait_frame } from "nda/dist/browser/dom"
 import { counter, sleep } from "nda/dist/isomorphic/prelude"
 import { map } from "nda/dist/isomorphic/list"
+import { throttle } from "nda/dist/isomorphic/decorator"
 
 const grid = $(`.masonry`)
 const images = $$<HTMLImageElement>(`img`)
@@ -18,6 +19,8 @@ const main = async () => {
     initLayout: true,
   })
 
+  const layout = throttle(200, () => masonry.layout!())
+
   header_menu.addEventListener("click", async () => {
     await wait_frame()
     masonry.layout!()
@@ -30,7 +33,7 @@ const main = async () => {
       } catch (err) {
         console.error(err)
       }
-      masonry.layout!()
+      layout()
     }, images),
   )
 
@@ -44,7 +47,7 @@ const main = async () => {
 
   while (flag && inc() < 25) {
     await sleep(250)
-    masonry.layout!()
+    layout()
   }
 }
 
