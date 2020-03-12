@@ -108,7 +108,11 @@ const page_name = "index.html"
 export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
   const showcase = filter((r) => r.showcase, repos)
   const sorted = sort_by_keys(
-    (s) => [s.idx, new Date(s.updated_at).valueOf() * -1],
+    (s) => [
+      s.stargazers_count * -1,
+      s.forks_count * -1,
+      new Date(s.updated_at).valueOf() * -1,
+    ],
     showcase,
   )
   const page = (
