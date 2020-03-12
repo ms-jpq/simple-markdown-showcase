@@ -7,8 +7,7 @@
   --image-placeholder-color: rgb(200, 200, 200);
 }
 
-$col_gap: 1em;
-$row_gap: 1em;
+$grid_gap: 1.7em;
 $card_width: 25em;
 
 /********
@@ -31,8 +30,8 @@ main {
 }
 
 .masonry {
-  column-gap: $col_gap;
-  row-gap: $row_gap;
+  column-gap: $grid_gap;
+  row-gap: $grid_gap;
 
   > .card {
     width: 100%;
@@ -40,18 +39,18 @@ main {
 
   &.scripting {
     > .col-gap-sizer {
-      width: $col_gap;
+      width: $grid_gap;
     }
     > .card {
-      margin-top: ($row_gap / 2);
-      margin-bottom: ($row_gap / 2);
+      margin-top: ($grid_gap / 2);
+      margin-bottom: ($grid_gap / 2);
     }
   }
 
   @mixin size_col($cols) {
     grid-template-columns: repeat($cols, 1fr);
     &.scripting > .card {
-      width: calc((100% - #{($cols - 1) * $col_gap}) / #{$cols});
+      width: calc((100% - #{($cols - 1) * $grid_gap}) / #{$cols});
     }
   }
   $max_cols: 4;
@@ -118,13 +117,16 @@ main {
 }
 
 .masonry > .card {
-  box-shadow: 0 0 0.2em var(--card-shadow);
+  $inner_shadow: 0.5em;
+  $outer_shadow: 0.8em;
+
+  box-shadow: 0 0 $inner_shadow var(--card-shadow);
   background-color: var(--background-colour-light);
 
   &:hover,
   &:focus,
   &:active {
-    box-shadow: 0 0 0.5em var(--card-shadow);
+    box-shadow: 0 0 $outer_shadow var(--card-shadow);
   }
 }
 
