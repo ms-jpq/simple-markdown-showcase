@@ -5,7 +5,10 @@ export type LangProps = { lang: string; colour: string }
 
 export const GithubLang = ({ lang, colour }: LangProps) => (
   <span className={cn("github-lang")}>
-    <i style={{ color: colour }}> </i>
+    <i
+      className={cn("border-circle", "d-ib")}
+      style={{ backgroundColor: colour }}
+    ></i>{" "}
     {lang}
   </span>
 )
@@ -13,17 +16,15 @@ export const GithubLang = ({ lang, colour }: LangProps) => (
 export type StarProps = { stars: number }
 
 export const GithubStars = ({ stars }: StarProps) => (
-  <span className={cn("github-stars")}>
-    <i className="fas fa-star"></i>
-    {stars}
+  <span className={cn("github-stars", { hidden: stars === 0 })}>
+    <i className="fas fa-star"></i> {stars}
   </span>
 )
 
 export type ForkProps = { forks: number }
 
 export const GithubForks = ({ forks }: ForkProps) => (
-  <span className={cn("github-forks")}>
-    <i className="fas fa-code-branch"></i>
-    {forks}
+  <span className={cn("github-forks", { hidden: forks === 0 })}>
+    <i className="fas fa-code-branch"></i> {forks}
   </span>
 )

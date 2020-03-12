@@ -178,7 +178,6 @@ body > header {
 
   grid-template-rows: 1fr;
   grid-template-columns: auto;
-  grid-auto-flow: column;
 
   padding-left: $side_padding_h;
   padding-right: $side_padding_h;
@@ -244,7 +243,6 @@ body > aside {
 
   grid-auto-columns: $association_size;
   grid-auto-rows: $association_size;
-  grid-auto-flow: column;
 
   column-gap: $association_padding;
   row-gap: $association_padding;
@@ -262,6 +260,14 @@ body > aside {
       color: var(--highlight-colour);
       border-color: var(--highlight-colour);
     }
+  }
+}
+
+.github-lang {
+  $size: 0.7em;
+  > i {
+    width: $size;
+    height: $size;
   }
 }
 

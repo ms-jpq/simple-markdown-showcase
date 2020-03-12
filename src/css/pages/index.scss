@@ -96,10 +96,18 @@ main {
 
     padding-left: $desc_padding_h;
     padding-right: $desc_padding_h;
-    padding-bottom: $desc_padding_v;
+
+    padding-bottom: 0.5em;
   }
   > .figure-meta {
     grid-area: meta;
+
+    padding-left: $desc_padding_h;
+    padding-right: $desc_padding_h;
+
+    padding-bottom: $desc_padding_v;
+
+    column-gap: 1em;
   }
 
   grid-template-areas:

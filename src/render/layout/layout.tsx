@@ -41,7 +41,7 @@ const Head = ({ title, desc, js, css }: HeadProps) => (
 export type HeaderProps = {} & HeaderConfig
 
 const Header = ({ title, menu }: HeaderProps) => (
-  <header className={cn("d-grid")}>
+  <header className={cn("d-grid", "grid-col")}>
     <HeaderMenu menu_title={menu} />
     <HeaderTitle title={title} />
   </header>

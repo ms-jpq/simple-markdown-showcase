@@ -27,7 +27,7 @@ export const AsideAssociations = ({
 }: AssociationsProps) => (
   <section
     id="associations"
-    className={cn("associations", "d-grid", "text-centre")}
+    className={cn("associations", "d-grid", "grid-col", "text-centre")}
   >
     <Circle href={`mailto:${email}`} class_name={"far fa-envelope"} />
     <Circle

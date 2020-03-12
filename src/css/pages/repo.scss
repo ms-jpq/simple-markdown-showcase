@@ -22,10 +22,14 @@ main {
   }
 
   .repo-header {
+    $header_padding: 1em;
+
     .big-button {
       border-style: dashed;
-
       color: var(--text-color);
+    }
+    > * {
+      padding-left: $header_padding;
     }
   }
 

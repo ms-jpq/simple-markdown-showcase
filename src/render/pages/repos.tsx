@@ -26,7 +26,16 @@ const Repo = ({
   forks_count,
 }: RepoProps) => (
   <React.Fragment>
-    <section className={cn("repo-header", "d-grid", "ji-end", "m-auto")}>
+    <section
+      className={cn(
+        "repo-header",
+        "d-flex",
+        "fiex-col",
+        "jc-end",
+        "ai-centre",
+        "m-auto",
+      )}
+    >
       <GithubStars stars={stargazers_count} />
       <GithubForks forks={forks_count} />
       <a href={html_url} className={cn("invis-link")}>

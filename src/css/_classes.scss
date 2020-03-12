@@ -72,8 +72,40 @@
  * Display *
  ***********/
 
+.d-inline {
+  display: inline;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-ib {
+  display: inline-block;
+}
+
 .d-grid {
   display: grid;
+}
+
+.grid-row {
+  grid-auto-flow: row;
+}
+
+.grid-col {
+  grid-auto-flow: column;
+}
+
+.d-flex {
+  display: flex;
+}
+
+.flex-row {
+  flex-direction: row;
+}
+
+.flex-col {
+  flex-direction: column;
 }
 
 /* justify-items */
@@ -143,6 +175,10 @@
 .border-thin {
   border-style: solid;
   border-width: thin;
+}
+
+.border-invis {
+  border-color: transparent;
 }
 
 .border-circle {
