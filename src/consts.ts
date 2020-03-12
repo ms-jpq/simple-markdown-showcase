@@ -65,6 +65,7 @@ export type AsideConfig = {
 
 export type StaticConfig = {
   user: string
+  lang: string
   title: string
   repo_shim: string
   aside: AsideConfig

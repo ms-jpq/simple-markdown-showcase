@@ -16,6 +16,7 @@ import { run as run_parcel } from "./parcel"
 import { spit } from "nda/dist/node/fs"
 
 const render_page = async ({
+  lang,
   js: local_js,
   css: local_css,
   title,
@@ -24,7 +25,7 @@ const render_page = async ({
   page,
   page_name,
   body,
-}: RenderInstruction & { body: BodyProps }) => {
+}: RenderInstruction & { lang: string; body: BodyProps }) => {
   const sub_path = join(static_config.out_dir, path)
   const js = map(
     (js) => relative(sub_path, join(static_config.src_dir, "js", `${js}.ts`)),
@@ -36,7 +37,7 @@ const render_page = async ({
     local_css,
   )
   const content = (
-    <Page head={{ title, desc, js, css }} body={body}>
+    <Page lang={lang} head={{ title, desc, js, css }} body={body}>
       {page}
     </Page>
   )
@@ -90,6 +91,7 @@ export const render = async ({ config, repos, md_strings }: RenderProps) => {
       map(
         (i) => ({
           ...i,
+          lang: config.lang,
           body: {
             ...config,
             aside: {

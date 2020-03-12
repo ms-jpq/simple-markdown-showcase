@@ -79,14 +79,19 @@ export type BodyProps = {
   footer: FooterProps
 }
 
-export type PageProps = { head: HeadProps; body: BodyProps } & Parent
+export type PageProps = {
+  lang: string
+  head: HeadProps
+  body: BodyProps
+} & Parent
 
 export const Page = ({
+  lang,
   head,
   body: { aside, header, footer },
   children,
 }: PageProps) => (
-  <html>
+  <html lang={lang}>
     <Head title={head.title} desc={head.desc} js={head.js} css={head.css} />
     <body className={cn("d-grid", "vw-100", "mp-0")}>
       <Header title={header.title} menu={header.menu} />
