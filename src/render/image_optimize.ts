@@ -106,6 +106,7 @@ const cache_image = (sub_path: string) => async (img: HTMLImageElement) => {
     ",",
     map((s) => `${relative(sub_path, s.new_name)} ${s.width}w`, new_sizes),
   )
+  img.setAttribute("loading", "lazy")
 }
 
 const filter_localize = ({ src }: HTMLImageElement) => {

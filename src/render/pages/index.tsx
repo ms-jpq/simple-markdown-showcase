@@ -62,7 +62,11 @@ const Card = ({
     <figure className={cn("card", "d-grid")}>
       {image ? (
         <a href={link} className={cn("figure-img", "d-grid", "mp-0")}>
-          <img className={cn("img-responsive", "w-100")} src={image} />
+          <img
+            className={cn("img-responsive", "w-100")}
+            src={image}
+            alt={title}
+          />
           <div className={cn("figure-facade", "d-grid")}>
             <i className="fas fa-chevron-right"></i>
           </div>
