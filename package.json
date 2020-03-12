@@ -17,6 +17,7 @@
     "@types/react-dom": "^16.9.5",
     "@types/sharp": "^0.24.0",
     "bootstrap": "^4.4.1",
+    "cda": "git+https://github.com/ms-jpq/cda.git",
     "crypto-js": "^4.0.0",
     "gifsicle": "^5.0.0",
     "highlight.js": "^9.18.1",

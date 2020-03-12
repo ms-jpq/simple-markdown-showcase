@@ -6,7 +6,7 @@ export type LangProps = { lang: string; colour: string }
 export const GithubLang = ({ lang, colour }: LangProps) => (
   <span className={cn("github-lang")}>
     <i
-      className={cn("border-circle", "d-ib")}
+      className={cn("border-circle", "d-inline-block")}
       style={{ backgroundColor: colour }}
     ></i>{" "}
     {lang}
