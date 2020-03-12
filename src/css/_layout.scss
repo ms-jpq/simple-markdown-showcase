@@ -72,6 +72,7 @@ samp {
  * BODY *
  ********/
 $transition_width: 60em;
+$max_side: 20em;
 
 $side_padding_h: 1em;
 $side_padding_v: 1em;
@@ -133,7 +134,7 @@ body {
 }
 
 @mixin col2_view() {
-  grid-template-columns: minmax(min-content, 1fr) 3fr;
+  grid-template-columns: minmax(auto, $max_side) 3fr;
   grid-template-areas:
     "header main"
     "aside  main"
@@ -147,7 +148,7 @@ body {
 }
 
 @mixin col2_view_short() {
-  grid-template-columns: minmax(min-content, 1fr) 3fr;
+  grid-template-columns: minmax(auto, $max_side) 3fr;
   grid-template-areas:
     "aside  header"
     "aside  main"
