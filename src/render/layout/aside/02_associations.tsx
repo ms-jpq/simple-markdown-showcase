@@ -8,6 +8,7 @@ const Circle = ({ href, class_name }: CircleProps) => (
   <a
     className={cn(
       "association-circle",
+      "border-solid",
       "border-thin",
       "border-circle",
       "d-grid",
