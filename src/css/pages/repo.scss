@@ -22,9 +22,6 @@ main {
   }
 
   .repo-header {
-    $header_padding_h: 1em;
-    column-gap: $header_padding_h;
-
     .big-button {
       border-style: dashed;
       color: var(--text-color);
@@ -36,9 +33,5 @@ main {
       width: 100%;
       max-width: 85vw;
     }
-  }
-
-  .repo-footer {
-    column-gap: 1em;
   }
 }

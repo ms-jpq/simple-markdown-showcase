@@ -80,19 +80,37 @@ const Card = ({
           "text-uppercase",
           "text-centre",
           "text-ellipsis",
+          "py-1",
+          "px-2",
         )}
       >
         <a href={link} className={cn("invis-link")}>
           {title}
         </a>
       </h4>
-      <div className={cn("figure-meta", "d-grid", "grid-col", "jc-start")}>
+      <div
+        className={cn(
+          "figure-meta",
+          "d-grid",
+          "grid-col",
+          "jc-start",
+          "col-gap-2",
+          "px-2",
+          "pb-1",
+        )}
+      >
         <GithubLang lang={language} colour={colour} />
         <GithubStars stars={stars} />
         <GithubForks forks={forks} />
       </div>
       <figcaption
-        className={cn("figure-detail", "text-ellipsis", "text-justify")}
+        className={cn(
+          "figure-detail",
+          "text-ellipsis",
+          "text-justify",
+          "px-2",
+          "pb-1",
+        )}
       >
         {desc}
       </figcaption>
