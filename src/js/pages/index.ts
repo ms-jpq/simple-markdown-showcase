@@ -16,7 +16,7 @@ const main = async () => {
     itemSelector: `.card`,
     gutter: `.col-gap-sizer`,
     transitionDuration: "0.5s",
-    initLayout: true,
+    initLayout: false,
   })
 
   const layout = throttle(200, () => masonry.layout!())
@@ -46,8 +46,8 @@ const main = async () => {
   })()
 
   while (flag && inc() < 25) {
-    await sleep(250)
     layout()
+    await sleep(250)
   }
 }
 
