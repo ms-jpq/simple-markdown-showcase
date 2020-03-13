@@ -65,7 +65,7 @@ const Card = ({
           <img
             className={cn("img-responsive", "w-100")}
             src={image}
-            alt={title}
+            alt={`${title} - image`}
           />
           <div
             className={cn("figure-facade", "d-none", "ji-centre", "ai-centre")}

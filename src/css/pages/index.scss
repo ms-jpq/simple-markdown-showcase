@@ -101,9 +101,9 @@ main {
 
 .card > .figure-img {
   text-decoration: none;
-  font-size: 250%;
 
   img {
+    color: var(--facade-background);
     background-color: var(--image-placeholder-color);
   }
 
@@ -114,6 +114,7 @@ main {
   }
 
   > .figure-facade {
+    font-size: 250%;
     color: var(--facade-colour);
     background-color: var(--facade-background);
   }
