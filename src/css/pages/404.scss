@@ -1,12 +1,7 @@
 @import "../layout";
 
 main {
-  justify-items: center;
-  align-items: center;
-
   background-color: var(--background-colour-light);
-
-  text-align: center;
 
   > h1 {
     color: var(--desc-colour);

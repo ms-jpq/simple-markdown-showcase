@@ -12,7 +12,7 @@ export type RenderProps = {}
 export const render: RenderPage<RenderProps> = async ({}) => {
   const title = "404"
   const page = (
-    <React.Fragment>
+    <main className={cn("d-grid", "ji-centre", "ai-centre", "text-centre")}>
       <h1>404</h1>
       <h3>The page you're looking for doesn't exist</h3>
       <h2>
@@ -21,7 +21,7 @@ export const render: RenderPage<RenderProps> = async ({}) => {
           <i className="fas fa-dog"></i>
         </a>
       </h2>
-    </React.Fragment>
+    </main>
   )
   return [{ path: "", page_name, title, desc, js, css, page }]
 }

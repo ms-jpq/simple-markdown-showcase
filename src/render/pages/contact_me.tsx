@@ -20,10 +20,10 @@ export const render: RenderPage<RenderProps> = async ({
 }) => {
   const title = "Contact:Me"
   const page = (
-    <React.Fragment>
+    <main className={cn("d-grid")}>
       <Markdown content={md_line} />
       <AsideAssociations contacts={contacts} />
-    </React.Fragment>
+    </main>
   )
   return [{ path: "contact", page_name, title, desc, js, css, page }]
 }

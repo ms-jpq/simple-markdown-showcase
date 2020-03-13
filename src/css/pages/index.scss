@@ -7,8 +7,8 @@
   --image-placeholder-color: rgb(200, 200, 200);
 }
 
-$grid_gap: 1.7em;
-$card_width: 25em;
+$grid_gap: 1.7rem;
+$card_width: 25rem;
 
 /********
  * MAIN *
@@ -17,14 +17,6 @@ $card_width: 25em;
 main {
   margin-top: -$side_padding_v;
 
-  $padding_v: 1em;
-  $padding_h: 1em;
-
-  padding-top: $padding_v;
-  padding-bottom: $padding_v;
-  padding-left: $padding_h;
-  padding-right: $padding_h;
-
   grid-template-columns: 1fr;
   grid-template-rows: 1fr;
 }
@@ -32,10 +24,6 @@ main {
 .masonry {
   column-gap: $grid_gap;
   row-gap: $grid_gap;
-
-  > .card {
-    width: 100%;
-  }
 
   &.scripting {
     > .col-gap-sizer {

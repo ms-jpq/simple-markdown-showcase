@@ -12,6 +12,10 @@ export type RenderProps = { md_line: string }
 
 export const render: RenderPage<RenderProps> = async ({ md_line }) => {
   const title = "About:Me"
-  const page = <Markdown content={md_line} />
+  const page = (
+    <main className={cn("d-grid")}>
+      <Markdown content={md_line} />
+    </main>
+  )
   return [{ path: "about-me", page_name, title, desc, js, css, page }]
 }

@@ -41,14 +41,10 @@ const Head = ({ title, desc, js, css }: HeadProps) => (
 export type HeaderProps = {} & HeaderConfig
 
 const Header = ({ title, menu }: HeaderProps) => (
-  <header className={cn("d-grid", "grid-col", "px-2")}>
+  <header className={cn("d-grid", "grid-col", "px-4")}>
     <HeaderMenu menu_title={menu} />
     <HeaderTitle title={title} />
   </header>
-)
-
-const Main = ({ children }: Parent) => (
-  <main className={cn("d-grid")}>{children}</main>
 )
 
 export type FooterProps = { md_line: string }
@@ -66,7 +62,7 @@ export type AsideProps = {
 } & AsideConfig
 
 const Aside = ({ dest, off, md_line, contacts, nav }: AsideProps) => (
-  <aside id="left-panel" className={cn("grid", "ac-start", "px-2")}>
+  <aside id="left-panel" className={cn("grid", "ac-start", "px-4")}>
     <AsideAbout md_line={md_line} />
     <AsideNav off={off} dests={nav} dest={dest} />
     <AsideAssociations contacts={contacts} />
@@ -95,7 +91,7 @@ export const Page = ({
     <Head title={head.title} desc={head.desc} js={head.js} css={head.css} />
     <body className={cn("d-grid", "vw-100", "mp-0")}>
       <Header title={header.title} menu={header.menu} />
-      <Main>{children}</Main>
+      {children}
       <Aside
         off={aside.off}
         dest={aside.dest}

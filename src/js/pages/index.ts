@@ -19,12 +19,12 @@ const main = async () => {
     initLayout: false,
   })
 
-  const layout = throttle(200, () => masonry.layout!())
-
   header_menu.addEventListener("click", async () => {
     await wait_frame()
     masonry.layout!()
   })
+
+  const layout = throttle(200, () => masonry.layout!())
 
   const all_loaded = Promise.all(
     map(async (image) => {

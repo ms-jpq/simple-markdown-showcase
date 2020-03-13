@@ -59,7 +59,7 @@ const Card = ({
   )
   const image = fst(images)
   return (
-    <figure className={cn("card", "d-grid")}>
+    <figure className={cn("card", "d-grid", "w-100")}>
       {image ? (
         <a href={link} className={cn("figure-img", "d-grid", "mp-0")}>
           <img
@@ -80,8 +80,8 @@ const Card = ({
           "text-uppercase",
           "text-centre",
           "text-ellipsis",
-          "py-1",
-          "px-2",
+          "py-2",
+          "px-4",
         )}
       >
         <a href={link} className={cn("invis-link")}>
@@ -94,9 +94,9 @@ const Card = ({
           "d-grid",
           "grid-col",
           "jc-start",
-          "col-gap-2",
-          "px-2",
-          "pb-1",
+          "col-gap-4",
+          "px-4",
+          "pb-2",
         )}
       >
         <GithubLang lang={language} colour={colour} />
@@ -108,8 +108,8 @@ const Card = ({
           "figure-detail",
           "text-ellipsis",
           "text-justify",
-          "px-2",
-          "pb-1",
+          "px-4",
+          "pb-2",
         )}
       >
         {desc}
@@ -138,35 +138,37 @@ export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
     showcase,
   )
   const page = (
-    <div className={cn("masonry", "d-grid", "ai-end", "ji-centre")}>
-      {map(
-        ({
-          title,
-          images,
-          name,
-          desc,
-          display,
-          stargazers_count,
-          forks_count,
-          language,
-          colour,
-        }) => (
-          <Card
-            link={name}
-            images={images}
-            title={title}
-            desc={desc}
-            language={language}
-            colour={colour}
-            stars={stargazers_count}
-            forks={forks_count}
-            hide_detail={(display || {}).hide_details}
-          />
-        ),
-        sorted,
-      )}
-      <div className={cn("col-gap-sizer")}></div>
-    </div>
+    <main className={cn("d-grid", "p-4")}>
+      <div className={cn("masonry", "d-grid", "ai-end", "ji-centre")}>
+        {map(
+          ({
+            title,
+            images,
+            name,
+            desc,
+            display,
+            stargazers_count,
+            forks_count,
+            language,
+            colour,
+          }) => (
+            <Card
+              link={name}
+              images={images}
+              title={title}
+              desc={desc}
+              language={language}
+              colour={colour}
+              stars={stargazers_count}
+              forks={forks_count}
+              hide_detail={(display || {}).hide_details}
+            />
+          ),
+          sorted,
+        )}
+        <div className={cn("col-gap-sizer")}></div>
+      </div>
+    </main>
   )
 
   return [

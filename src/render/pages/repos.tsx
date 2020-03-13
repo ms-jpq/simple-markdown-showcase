@@ -34,7 +34,7 @@ const Repo = ({
         "jc-end",
         "ai-centre",
         "mx-auto",
-        "col-gap-2",
+        "col-gap-4",
       )}
     >
       <GithubStars stars={stargazers_count} />
@@ -46,7 +46,7 @@ const Repo = ({
       </a>
     </section>
     <section className={cn("repo-body", "d-grid", "mx-auto")}>
-      <Markdown content={read_me} />
+      <Markdown content={read_me} classname={cn("w-100")} />
     </section>
     <section
       className={cn(
@@ -54,7 +54,7 @@ const Repo = ({
         "d-grid",
         "ji-end",
         "mx-auto",
-        "col-gap-2",
+        "col-gap-4",
         "hidden",
       )}
     >
@@ -94,14 +94,16 @@ const render_repo: RenderPage<Repo & ShimProps> = async ({
 }) => {
   const path = `${shim}${name}`
   const page = (
-    <Repo
-      read_me={read_me}
-      html_url={html_url}
-      created_at={created_at}
-      updated_at={updated_at}
-      stargazers_count={stargazers_count}
-      forks_count={forks_count}
-    />
+    <main className={cn("d-grid", "p-8", "row-gap-8")}>
+      <Repo
+        read_me={read_me}
+        html_url={html_url}
+        created_at={created_at}
+        updated_at={updated_at}
+        stargazers_count={stargazers_count}
+        forks_count={forks_count}
+      />
+    </main>
   )
   return [{ js, css, title, desc, path, page_name, page }]
 }
