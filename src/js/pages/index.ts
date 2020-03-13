@@ -33,7 +33,7 @@ const main = async () => {
 
   const inc = counter()
 
-  while (inc() < 40) {
+  while (images.size && inc() < 40) {
     await sleep(250)
     const old_size = images.size
 
