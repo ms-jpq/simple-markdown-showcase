@@ -59,7 +59,7 @@ const Card = ({
   )
   const image = fst(images)
   return (
-    <figure className={cn("card", "d-grid", "w-100", "m-0")}>
+    <figure className={cn("card", "d-grid", "m-0")}>
       {image ? (
         <a href={link} className={cn("figure-img", "d-grid", "mp-0")}>
           <img
@@ -140,7 +140,7 @@ export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
     showcase,
   )
   const page = (
-    <main className={cn("d-grid", "p-4")}>
+    <main className={cn("p-4")}>
       <div className={cn("masonry", "d-grid", "ai-end", "ji-centre")}>
         {map(
           ({
@@ -168,7 +168,6 @@ export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
           ),
           sorted,
         )}
-        <div className="col-sizer"></div>
         <div className="col-gap-sizer"></div>
       </div>
     </main>

@@ -15,24 +15,23 @@ $card_width: 25em;
  ********/
 
 main {
-  margin-top: -$side_padding_v;
-
-  grid-template-columns: 1fr;
-  grid-template-rows: 1fr;
+  margin-top: 0;
+  @media (max-width: $transition_width) {
+    margin-top: -$side_padding_v;
+  }
 }
 
 .masonry {
   column-gap: $grid_gap;
   row-gap: $grid_gap;
 
-  &.scripting {
-    > .col-gap-sizer {
-      width: $grid_gap;
-    }
-    > .card {
-      margin-top: ($grid_gap / 2);
-      margin-bottom: ($grid_gap / 2);
-    }
+  .col-gap-sizer {
+    width: $grid_gap;
+  }
+
+  &.scripting > .card {
+    margin-top: ($grid_gap / 2);
+    margin-bottom: ($grid_gap / 2);
   }
 
   @mixin size_col($cols) {
