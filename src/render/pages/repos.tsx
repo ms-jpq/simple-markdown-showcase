@@ -33,7 +33,7 @@ const Repo = ({
         "grid-col",
         "jc-end",
         "ai-centre",
-        "m-auto",
+        "mx-auto",
       )}
     >
       <GithubStars stars={stargazers_count} />
@@ -44,11 +44,11 @@ const Repo = ({
         </BigButton>
       </a>
     </section>
-    <section className={cn("repo-body", "d-grid", "m-auto")}>
+    <section className={cn("repo-body", "d-grid", "mx-auto")}>
       <Markdown content={read_me} />
     </section>
     <section
-      className={cn("repo-footer", "d-grid", "ji-end", "m-auto", "hidden")}
+      className={cn("repo-footer", "d-grid", "ji-end", "mx-auto", "hidden")}
     >
       <span>
         Created at:{" "}
