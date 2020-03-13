@@ -59,7 +59,7 @@ const Card = ({
   )
   const image = fst(images)
   return (
-    <figure className={cn("card", "d-grid", "w-100")}>
+    <figure className={cn("card", "d-grid", "w-100", "m-0")}>
       {image ? (
         <a href={link} className={cn("figure-img", "d-grid", "mp-0")}>
           <img
@@ -67,7 +67,9 @@ const Card = ({
             src={image}
             alt={title}
           />
-          <div className={cn("figure-facade", "d-grid")}>
+          <div
+            className={cn("figure-facade", "d-none", "ji-centre", "ai-centre")}
+          >
             <i className="fas fa-chevron-right"></i>
           </div>
         </a>
@@ -166,7 +168,8 @@ export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
           ),
           sorted,
         )}
-        <div className={cn("col-gap-sizer")}></div>
+        <div className="col-sizer"></div>
+        <div className="col-gap-sizer"></div>
       </div>
     </main>
   )

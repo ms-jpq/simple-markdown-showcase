@@ -7,8 +7,8 @@
   --image-placeholder-color: rgb(200, 200, 200);
 }
 
-$grid_gap: 1.7rem;
-$card_width: 25rem;
+$grid_gap: 1.7em;
+$card_width: 25em;
 
 /********
  * MAIN *
@@ -115,11 +115,6 @@ main {
   }
 
   > .figure-facade {
-    display: none;
-
-    justify-items: center;
-    align-items: center;
-
     color: var(--facade-colour);
     background-color: var(--facade-background);
   }
