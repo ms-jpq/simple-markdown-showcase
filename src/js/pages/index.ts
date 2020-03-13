@@ -5,7 +5,7 @@ import { filter, iter } from "nda/dist/isomorphic/list"
 import { throttle } from "nda/dist/isomorphic/decorator"
 
 const grid = $(`.masonry`)
-const images = $$<HTMLImageElement>(`img`)
+const images = new Set($$<HTMLImageElement>(`img`))
 const header_menu = $<HTMLButtonElement>(`header > button`)!
 
 const main = async () => {
@@ -27,27 +27,24 @@ const main = async () => {
 
   layout()
 
-  iter((img) => (img.onload = img.onerror = layout), images)
+  for (const img of images) {
+    img.onload = img.onerror = layout
+  }
 
   const inc = counter()
-  const set = new Set()
 
-  while (inc() < 100) {
+  while (inc() < 40) {
     await sleep(250)
+    const old_size = images.size
 
-    const mature = filter(
-      (img) => img.naturalWidth !== 0 && img.naturalHeight !== 0,
-      images,
-    )
-
-    const old_size = set.size
-    iter((img) => set.add(img), mature)
-    if (set.size !== old_size) {
-      layout()
+    for (const img of images) {
+      if (img.naturalWidth !== 0 && img.naturalHeight !== 0) {
+        images.delete(img)
+      }
     }
 
-    if (set.size === images.length) {
-      break
+    if (images.size !== old_size) {
+      layout()
     }
   }
 }
