@@ -75,7 +75,6 @@ $transition_width: 60em;
 $min_side: auto;
 $max_side: 25em;
 
-$side_padding_h: 1em;
 $side_padding_v: 1em;
 
 body {
@@ -157,7 +156,7 @@ body {
 
   > aside {
     display: grid;
-    padding-top: $side_padding_h;
+    padding-top: $side_padding_v;
   }
 }
 
@@ -180,9 +179,6 @@ body > header {
 
   grid-template-rows: 1fr;
   grid-template-columns: auto;
-
-  padding-left: $side_padding_h;
-  padding-right: $side_padding_h;
 }
 
 /**********
@@ -202,9 +198,6 @@ body > aside {
   grid-template-rows: auto;
 
   row-gap: $side_padding_v;
-
-  padding-left: $side_padding_h;
-  padding-right: $side_padding_h;
 
   > #about-me {
     p {

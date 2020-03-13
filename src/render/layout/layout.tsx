@@ -41,7 +41,7 @@ const Head = ({ title, desc, js, css }: HeadProps) => (
 export type HeaderProps = {} & HeaderConfig
 
 const Header = ({ title, menu }: HeaderProps) => (
-  <header className={cn("d-grid", "grid-col")}>
+  <header className={cn("d-grid", "grid-col", "px-2")}>
     <HeaderMenu menu_title={menu} />
     <HeaderTitle title={title} />
   </header>
@@ -66,7 +66,7 @@ export type AsideProps = {
 } & AsideConfig
 
 const Aside = ({ dest, off, md_line, contacts, nav }: AsideProps) => (
-  <aside id="left-panel" className={cn("grid", "ac-start")}>
+  <aside id="left-panel" className={cn("grid", "ac-start", "px-2")}>
     <AsideAbout md_line={md_line} />
     <AsideNav off={off} dests={nav} dest={dest} />
     <AsideAssociations contacts={contacts} />
