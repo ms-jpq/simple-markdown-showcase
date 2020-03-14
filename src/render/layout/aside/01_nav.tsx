@@ -8,7 +8,7 @@ export type NavProps = {
   dests: { title: string; link: string }[]
 }
 export const AsideNav = ({ dest, off, dests }: NavProps) => (
-  <section id="nav" className={cn("d-grid")}>
+  <section id="nav">
     <nav>
       <ul>
         {map(

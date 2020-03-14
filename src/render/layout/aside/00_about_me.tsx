@@ -6,7 +6,7 @@ export type AboutMeProps = {
   md_line: string
 }
 export const AsideAbout = ({ md_line }: AboutMeProps) => (
-  <section id="about-me" className={cn("d-grid")}>
+  <section id="about-me">
     <Markdown content={md_line} />
   </section>
 )
