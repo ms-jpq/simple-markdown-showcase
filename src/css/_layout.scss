@@ -72,8 +72,7 @@ samp {
  * BODY *
  ********/
 $transition_width: 60em;
-$min_side: auto;
-$max_side: 25em;
+$side_len: minmax(auto, 25em);
 
 $side_padding_v: 1em;
 
@@ -134,7 +133,7 @@ body {
 }
 
 @mixin col2_view() {
-  grid-template-columns: minmax($min_side, $max_side) 3fr;
+  grid-template-columns: $side_len 1fr;
   grid-template-areas:
     "header main"
     "aside  main"
@@ -148,7 +147,7 @@ body {
 }
 
 @mixin col2_view_short() {
-  grid-template-columns: minmax($min_side, $max_side) 3fr;
+  grid-template-columns: $side_len 1fr;
   grid-template-areas:
     "aside  header"
     "aside  main"
@@ -231,19 +230,7 @@ body > aside {
  **************/
 
 .associations {
-  $association_size: 2.5em;
-  $association_padding: 0.7em;
-
-  grid-auto-columns: $association_size;
-  grid-auto-rows: $association_size;
-
-  column-gap: $association_padding;
-  row-gap: $association_padding;
-
   > .association-circle {
-    width: $association_size;
-    height: $association_size;
-
     border-color: var(--desc-colour);
     color: var(--desc-colour);
 

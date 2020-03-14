@@ -11,9 +11,12 @@ const Circle = ({ href, class_name }: CircleProps) => (
       "border-solid",
       "border-thin",
       "border-circle",
-      "d-grid",
+      "d-flex",
       "ai-centre",
-      "ji-centre",
+      "jc-centre",
+      "p-2",
+      "m-2",
+      "text-centre",
     )}
     href={href}
   >
@@ -28,7 +31,7 @@ export const AsideAssociations = ({
 }: AssociationsProps) => (
   <section
     id="associations"
-    className={cn("associations", "d-grid", "grid-col", "text-centre")}
+    className={cn("associations", "d-flex", "flex-wrap")}
   >
     <Circle href={`mailto:${email}`} class_name={"far fa-envelope"} />
     <Circle
