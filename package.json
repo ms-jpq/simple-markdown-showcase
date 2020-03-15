@@ -51,7 +51,6 @@
     "parse-gitignore": "*",
     "prettier": "*",
     "ts-node": "*",
-    "typed-scss-modules": "*",
     "typescript": "*"
   },
   "homepage": "https://ms-jpq.github.io",
