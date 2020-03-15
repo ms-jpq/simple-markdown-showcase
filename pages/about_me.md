@@ -14,12 +14,12 @@ _Vancouer, BC_
 
 ### Microservices
 
-Opensourced multiple [kubernetes native](https://ms-jpq.github.io/simple-traefik-dash), [dockerized](https://ms-jpq.github.io/simple-traefik-identity) [services](https://ms-jpq.github.io/kde-in-docker) for the self hosting community.
+Opensourced multiple [Kubernetes native](https://ms-jpq.github.io/simple-traefik-dash), [Dockerized](https://ms-jpq.github.io/simple-traefik-identity) [services](https://ms-jpq.github.io/kde-in-docker) for the self hosting community.
 Over 20k docker pulls in total.
 
 ### Devops
 
-Authored [templating framework](http://ms-jpq.github.io/jinja2pp) for kubernetes, ansible deployment pipelines, and integration of Azure Devops CI.
+Authored [templating framework](http://ms-jpq.github.io/jinja2pp) for Kubernetes, Ansible deployment pipelines, and integration of Azure Devops CI.
 
 ### Functional Design
 
