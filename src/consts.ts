@@ -1,8 +1,9 @@
-import { drop, fst } from "nda/dist/isomorphic/list"
+import { drop } from "nda/dist/isomorphic/iterator"
+import { fst } from "nda/dist/isomorphic/list"
 import { ReactElement } from "react"
 
 export const args = (() => {
-  const argv = drop(2, process.argv)
+  const argv = [...drop(2, process.argv)]
   return {
     prod: fst(argv) === "clean",
   }

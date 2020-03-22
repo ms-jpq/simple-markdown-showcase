@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node
 import { additional_pages, args, static_config, StaticConfig } from "./consts"
-import { big_print } from "nda/dist/node/prelude"
+import { big_print } from "nda/dist/node/console"
 import { extract, GithubInfo } from "./github/api"
 import { join } from "nda/dist/node/path"
 import { parse } from "./vender/yaml"

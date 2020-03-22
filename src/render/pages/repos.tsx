@@ -1,7 +1,7 @@
 import React from "react"
 import { BigButton } from "../layout/components/big_button"
 import { cn } from "nda/dist/isomorphic/dom"
-import { flat_map, map } from "nda/dist/isomorphic/list"
+import { flat_map, map } from "nda/dist/isomorphic/iterator"
 import { GithubForks, GithubStars } from "../layout/components/github"
 import { id, str } from "nda/dist/isomorphic/prelude"
 import { Markdown } from "../layout/markdown"
@@ -116,6 +116,6 @@ export const render: RenderPage<RenderProps> = async ({ repos, shim }) => {
   const pages = await Promise.all(
     map((repo) => render_repo({ ...repo, shim }), repos),
   )
-  const renderings = flat_map(id, pages)
+  const renderings = [...flat_map(id, pages)]
   return renderings
 }

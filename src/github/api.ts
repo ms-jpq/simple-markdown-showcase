@@ -1,6 +1,6 @@
 import assert from "assert"
 import fetch from "node-fetch"
-import { compact_map, map } from "nda/dist/isomorphic/list"
+import { compact_map, map } from "nda/dist/isomorphic/iterator"
 import { id } from "nda/dist/isomorphic/prelude"
 import { of_list } from "nda/dist/isomorphic/record"
 import { parse } from "../vender/yaml"
@@ -33,7 +33,10 @@ const github_color = async () => {
   ).text()
   const yml = parse(data)
   const record = of_list<Record<string, string>>(
-    map(([k, v]) => [k, (v as any)["color"]], Object.entries(yml)),
+    map(
+      ([k, v]) => [k, (v as any)["color"]] as [string, any],
+      Object.entries(yml),
+    ),
   )
   return record
 }
@@ -88,7 +91,7 @@ const github_repos = async (user: string, token?: string) => {
   const seek = github_repo(colors, token)
   try {
     const repos = await Promise.all(map(seek, repo_data))
-    return compact_map(id, repos)
+    return [...compact_map(id, repos)]
   } catch (err) {
     console.error(err, repo_data)
     return []

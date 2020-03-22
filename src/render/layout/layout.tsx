@@ -6,7 +6,7 @@ import { cn } from "nda/dist/isomorphic/dom"
 import { FooterDesc } from "./footer/00_desc"
 import { HeaderMenu } from "./header/00_menu"
 import { HeaderTitle } from "./header/01_title"
-import { map } from "nda/dist/isomorphic/list"
+import { map } from "nda/dist/isomorphic/iterator"
 import { Parent } from "../../vender/react"
 import { AsideAbout } from "./aside/00_about_me"
 
@@ -23,18 +23,8 @@ const Head = ({ title, desc, js, css }: HeadProps) => (
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={desc} />
     <title>{title}</title>
-    {map(
-      (src) => (
-        <script src={src} defer></script>
-      ),
-      js,
-    )}
-    {map(
-      (href) => (
-        <link href={href} rel="stylesheet"></link>
-      ),
-      css,
-    )}
+    {[...map((src) => <script src={src} defer></script>, js)]}
+    {[...map((href) => <link href={href} rel="stylesheet"></link>, css)]}
   </head>
 )
 

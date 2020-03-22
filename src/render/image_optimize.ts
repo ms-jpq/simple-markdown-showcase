@@ -1,11 +1,11 @@
 import fetch from "node-fetch"
 import md5 from "crypto-js/md5"
 import sharp from "sharp"
-import { any, filter, join, last } from "nda/dist/isomorphic/list"
+import { any, filter, join, map } from "nda/dist/isomorphic/iterator"
 import { exists, sip, spit } from "nda/dist/node/fs"
 import { imageSize } from "image-size"
 import { JSDOM } from "jsdom"
-import { map } from "nda/dist/isomorphic/list"
+import { last } from "nda/dist/isomorphic/list"
 import { pipe } from "nda/dist/node/sub_process"
 import { static_config } from "../consts"
 import {
@@ -65,15 +65,17 @@ const resize_image = async (path: string) => {
     width,
   ])
   const [file_name, ext] = fn_ext(path)
-  const src_set = map(
-    (w) => ({
-      src: buffer,
-      new_name: `${file_name}-${w}w${ext}`,
-      width: w,
-      height: Math.round((w / width) * height),
-    }),
-    widths,
-  )
+  const src_set = [
+    ...map(
+      (w) => ({
+        src: buffer,
+        new_name: `${file_name}-${w}w${ext}`,
+        width: w,
+        height: Math.round((w / width) * height),
+      }),
+      widths,
+    ),
+  ]
 
   await Promise.all(map(resize, src_set))
   return src_set

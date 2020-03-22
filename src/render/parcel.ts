@@ -1,7 +1,8 @@
 import Bundler, { ParcelOptions } from "parcel-bundler"
 import { args, RenderInstruction, static_config } from "../consts"
-import { chunk, map } from "nda/dist/isomorphic/list"
+import { chunk } from "nda/dist/isomorphic/list"
 import { join } from "nda/dist/node/path"
+import { map } from "nda/dist/isomorphic/iterator"
 
 const options: ParcelOptions = {
   outDir: `${static_config.dist_dir}`,
@@ -14,10 +15,12 @@ const options: ParcelOptions = {
 }
 
 export const run = async (instructions: RenderInstruction[]) => {
-  const entry = map(
-    (i) => join(static_config.out_dir, i.path, i.page_name),
-    instructions,
-  )
+  const entry = [
+    ...map(
+      (i) => join(static_config.out_dir, i.path, i.page_name),
+      instructions,
+    ),
+  ]
 
   // const bundler = new Bundler(entry, options)
   // bundler.on("buildError", (err) => {

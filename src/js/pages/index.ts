@@ -1,7 +1,6 @@
 import Masonry from "masonry-layout"
 import { $, $$, wait_frame } from "nda/dist/browser/dom"
 import { counter, sleep } from "nda/dist/isomorphic/prelude"
-import { filter, iter } from "nda/dist/isomorphic/list"
 import { throttle } from "nda/dist/isomorphic/decorator"
 
 const grid = $(`.masonry`)

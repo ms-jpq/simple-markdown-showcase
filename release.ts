@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node
 import { cp, readdir, rm } from "nda/dist/node/fs"
-import { filter, map } from "nda/dist/isomorphic/list"
+import { filter, map } from "nda/dist/isomorphic/iterator"
 import { run } from "nda/dist/node/sub_process"
 import { static_config } from "./src/consts"
 

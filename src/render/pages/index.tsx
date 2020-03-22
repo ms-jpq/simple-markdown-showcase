@@ -1,8 +1,9 @@
 import assert from "assert"
 import React from "react"
-import { big_print } from "nda/dist/node/prelude"
+import { big_print } from "nda/dist/node/console"
 import { cn } from "nda/dist/isomorphic/dom"
-import { filter, fst, map, sort_by_keys } from "nda/dist/isomorphic/list"
+import { filter, map, sort_by_keys } from "nda/dist/isomorphic/iterator"
+import { fst } from "nda/dist/isomorphic/list"
 import { RenderPage, Repo, StaticConfig } from "../../consts"
 import {
   GithubLang,
@@ -142,32 +143,34 @@ export const render: RenderPage<RenderProps> = async ({ config, repos }) => {
   const page = (
     <main className={cn("p-4")}>
       <div className={cn("masonry", "d-grid", "ai-end", "ji-centre")}>
-        {map(
-          ({
-            title,
-            images,
-            name,
-            desc,
-            display,
-            stargazers_count,
-            forks_count,
-            language,
-            colour,
-          }) => (
-            <Card
-              link={name}
-              images={images}
-              title={title}
-              desc={desc}
-              language={language}
-              colour={colour}
-              stars={stargazers_count}
-              forks={forks_count}
-              hide_detail={(display || {}).hide_details}
-            />
+        {[
+          ...map(
+            ({
+              title,
+              images,
+              name,
+              desc,
+              display,
+              stargazers_count,
+              forks_count,
+              language,
+              colour,
+            }) => (
+              <Card
+                link={name}
+                images={images}
+                title={title}
+                desc={desc}
+                language={language}
+                colour={colour}
+                stars={stargazers_count}
+                forks={forks_count}
+                hide_detail={(display || {}).hide_details}
+              />
+            ),
+            sorted,
           ),
-          sorted,
-        )}
+        ]}
         <div className="col-gap-sizer"></div>
       </div>
     </main>

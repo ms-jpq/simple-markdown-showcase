@@ -1,10 +1,9 @@
 import React from "react"
 import { BodyProps, Page } from "./layout/layout"
-import { flat_map } from "nda/dist/isomorphic/list"
+import { flat_map, map, sort_by, unique_by } from "nda/dist/isomorphic/iterator"
 import { id } from "nda/dist/isomorphic/prelude"
 import { join, relative } from "nda/dist/node/path"
 import { localize_image } from "./image_optimize"
-import { map, sort_by, unique_by } from "nda/dist/isomorphic/list"
 import { render as render_404 } from "./pages/404"
 import { render as render_index } from "./pages/index"
 import { render as render_repos } from "./pages/repos"
@@ -27,15 +26,19 @@ const render_page = async ({
   body,
 }: RenderInstruction & { lang: string; body: BodyProps }) => {
   const sub_path = join(static_config.out_dir, path)
-  const js = map(
-    (js) => relative(sub_path, join(static_config.src_dir, "js", `${js}.ts`)),
-    local_js,
-  )
-  const css = map(
-    (css) =>
-      relative(sub_path, join(static_config.src_dir, "css", `${css}.scss`)),
-    local_css,
-  )
+  const js = [
+    ...map(
+      (js) => relative(sub_path, join(static_config.src_dir, "js", `${js}.ts`)),
+      local_js,
+    ),
+  ]
+  const css = [
+    ...map(
+      (css) =>
+        relative(sub_path, join(static_config.src_dir, "css", `${css}.scss`)),
+      local_css,
+    ),
+  ]
   const content = (
     <Page lang={lang} head={{ title, desc, js, css }} body={body}>
       {page}
@@ -84,7 +87,7 @@ export const render = async ({ config, repos, md_strings }: RenderProps) => {
     }),
     render_repos({ repos: sorted, shim: config.repo_shim }),
   ])
-  const instructions = flat_map(id, pages)
+  const instructions = [...flat_map(id, pages)]
   const commits = await Promise.all(
     map(
       render_page,
