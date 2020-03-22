@@ -1,5 +1,5 @@
-import assert from "assert"
 import fetch from "node-fetch"
+import { assert } from "nda/dist/isomorphic/assertion"
 import { compact_map, map } from "nda/dist/isomorphic/iterator"
 import { id } from "nda/dist/isomorphic/prelude"
 import { of_list } from "nda/dist/isomorphic/record"

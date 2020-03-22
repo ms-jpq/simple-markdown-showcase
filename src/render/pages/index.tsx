@@ -1,5 +1,5 @@
-import assert from "assert"
 import React from "react"
+import { assert } from "nda/dist/isomorphic/assertion"
 import { big_print } from "nda/dist/node/console"
 import { cn } from "nda/dist/isomorphic/dom"
 import { filter, map, sort_by_keys } from "nda/dist/isomorphic/iterator"
