@@ -1,5 +1,6 @@
 .secrets
-.vscode
+.vscode/
+.git/
 temp/
 out/
 dist/
@@ -14,3 +15,4 @@ yarn.lock
 img_cache/
 tsc/
 artifacts/
+.log/

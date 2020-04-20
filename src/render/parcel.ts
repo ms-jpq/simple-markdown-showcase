@@ -36,7 +36,7 @@ export const run = async (instructions: RenderInstruction[]) => {
    * Parcel also renders single file to the wrong location...
    */
 
-  const entries = chunk(static_config.parallelism, entry)
+  const entries = [...chunk(static_config.parallelism, entry)]
   console.log(entries)
   for (const lst of entries) {
     if (lst.length === 1) {
