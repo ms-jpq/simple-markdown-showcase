@@ -15,7 +15,7 @@ _Vancouer, BC_
 ### Microservices
 
 Opensourced multiple [Kubernetes native](https://ms-jpq.github.io/simple-traefik-dash), [Dockerized](https://ms-jpq.github.io/simple-traefik-identity) [services](https://ms-jpq.github.io/kde-in-docker) for the self hosting community.
-Over 20k docker pulls in total.
+Over 50k docker pulls in total.
 
 ### Devops
 
