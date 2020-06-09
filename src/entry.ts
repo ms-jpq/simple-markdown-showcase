@@ -8,7 +8,11 @@ import { render } from "./render/render"
 import { rm, slurp, spit, exists } from "nda/dist/node/fs"
 
 const cleanup = () =>
-  Promise.all([rm(static_config.out_dir), rm(static_config.dist_dir)])
+  Promise.all([
+    rm(static_config.img_cache_dir),
+    rm(static_config.out_dir),
+    rm(static_config.dist_dir),
+  ])
 
 const main = async () => {
   console.time("pre_render")
@@ -58,3 +62,4 @@ const main = async () => {
 }
 
 main()
+
