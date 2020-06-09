@@ -38,13 +38,13 @@ const resize = async ({ src, new_name, width, height }: ResizeOpts) => {
         break
       case ".gif":
         const args = `--resize ${width}x${height} -o ${new_name}`
-        const [stdout, stderr] = await pipe({
+        const { code, stderr } = await pipe({
           cmd: "gifsicle",
           args: args.split(" "),
           stdin: src,
         })
-        const err = stderr.toString()
-        if (err) {
+        if (code !== 0) {
+          const err = stderr.toString()
           throw new Error(err)
         }
         break
