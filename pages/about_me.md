@@ -10,20 +10,28 @@ _Vancouer, BC_
 
 ---
 
-## Skills
+## Highlights
 
-### Microservices
+### Open Source
 
-Opensourced multiple [Kubernetes native](https://ms-jpq.github.io/simple-traefik-dash), [Dockerized](https://ms-jpq.github.io/simple-traefik-identity) [services](https://ms-jpq.github.io/kde-in-docker) for the self hosting community.
-Over 50k docker pulls in total.
+Open-sourced multiple Kubernetes native, Dockerized services for the self hosting community.
+Over 50k cumulative docker pulls.
 
 ### Devops
 
-Authored [templating framework](http://ms-jpq.github.io/jinja2pp) for Kubernetes, Ansible deployment pipelines, and integration of Azure Devops CI.
+Authored templating framework for Kubernetes, designed Ansible deployment pipelines, and automated CI pipelines using Github and Azure Devops.
 
-### Functional Design
+### Scripting
 
-Developed many modular, domain agnostic and generic components. Including a typesafe [React in 70 lines](http://ms-jpq.github.io/noact), and [Redux in Swift](http://ms-jpq.github.io/simple-reeducks).
+Prolific author of guides, tools, and snippets for the commandline enthusiast community. Including a well received "sed" tool written in Rust with over 70 Github stars.
+
+### Code Golfing
+
+Implemented a typesafe React in 70 lines (TypeScript), async await using coroutines in 90 lines (Lua).
+
+### Multilingual
+
+Over 10000 lines of experience in iOS (Swift), and Dotnet Core (F#), as well as thousands of lines of experience in scripting using Python and Bash. Over 1000 line of experience in Go.
 
 ---
 
@@ -56,3 +64,4 @@ Proud owner of [www.bigly.dog](https://bigly.dog).
 ```
 
 ![dog with cape.jpg](https://github.com/ms-jpq/simple-markdown-showcase/raw/master/assets/super_dog.jpg)
+
