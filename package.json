@@ -63,8 +63,8 @@
   },
   "scripts": {
     "prettier": "prettier --write **/**.tsx --write **/**.ts",
-    "build": "ts-node src/entry.ts",
-    "release": "ts-node release.ts"
+    "build": "./src/entry.ts",
+    "release": "./release.ts"
   },
   "version": "1.0.0"
 }
