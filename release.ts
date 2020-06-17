@@ -1,6 +1,6 @@
 #!/usr/bin/env ts-node
 import { cp, isdir, readdir, rm, spit } from "nda/dist/node/fs"
-import { join } from "nda/dist/node/path"
+import { join } from "path"
 import { filter, map } from "nda/dist/isomorphic/iterator"
 import { call, SpawnArgs } from "nda/dist/node/sub_process"
 import { static_config } from "./src/consts"

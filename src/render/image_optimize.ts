@@ -5,16 +5,11 @@ import { any, filter, join, map } from "nda/dist/isomorphic/iterator"
 import { exists, sip, spit } from "nda/dist/node/fs"
 import { imageSize } from "image-size"
 import { JSDOM } from "jsdom"
+import { fn_ext } from "nda/dist/node/path"
 import { last } from "nda/dist/isomorphic/list"
 import { pipe } from "nda/dist/node/sub_process"
 import { static_config } from "../consts"
-import {
-  basename,
-  extname,
-  join as path_join,
-  relative,
-  fn_ext,
-} from "nda/dist/node/path"
+import { basename, extname, join as path_join, relative } from "path"
 
 export type ResizeOpts = {
   src: Buffer
@@ -130,3 +125,4 @@ export const localize_image = async (sub_path: string, html: string) => {
   await Promise.all(map(cache, target_images))
   return dom.serialize()
 }
+
