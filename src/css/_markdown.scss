@@ -51,4 +51,14 @@
   code {
     background-color: var(--code-colour);
   }
+
+  table {
+    thead > tr > th,
+    tbody > tr > td {
+      &:not(:last-child) {
+        padding-right: 1em;
+      }
+    }
+  }
 }
+
