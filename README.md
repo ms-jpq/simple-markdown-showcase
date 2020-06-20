@@ -8,11 +8,11 @@ Clean room port of the [hugo-creative-portfolio-theme](https://github.com/kishan
 
 ### Desktop
 
-![big png](https://github.com/ms-jpq/simple-markdown-showcase/raw/master/preview/big.png)
+![big png](https://github.com/ms-jpq/simple-markdown-showcase/raw/show/preview/big.png)
 
 ### Mobile
 
-![smol png](https://github.com/ms-jpq/simple-markdown-showcase/raw/master/preview/smol.png)
+![smol png](https://github.com/ms-jpq/simple-markdown-showcase/raw/show/preview/smol.png)
 
 ## Usage
 
