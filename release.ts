@@ -23,7 +23,7 @@ const git_clone = async () => {
   if (await isdir(static_config.artifacts_dir)) {
     return
   } else {
-    const uri = `static_config.artifacts_dir`
+    const uri = `git@github.com:ms-jpq/ms-jpq.github.io.git`
     await run({ cmd: "git", args: ["clone", uri, static_config.artifacts_dir] })
   }
 }
