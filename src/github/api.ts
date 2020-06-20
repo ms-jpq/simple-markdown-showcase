@@ -10,13 +10,14 @@ const secure_fetch = (uri: string, token?: string) =>
   fetch(uri, { headers: token ? { Authorization: `token ${token}` } : {} })
 
 const repo_resource = async (
+  branch: string,
   full_name: string,
   resource: string,
   token?: string,
 ) => {
   try {
     const res = await secure_fetch(
-      `https://raw.githubusercontent.com/${full_name}/master/${resource}`,
+      `https://raw.githubusercontent.com/${full_name}/${branch}/${resource}`,
       token,
     )
     return res.ok ? res.text() : undefined
@@ -46,6 +47,7 @@ const github_repo = (colours: Record<string, string>, token?: string) => async (
 ) => {
   const {
     name,
+    default_branch,
     full_name,
     html_url,
     created_at,
@@ -55,9 +57,9 @@ const github_repo = (colours: Record<string, string>, token?: string) => async (
     language,
   } = repo_data
   const [read_me, config, spec] = await Promise.all([
-    repo_resource(full_name, repo_resources.read_me, token),
-    repo_resource(full_name, repo_resources.config, token),
-    repo_resource(full_name, repo_resources.build_spec, token),
+    repo_resource(default_branch, full_name, repo_resources.read_me, token),
+    repo_resource(default_branch, full_name, repo_resources.config, token),
+    repo_resource(default_branch, full_name, repo_resources.build_spec, token),
   ])
   if (!read_me || !config) {
     return undefined
@@ -110,3 +112,4 @@ export const extract = async (
     repos,
   }
 }
+
