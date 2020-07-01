@@ -23,7 +23,7 @@ const resize = async ({ src, new_name, width, height }: ResizeOpts) => {
   if (!has) {
     const ext = extname(new_name)
     const conf = sharp(src).resize({ width, height })
-    switch (ext) {
+    switch (ext.toLowerCase()) {
       case ".jpg":
       case ".jpeg":
         await conf.jpeg().toFile(new_name)
@@ -125,4 +125,3 @@ export const localize_image = async (sub_path: string, html: string) => {
   await Promise.all(map(cache, target_images))
   return dom.serialize()
 }
-
