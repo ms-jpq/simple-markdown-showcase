@@ -25,5 +25,4 @@ jobs:
 
       - name: Build Page
         run: |-
-          export PATH="$PWD/node_modules/.bin:$PATH"
-          ./src/entry.ts
+          npm run build
