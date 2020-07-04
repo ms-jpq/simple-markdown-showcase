@@ -62,7 +62,7 @@
   },
   "scripts": {
     "prettier": "prettier --write **/**.tsx --write **/**.ts",
-    "build": "PATH=\"$PWD/node_modules/.bin:$PATH\" ./src/entry.ts",
+    "build": "./src/entry.ts",
     "release": "./release.ts"
   },
   "version": "1.0.0"
