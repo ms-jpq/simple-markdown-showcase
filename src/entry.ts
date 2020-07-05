@@ -24,7 +24,7 @@ const main = async () => {
     slurp(additional_pages.contact_me),
   ])
 
-  const config: StaticConfig = parse(yml)
+  const config = parse(yml) as StaticConfig
 
   if (args.prod) {
     console.log("cleaning up...")
