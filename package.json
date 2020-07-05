@@ -51,7 +51,7 @@
     "parse-gitignore": "*",
     "prettier": "*",
     "ts-node": "*",
-    "typescript": "*"
+    "typescript": "^3.9.6"
   },
   "homepage": "https://ms-jpq.github.io",
   "license": "MIT",
