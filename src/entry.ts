@@ -1,4 +1,3 @@
-#!/usr/bin/env ts-node
 import { additional_pages, args, static_config, StaticConfig } from "./consts"
 import { big_print } from "nda/dist/node/console"
 import { extract, GithubInfo } from "./github/api"
@@ -25,7 +24,7 @@ const main = async () => {
     slurp(additional_pages.contact_me),
   ])
 
-  const config: StaticConfig = parse(yml) as StaticConfig
+  const config: StaticConfig = parse(yml)
 
   if (args.prod) {
     console.log("cleaning up...")
