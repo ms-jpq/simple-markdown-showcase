@@ -26,7 +26,7 @@
     "jsdom": "^16.2.0",
     "markdown-it": "^11.0.0",
     "masonry-layout": "^4.2.2",
-    "nda": "git+https://github.com/ms-jpq/nda.git#806e4fd089bed78ab87021ece05f4f43eca35fc4",
+    "nda": "git+https://github.com/ms-jpq/nda.git#91d51f331e93ecb9075fec94464ad515622acdf4",
     "node-fetch": "^2.6.0",
     "parcel-bundler": "^1.12.4",
     "react": "^16.12.0",
@@ -61,8 +61,8 @@
     "url": "git+https://github.com/ms-jpq/ms-jpq.github.io.git"
   },
   "scripts": {
+    "build": "./node_modules/.bin/tsc --outDir tsc && node tsc/src/entry.js",
     "prettier": "prettier --write **/**.tsx --write **/**.ts",
-    "build": "./node_modules/.bin/tsc && node tsc/src/entry.js",
     "release": "./release.ts"
   },
   "version": "1.0.0"

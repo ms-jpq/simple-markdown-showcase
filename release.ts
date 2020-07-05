@@ -67,10 +67,10 @@ const copy = async () => {
 const main = async () => {
   chdir()
   await git_clone()
-  await run({ cmd: "src/entry.ts", args: ["clean"] })
+  await run({ cmd: "tsc", args: ["--outDir", "tsc"] })
+  await run({ cmd: "node", args: [join("tsc", "src", "entry.js")] })
   await copy()
   await git_commit()
 }
 
 main()
-
