@@ -5,7 +5,6 @@ temp/
 out/
 dist/
 node_modules/
-venv/
 package-lock.json
 yarn.lock
 *.scss.d.ts
@@ -16,4 +15,3 @@ img_cache/
 tsc/
 artifacts/
 .log/
-

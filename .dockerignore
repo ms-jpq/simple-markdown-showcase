@@ -1,2 +1,12 @@
+.secrets
+.vscode/
+.git/
+temp/
+out/
+dist/
 node_modules/
-.venv/
+.cache
+img_cache/
+tsc/
+artifacts/
+.log/
