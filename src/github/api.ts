@@ -34,10 +34,7 @@ const github_color = async () => {
   ).text()
   const yml = parse(data)
   const record = of_list<Record<string, string>>(
-    map(
-      ([k, v]) => [k, (v as any)["color"]] as [string, any],
-      Object.entries(yml),
-    ),
+    map(([k, v]) => [k, (v as any)["color"]] as any, Object.entries(yml)),
   )
   return record
 }
@@ -66,7 +63,7 @@ const github_repo = (colours: Record<string, string>, token?: string) => async (
   }
   const colour = colours[language]
   assert(colour !== undefined)
-  const repo_config: RepoConfig = parse(config)
+  const repo_config: RepoConfig = parse(config) as RepoConfig
   const repo: Repo = {
     build_spec: spec ? parse(spec) : undefined,
     name,
@@ -112,4 +109,3 @@ export const extract = async (
     repos,
   }
 }
-
