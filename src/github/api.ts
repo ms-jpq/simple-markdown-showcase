@@ -32,7 +32,7 @@ const github_color = async () => {
       "https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml",
     )
   ).text()
-  const yml = parse(data)
+  const yml = parse(data) as [string, any]
   const record = of_list<Record<string, string>>(
     map(
       ([k, v]) => [k, (v as any)["color"]] as [string, any],
@@ -66,7 +66,7 @@ const github_repo = (colours: Record<string, string>, token?: string) => async (
   }
   const colour = colours[language]
   assert(colour !== undefined)
-  const repo_config: RepoConfig = parse(config)
+  const repo_config = parse(config) as RepoConfig
   const repo: Repo = {
     build_spec: spec ? parse(spec) : undefined,
     name,
