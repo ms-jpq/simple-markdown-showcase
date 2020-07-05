@@ -20,9 +20,5 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
 
-      - name: Install Packages
-        run: npm install
-
       - name: Build Page
-        run: |-
-          npm run build
+        run: ./docker/ci.sh
