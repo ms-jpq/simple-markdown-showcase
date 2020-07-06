@@ -20,7 +20,7 @@
     "cda": "git+https://github.com/ms-jpq/cda.git#6b807338f2e73d4077e309bae30371b685ff88c2",
     "crypto-js": "^4.0.0",
     "gifsicle": "^5.0.0",
-    "highlight.js": "^9.18.1",
+    "highlight.js": "^10.1.1",
     "image-size": "^0.8.3",
     "js-yaml": "^3.13.1",
     "jsdom": "^16.2.0",
