@@ -15,7 +15,7 @@
     "@types/parcel-bundler": "^1.12.1",
     "@types/react": "^16.9.21",
     "@types/react-dom": "^16.9.5",
-    "@types/sharp": "^0.24.0",
+    "@types/sharp": "^0.25.0",
     "bootstrap": "^4.4.1",
     "cda": "git+https://github.com/ms-jpq/cda.git#6b807338f2e73d4077e309bae30371b685ff88c2",
     "crypto-js": "^4.0.0",
