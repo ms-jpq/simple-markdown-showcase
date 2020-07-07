@@ -9,7 +9,7 @@
     "@types/highlight.js": "^9.12.3",
     "@types/js-yaml": "^3.12.2",
     "@types/jsdom": "^16.1.0",
-    "@types/markdown-it": "0.0.9",
+    "@types/markdown-it": "10.0.1",
     "@types/masonry-layout": "^4.2.1",
     "@types/node-fetch": "^2.5.4",
     "@types/parcel-bundler": "^1.12.1",
