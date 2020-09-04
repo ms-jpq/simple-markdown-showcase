@@ -21,7 +21,7 @@
     "crypto-js": "^4.0.0",
     "gifsicle": "^5.0.0",
     "highlight.js": "^10.1.1",
-    "image-size": "^0.8.3",
+    "image-size": "^0.9.1",
     "js-yaml": "^3.13.1",
     "jsdom": "^16.2.0",
     "markdown-it": "^11.0.0",
