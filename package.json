@@ -29,8 +29,8 @@
     "nda": "git+https://github.com/ms-jpq/nda.git#91d51f331e93ecb9075fec94464ad515622acdf4",
     "node-fetch": "^2.6.0",
     "parcel-bundler": "^1.12.4",
+    "react-dom": "^17.0.0",
     "react": "^17.0.0",
-    "react-dom": "^16.12.0",
     "sass": "^1.26.2",
     "sharp": "^0.26.0"
   },
