@@ -26,7 +26,7 @@
     "jsdom": "^16.2.0",
     "markdown-it": "^12.0.0",
     "masonry-layout": "^4.2.2",
-    "nda": "git+https://github.com/ms-jpq/nda.git#0bf4b67d6358feabdb26f85741e7b20be2921da9",
+    "nda": "git+https://github.com/ms-jpq/nda.git#a7f50acd1d3386f9c470aa393bfcbb068f86d2c3",
     "node-fetch": "^2.6.0",
     "parcel-bundler": "^1.12.4",
     "react-dom": "^17.0.0",
