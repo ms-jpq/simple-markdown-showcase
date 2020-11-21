@@ -1,8 +1,6 @@
 {
   "author": "_",
-  "browserslist": [
-    "last 5 Chrome versions"
-  ],
+  "browserslist": ["last 5 Chrome versions"],
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.12.1",
     "@types/crypto-js": "^4.0.0",
@@ -19,6 +17,7 @@
     "bootstrap": "^4.4.1",
     "cda": "git+https://github.com/ms-jpq/cda.git#6b807338f2e73d4077e309bae30371b685ff88c2",
     "crypto-js": "^4.0.0",
+    "csstype": "^3.0.5",
     "gifsicle": "^5.0.0",
     "highlight.js": "^10.1.1",
     "image-size": "^0.9.1",
@@ -29,8 +28,8 @@
     "nda": "git+https://github.com/ms-jpq/nda.git#a7f50acd1d3386f9c470aa393bfcbb068f86d2c3",
     "node-fetch": "^2.6.0",
     "parcel-bundler": "^1.12.4",
-    "react-dom": "^17.0.0",
     "react": "^17.0.0",
+    "react-dom": "^17.0.0",
     "sass": "^1.26.2",
     "sharp": "^0.26.0"
   },
