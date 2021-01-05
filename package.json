@@ -21,7 +21,7 @@
     "gifsicle": "^5.0.0",
     "highlight.js": "^10.1.1",
     "image-size": "^0.9.1",
-    "js-yaml": "^3.13.1",
+    "js-yaml": "^4.0.0",
     "jsdom": "^16.2.0",
     "markdown-it": "^12.0.0",
     "masonry-layout": "^4.2.2",
