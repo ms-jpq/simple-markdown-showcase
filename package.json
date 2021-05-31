@@ -19,7 +19,7 @@
     "crypto-js": "^4.0.0",
     "csstype": "^3.0.5",
     "gifsicle": "^5.0.0",
-    "highlight.js": "^10.1.1",
+    "highlight.js": "^11.0.0",
     "image-size": "^0.9.1",
     "js-yaml": "^4.0.0",
     "jsdom": "^16.2.0",
