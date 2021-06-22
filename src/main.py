@@ -2,7 +2,7 @@ from argparse import ArgumentParser, Namespace
 from asyncio import gather
 from json import dumps, loads
 from pathlib import PurePath
-from typing import Sequence, Tuple
+from typing import Any, Mapping, Sequence, Tuple
 
 from std2.asyncio import call
 from std2.pathlib import walk
@@ -11,9 +11,9 @@ from std2.pickle.coders import BUILTIN_DECODERS, BUILTIN_ENCODERS
 
 from .consts import CACHE_DIR, DIST_DIR, SCSS, TEMPLATES, TOP_LV
 from .github import ls
-from .types import Linguist, RepoInfo
 from .j2 import build, render
 from .markdown import css
+from .types import Linguist, RepoInfo
 
 _GH_CACHE = CACHE_DIR / "github.json"
 _CSS = CACHE_DIR / "hl.css"
@@ -48,30 +48,30 @@ async def main() -> None:
         cached: Tuple[Linguist, Sequence[RepoInfo]] = decode(
             Tuple[Linguist, Sequence[RepoInfo]], json, decoders=BUILTIN_DECODERS
         )
-        colours, repos = cached
+        colours, specs = cached
     else:
-        colours, repos = await ls(args.user)
-        fetched = encode((colours, repos), encoders=BUILTIN_ENCODERS)
+        colours, specs = await ls(args.user)
+        fetched = encode((colours, specs), encoders=BUILTIN_ENCODERS)
         json = dumps(fetched, check_circular=False, ensure_ascii=False, indent=2)
         CACHE_DIR.mkdir(parents=True, exist_ok=True)
         _GH_CACHE.write_text(json)
 
     await _compile()
 
-    frame = {
+    frame: Mapping[PurePath, Mapping[str, Any]] = {
         _PAGES / "404.html": {},
         _PAGES / "about_me.html": {},
         _PAGES / "contact_me.html": {},
-        _PAGES / "index.html": {},
+        _PAGES / "index.html": {"specs": specs},
     }
     for src, env in frame.items():
         dest = DIST_DIR / src.relative_to(_PAGES)
         html = render(j2, path=src, env=env)
         dest.write_text(html)
 
-    for spec in repos:
+    for spec in specs:
         dest = DIST_DIR / spec.repo.full_name / "index.html"
-        env = {}
+        env = {"spec": spec}
         html = render(j2, path=_PAGES / "repo.html", env=env)
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(html)
