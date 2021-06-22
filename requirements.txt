@@ -1,0 +1,4 @@
+std2@https://github.com/ms-jpq/std2/archive/dc475f0139b49c2adba10f02838da338b2ea5a42.tar.gz
+PyYAML=5.4.1
+Pygments=2.9.0
+Jinja2=3.0.1

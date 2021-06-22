@@ -5,8 +5,8 @@
     "@fortawesome/fontawesome-free": "^5.12.1",
     "@types/crypto-js": "^4.0.0",
     "@types/highlight.js": "^10.1.0",
-    "@types/js-yaml": "^4.0.0",
-    "@types/jsdom": "^16.1.0",
+
+
     "@types/markdown-it": "12.0.2",
     "@types/masonry-layout": "^4.2.1",
     "@types/node-fetch": "^2.5.4",
@@ -35,21 +35,10 @@
   },
   "description": "_",
   "devDependencies": {
-    "@types/cors": "*",
-    "@types/express": "*",
-    "@types/node": "*",
-    "@types/nodemon": "*",
-    "@typescript-eslint/eslint-plugin": "*",
-    "@typescript-eslint/parser": "*",
-    "cors": "*",
     "eslint": "*",
     "eslint-config-prettier": "*",
     "eslint-plugin-prettier": "*",
-    "express": "*",
-    "nodemon": "*",
-    "parse-gitignore": "*",
     "prettier": "*",
-    "ts-node": "*",
     "typescript": "*"
   },
   "homepage": "https://ms-jpq.github.io",
@@ -66,3 +55,4 @@
   },
   "version": "1.0.0"
 }
+

@@ -7,6 +7,7 @@ const grid = $(`.masonry`)
 const images = new Set($$<HTMLImageElement>(`img`))
 const header_menu = $<HTMLButtonElement>(`header > button`)!
 
+
 const main = async () => {
   grid?.classList.add("scripting")
 
