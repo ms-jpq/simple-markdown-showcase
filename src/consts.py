@@ -3,7 +3,7 @@ from pathlib import Path
 _SRC = Path(__file__).resolve().parent
 TOP_LV = _SRC.parent
 
-PAGES = _SRC / "pages"
+TEMPLATES = _SRC / "templates"
 SCSS = _SRC / "css"
 
 MARKDOWNS = TOP_LV / "markdown"

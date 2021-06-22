@@ -1,6 +1,7 @@
 from argparse import ArgumentParser, Namespace
 from asyncio import gather
 from json import dumps, loads
+from pathlib import PurePath
 from typing import Sequence, Tuple
 
 from std2.asyncio import call
@@ -8,14 +9,15 @@ from std2.pathlib import walk
 from std2.pickle import decode, encode
 from std2.pickle.coders import BUILTIN_DECODERS, BUILTIN_ENCODERS
 
-from .consts import CACHE_DIR, DIST_DIR, PAGES, SCSS, TOP_LV
+from .consts import CACHE_DIR, DIST_DIR, SCSS, TEMPLATES, TOP_LV
 from .github.api import ls
 from .github.types import Linguist, RepoInfo
-from .j2 import build
+from .j2 import build, render
 from .markdown import css
 
 _GH_CACHE = CACHE_DIR / "github.json"
 _CSS = CACHE_DIR / "hl.css"
+_PAGES = PurePath("pages")
 
 
 async def _compile() -> None:
@@ -39,7 +41,7 @@ def _parse_args() -> Namespace:
 
 async def main() -> None:
     args = _parse_args()
-    j2 = build(PAGES)
+    j2 = build(TEMPLATES)
 
     if args.cache:
         json = loads(_GH_CACHE.read_text())
@@ -56,5 +58,21 @@ async def main() -> None:
 
     await _compile()
 
-    print(len(repos))
+    frame = {
+        _PAGES / "404.html": {},
+        _PAGES / "about_me.html": {},
+        _PAGES / "contact_me.html": {},
+        _PAGES / "index.html": {},
+    }
+    for src, env in frame.items():
+        dest = DIST_DIR / src.relative_to(_PAGES)
+        html = render(j2, path=src, env=env)
+        dest.write_text(html)
+
+    for spec in repos:
+        dest = DIST_DIR / spec.repo.full_name / "index.html"
+        env = {}
+        html = render(j2, path=_PAGES / "repo.html", env=env)
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(html)
 
