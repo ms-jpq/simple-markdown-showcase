@@ -1,5 +1,6 @@
 from argparse import ArgumentParser, Namespace
 from asyncio import gather
+from dataclasses import asdict
 from json import dumps, loads
 from pathlib import PurePath
 from typing import Any, Mapping, Sequence, Tuple
@@ -62,7 +63,7 @@ async def main() -> None:
         _PAGES / "404.html": {},
         _PAGES / "about_me.html": {},
         _PAGES / "contact_me.html": {},
-        _PAGES / "index.html": {"specs": specs},
+        # _PAGES / "index.html": {"specs": specs},
     }
     for src, env in frame.items():
         dest = DIST_DIR / src.relative_to(_PAGES)
@@ -71,7 +72,7 @@ async def main() -> None:
 
     for spec in specs:
         dest = DIST_DIR / spec.repo.full_name / "index.html"
-        env = {"spec": spec}
+        env = {**asdict(spec.info), "read_me": spec.read_me, **asdict(spec.repo)}
         html = render(j2, path=_PAGES / "repo.html", env=env)
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(html)

@@ -19,6 +19,7 @@ from .types import Info, Linguist, Repo, RepoInfo
 
 _LINGUIST = "https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml"
 _CONFIG = PurePosixPath("_config.yml")
+_README = PurePosixPath("README.md")
 
 
 def _colours() -> Linguist:
@@ -81,30 +82,33 @@ def _ls_repos(user: str) -> Sequence[Repo]:
     return repos
 
 
-def _resource(repo: Repo, path: PurePosixPath) -> bytes:
+def _resource(repo: Repo, path: PurePosixPath) -> Optional[bytes]:
     uri = f"https://raw.githubusercontent.com/{repo.full_name}/{repo.default_branch}/{path}"
     try:
         with urlopen(uri, timeout=TIMEOUT) as resp:
             raw = resp.read()
     except HTTPError as e:
-        if e.code != HTTPStatus.NOT_FOUND:
-            log.exception("%s", e, uri)
-        raise
-    return raw
-
-
-def _repo_info(repo: Repo) -> RepoInfo:
-    try:
-        raw = _resource(repo, path=_CONFIG)
-    except HTTPError as e:
         if e.code == HTTPStatus.NOT_FOUND:
-            info = Info(title=repo.name.capitalize(), showcase=False, images=())
+            return None
         else:
+            log.exception("%s", e, uri)
             raise
     else:
-        yaml = safe_load(raw)
-        info = decode(Info, yaml)
-    ri = RepoInfo(repo=repo, info=info)
+        return raw
+
+
+async def _repo_info(repo: Repo) -> RepoInfo:
+    raw_info, raw_readme = await gather(
+        run_in_executor(_resource, repo, path=_CONFIG),
+        run_in_executor(_resource, repo, path=_README),
+    )
+    info = (
+        decode(Info, safe_load(raw_info))
+        if raw_info
+        else Info(title=repo.name.capitalize(), showcase=False, images=())
+    )
+    read_me = raw_readme.decode() if raw_readme else None
+    ri = RepoInfo(repo=repo, info=info, read_me=read_me)
     return ri
 
 
@@ -112,6 +116,6 @@ async def ls(user: str) -> Tuple[Linguist, Sequence[RepoInfo]]:
     colours, repos = await gather(
         run_in_executor(_colours), run_in_executor(_ls_repos, user)
     )
-    infos = await gather(*(run_in_executor(_repo_info, repo) for repo in repos))
+    infos = await gather(*map(_repo_info, repos))
     return colours, infos
 

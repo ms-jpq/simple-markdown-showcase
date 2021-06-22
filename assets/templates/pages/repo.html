@@ -1,9 +1,10 @@
 {% from "layout/layout.html" import html with context %} 
+{% from "components/big_button.html" import big_button with context %}
 {% from "components/github.html" import github_stars with context %}
 {% from "components/github.html" import github_forks with context %}
 
 
-{% call html() %}
+{% call html(path="/contact_me", css=[], js=[], desc="") %}
 {% set TIME_FMT = "%Y-%m-%dT%H:%M:%S%z" %}
 {% set HUMAN_FMT = "%Y-%m-%d H:%M:%S %Z" %}
 <main class="d-grid p-8 row-gap-8">
@@ -12,7 +13,7 @@
   >
     {{ github_stars(stargazers_count) }} 
     {{ github_forks(forks_count) }}
-    <a href="{{" html_url | urlencode }} class="invis-link">
+    <a href="{{ html_url | urlencode }}" class="invis-link">
       {% call big_button() %} View on Github <i class="fab fa-github"></i>
       {% endcall %}
     </a>

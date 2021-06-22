@@ -37,5 +37,6 @@ class Info:
 class RepoInfo:
     repo: Repo
     info: Info
+    read_me: Optional[str]
 
 

@@ -3,7 +3,7 @@
 {% from "components/github.html" import github_stars with context %}
 {% from "components/github.html" import github_forks with context %}
 
-{% call html() %}
+{% call html(path="/", css=[], js=[], desc="") %}
 <main class="p-4">
   <div class="masonry d-grid ai-end ji-centre">
     {% for repo in repos %}
