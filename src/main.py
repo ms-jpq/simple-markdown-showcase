@@ -2,6 +2,7 @@ from argparse import ArgumentParser, Namespace
 from asyncio import gather
 from dataclasses import asdict
 from json import dumps, loads
+from locale import strxfrm
 from pathlib import PurePath
 from typing import Any, Mapping, Sequence, Tuple
 
@@ -33,6 +34,52 @@ async def _compile() -> None:
     await gather(call("tsc", cwd=TOP_LV), call("sass", *scss_paths, cwd=TOP_LV))
 
 
+def _splat(colours: Linguist, spec: RepoInfo) -> Mapping[str, Any]:
+    colour = colours.get(spec.repo.language or "")
+    env = {
+        **asdict(spec.info),
+        "read_me": spec.read_me,
+        "colour": colour,
+        **asdict(spec.repo),
+    }
+    return env
+
+
+def _j2(colours: Linguist, specs: Sequence[RepoInfo]) -> None:
+    j2 = build(TEMPLATES)
+    ordered = sorted(
+        specs,
+        key=lambda s: (
+            s.repo.stargazers_count,
+            s.repo.forks_count,
+            s.repo.updated_at,
+            s.repo.created_at,
+            strxfrm(s.repo.name),
+        ),
+        reverse=True,
+    )
+    frame: Mapping[PurePath, Mapping[str, Any]] = {
+        _PAGES / "404.html": {},
+        _PAGES / "about_me.html": {},
+        _PAGES / "contact_me.html": {},
+        _PAGES
+        / "index.html": {
+            "specs": tuple(_splat(colours, spec=spec) for spec in ordered)
+        },
+    }
+    for src, env in frame.items():
+        dest = DIST_DIR / src.relative_to(_PAGES)
+        html = render(j2, path=src, env=env)
+        dest.write_text(html)
+
+    for spec in specs:
+        dest = DIST_DIR / spec.repo.name / "index.html"
+        env = _splat(colours, spec=spec)
+        html = render(j2, path=_PAGES / "repo.html", env=env)
+        dest.parent.mkdir(parents=True, exist_ok=True)
+        dest.write_text(html)
+
+
 def _parse_args() -> Namespace:
     parser = ArgumentParser()
     parser.add_argument("--cache", action="store_true")
@@ -42,7 +89,6 @@ def _parse_args() -> Namespace:
 
 async def main() -> None:
     args = _parse_args()
-    j2 = build(TEMPLATES)
 
     if args.cache:
         json = loads(_GH_CACHE.read_text())
@@ -58,22 +104,5 @@ async def main() -> None:
         _GH_CACHE.write_text(json)
 
     await _compile()
-
-    frame: Mapping[PurePath, Mapping[str, Any]] = {
-        _PAGES / "404.html": {},
-        _PAGES / "about_me.html": {},
-        _PAGES / "contact_me.html": {},
-        # _PAGES / "index.html": {"specs": specs},
-    }
-    for src, env in frame.items():
-        dest = DIST_DIR / src.relative_to(_PAGES)
-        html = render(j2, path=src, env=env)
-        dest.write_text(html)
-
-    for spec in specs:
-        dest = DIST_DIR / spec.repo.name / "index.html"
-        env = {**asdict(spec.info), "read_me": spec.read_me, **asdict(spec.repo)}
-        html = render(j2, path=_PAGES / "repo.html", env=env)
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_text(html)
+    _j2(colours, specs=specs)
 
