@@ -16,14 +16,14 @@
 </a>
 {% endmacro %}
 
-{% macro associations() %}
+{% macro aside_associations() %}
 {% set contacts = read_data("contacts.yml") %}
 <section
   id="associations" class="associations d-flex flex-wrap"
 >
-  {{ circle(href=f"mailto:{contacts.email}", class="far fa-envelope" }}
-  {{ circle(href=f"https://www.linkedin.com/in/{contacts.linkedin}", class="fab fa-linkedin-in" }}
-  {{ circle(href=f"https://github.com/{contacts.github}", class="fab fa-github" }}
-  {{ circle(href=f"https://stackexchange.com/users/{contacts.stackoverflow}", class="fab fa-stack-overflow" }}
+  {{ circle(href="mailto:" ~ contacts.email, class="far fa-envelope") }}
+  {{ circle(href=contacts.linkedin, class="fab fa-linkedin-in") }}
+  {{ circle(href=contacts.github, class="fab fa-github") }}
+  {{ circle(href=contacts.stackoverflow, class="fab fa-stack-overflow") }}
 </section>
 {% endmacro %}
