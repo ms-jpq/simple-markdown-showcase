@@ -12,6 +12,7 @@ from .j2 import build
 from .markdown import css
 
 _GH_CACHE = CACHE_DIR / "github.json"
+_CSS = CACHE_DIR / "hl.css"
 
 
 def _parse_args() -> Namespace:
@@ -38,6 +39,8 @@ async def main() -> None:
         fetched = encode((colours, repos), encoders=BUILTIN_ENCODERS)
         json = dumps(fetched, check_circular=False, ensure_ascii=False, indent=2)
         _GH_CACHE.write_text(json)
+
+    _CSS.write_text(scss)
 
     print(len(repos))
 

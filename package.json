@@ -1,57 +1,32 @@
 {
-  "author": "_",
-  "browserslist": ["last 5 Chrome versions"],
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.12.1",
-    "@types/crypto-js": "^4.0.0",
-    "@types/highlight.js": "^10.1.0",
-
-
-    "@types/markdown-it": "12.0.2",
-    "@types/masonry-layout": "^4.2.1",
-    "@types/node-fetch": "^2.5.4",
-    "@types/parcel-bundler": "^1.12.1",
-    "@types/react": "^17.0.0",
-    "@types/react-dom": "^17.0.0",
-    "@types/sharp": "^0.28.0",
-    "bootstrap": "^4.4.1",
-    "cda": "git+https://github.com/ms-jpq/cda.git#6b807338f2e73d4077e309bae30371b685ff88c2",
-    "crypto-js": "^4.0.0",
-    "csstype": "^3.0.5",
-    "gifsicle": "^5.0.0",
-    "highlight.js": "^10.1.1",
-    "image-size": "^0.9.1",
-    "js-yaml": "^4.0.0",
-    "jsdom": "^16.2.0",
-    "markdown-it": "^12.0.0",
-    "masonry-layout": "^4.2.2",
-    "nda": "git+https://github.com/ms-jpq/nda.git#a7f50acd1d3386f9c470aa393bfcbb068f86d2c3",
-    "node-fetch": "^2.6.0",
-    "parcel-bundler": "^1.12.4",
-    "react": "^17.0.0",
-    "react-dom": "^17.0.0",
-    "sass": "^1.26.2",
-    "sharp": "^0.28.1"
+  "author": "",
+  "bugs": {
+    "url": "https://github.com/ms-jpq/simple-markdown-showcase/issues"
   },
-  "description": "_",
+  "dependencies": {
+    "cda": "git+https://github.com/ms-jpq/cda.git#6b807338f2e73d4077e309bae30371b685ff88c2",
+    "nda": "git+https://github.com/ms-jpq/nda.git#a7f50acd1d3386f9c470aa393bfcbb068f86d2c3"
+  },
+  "description": "Generates responsive personal portfolio pages using Github APIs.",
   "devDependencies": {
+    "bootstrap": "^4.4.1",
     "eslint": "*",
     "eslint-config-prettier": "*",
     "eslint-plugin-prettier": "*",
-    "prettier": "*",
+    "sass": "*",
     "typescript": "*"
   },
-  "homepage": "https://ms-jpq.github.io",
-  "license": "MIT",
-  "name": "ms-jpq.github.io",
+  "homepage": "https://github.com/ms-jpq/simple-markdown-showcase#readme",
+  "keywords": [],
+  "license": "ISC",
+  "main": "index.js",
+  "name": "simple-markdown-showcase",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/ms-jpq/ms-jpq.github.io.git"
+    "url": "git+https://github.com/ms-jpq/simple-markdown-showcase.git"
   },
   "scripts": {
-    "build": "./node_modules/.bin/tsc --outDir tsc && node tsc/src/entry.js",
-    "prettier": "prettier --write **/**.tsx --write **/**.ts",
-    "release": "./build.sh"
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "version": "1.0.0"
 }
