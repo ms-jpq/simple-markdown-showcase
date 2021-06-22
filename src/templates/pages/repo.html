@@ -1,8 +1,11 @@
+{% from "layout/layout.html" import html with context %} 
+{% from "components/github.html" import github_stars with context %}
+{% from "components/github.html" import github_forks with context %}
+
+
+{% call html() %}
 {% set TIME_FMT = "%Y-%m-%dT%H:%M:%S%z" %}
 {% set HUMAN_FMT = "%Y-%m-%d H:%M:%S %Z" %}
-
-{% from "layout/layout.html" import html with context %} 
-{% call html() %}
 <main class="d-grid p-8 row-gap-8">
   <section
     class="repo-header d-grid grid-col jc-end ai-centre mx-auto col-gap-4"

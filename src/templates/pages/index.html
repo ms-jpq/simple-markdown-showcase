@@ -1,3 +1,48 @@
 {% from "layout/layout.html" import html with context %}
+{% from "components/github.html" import github_lang with context %}
+{% from "components/github.html" import github_stars with context %}
+{% from "components/github.html" import github_forks with context %}
+
 {% call html() %}
+<main class="p-4">
+  <div class="masonry d-grid ai-end ji-centre">
+    {% for repo in repos %}
+    <figure class="card d-grid m-0">
+      {% if repo.images %} {% set image = repo.images[0] %}
+      <a href="{{" image | urlencode }} class="figure-img d-grid mp-0">
+        <img class="img-responsive w-100" src={{ image }} alt={{ f"{title} -
+        image" }} />
+        <div class="figure-facade d-none ji-centre ai-centre">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </a>
+      {% endif %}
+      <h4
+        class="figure-title text-uppercase text-centre text-ellipsis py-2 px-4"
+      >
+        <a href="{{" repo.link | urlencode }} class="invis-link">
+          {{ repo.title | e }}
+        </a>
+      </h4>
+      <div
+        className="figure-meta
+          d-grid
+          grid-col
+          jc-start
+          col-gap-4
+          px-4
+          pb-2"
+      >
+        {{ github_lang(lang=lang, colour=colour)}} {{ github_stars(stars=stars)
+        }} {{ githubForks(forks=forks) }}
+      </div>
+      <figcaption class="figure-detail text-ellipsis text-justify px-4 pb-2">
+        {{ repo.desc }}
+      </figcaption>
+    </figure>
+    {% endfor %}
+    <div class="col-gap-sizer"></div>
+  </div>
+</main>
 {% endcall %}
+
