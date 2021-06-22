@@ -4,15 +4,11 @@
     "url": "https://github.com/ms-jpq/simple-markdown-showcase/issues"
   },
   "dependencies": {
-    "cda": "git+https://github.com/ms-jpq/cda.git#6b807338f2e73d4077e309bae30371b685ff88c2",
-    "nda": "git+https://github.com/ms-jpq/nda.git#a7f50acd1d3386f9c470aa393bfcbb068f86d2c3"
+    "bootstrap": "^5.0.2",
+    "cda": "git+https://github.com/ms-jpq/cda.git#6b807338f2e73d4077e309bae30371b685ff88c2"
   },
   "description": "Generates responsive personal portfolio pages using Github APIs.",
   "devDependencies": {
-    "bootstrap": "^4.4.1",
-    "eslint": "*",
-    "eslint-config-prettier": "*",
-    "eslint-plugin-prettier": "*",
     "sass": "*",
     "typescript": "*"
   },
@@ -30,4 +26,3 @@
   },
   "version": "1.0.0"
 }
-
