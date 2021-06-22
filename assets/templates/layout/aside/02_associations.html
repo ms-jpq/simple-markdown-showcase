@@ -12,11 +12,12 @@
   "
   href="{{ href | urlencode }}"
 >
-  <i class="{{class}}"></i>
+  <i class="{{ class }}"></i>
 </a>
 {% endmacro %}
 
-{% macro associations(contacts) %}
+{% macro associations() %}
+{% set contacts = read_data("contacts.yml") %}
 <section
   id="associations" class="associations d-flex flex-wrap"
 >

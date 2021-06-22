@@ -13,8 +13,8 @@ from std2.pickle.decoder import DecodeError, Decoders
 from std2.urllib import urlopen
 from yaml import safe_load
 
-from ..consts import TIMEOUT
-from ..log import log
+from .consts import TIMEOUT
+from .log import log
 from .types import Info, Linguist, Repo, RepoInfo
 
 _LINGUIST = "https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml"

@@ -40,7 +40,7 @@ def _read_markdown(path: str, *paths: str) -> str:
 
 
 _FILTERS = {"markdown": _render}
-_GLOBALS = {"read_data": _read_data, "read_md": _read_markdown}
+_GLOBALS = {"read_data": _read_data, "read_markdown": _read_markdown}
 
 
 def build(path: PurePath, *paths: PurePath) -> Environment:

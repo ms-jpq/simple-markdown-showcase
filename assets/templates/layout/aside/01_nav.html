@@ -1,10 +1,10 @@
-{% macro aside_nav(dest, destinations) %}
+{% macro aside_nav(path) %}
 <section id="nav">
   <nav>
     <ul>
       {% for d in destinations %}
       <li
-        class="text-capitalize {{ 'active' if d.link == dest else '' }}"
+        class="text-capitalize {{ 'active' if d.link == path else '' }}"
       >
         <a href="{{ d.link | urlencode }}">{{ d.title | e }}</a>
       </li>

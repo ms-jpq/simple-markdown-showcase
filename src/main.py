@@ -10,8 +10,8 @@ from std2.pickle import decode, encode
 from std2.pickle.coders import BUILTIN_DECODERS, BUILTIN_ENCODERS
 
 from .consts import CACHE_DIR, DIST_DIR, SCSS, TEMPLATES, TOP_LV
-from .github.api import ls
-from .github.types import Linguist, RepoInfo
+from .github import ls
+from .types import Linguist, RepoInfo
 from .j2 import build, render
 from .markdown import css
 

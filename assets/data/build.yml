@@ -11,19 +11,5 @@ header:
   title: Creative Portfolio
   menu: Menu
 
-aside:
-  nav:
-    - title: home
-      link: ""
-    - title: about
-      link: about-me
-    - title: get in touch
-      link: contact
 
-  contacts:
-    email: github@bigly.dog
-    linkedin: wang--hao
-    github: ms-jpq
-    dockerhub: msjpq
-    stackoverflow: 15744711
 
