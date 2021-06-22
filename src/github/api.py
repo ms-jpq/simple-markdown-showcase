@@ -31,7 +31,7 @@ def _colours() -> Linguist:
 
 def _page(link: str) -> Optional[str]:
     for sections in link.split(","):
-        uri, params = sections.split(";")
+        uri, *params = sections.split(";")
         for param in params:
             key, _, value = param.strip().partition("=")
             val = (
