@@ -14,7 +14,7 @@
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
     "@types/sharp": "^0.28.0",
-    "bootstrap": "^4.4.1",
+    "bootstrap": "^5.0.2",
     "cda": "git+https://github.com/ms-jpq/cda.git#6b807338f2e73d4077e309bae30371b685ff88c2",
     "crypto-js": "^4.0.0",
     "csstype": "^3.0.5",
