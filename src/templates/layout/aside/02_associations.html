@@ -10,18 +10,19 @@
     m-2
     text-centre
   "
-  href="{{ href }}"
+  href="{{ href | urlencode }}"
 >
   <i className="{class_name}"></i>
 </a>
 {% endmacro %}
 
+{% macro associations(contacts) %}
 <section
   id="associations" className="associations d-flex flex-wrap"
 >
-  {{ circle(href=f"mailto:email", class="far fa-envelope" }}
-  {{ circle(href=f"https://www.linkedin.com/in/$linkedin", class="fab fa-linkedin-in" }}
-  {{ circle(href=f"https://github.com/${github}", class="fab fa-github" }}
-  {{ circle(href=f"https://stackexchange.com/users/${stackoverflow}", class="fab fa-stack-overflow" }}
+  {{ circle(href=f"mailto:{contacts.email}", class="far fa-envelope" }}
+  {{ circle(href=f"https://www.linkedin.com/in/{contacts.linkedin}", class="fab fa-linkedin-in" }}
+  {{ circle(href=f"https://github.com/{contacts.github}", class="fab fa-github" }}
+  {{ circle(href=f"https://stackexchange.com/users/{contacts.stackoverflow}", class="fab fa-stack-overflow" }}
 </section>
-
+{% endmacro %}

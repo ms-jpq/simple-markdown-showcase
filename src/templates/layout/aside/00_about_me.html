@@ -1,1 +1,6 @@
-<section id="about-me">{{ read_md("about_me.md") }}</section>
+{% macro about_me %}
+<section id="about-me">
+  <div class="markdown">{{ read_md("about_me.md") }}</div>
+</section>
+{% endmacro %}
+

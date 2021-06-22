@@ -1,0 +1,34 @@
+{% from "layout/aside/00_about_me.html" import aside_about_me with context %}
+{% from "layout/aside/01_nav.html" import aside_nav with context %}
+{% from "layout/aside/02_associations.html" import aside_associations with context %}
+{% from "layout/header/00_menu.html" import header_menu with context %}
+{% from "layout/header/01_title.html" import header_title with context %}
+{% from "layout/footer/00_desc.html" import footer_desc with context %}
+
+{% macro html(title, desc, css, js) %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="{{ desc or '' }}" />
+    <title>{{ title | e }}</title>
+    {% for c in css %}
+    <link rel="stylesheet" href="{{ c | urlencode }}" />
+    {% endfor %} {% for j in js %}
+    <script defer src="{{ j | urlencode }}"></script>
+    {% endfor %}
+  </head>
+  <body>
+    <header className="d-grid grid-col px-4">
+      {{ header_menu() }} {{ header_title() }}
+    </header>
+    <aside id="left-panel" className="grid ac-start px-4">
+      {{ aside_about_me() }} {{ aside_nav(dest, destinations) }} {{ aside_associations(contacts) }}
+    </aside>
+    {{ caller() }}
+    <footer>{{ footer_desc(desc) }}</footer>
+  </body>
+</html>
+{% endmacro %}
+
