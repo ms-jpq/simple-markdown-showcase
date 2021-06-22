@@ -6,7 +6,7 @@ TOP_LV = _SRC.parent
 TEMPLATES = _SRC / "templates"
 SCSS = _SRC / "css"
 
-MARKDOWNS = TOP_LV / "markdown"
+ASSETS = TOP_LV / "assets"
 CACHE_DIR = TOP_LV / ".cache"
 DIST_DIR = TOP_LV / "dist"
 
