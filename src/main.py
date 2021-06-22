@@ -26,6 +26,7 @@ async def main() -> None:
     j2 = build(PAGES)
     scss = css()
 
+    CACHE_DIR.mkdir(parents=True, exist_ok=True)
     if args.cache:
         json = loads(_GH_CACHE.read_text())
         cached: Tuple[Linguist, Sequence[RepoInfo]] = decode(
@@ -38,5 +39,5 @@ async def main() -> None:
         json = dumps(fetched, check_circular=False, ensure_ascii=False, indent=2)
         _GH_CACHE.write_text(json)
 
-    print(repos)
+    print(len(repos))
 
