@@ -5,9 +5,9 @@ from typing import Any, Mapping
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 
 from .consts import MARKDOWNS
-from .markdown import render
+from .markdown import render as render_md
 
-_render = lru_cache(render("friendly"))
+_render = lru_cache(render_md("friendly"))
 
 
 @lru_cache

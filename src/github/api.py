@@ -14,6 +14,7 @@ from std2.urllib import urlopen
 from yaml import safe_load
 
 from ..consts import TIMEOUT
+from ..log import log
 from .types import Info, Linguist, Repo, RepoInfo
 
 _LINGUIST = "https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml"
@@ -82,8 +83,13 @@ def _ls_repos(user: str) -> Sequence[Repo]:
 
 def _resource(repo: Repo, path: PurePosixPath) -> bytes:
     uri = f"https://raw.githubusercontent.com/{repo.full_name}/{repo.default_branch}/{path}"
-    with urlopen(uri, timeout=TIMEOUT) as resp:
-        raw = resp.read()
+    try:
+        with urlopen(uri, timeout=TIMEOUT) as resp:
+            raw = resp.read()
+    except HTTPError as e:
+        if e.code != HTTPStatus.NOT_FOUND:
+            log.exception("%s", e, uri)
+        raise
     return raw
 
 
@@ -97,7 +103,7 @@ def _repo_info(repo: Repo) -> RepoInfo:
             raise
     else:
         yaml = safe_load(raw)
-        info: Info = decode(Info, yaml)
+        info = decode(Info, yaml)
     ri = RepoInfo(repo=repo, info=info)
     return ri
 
