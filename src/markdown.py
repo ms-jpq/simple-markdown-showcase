@@ -1,4 +1,9 @@
+from locale import strxfrm
+from os import linesep
 from typing import Callable, Sequence, no_type_check
+
+from pygments.formatters.html import HtmlFormatter
+from pygments.styles import get_all_styles, get_style_by_name
 
 from markdown import Markdown
 from markdown.extensions import Extension
@@ -38,6 +43,18 @@ def _extensions(style: str) -> Sequence[Extension]:
         toc(),
         wikilinks(),
     )
+
+
+def css() -> str:
+    lines = (
+        f".{_CODEHL_CLASS}.{name} {line}"
+        for name in get_all_styles()
+        for line in HtmlFormatter(style=get_style_by_name(name))
+        .get_style_defs()
+        .splitlines()
+    )
+    css = linesep.join(sorted(lines, key=strxfrm))
+    return css
 
 
 def render(style: str) -> Callable[[str], str]:
