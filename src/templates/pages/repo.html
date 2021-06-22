@@ -1,4 +1,34 @@
-{% from "layout/layout.html" import html with context %}
+{% from "layout/layout.html" import html with context %} 
 {% call html() %}
+<main class="d-grid p-8 row-gap-8">
+  <section
+    class="repo-header d-grid grid-col jc-end ai-centre mx-auto col-gap-4"
+  >
+    <!--<GithubStars stars={stargazers_count} />-->
+    <!--<GithubForks forks={forks_count} />-->
+    <!--<a href={html_url} className={cn("invis-link")}>-->
+    <!--  <BigButton>-->
+    <!--    View on Github <i className="fab fa-github"></i>-->
+    <!--  </BigButton>-->
+    <!--</a>-->
+  </section>
+  <section class="repo-body d-grid mx-auto">
+    <div class="markdown w-100">{{ read_me | markdown }}</div>
+  </section>
+  <section class="repo-footer d-grid ji-end mx-auto col-gap-4 hidden">
+    <span>
+      Created at:
+      <time datetime="{str(created_at)}">
+        {new Date(created_at).toLocaleDateString()}
+      </time>
+    </span>
+    <span>
+      Updated at:
+      <time datetime="{str(updated_at)}">
+        {new Date(updated_at).toLocaleDateString()}
+      </time>
+    </span>
+  </section>
+</main>
 {% endcall %}
 
