@@ -1,0 +1,27 @@
+{% macro circle(href, class) %}
+<a
+  class="
+    association-circle
+    border-solid border-thin border-circle
+    d-flex
+    ai-centre
+    jc-centre
+    p-2
+    m-2
+    text-centre
+  "
+  href="{{ href }}"
+>
+  <i className="{class_name}"></i>
+</a>
+{% endmacro %}
+
+<section
+  id="associations" className="associations d-flex flex-wrap"
+>
+  {{ circle(href=f"mailto:email", class="far fa-envelope" }}
+  {{ circle(href=f"https://www.linkedin.com/in/$linkedin", class="fab fa-linkedin-in" }}
+  {{ circle(href=f"https://github.com/${github}", class="fab fa-github" }}
+  {{ circle(href=f"https://stackexchange.com/users/${stackoverflow}", class="fab fa-stack-overflow" }}
+</section>
+

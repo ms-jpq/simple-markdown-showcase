@@ -1,0 +1,14 @@
+<section id="nav">
+  <nav>
+    <ul>
+      {% for d in destinations %}
+      <li
+        class="text-capitalize {{ 'active' if off && d.link === dest else '' }}"
+      >
+        <a href="{{ d.link | urlencode }}">{{ d.title | e }}</a>
+      </li>
+      {% endfor %}
+    </ul>
+  </nav>
+</section>
+
