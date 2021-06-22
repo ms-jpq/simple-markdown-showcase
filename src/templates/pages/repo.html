@@ -1,16 +1,20 @@
+{% set TIME_FMT = "%Y-%m-%dT%H:%M:%S%z" %}
+{% set HUMAN_FMT = "%Y-%m-%d H:%M:%S %Z" %}
+
+
 {% from "layout/layout.html" import html with context %} 
 {% call html() %}
 <main class="d-grid p-8 row-gap-8">
   <section
     class="repo-header d-grid grid-col jc-end ai-centre mx-auto col-gap-4"
   >
-    <!--<GithubStars stars={stargazers_count} />-->
-    <!--<GithubForks forks={forks_count} />-->
-    <!--<a href={html_url} className={cn("invis-link")}>-->
-    <!--  <BigButton>-->
-    <!--    View on Github <i className="fab fa-github"></i>-->
-    <!--  </BigButton>-->
-    <!--</a>-->
+    {{ github_stars(stargazers_count) }}
+    {{ github_forks(forks_count) }}
+    <a href={{ html_url | urlencode }} className="invis-link">
+      {% call big_button() %}
+        View on Github <i className="fab fa-github"></i>
+      {% endcall %}
+    </a>
   </section>
   <section class="repo-body d-grid mx-auto">
     <div class="markdown w-100">{{ read_me | markdown }}</div>
@@ -18,14 +22,14 @@
   <section class="repo-footer d-grid ji-end mx-auto col-gap-4 hidden">
     <span>
       Created at:
-      <time datetime="{str(created_at)}">
-        {new Date(created_at).toLocaleDateString()}
+      <time datetime="{{ created_at.strftime(TIME_FMT) }}">
+        {{ created_at.strftime(HUMAN_FMT) }}
       </time>
     </span>
     <span>
       Updated at:
-      <time datetime="{str(updated_at)}">
-        {new Date(updated_at).toLocaleDateString()}
+      <time datetime="{{ updated_at.strftime(TIME_FMT) }}">
+        {{ updated_at.strftime(HUMAN_FMT) }}
       </time>
     </span>
   </section>

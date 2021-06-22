@@ -1,25 +1,22 @@
-{% macro github_lang %}
-  <span className={cn("github-lang")}>
-    <i
-      className={cn("border-circle", "d-inline-block")}
-      style={{ backgroundColor: colour }}
-    ></i>{" "}
-    {lang}
-  </span>
+{% macro github_lang(lang, colour) %}
+<span class="github-lang">
+  <i
+    class="border-circle d-inline-block"
+    style="backgroundcolor:{{ colour }}"
+  ></i>
+  {{ lang }}
+</span>
+{% endmacro %} 
+
+{% macro github_stars(stars) %}
+<span class="github-stars {{ 'hidden' if not stars else '' }}">
+  <i class="fas fa-star"></i> {{ stars }}
+</span>
+{% endmacro %} 
+
+{% macro github_forks(forks) %}
+<span class="github-forks {{ 'hidden' if not forks else '' })}">
+  <i class="fas fa-code-branch"></i> {forks}
+</span>
 {% endmacro %}
-
-
-{% macro github_stars %}
-  <span className={cn("github-stars", { hidden: stars === 0 })}>
-    <i className="fas fa-star"></i> {stars}
-  </span>
-{% endmacro %}
-
-
-{% macro github_forks %}
-  <span className={cn("github-forks", { hidden: forks === 0 })}>
-    <i className="fas fa-code-branch"></i> {forks}
-  </span>
-{% endmacro %}
-
 
