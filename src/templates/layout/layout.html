@@ -4,8 +4,9 @@
 {% from "layout/header/00_menu.html" import header_menu with context %}
 {% from "layout/header/01_title.html" import header_title with context %}
 {% from "layout/footer/00_desc.html" import footer_desc with context %}
-{% macro html(title, desc, css, js) %}
 
+
+{% macro html(path, title, desc, css, js, header) %}
 <!DOCTYPE html>
 <html>
   <head>
@@ -21,14 +22,14 @@
   </head>
   <body>
     <header className="d-grid grid-col px-4">
-      {{ header_menu() }} {{ header_title() }}
+      {{ header_menu(title=header) }} {{ header_title(title=title) }}
     </header>
     <aside id="left-panel" className="grid ac-start px-4">
-      {{ aside_about_me() }} {{ aside_nav(dest, destinations) }} {{
-      aside_associations(contacts) }}
+      {{ aside_about_me() }} {{ aside_nav(dest=path, destinations=destinations) }} {{
+      aside_associations(contacts=contacts) }}
     </aside>
     {{ caller() }}
-    <footer>{{ footer_desc(desc) }}</footer>
+    <footer>{{ footer_desc(desc=desc) }}</footer>
   </body>
 </html>
 {% endmacro %}

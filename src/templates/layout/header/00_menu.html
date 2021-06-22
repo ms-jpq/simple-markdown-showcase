@@ -1,6 +1,6 @@
 {% from "components/big_button.html" import big_button with context %}
 
-{% macro header_menu() %}
+{% macro header_menu(title) %}
 {% call big_button() %}
 <i class="fas fa-bars"></i> {title}
 {% endcall %}
