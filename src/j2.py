@@ -3,6 +3,10 @@ from typing import Any, Mapping
 
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 
+from .markdown import render
+
+_FILTERS = {"markdown": render("friendly")}
+
 
 def build(path: Path, *paths: Path) -> Environment:
     j2 = Environment(
@@ -12,6 +16,7 @@ def build(path: Path, *paths: Path) -> Environment:
         undefined=StrictUndefined,
         loader=FileSystemLoader((path, *paths), followlinks=True),
     )
+    j2.filters = {**_FILTERS, **j2.filters}
     return j2
 
 
