@@ -71,7 +71,7 @@ async def main() -> None:
         dest.write_text(html)
 
     for spec in specs:
-        dest = DIST_DIR / spec.repo.full_name / "index.html"
+        dest = DIST_DIR / spec.repo.name / "index.html"
         env = {**asdict(spec.info), "read_me": spec.read_me, **asdict(spec.repo)}
         html = render(j2, path=_PAGES / "repo.html", env=env)
         dest.parent.mkdir(parents=True, exist_ok=True)

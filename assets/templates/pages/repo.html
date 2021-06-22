@@ -4,7 +4,7 @@
 {% from "components/github.html" import github_forks with context %}
 
 
-{% call html(path="/contact_me", css=[], js=[], desc="") %}
+{% call html(path="/" ~ name, css=[], js=[], desc="") %}
 {% set TIME_FMT = "%Y-%m-%dT%H:%M:%S%z" %}
 {% set HUMAN_FMT = "%Y-%m-%d H:%M:%S %Z" %}
 <main class="d-grid p-8 row-gap-8">
@@ -14,12 +14,13 @@
     {{ github_stars(stargazers_count) }} 
     {{ github_forks(forks_count) }}
     <a href="{{ html_url | urlencode }}" class="invis-link">
-      {% call big_button() %} View on Github <i class="fab fa-github"></i>
+      {% call big_button() %} 
+      View on Github <i class="fab fa-github"></i>
       {% endcall %}
     </a>
   </section>
   <section class="repo-body d-grid mx-auto">
-    <div class="markdown w-100">{{ read_me | markdown }}</div>
+    <div class="markdown w-100">{{ read_me or "" | markdown }}</div>
   </section>
   <section class="repo-footer d-grid ji-end mx-auto col-gap-4 hidden">
     <span>
