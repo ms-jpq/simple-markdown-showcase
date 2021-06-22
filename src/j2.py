@@ -21,7 +21,7 @@ _FILTERS = {"markdown": _render}
 _GLOBALS = {"read_md": _read_markdown}
 
 
-def build(path: Path, *paths: Path) -> Environment:
+def build(path: PurePath, *paths: PurePath) -> Environment:
     j2 = Environment(
         enable_async=False,
         trim_blocks=True,

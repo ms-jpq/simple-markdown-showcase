@@ -1,21 +1,26 @@
+from asyncio import gather
 from datetime import datetime
+from http import HTTPStatus
 from inspect import isclass
 from json import loads
 from pathlib import PurePosixPath
-from typing import Any, Iterator, MutableSet, Optional, Sequence
+from typing import Any, Iterator, MutableSet, Optional, Sequence, Tuple
+from urllib.error import HTTPError
 
+from std2.asyncio import run_in_executor
 from std2.pickle import decode
 from std2.pickle.decoder import DecodeError, Decoders
 from std2.urllib import urlopen
 from yaml import safe_load
 
 from ..consts import TIMEOUT
-from .types import Linguist, Repo
+from .types import Info, Linguist, Repo, RepoInfo
 
 _LINGUIST = "https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml"
+_CONFIG = PurePosixPath("_config.yml")
 
 
-def colours() -> Linguist:
+def _colours() -> Linguist:
     with urlopen(_LINGUIST, timeout=TIMEOUT) as resp:
         raw = resp.read()
     yaml = safe_load(raw)
@@ -69,15 +74,38 @@ def _repos(uri: str) -> Iterator[Repo]:
         yield from _repos(page)
 
 
-def repos(user: str) -> Sequence[Repo]:
+def _ls_repos(user: str) -> Sequence[Repo]:
     uri = f"https://api.github.com/users/{user}/repos"
     repos = tuple(_repos(uri))
     return repos
 
 
-def resource(repo: Repo, path: PurePosixPath) -> bytes:
+def _resource(repo: Repo, path: PurePosixPath) -> bytes:
     uri = f"https://raw.githubusercontent.com/{repo.full_name}/{repo.default_branch}/{path}"
     with urlopen(uri, timeout=TIMEOUT) as resp:
         raw = resp.read()
     return raw
+
+
+def _repo_info(repo: Repo) -> RepoInfo:
+    try:
+        raw = _resource(repo, path=_CONFIG)
+    except HTTPError as e:
+        if e.code == HTTPStatus.NOT_FOUND:
+            info = Info(title=repo.name.capitalize(), showcase=False, images=())
+        else:
+            raise
+    else:
+        yaml = safe_load(raw)
+        info: Info = decode(Info, yaml)
+    ri = RepoInfo(repo=repo, info=info)
+    return ri
+
+
+async def ls(user: str) -> Tuple[Linguist, Sequence[RepoInfo]]:
+    colours, repos = await gather(
+        run_in_executor(_colours), run_in_executor(_ls_repos, user)
+    )
+    infos = await gather(*(run_in_executor(_repo_info, repo) for repo in repos))
+    return colours, infos
 
