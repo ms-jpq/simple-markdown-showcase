@@ -1,11 +1,24 @@
-from pathlib import Path, PurePath
+from functools import lru_cache
+from pathlib import PurePath
 from typing import Any, Mapping
 
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 
+from .consts import MARKDOWNS
 from .markdown import render
 
-_FILTERS = {"markdown": render("friendly")}
+_render = lru_cache(render("friendly"))
+
+
+@lru_cache
+def _read_markdown(path: str) -> str:
+    resolved = MARKDOWNS / path
+    md = resolved.read_text()
+    return _render(md)
+
+
+_FILTERS = {"markdown": _render}
+_GLOBALS = {"read_md": _read_markdown}
 
 
 def build(path: Path, *paths: Path) -> Environment:
@@ -17,6 +30,7 @@ def build(path: Path, *paths: Path) -> Environment:
         loader=FileSystemLoader((path, *paths), followlinks=True),
     )
     j2.filters = {**_FILTERS, **j2.filters}
+    j2.globals = {**_GLOBALS, **j2.globals}
     return j2
 
 
