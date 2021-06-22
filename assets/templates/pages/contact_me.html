@@ -1,9 +1,8 @@
 {% from "layout/layout.html" import html with context %}
 
-{% call html() %}
+{% call html(path="/contact_me", css=[], js=[], desc="") %}
 <main class="d-grid">
-  {{ contact_me | markdown }}
-  <AsideAssociations contacts="{contacts}" />
+  {{ read_markdown("contact_me.md") }}
 </main>
 {% endcall %}
 

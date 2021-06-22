@@ -6,7 +6,7 @@
 {% from "layout/footer/00_desc.html" import footer_desc with context %}
 
 
-{% macro html(path, desc, css, js) %}
+{% macro html(path, css, js, desc) %}
 {% set header = read_data("header.yml") %}
 <!DOCTYPE html>
 <html>
