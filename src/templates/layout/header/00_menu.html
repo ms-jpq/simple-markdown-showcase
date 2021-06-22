@@ -1,4 +1,7 @@
-  <BigButton>
-    <i className="fas fa-bars"></i> {menu_title}
-  </BigButton>
+{% from "components/big_button.html" import big_button with context %}
 
+{% macro header_menu() %}
+{% call big_button() %}
+<i class="fas fa-bars"></i> {title}
+{% endcall %}
+{% endmacro %}
