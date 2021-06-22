@@ -1,13 +1,14 @@
 from argparse import ArgumentParser, Namespace
+from asyncio import gather
 from json import dumps, loads
 from typing import Sequence, Tuple
 
-from asyncio import gather
 from std2.asyncio import call
+from std2.pathlib import walk
 from std2.pickle import decode, encode
 from std2.pickle.coders import BUILTIN_DECODERS, BUILTIN_ENCODERS
 
-from .consts import CACHE_DIR, PAGES, TOP_LV
+from .consts import CACHE_DIR, DIST_DIR, PAGES, SCSS, TOP_LV
 from .github.api import ls
 from .github.types import Linguist, RepoInfo
 from .j2 import build
@@ -18,9 +19,14 @@ _CSS = CACHE_DIR / "hl.css"
 
 
 async def _compile() -> None:
+    scss_paths = (
+        f"{path}:{DIST_DIR / path.relative_to(SCSS)}"
+        for path in walk(SCSS)
+        if not path.name.startswith("_")
+    )
     scss = css()
     _CSS.write_text(scss)
-    await gather(call("tsc", cwd=TOP_LV) , call("", cwd=TOP_LV))
+    await gather(call("tsc", cwd=TOP_LV), call("sass", *scss_paths, cwd=TOP_LV))
 
 
 def _parse_args() -> Namespace:
