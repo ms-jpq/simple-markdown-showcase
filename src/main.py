@@ -2,10 +2,12 @@ from argparse import ArgumentParser, Namespace
 from json import dumps, loads
 from typing import Sequence, Tuple
 
+from asyncio import gather
+from std2.asyncio import call
 from std2.pickle import decode, encode
 from std2.pickle.coders import BUILTIN_DECODERS, BUILTIN_ENCODERS
 
-from .consts import CACHE_DIR, PAGES
+from .consts import CACHE_DIR, PAGES, TOP_LV
 from .github.api import ls
 from .github.types import Linguist, RepoInfo
 from .j2 import build
@@ -13,6 +15,12 @@ from .markdown import css
 
 _GH_CACHE = CACHE_DIR / "github.json"
 _CSS = CACHE_DIR / "hl.css"
+
+
+async def _compile() -> None:
+    scss = css()
+    _CSS.write_text(scss)
+    await gather(call("tsc", cwd=TOP_LV) , call("", cwd=TOP_LV))
 
 
 def _parse_args() -> Namespace:
@@ -25,7 +33,6 @@ def _parse_args() -> Namespace:
 async def main() -> None:
     args = _parse_args()
     j2 = build(PAGES)
-    scss = css()
 
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
     if args.cache:
@@ -40,7 +47,7 @@ async def main() -> None:
         json = dumps(fetched, check_circular=False, ensure_ascii=False, indent=2)
         _GH_CACHE.write_text(json)
 
-    _CSS.write_text(scss)
+    await _compile()
 
     print(len(repos))
 

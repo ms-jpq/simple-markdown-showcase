@@ -9,6 +9,7 @@
   },
   "description": "Generates responsive personal portfolio pages using Github APIs.",
   "devDependencies": {
+    "prettier": "*",
     "sass": "*",
     "typescript": "*"
   },
