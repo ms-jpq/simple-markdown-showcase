@@ -1,12 +1,13 @@
 {% macro aside_nav(path) %}
+{% set pages = read_data("nav.yml") %}
 <section id="nav">
   <nav>
     <ul>
-      {% for d in destinations %}
+      {% for p in pages %}
       <li
-        class="text-capitalize {{ 'active' if d.link == path else '' }}"
+        class="text-capitalize {{ 'active' if p.link == path else '' }}"
       >
-        <a href="{{ d.link | urlencode }}">{{ d.title | e }}</a>
+        <a href="{{ p.link | urlencode }}">{{ p.title | e }}</a>
       </li>
       {% endfor %}
     </ul>

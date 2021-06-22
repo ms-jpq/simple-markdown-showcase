@@ -6,14 +6,15 @@
 {% from "layout/footer/00_desc.html" import footer_desc with context %}
 
 
-{% macro html(path, title, desc, css, js, header) %}
+{% macro html(path, desc, css, js) %}
+{% set header = read_data("header.yml") %}
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content="{{ desc or '' }}" />
-    <title>{{ title | e }}</title>
+    <title>{{ header.title | e }}</title>
     {% for c in css %}
     <link rel="stylesheet" href="{{ c | urlencode }}" />
     {% endfor %} {% for j in js %}
@@ -22,11 +23,11 @@
   </head>
   <body>
     <header class="d-grid grid-col px-4">
-      {{ header_menu(title=header) }} {{ header_title(title=title) }}
+      {{ header_menu(title=header.menu) }} {{ header_title(title=header.title) }}
     </header>
     <aside id="left-panel" class="grid ac-start px-4">
-      {{ aside_about_me() }} {{ aside_nav(dest=path, destinations=destinations) }} {{
-      aside_associations(contacts=contacts) }}
+      {{ aside_about_me() }} {{ aside_nav(path=path) }} {{
+      aside_associations() }}
     </aside>
     {{ caller() }}
     <footer>{{ footer_desc(desc=desc) }}</footer>
