@@ -19,6 +19,7 @@ _CSS = CACHE_DIR / "hl.css"
 
 
 async def _compile() -> None:
+    DIST_DIR.mkdir(parents=True, exist_ok=True)
     scss_paths = (
         f"{path}:{DIST_DIR / path.relative_to(SCSS)}"
         for path in walk(SCSS)
@@ -40,7 +41,6 @@ async def main() -> None:
     args = _parse_args()
     j2 = build(PAGES)
 
-    CACHE_DIR.mkdir(parents=True, exist_ok=True)
     if args.cache:
         json = loads(_GH_CACHE.read_text())
         cached: Tuple[Linguist, Sequence[RepoInfo]] = decode(
@@ -51,6 +51,7 @@ async def main() -> None:
         colours, repos = await ls(args.user)
         fetched = encode((colours, repos), encoders=BUILTIN_ENCODERS)
         json = dumps(fetched, check_circular=False, ensure_ascii=False, indent=2)
+        CACHE_DIR.mkdir(parents=True, exist_ok=True)
         _GH_CACHE.write_text(json)
 
     await _compile()
