@@ -40,6 +40,8 @@ async def _compile() -> None:
                 NPM_BIN / "sass",
                 "--load-path",
                 str(TOP_LV),
+                "--style",
+                "compressed",
                 *scss_paths,
                 cwd=TOP_LV,
                 check_returncode=True,
