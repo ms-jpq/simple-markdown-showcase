@@ -36,7 +36,14 @@ async def _compile() -> None:
     try:
         p1, p2 = await gather(
             call(NPM_BIN / "tsc", cwd=TOP_LV, check_returncode=True),
-            call(NPM_BIN / "sass", *scss_paths, cwd=TOP_LV, check_returncode=True),
+            call(
+                NPM_BIN / "sass",
+                "--load-path",
+                str(TOP_LV),
+                *scss_paths,
+                cwd=TOP_LV,
+                check_returncode=True,
+            ),
         )
     except CalledProcessError as e:
         log.exception("%s", f"{e}{linesep}{e.stderr}")

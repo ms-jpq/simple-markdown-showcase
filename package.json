@@ -4,6 +4,7 @@
     "url": "https://github.com/ms-jpq/simple-markdown-showcase/issues"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.15.3",
     "bootstrap": "^5.0.2",
     "cda": "git+https://github.com/ms-jpq/cda.git#f197475ea799083482b127328b0dcb5461b1fc3d"
   },
