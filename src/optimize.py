@@ -9,7 +9,7 @@ def optimize(path: Path, html: str) -> str:
         node = parse(html)
     except ParseError:
         log.exception("%s", path)
-        return html
+        raise
     else:
         main, *_ = (
             child
