@@ -35,3 +35,5 @@ jobs:
       - name: Lint
         run: ./lint.sh
 
+      - name: Build
+        run: python3 -m src 'ms-jpq'
