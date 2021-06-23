@@ -5,7 +5,7 @@
   },
   "dependencies": {
     "bootstrap": "^5.0.2",
-    "cda": "git+https://github.com/ms-jpq/cda.git#6b807338f2e73d4077e309bae30371b685ff88c2"
+    "cda": "git+https://github.com/ms-jpq/cda.git#f197475ea799083482b127328b0dcb5461b1fc3d"
   },
   "description": "Generates responsive personal portfolio pages using Github APIs.",
   "devDependencies": {

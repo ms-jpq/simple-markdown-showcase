@@ -3,7 +3,9 @@ from asyncio import gather
 from dataclasses import asdict
 from json import dumps, loads
 from locale import strxfrm
+from os import linesep
 from pathlib import PurePath
+from subprocess import CalledProcessError
 from typing import Any, Mapping, Sequence, Tuple
 
 from std2.asyncio import call
@@ -14,6 +16,7 @@ from std2.pickle.coders import BUILTIN_DECODERS, BUILTIN_ENCODERS
 from .consts import CACHE_DIR, DIST_DIR, NPM_BIN, SCSS, TEMPLATES, TOP_LV
 from .github import ls
 from .j2 import build, render
+from .log import log
 from .markdown import css
 from .types import Linguist, RepoInfo
 
@@ -31,10 +34,14 @@ async def _compile() -> None:
     )
     scss = css()
     _CSS.write_text(scss)
-    await gather(
-        call(NPM_BIN / "tsc", cwd=TOP_LV, check_returncode=True),
-        call(NPM_BIN / "sass", *scss_paths, cwd=TOP_LV, check_returncode=True),
-    )
+    try:
+        await gather(
+            call(NPM_BIN / "tsc", cwd=TOP_LV, check_returncode=True),
+            call(NPM_BIN / "sass", *scss_paths, cwd=TOP_LV, check_returncode=True),
+        )
+    except CalledProcessError as e:
+        log.exception("%s", f"{e}{linesep}{e.stderr}")
+        exit(1)
 
 
 def _splat(colours: Linguist, spec: RepoInfo) -> Mapping[str, Any]:
