@@ -3,13 +3,15 @@ from pathlib import Path
 from .log import log
 from .parse import ParseError, parse
 
+from difflib import unified_diff
 
 def optimize(path: Path, html: str) -> str:
     try:
         node = parse(html)
     except ParseError:
         log.exception("%s", path)
-        raise
+        return html
     else:
-        return str(node)
+        main, *_ = node
+        return str(main)
 
