@@ -23,7 +23,7 @@ from std2.pathlib import walk
 from std2.pickle import decode, encode
 from std2.pickle.coders import BUILTIN_DECODERS, BUILTIN_ENCODERS
 
-from .consts import CACHE_DIR, DIST_DIR, NPM_DIR, SCSS, TEMPLATES, TOP_LV
+from .consts import ASSETS, CACHE_DIR, DIST_DIR, NPM_DIR, TEMPLATES, TOP_LV
 from .github import ls
 from .j2 import build, render
 from .log import log
@@ -31,6 +31,8 @@ from .markdown import css
 from .optimize import optimize
 from .types import Linguist, RepoInfo
 
+_TS = ASSETS / "js"
+_SCSS = ASSETS / "css"
 _GH_CACHE = CACHE_DIR / "github.json"
 _CSS = CACHE_DIR / "hl.css"
 _PAGES = PurePath("pages")
@@ -41,16 +43,37 @@ _FONTS_DEST = DIST_DIR / "webfonts"
 
 async def _compile() -> None:
     DIST_DIR.mkdir(parents=True, exist_ok=True)
+    ts_paths = (
+        (
+            str(path),
+            str(DIST_DIR / "_".join(path.with_suffix(".js").relative_to(_TS).parts)),
+        )
+        for path in walk(_TS)
+    )
     scss_paths = (
-        f"{path}:{DIST_DIR / '_'.join(path.with_suffix('.css').relative_to(SCSS).parts)}"
-        for path in walk(SCSS)
-        if path.suffix == ".scss" and not path.name.startswith("_")
+        f"{path}:{DIST_DIR / '_'.join(path.with_suffix('.css').relative_to(_SCSS).parts)}"
+        for path in walk(_SCSS)
+        if not path.name.startswith("_")
     )
     _CSS.write_text(css())
     copytree(_FONTS_SRC, _FONTS_DEST, dirs_exist_ok=True)
     try:
-        p1, p2 = await gather(
-            call(_NPM_BIN / "tsc", cwd=TOP_LV, check_returncode=True),
+        procs = await gather(
+            *(
+                call(
+                    _NPM_BIN / "rollup",
+                    "--plugin",
+                    "typescript",
+                    "--format",
+                    "iife",
+                    "--file",
+                    dest,
+                    src,
+                    cwd=TOP_LV,
+                    check_returncode=True,
+                )
+                for src, dest in ts_paths
+            ),
             call(
                 _NPM_BIN / "sass",
                 "--load-path",
@@ -66,9 +89,10 @@ async def _compile() -> None:
         log.exception("%s", f"{e}{linesep}{e.stderr}")
         exit(1)
     else:
-        for p in (p1, p2):
+        for p in procs:
             if p.err:
                 log.warn("%s", p.err)
+            print(p.out.decode())
 
 
 def _splat(colours: Linguist, spec: RepoInfo) -> Mapping[str, Any]:

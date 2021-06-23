@@ -5,7 +5,6 @@ NPM_DIR = TOP_LV / "node_modules"
 ASSETS = TOP_LV / "assets"
 
 TEMPLATES = ASSETS / "templates"
-SCSS = ASSETS / "css"
 
 CACHE_DIR = TOP_LV / ".cache"
 DIST_DIR = TOP_LV / "dist"
