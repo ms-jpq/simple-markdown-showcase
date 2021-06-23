@@ -32,8 +32,8 @@ async def _compile() -> None:
     scss = css()
     _CSS.write_text(scss)
     await gather(
-        call(NPM_BIN / "tsc", cwd=TOP_LV),
-        call(NPM_BIN / "sass", *scss_paths, cwd=TOP_LV),
+        call(NPM_BIN / "tsc", cwd=TOP_LV, check_returncode=True),
+        call(NPM_BIN / "sass", *scss_paths, cwd=TOP_LV, check_returncode=True),
     )
 
 
