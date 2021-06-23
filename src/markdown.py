@@ -47,7 +47,7 @@ class _B4HtmlProcessor(InlineProcessor):
         maybe_html = m.group(1)
         chars = {*maybe_html}
 
-        if maybe_html.endswith("/") or chars & {"<"} or chars & {"=", '"'}:
+        if maybe_html.endswith("/") or "<" in chars or chars > {"=", '"'}:
             return None, None, None
         else:
             escaped = escape(data)
