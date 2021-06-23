@@ -7,10 +7,11 @@
 <main class="p-4">
   <div class="masonry d-grid ai-end ji-centre">
     {% for spec in specs %}
+    {% set spec_uri = '/' ~ spec.name ~ '/index.html' | urlencode %}
     <figure class="card d-grid m-0">
       {% if spec.images %} 
       {% set image = spec.images[0] %}
-      <a href="{{ image | urlencode }}" class="figure-img d-grid mp-0">
+      <a href="{{ spec_uri }}" class="figure-img d-grid mp-0">
         <img class="img-responsive w-100" src={{ image }} />
         <div class="figure-facade d-none ji-centre ai-centre">
           <i class="fas fa-chevron-right"></i>
@@ -20,7 +21,7 @@
       <h4
         class="figure-title text-uppercase text-centre text-ellipsis py-2 px-4"
       >
-        <a href="{{ "/" ~ spec.name | urlencode }}" class="invis-link">
+        <a href="{{ spec_uri }}" class="invis-link">
           {{ spec.title | e }}
         </a>
       </h4>
