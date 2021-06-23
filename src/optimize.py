@@ -48,6 +48,7 @@ async def _localize(node: Node) -> None:
                 with NamedTemporaryFile() as ntf:
                     ntf.write(buf)
                     ntf.flush()
+                    Path(ntf.name).write_bytes(buf)
 
 
 def _optimize(node: Node) -> Iterator[Awaitable[None]]:
