@@ -43,13 +43,6 @@ _FONTS_DEST = DIST_DIR / "webfonts"
 
 async def _compile() -> None:
     DIST_DIR.mkdir(parents=True, exist_ok=True)
-    ts_paths = (
-        (
-            path,
-            DIST_DIR / "_".join(path.with_suffix(".js").relative_to(_TS).parts),
-        )
-        for path in walk(_TS)
-    )
     scss_paths = (
         f"{path}:{DIST_DIR / '_'.join(path.with_suffix('.css').relative_to(_SCSS).parts)}"
         for path in walk(_SCSS)
@@ -59,17 +52,14 @@ async def _compile() -> None:
     copytree(_FONTS_SRC, _FONTS_DEST, dirs_exist_ok=True)
     try:
         procs = await gather(
-            *(
-                call(
-                    _NPM_BIN / "esbuild",
-                    "--bundle",
-                    "--minify",
-                    f"--outfile={dest}",
-                    str(src),
-                    cwd=TOP_LV,
-                    check_returncode=True,
-                )
-                for src, dest in ts_paths
+            call(
+                _NPM_BIN / "esbuild",
+                "--bundle",
+                "--minify",
+                f"--outdir={DIST_DIR}",
+                *map(str, walk(_TS)),
+                cwd=TOP_LV,
+                check_returncode=True,
             ),
             call(
                 _NPM_BIN / "sass",
