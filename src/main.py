@@ -32,8 +32,7 @@ async def _compile() -> None:
         for path in walk(SCSS)
         if path.suffix == ".scss" and not path.name.startswith("_")
     )
-    scss = css()
-    _CSS.write_text(scss)
+    _CSS.write_text(css())
     try:
         p1, p2 = await gather(
             call(NPM_BIN / "tsc", cwd=TOP_LV, check_returncode=True),
