@@ -45,8 +45,8 @@ async def _compile() -> None:
     DIST_DIR.mkdir(parents=True, exist_ok=True)
     ts_paths = (
         (
-            str(path),
-            str(DIST_DIR / "_".join(path.with_suffix(".js").relative_to(_TS).parts)),
+            path,
+            DIST_DIR / "_".join(path.with_suffix(".js").relative_to(_TS).parts),
         )
         for path in walk(_TS)
     )
@@ -61,14 +61,10 @@ async def _compile() -> None:
         procs = await gather(
             *(
                 call(
-                    _NPM_BIN / "rollup",
-                    "--plugin",
-                    "typescript",
-                    "--format",
-                    "iife",
-                    "--file",
-                    dest,
-                    src,
+                    _NPM_BIN / "esbuild",
+                    "--bundle",
+                    f"--outfile={dest}",
+                    str(src),
                     cwd=TOP_LV,
                     check_returncode=True,
                 )
