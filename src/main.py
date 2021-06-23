@@ -30,7 +30,7 @@ async def _compile() -> None:
     scss_paths = (
         f"{path}:{DIST_DIR / path.relative_to(SCSS)}"
         for path in walk(SCSS)
-        if not path.name.startswith("_")
+        if path.suffix == ".scss" and not path.name.startswith("_")
     )
     scss = css()
     _CSS.write_text(scss)

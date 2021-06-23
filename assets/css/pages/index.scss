@@ -1,3 +1,4 @@
+@use "sass:math";
 @import "../layout";
 
 :root {
@@ -30,8 +31,8 @@ main {
   }
 
   &.scripting > .card {
-    margin-top: ($grid_gap / 2);
-    margin-bottom: ($grid_gap / 2);
+    margin-top: math.div($grid_gap, 2);
+    margin-bottom: math.div($grid_gap, 2);
   }
 
   @mixin size_col($cols) {
@@ -125,3 +126,4 @@ main {
     }
   }
 }
+
