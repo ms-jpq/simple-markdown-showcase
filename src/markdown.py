@@ -1,7 +1,7 @@
+from html import escape
 from locale import strxfrm
 from os import linesep
 from typing import Callable, Match, Sequence, Tuple, Union, no_type_check
-from xml.etree.ElementTree import Element
 
 from pygments.formatters.html import HtmlFormatter
 from pygments.styles import get_all_styles, get_style_by_name
@@ -23,26 +23,44 @@ from markdown.extensions.tables import makeExtension as tables
 from markdown.extensions.toc import makeExtension as toc
 from markdown.extensions.wikilinks import makeExtension as wikilinks
 from markdown.inlinepatterns import InlineProcessor
-from html import escape
 
 _CODEHL_CLASS = "codehilite"
 
 
-class _Inline(InlineProcessor):
+class _B4HtmlProcessor(InlineProcessor):
+    """
+    The builtin html processors store & restore `<...>`
+    But does not check if `<...>` is valid html
+
+    This processor tries to escape invalid html
+    """
+
+    PRIORITY = 91
+
+    def __init__(self) -> None:
+        super().__init__(pattern="<([^>]*)>")
+
+    @no_type_check
     def handleMatch(
         self, m: Match[str], data: str
-    ) -> Union[Tuple[Element, int, int], Tuple[None, None, None]]:
-        escaped = escape(data)
-        if escaped != data:
-            return escaped, m.start(0), m.end(0)
+    ) -> Union[Tuple[str, int, int], Tuple[None, None, None]]:
+        maybe_html = m.group(1)
+        chars = {*maybe_html}
+
+        if maybe_html.endswith("/") or chars & {"<"} or chars & {"=", '"'}:
+            return None, None, None
         else:
-            return None, m.start(0), m.end(0)
+            escaped = escape(data)
+            return escaped, m.start(0), m.end(0)
 
 
 class _UserExts(Extension):
     def extendMarkdown(self, md: Markdown) -> None:
-        inline = _Inline(pattern=".+")
-        md.inlinePatterns.register(inline, name=_Inline.__qualname__, priority=-1000)
+        md.inlinePatterns.register(
+            _B4HtmlProcessor(),
+            name=_B4HtmlProcessor.__qualname__,
+            priority=_B4HtmlProcessor.PRIORITY,
+        )
 
 
 @no_type_check
