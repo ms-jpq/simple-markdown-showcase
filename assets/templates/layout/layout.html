@@ -6,14 +6,13 @@
 {% from "layout/footer/00_desc.html" import footer_desc with context %}
 
 
-{% macro html(path, css, js, desc) %}
+{% macro html(path, css, js) %}
 {% set header = read_data("header.yml") %}
 <!DOCTYPE html>
 <html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="description" content="{{ desc or '' }}" />
     <title>{{ header.title | e }}</title>
     {% for c in css %}
     <link rel="stylesheet" href="{{ c | urlencode }}" />
@@ -30,7 +29,7 @@
       aside_associations() }}
     </aside>
     {{ caller() }}
-    <footer>{{ footer_desc(desc=desc) }}</footer>
+    <footer>{{ footer_desc() }}</footer>
   </body>
 </html>
 {% endmacro %}

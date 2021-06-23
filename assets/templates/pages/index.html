@@ -3,7 +3,7 @@
 {% from "components/github.html" import github_stars with context %}
 {% from "components/github.html" import github_forks with context %}
 
-{% call html(path="/index.html", css=["/pages_index.css"], js=["/layout.js"], desc="") %}
+{% call html(path="/index.html", css=["/pages_index.css"], js=["/layout.js"]) %}
 <main class="p-4">
   <div class="masonry d-grid ai-end ji-centre">
     {% for spec in specs %}

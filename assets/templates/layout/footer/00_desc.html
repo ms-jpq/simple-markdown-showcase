@@ -1,4 +1,4 @@
 {% macro footer_desc(desc) %}
-  <div class="markdown">{{ desc | markdown }}</div>
+  <div class="markdown">{{ read_markdown('_footer.md') }}</div>
 {% endmacro %}
 
