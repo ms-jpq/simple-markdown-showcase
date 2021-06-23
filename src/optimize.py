@@ -2,6 +2,7 @@ from asyncio.tasks import gather
 from hashlib import sha256
 from pathlib import Path, PosixPath
 from typing import Awaitable, Iterator
+from urllib.error import HTTPError
 from urllib.parse import urlsplit
 
 from std2.asyncio import run_in_executor
@@ -26,15 +27,19 @@ async def _fetch(uri: str) -> bytes:
 async def _localize(node: Node) -> None:
     assert node.tag == "img"
     src = node.attrs.get("src")
-    if src:
-        ext = PosixPath(urlsplit(src).path).suffix
+
+    if src and src.startswith("http"):
+        ext = PosixPath(urlsplit(src).path).suffix.casefold()
         sha = sha256(src.encode()).hexdigest()
         name = Path(sha).with_suffix(ext)
         path = _IMG_CACHE / name
 
         if not path.exists():
-            buf = await _fetch(src)
-            path.write_bytes(buf)
+            try:
+                buf = await _fetch(src)
+                path.write_bytes(buf)
+            except HTTPError as e:
+                log.exception("%s", f"{e} -- {src}")
 
 
 def _optimize(node: Node) -> Iterator[Awaitable[None]]:
