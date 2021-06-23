@@ -28,7 +28,7 @@ _PAGES = PurePath("pages")
 async def _compile() -> None:
     DIST_DIR.mkdir(parents=True, exist_ok=True)
     scss_paths = (
-        f"{path}:{DIST_DIR / path.relative_to(SCSS)}"
+        f"{path}:{DIST_DIR / '_'.join(path.with_suffix('.css').relative_to(SCSS).parts)}"
         for path in walk(SCSS)
         if path.suffix == ".scss" and not path.name.startswith("_")
     )
