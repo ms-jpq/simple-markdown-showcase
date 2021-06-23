@@ -17,7 +17,7 @@ from typing import (
     Tuple,
 )
 
-from std2.asyncio import call, run_in_executor
+from std2.asyncio import call
 from std2.pathlib import walk
 from std2.pickle import decode, encode
 from std2.pickle.coders import BUILTIN_DECODERS, BUILTIN_ENCODERS
@@ -119,7 +119,7 @@ async def _j2(
 
 async def _write(instructions: Iterable[Tuple[Path, str]]) -> None:
     async def go(path: Path, html: str) -> None:
-        optimized = await run_in_executor(optimize, path, html=html)
+        optimized = await optimize(path, html=html)
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(optimized)
 

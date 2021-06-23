@@ -5,7 +5,15 @@ from html import escape
 from html.parser import HTMLParser
 from locale import strxfrm
 from os import linesep
-from typing import MutableMapping, MutableSequence, Optional, Sequence, Tuple, Union
+from typing import (
+    Iterator,
+    MutableMapping,
+    MutableSequence,
+    Optional,
+    Sequence,
+    Tuple,
+    Union,
+)
 from weakref import ref
 
 _VOID = {
@@ -57,10 +65,18 @@ class Node:
             escape(child) if isinstance(child, str) else str(child)
             for child in self.children
         )
-        if kids:
+        if self.tag in _VOID:
             return f"<{self.tag} {attrs}/>"
         else:
             return f"<{self.tag} {attrs}>{kids}</{self.tag}>"
+
+    def __iter__(self) -> Iterator[Union[Node, str]]:
+        yield self
+        for child in self.children:
+            if isinstance(child, Node):
+                yield from child
+            else:
+                yield child
 
 
 class _Parser(HTMLParser):
