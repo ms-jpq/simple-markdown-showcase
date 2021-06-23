@@ -1,9 +1,8 @@
 from pathlib import Path
 
 from .log import log
-from .parse import ParseError, parse
+from .parse import Node, ParseError, parse
 
-from difflib import unified_diff
 
 def optimize(path: Path, html: str) -> str:
     try:
@@ -12,6 +11,10 @@ def optimize(path: Path, html: str) -> str:
         log.exception("%s", path)
         return html
     else:
-        main, *_ = node
-        return str(main)
+        main, *_ = (
+            child
+            for child in node.children
+            if isinstance(child, Node) and child.tag == "html"
+        )
+        return "<!DOCTYPE html>" + str(main)
 

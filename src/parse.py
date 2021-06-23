@@ -5,16 +5,34 @@ from html import escape
 from html.parser import HTMLParser
 from locale import strxfrm
 from os import linesep
-from typing import (
-    Iterator,
-    MutableMapping,
-    MutableSequence,
-    Optional,
-    Sequence,
-    Tuple,
-    Union,
-)
+from typing import MutableMapping, MutableSequence, Optional, Sequence, Tuple, Union
 from weakref import ref
+
+_VOID = {
+    "area",
+    "base",
+    "basefont",
+    "bgsound",
+    "br",
+    "col",
+    "command",
+    "embed",
+    "frame",
+    "hr",
+    "image",
+    "img",
+    "input",
+    "isindex",
+    "keygen",
+    "link",
+    "menuitem",
+    "meta",
+    "nextid",
+    "param",
+    "source",
+    "track",
+    "wbr",
+}
 
 
 class ParseError(Exception):
@@ -40,17 +58,9 @@ class Node:
             for child in self.children
         )
         if kids:
-            return f"<{self.tag} {attrs}>{kids}</{self.tag}>"
-        else:
             return f"<{self.tag} {attrs}/>"
-
-    def __iter__(self) -> Iterator[Union[Node, str]]:
-        yield self
-        for child in self.children:
-            if isinstance(child, Node):
-                yield from child
-            else:
-                yield child
+        else:
+            return f"<{self.tag} {attrs}>{kids}</{self.tag}>"
 
 
 class _Parser(HTMLParser):
