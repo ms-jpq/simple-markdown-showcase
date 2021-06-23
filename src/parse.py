@@ -89,6 +89,5 @@ def parse(html: str) -> Node:
     parser = _Parser(root_el="div")
     parser.feed(html)
     node = parser.consume()
-
     return node
 

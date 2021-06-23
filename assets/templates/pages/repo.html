@@ -20,19 +20,19 @@
     </a>
   </section>
   <section class="repo-body d-grid mx-auto">
-    <div class="markdown w-100">{{ read_me or "" | markdown }}</div>
+    <div class="markdown w-100">{{ read_me or '' | markdown }}</div>
   </section>
   <section class="repo-footer d-grid ji-end mx-auto col-gap-4 hidden">
     <span>
       Created at:
-      <time datetime="{{ created_at.strftime(TIME_FMT) }}">
-        {{ created_at.strftime(HUMAN_FMT) }}
+      <time datetime="{{ created_at.strftime(TIME_FMT) | e }}">
+        {{ created_at.strftime(HUMAN_FMT) | e }}
       </time>
     </span>
     <span>
       Updated at:
-      <time datetime="{{ updated_at.strftime(TIME_FMT) }}">
-        {{ updated_at.strftime(HUMAN_FMT) }}
+      <time datetime="{{ updated_at.strftime(TIME_FMT) | e }}">
+        {{ updated_at.strftime(HUMAN_FMT) | e }}
       </time>
     </span>
   </section>
