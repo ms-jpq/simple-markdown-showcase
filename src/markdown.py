@@ -1,6 +1,7 @@
 from locale import strxfrm
 from os import linesep
-from typing import Callable, Sequence, no_type_check
+from typing import Callable, Match, Sequence, Tuple, Union, no_type_check
+from xml.etree.ElementTree import Element
 
 from pygments.formatters.html import HtmlFormatter
 from pygments.styles import get_all_styles, get_style_by_name
@@ -21,8 +22,27 @@ from markdown.extensions.smarty import makeExtension as smarty
 from markdown.extensions.tables import makeExtension as tables
 from markdown.extensions.toc import makeExtension as toc
 from markdown.extensions.wikilinks import makeExtension as wikilinks
+from markdown.inlinepatterns import InlineProcessor
+from html import escape
 
 _CODEHL_CLASS = "codehilite"
+
+
+class _Inline(InlineProcessor):
+    def handleMatch(
+        self, m: Match[str], data: str
+    ) -> Union[Tuple[Element, int, int], Tuple[None, None, None]]:
+        escaped = escape(data)
+        if escaped != data:
+            return escaped, m.start(0), m.end(0)
+        else:
+            return None, m.start(0), m.end(0)
+
+
+class _UserExts(Extension):
+    def extendMarkdown(self, md: Markdown) -> None:
+        inline = _Inline(pattern=".+")
+        md.inlinePatterns.register(inline, name=_Inline.__qualname__, priority=-1000)
 
 
 @no_type_check
@@ -42,6 +62,7 @@ def _extensions(style: str) -> Sequence[Extension]:
         tables(),
         toc(),
         wikilinks(),
+        _UserExts(),
     )
 
 

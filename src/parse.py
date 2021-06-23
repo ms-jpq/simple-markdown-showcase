@@ -4,7 +4,6 @@ from dataclasses import dataclass, field
 from html import escape
 from html.parser import HTMLParser
 from locale import strxfrm
-from os import linesep
 from typing import (
     Iterator,
     MutableMapping,
@@ -30,13 +29,15 @@ class Node:
 
     def __str__(self) -> str:
         attrs = " ".join(
-            f'{key}="{escape(self.attrs[key] or "")}"' if self.attrs[key] else key
+            f'{key}="{escape((self.attrs[key] or "").strip())}"'
+            if self.attrs[key]
+            else key
             for key in sorted(self.attrs.keys(), key=strxfrm)
         )
-        opening = f"<{self.tag} {attrs}>"
-        closing = f"</{self.tag}>"
-        middle = linesep.join(f"  {child}" for child in self.children)
-        return f"{opening}{linesep}{middle}{linesep}{closing}"
+        kids = "".join(map(str, self.children))
+        pre = f"<{self.tag} {attrs}>"
+        post = f"</{self.tag}>"
+        return pre + kids + post
 
     def __iter__(self) -> Iterator[Union[Node, str]]:
         yield self
