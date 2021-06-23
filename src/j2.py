@@ -45,7 +45,7 @@ _GLOBALS = {"read_data": _read_data, "read_markdown": _read_markdown}
 
 def build(path: PurePath, *paths: PurePath) -> Environment:
     j2 = Environment(
-        enable_async=False,
+        enable_async=True,
         trim_blocks=True,
         lstrip_blocks=True,
         undefined=StrictUndefined,
@@ -56,7 +56,7 @@ def build(path: PurePath, *paths: PurePath) -> Environment:
     return j2
 
 
-def render(j2: Environment, path: PurePath, env: Mapping[str, Any]) -> str:
-    text = j2.get_template(str(path)).render(env)
+async def render(j2: Environment, path: PurePath, env: Mapping[str, Any]) -> str:
+    text = await j2.get_template(str(path)).render_async(env)
     return text
 

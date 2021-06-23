@@ -4,11 +4,20 @@ from dataclasses import asdict
 from json import dumps, loads
 from locale import strxfrm
 from os import linesep
-from pathlib import PurePath
+from pathlib import Path, PurePath
 from subprocess import CalledProcessError
-from typing import Any, Mapping, Sequence, Tuple
+from typing import (
+    Any,
+    AsyncIterator,
+    Awaitable,
+    Iterable,
+    Iterator,
+    Mapping,
+    Sequence,
+    Tuple,
+)
 
-from std2.asyncio import call
+from std2.asyncio import call, run_in_executor
 from std2.pathlib import walk
 from std2.pickle import decode, encode
 from std2.pickle.coders import BUILTIN_DECODERS, BUILTIN_ENCODERS
@@ -68,7 +77,9 @@ def _splat(colours: Linguist, spec: RepoInfo) -> Mapping[str, Any]:
     return env
 
 
-def _j2(colours: Linguist, specs: Sequence[RepoInfo]) -> None:
+async def _j2(
+    colours: Linguist, specs: Sequence[RepoInfo]
+) -> Sequence[Tuple[Path, str]]:
     j2 = build(TEMPLATES)
     ordered = sorted(
         specs,
@@ -90,19 +101,33 @@ def _j2(colours: Linguist, specs: Sequence[RepoInfo]) -> None:
             "specs": tuple(_splat(colours, spec=spec) for spec in ordered)
         },
     }
-    for src, env in frame.items():
-        dest = DIST_DIR / src.relative_to(_PAGES)
-        raw_html = render(j2, path=src, env=env)
-        html = optimize(dest, html=raw_html)
-        dest.write_text(html)
 
-    for spec in specs:
-        dest = DIST_DIR / spec.repo.name / "index.html"
-        env = _splat(colours, spec=spec)
-        raw_html = render(j2, path=_PAGES / "repo.html", env=env)
-        html = optimize(dest, html=raw_html)
-        dest.parent.mkdir(parents=True, exist_ok=True)
-        dest.write_text(html)
+    async def cont() -> AsyncIterator[Tuple[Path, str]]:
+        for src, env in frame.items():
+            dest = DIST_DIR / src.relative_to(_PAGES)
+            html = await render(j2, path=src, env=env)
+            yield dest, html
+
+        for spec in specs:
+            dest = DIST_DIR / spec.repo.name / "index.html"
+            env = _splat(colours, spec=spec)
+            html = await render(j2, path=_PAGES / "repo.html", env=env)
+            yield dest, html
+
+    return [e async for e in cont()]
+
+
+async def _write(instructions: Iterable[Tuple[Path, str]]) -> None:
+    async def go(path: Path, html: str) -> None:
+        optimized = await run_in_executor(optimize, path, html=html)
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_text(optimized)
+
+    def cont() -> Iterator[Awaitable[None]]:
+        for path, html in instructions:
+            yield go(path, html=html)
+
+    await gather(*cont())
 
 
 def _parse_args() -> Namespace:
@@ -128,6 +153,6 @@ async def main() -> None:
         CACHE_DIR.mkdir(parents=True, exist_ok=True)
         _GH_CACHE.write_text(json)
 
-    await _compile()
-    _j2(colours, specs=specs)
+    _, instructions = await gather(_compile(), _j2(colours, specs=specs))
+    await _write(instructions)
 
