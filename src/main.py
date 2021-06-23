@@ -35,13 +35,17 @@ async def _compile() -> None:
     scss = css()
     _CSS.write_text(scss)
     try:
-        await gather(
+        p1, p2 = await gather(
             call(NPM_BIN / "tsc", cwd=TOP_LV, check_returncode=True),
             call(NPM_BIN / "sass", *scss_paths, cwd=TOP_LV, check_returncode=True),
         )
     except CalledProcessError as e:
         log.exception("%s", f"{e}{linesep}{e.stderr}")
         exit(1)
+    else:
+        for p in (p1, p2):
+            if p.err:
+                log.warn("%s", p.err)
 
 
 def _splat(colours: Linguist, spec: RepoInfo) -> Mapping[str, Any]:
