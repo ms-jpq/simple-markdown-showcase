@@ -11,7 +11,7 @@ from std2.pathlib import walk
 from std2.pickle import decode, encode
 from std2.pickle.coders import BUILTIN_DECODERS, BUILTIN_ENCODERS
 
-from .consts import CACHE_DIR, DIST_DIR, SCSS, TEMPLATES, TOP_LV
+from .consts import CACHE_DIR, DIST_DIR, NPM_BIN, SCSS, TEMPLATES, TOP_LV
 from .github import ls
 from .j2 import build, render
 from .markdown import css
@@ -31,7 +31,10 @@ async def _compile() -> None:
     )
     scss = css()
     _CSS.write_text(scss)
-    await gather(call("tsc", cwd=TOP_LV), call("sass", *scss_paths, cwd=TOP_LV))
+    await gather(
+        call(NPM_BIN / "tsc", cwd=TOP_LV),
+        call(NPM_BIN / "sass", *scss_paths, cwd=TOP_LV),
+    )
 
 
 def _splat(colours: Linguist, spec: RepoInfo) -> Mapping[str, Any]:

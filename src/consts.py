@@ -1,7 +1,7 @@
 from pathlib import Path
 
-_SRC = Path(__file__).resolve().parent
-TOP_LV = _SRC.parent
+TOP_LV = Path(__file__).resolve().parent.parent
+NPM_BIN = TOP_LV / "node_modules" / ".bin"
 ASSETS = TOP_LV / "assets"
 
 TEMPLATES = ASSETS / "templates"
