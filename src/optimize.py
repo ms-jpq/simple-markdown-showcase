@@ -1,6 +1,9 @@
+from asyncio import create_task
 from asyncio.tasks import gather
+from functools import lru_cache
 from hashlib import sha256
 from pathlib import Path, PosixPath
+from tempfile import NamedTemporaryFile
 from typing import Awaitable, Iterator
 from urllib.error import HTTPError
 from urllib.parse import urlsplit
@@ -15,13 +18,14 @@ from .parse import Node, ParseError, parse
 _IMG_CACHE = CACHE_DIR / "img"
 
 
-async def _fetch(uri: str) -> bytes:
+@lru_cache
+def _fetch(uri: str) -> Awaitable[bytes]:
     def cont() -> bytes:
         with urlopen(uri, timeout=TIMEOUT) as resp:
             buf = resp.read()
         return buf
 
-    return await run_in_executor(cont)
+    return create_task(run_in_executor(cont))
 
 
 async def _localize(node: Node) -> None:
@@ -39,7 +43,11 @@ async def _localize(node: Node) -> None:
                 buf = await _fetch(src)
                 path.write_bytes(buf)
             except HTTPError as e:
-                log.exception("%s", f"{e} -- {src}")
+                print("%s", f"{e} -- {src}")
+            else:
+                with NamedTemporaryFile() as ntf:
+                    ntf.write(buf)
+                    ntf.flush()
 
 
 def _optimize(node: Node) -> Iterator[Awaitable[None]]:
