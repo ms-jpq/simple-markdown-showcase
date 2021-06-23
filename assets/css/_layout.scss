@@ -84,14 +84,14 @@ body {
   > header {
     grid-area: header;
   }
+  > aside {
+    grid-area: aside;
+  }
   > main {
     grid-area: main;
   }
   > footer {
     grid-area: footer;
-  }
-  > aside {
-    grid-area: aside;
   }
 
   background-color: var(--background-colour-dark);
