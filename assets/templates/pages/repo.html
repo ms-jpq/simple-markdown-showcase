@@ -4,7 +4,7 @@
 {% from "components/github.html" import github_forks with context %}
 
 
-{% call html(path="/" ~ name, css=[], js=[], desc="") %}
+{% call html(path="/" ~ name ~ "index.html", css=["/pages_repo.css"], js=["/layout.js"], desc="") %}
 {% set TIME_FMT = "%Y-%m-%dT%H:%M:%S%z" %}
 {% set HUMAN_FMT = "%Y-%m-%d H:%M:%S %Z" %}
 <main class="d-grid p-8 row-gap-8">
