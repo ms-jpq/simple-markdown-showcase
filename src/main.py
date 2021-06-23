@@ -5,6 +5,7 @@ from json import dumps, loads
 from locale import strxfrm
 from os import linesep
 from pathlib import Path, PurePath
+from shutil import copytree
 from subprocess import CalledProcessError
 from typing import (
     Any,
@@ -22,7 +23,7 @@ from std2.pathlib import walk
 from std2.pickle import decode, encode
 from std2.pickle.coders import BUILTIN_DECODERS, BUILTIN_ENCODERS
 
-from .consts import CACHE_DIR, DIST_DIR, NPM_BIN, SCSS, TEMPLATES, TOP_LV
+from .consts import CACHE_DIR, DIST_DIR, NPM_DIR, SCSS, TEMPLATES, TOP_LV
 from .github import ls
 from .j2 import build, render
 from .log import log
@@ -33,6 +34,9 @@ from .types import Linguist, RepoInfo
 _GH_CACHE = CACHE_DIR / "github.json"
 _CSS = CACHE_DIR / "hl.css"
 _PAGES = PurePath("pages")
+_NPM_BIN = NPM_DIR / ".bin"
+_FONTS_SRC = NPM_DIR / "@fortawesome" / "fontawesome-free" / "webfonts"
+_FONTS_DEST = DIST_DIR / "webfonts"
 
 
 async def _compile() -> None:
@@ -43,11 +47,12 @@ async def _compile() -> None:
         if path.suffix == ".scss" and not path.name.startswith("_")
     )
     _CSS.write_text(css())
+    copytree(_FONTS_SRC, _FONTS_DEST, dirs_exist_ok=True)
     try:
         p1, p2 = await gather(
-            call(NPM_BIN / "tsc", cwd=TOP_LV, check_returncode=True),
+            call(_NPM_BIN / "tsc", cwd=TOP_LV, check_returncode=True),
             call(
-                NPM_BIN / "sass",
+                _NPM_BIN / "sass",
                 "--load-path",
                 str(TOP_LV),
                 "--style",
