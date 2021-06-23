@@ -105,3 +105,4 @@ def render(style: str) -> Callable[[str], str]:
 
     return render
 
+
