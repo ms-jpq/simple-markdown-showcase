@@ -18,6 +18,7 @@ from .github import ls
 from .j2 import build, render
 from .log import log
 from .markdown import css
+from .optimize import optimize
 from .types import Linguist, RepoInfo
 
 _GH_CACHE = CACHE_DIR / "github.json"
@@ -91,13 +92,15 @@ def _j2(colours: Linguist, specs: Sequence[RepoInfo]) -> None:
     }
     for src, env in frame.items():
         dest = DIST_DIR / src.relative_to(_PAGES)
-        html = render(j2, path=src, env=env)
+        raw_html = render(j2, path=src, env=env)
+        html = optimize(dest, html=raw_html)
         dest.write_text(html)
 
     for spec in specs:
         dest = DIST_DIR / spec.repo.name / "index.html"
         env = _splat(colours, spec=spec)
-        html = render(j2, path=_PAGES / "repo.html", env=env)
+        raw_html = render(j2, path=_PAGES / "repo.html", env=env)
+        html = optimize(dest, html=raw_html)
         dest.parent.mkdir(parents=True, exist_ok=True)
         dest.write_text(html)
 
