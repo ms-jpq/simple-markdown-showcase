@@ -23,6 +23,9 @@ jobs:
       - name: Pip Packages 2
         run: pip install -U -r requirements.txt
 
+      - name: Npm Packages
+        run: npm install
+
       - name: Lint
         run: ./lint.sh
 
