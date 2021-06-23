@@ -2,6 +2,7 @@ from asyncio import create_task
 from asyncio.tasks import gather
 from functools import lru_cache
 from hashlib import sha256
+from http import HTTPStatus
 from pathlib import Path, PosixPath
 from tempfile import NamedTemporaryFile
 from typing import Awaitable, Iterator
@@ -43,7 +44,10 @@ async def _localize(node: Node) -> None:
                 buf = await _fetch(src)
                 path.write_bytes(buf)
             except HTTPError as e:
-                print("%s", f"{e} -- {src}")
+                if e.code == HTTPStatus.FORBIDDEN:
+                    pass
+                else:
+                    log.exception("%s", f"{e} -- {src}")
             else:
                 with NamedTemporaryFile() as ntf:
                     ntf.write(buf)
