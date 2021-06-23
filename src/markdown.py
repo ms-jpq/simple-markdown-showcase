@@ -58,8 +58,9 @@ def css() -> str:
 
 
 def render(style: str) -> Callable[[str], str]:
+    _markdown = Markdown(output_format="xhtml", extensions=_extensions(style))
+
     def render(md: str) -> str:
-        _markdown = Markdown(output_format="xhtml", extensions=_extensions(style))
         return _markdown.convert(md)
 
     return render
