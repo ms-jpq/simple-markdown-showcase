@@ -33,6 +33,7 @@ class _B4HtmlProcessor(InlineProcessor):
     But does not check if `<...>` is valid html
 
     This processor tries to escape invalid html
+    before the builtin ones
     """
 
     PRIORITY = 91
