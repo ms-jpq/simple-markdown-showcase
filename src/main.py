@@ -63,6 +63,7 @@ async def _compile() -> None:
                 call(
                     _NPM_BIN / "esbuild",
                     "--bundle",
+                    "--minify",
                     f"--outfile={dest}",
                     str(src),
                     cwd=TOP_LV,
