@@ -3,7 +3,9 @@ from __future__ import annotations
 from dataclasses import dataclass, field
 from html import escape
 from html.parser import HTMLParser
+from itertools import chain
 from locale import strxfrm
+from os import linesep
 from typing import (
     Iterator,
     MutableMapping,
@@ -55,9 +57,7 @@ class Node:
 
     def __str__(self) -> str:
         attrs = " ".join(
-            f'{key}="{escape((self.attrs[key] or ""))}"'
-            if self.attrs[key]
-            else key
+            f'{key}="{escape((self.attrs[key] or ""))}"' if self.attrs[key] else key
             for key in sorted(self.attrs.keys(), key=strxfrm)
         )
         kids = "".join(
@@ -94,23 +94,32 @@ class _Parser(HTMLParser):
             parent.children.append(node)
             stack.append(node)
         else:
-            raise ParseError(f"Orphan tag -- {tag} :: {attrs}")
+            msg = f"Orphan tag -- {tag} :: {attrs}"
+            raise ParseError(msg)
 
     def handle_endtag(self, tag: str) -> None:
         if stack := self._stack:
             node = stack.pop()
             if node.tag != tag:
-                msg = f"Unexpected tag -- {tag} :: Excepting -- {node.tag}"
+                msg = (
+                    f"Unexpected tag -- {tag}"
+                    " :: "
+                    f"Excepting -- {node.tag}"
+                    f"{linesep}"
+                    f"{linesep.join(map(str, chain(self._stack, (node,))))}"
+                )
                 raise ParseError(msg)
         else:
-            raise ParseError(f"Orphan tag -- {tag}")
+            msg = f"Orphan tag -- {tag}"
+            raise ParseError(msg)
 
     def handle_data(self, data: str) -> None:
         if stack := self._stack:
             parent = stack[-1]
             parent.children.append(data)
         else:
-            raise ParseError(f"Orphan textnode -- {data}")
+            msg = f"Orphan textnode -- {data}"
+            raise ParseError(msg)
 
     def consume(self) -> Node:
         return self._root

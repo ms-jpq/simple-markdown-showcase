@@ -32,7 +32,7 @@
         {{ github_forks(forks=spec.forks_count) }}
       </div>
       <figcaption class="figure-detail text-ellipsis text-justify px-4 pb-2">
-        {{ spec.description | e }}
+        {{ (spec.description or "") | e }}
       </figcaption>
     </figure>
     {% endfor %}
