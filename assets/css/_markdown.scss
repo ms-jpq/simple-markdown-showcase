@@ -28,6 +28,7 @@
 
   pre,
   blockquote {
+    $padding: 0.5em;
     $col_thic: 0.3em;
     $col_gap: 0.5em;
 
@@ -36,17 +37,32 @@
     overflow-x: scroll;
 
     display: grid;
-    grid-template-rows: 1fr;
     grid-template-columns: $col_thic 1fr;
+    grid-template-rows: auto;
     column-gap: $col_gap;
 
+    padding-left: $padding;
+    padding-right: $padding;
+
     &::before {
+      grid-row: span 100;
       content: "";
       background-color: var(--highlight-colour);
     }
 
-    > *:only-child {
+    > *:not(first-child) {
+      grid-column: 2;
       @include md_border();
+    }
+  }
+
+  blockquote {
+    margin-left: 0;
+    margin-right: 0;
+    > * {
+      $margin: 0.5em;
+      margin-top: $margin;
+      margin-bottom: $margin;
     }
   }
 
