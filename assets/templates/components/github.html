@@ -3,19 +3,22 @@
   <i
     class="border-circle d-inline-block"
     style="background-color:{{ colour.color if colour else 'inherit' }}"
-  ></i> {{ lang }}
+  ></i>
+  {{ lang }}
 </span>
 {% endmacro %}
 
 {% macro github_stars(stars) %}
 <span class="github-stars {{ 'hidden' if not stars else '' }}">
-  <i class="fas fa-star"></i> {{ stars }}
+  <i class="fas fa-star"></i>
+  {{ stars }}
 </span>
 {% endmacro %}
 
 {% macro github_forks(forks) %}
 <span class="github-forks {{ 'hidden' if not forks else '' }}">
-  <i class="fas fa-code-branch"></i> {{ forks }}
+  <i class="fas fa-code-branch"></i>
+  {{ forks }}
 </span>
 {% endmacro %}
 
