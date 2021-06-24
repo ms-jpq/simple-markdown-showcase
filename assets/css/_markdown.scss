@@ -32,7 +32,7 @@
     $col_thic: 0.3em;
     $col_gap: 0.5em;
 
-    width: 100%;
+    width: calc(100% - $col_thic - $col_gap);
     max-width: inherit;
     overflow-x: scroll;
 
