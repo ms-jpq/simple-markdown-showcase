@@ -2,9 +2,8 @@
 <span class="github-lang">
   <i
     class="border-circle d-inline-block"
-    style="backgroundcolor:{{ colour }}"
-  ></i>
-  {{ lang }}
+    style="background-color:{{ colour.color if colour else 'inherit' }}"
+  ></i> {{ lang }}
 </span>
 {% endmacro %}
 
