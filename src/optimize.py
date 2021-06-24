@@ -12,28 +12,27 @@ from urllib.parse import SplitResult, urlsplit, urlunsplit
 from std2.asyncio import run_in_executor
 from std2.urllib import urlopen
 
-from .consts import ASSETS, CACHE_DIR, TIMEOUT
+from .consts import ASSETS,  TIMEOUT ,DIST_DIR
 from .log import log
 from .parse import Node, ParseError, parse
 
 _IMG_DIR = ASSETS / "images"
-_IMG_CACHE = CACHE_DIR / "img"
 
 
-def _fetch(uri: str) -> bytes:
+def _get(uri: str) -> bytes:
     with urlopen(uri, timeout=TIMEOUT) as resp:
         buf = resp.read()
     return buf
 
 
 @lru_cache
-def _move(uri: SplitResult, cache_path: Path) -> Awaitable[None]:
+def _fetch(uri: SplitResult, cache_path: Path) -> Awaitable[None]:
     def cont() -> None:
         if not cache_path.exists():
             if uri.scheme in {"http", "https"}:
                 src = urlunsplit(uri)
                 try:
-                    buf = _fetch(src)
+                    buf = _get(src)
                     cache_path.write_bytes(buf)
                 except HTTPError as e:
                     if e.code in {HTTPStatus.FORBIDDEN}:
@@ -57,12 +56,14 @@ async def _localize(node: Node) -> None:
 
     ext = PurePosixPath(uri.path).suffix.casefold()
     sha = sha256(src.encode()).hexdigest()
-    cache_path = (_IMG_CACHE / sha).with_suffix(ext)
-    await _move(uri, cache_path=cache_path)
+    new_path = (DIST_DIR / sha).with_suffix(ext)
+    await _fetch(uri, cache_path=new_path)
+
+    node.attrs["loading"] = "lazy"
+    node.attrs["src"] = ""
 
 
 def _optimize(node: Node) -> Iterator[Awaitable[None]]:
-    _IMG_CACHE.mkdir(parents=True, exist_ok=True)
     for n in node:
         if isinstance(n, Node):
             if n.tag == "img":
