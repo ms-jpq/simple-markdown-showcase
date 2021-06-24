@@ -8,12 +8,12 @@
     "@types/masonry-layout": "^4.2.2",
     "bootstrap": "^5.0.2",
     "cda": "git+https://github.com/ms-jpq/cda.git#f197475ea799083482b127328b0dcb5461b1fc3d",
-    "esbuild": "^0.12.9",
     "masonry-layout": "^4.2.2",
     "nda": "git+https://github.com/ms-jpq/nda.git#a7f50acd1d3386f9c470aa393bfcbb068f86d2c3"
   },
   "description": "Generates responsive personal portfolio pages using Github APIs.",
   "devDependencies": {
+    "esbuild": "*",
     "prettier": "*",
     "sass": "*",
     "typescript": "*"
@@ -32,3 +32,4 @@
   },
   "version": "1.0.0"
 }
+
