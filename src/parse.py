@@ -4,7 +4,6 @@ from dataclasses import dataclass, field
 from html import escape
 from html.parser import HTMLParser
 from locale import strxfrm
-from os import linesep
 from typing import (
     Iterator,
     MutableMapping,
@@ -56,7 +55,7 @@ class Node:
 
     def __str__(self) -> str:
         attrs = " ".join(
-            f'{key}="{escape((self.attrs[key] or "").replace(linesep, " ").strip())}"'
+            f'{key}="{escape((self.attrs[key] or ""))}"'
             if self.attrs[key]
             else key
             for key in sorted(self.attrs.keys(), key=strxfrm)
