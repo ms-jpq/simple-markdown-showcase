@@ -1,6 +1,8 @@
 @import ".cache/hl";
 :root {
   --code-colour: rgb(245, 245, 245);
+  --table-border-colour: hsl(210, 10%, 90%);
+  --table-alternate-colour: hsl(210, 30%, 99%);
 }
 
 @mixin md_border() {
@@ -71,11 +73,25 @@
   }
 
   table {
+    border-collapse: collapse;
+
     thead > tr > th,
     tbody > tr > td {
-      &:not(:last-child) {
-        padding-right: 1em;
-      }
+      $padding-y: 0.3em;
+      $padding-x: 0.7em;
+
+      border-width: thin;
+      border-style: solid;
+      border-color: var(--table-border-colour);
+
+      padding-top: $padding-y;
+      padding-bottom: $padding-y;
+      padding-left: $padding-x;
+      padding-right: $padding-x;
+    }
+
+    tbody > tr:nth-child(even) {
+      background-color: var(--table-alternate-colour);
     }
   }
 }
