@@ -14,8 +14,10 @@
   "description": "Generates responsive personal portfolio pages using Github APIs.",
   "devDependencies": {
     "esbuild": "*",
+    "gifsicle": "*",
     "prettier": "*",
     "sass": "*",
+    "sharp": "*",
     "typescript": "*"
   },
   "homepage": "https://github.com/ms-jpq/simple-markdown-showcase#readme",
@@ -32,3 +34,4 @@
   },
   "version": "1.0.0"
 }
+
