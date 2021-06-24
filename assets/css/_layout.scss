@@ -1,4 +1,4 @@
-@import "node_modules/bootstrap/dist/css/bootstrap-reboot";
+@import "node_modules/normalize.css/normalize.css";
 @import "node_modules/@fortawesome/fontawesome-free/css/all";
 @import "node_modules/cda/dist/entry";
 @import "./markdown";
@@ -72,7 +72,7 @@ samp {
  * BODY *
  ********/
 $transition_width: 60em;
-$side_len: minmax(auto, 25em);
+$side_len: minmax(auto, 0.3fr);
 
 $side_padding_v: 1em;
 
