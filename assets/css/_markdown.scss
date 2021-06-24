@@ -19,6 +19,8 @@
   }
 
   ul > li {
+    line-height: 140%;
+
     &::before {
       color: var(--highlight-colour);
     }
@@ -34,8 +36,8 @@
     overflow-x: scroll;
 
     display: grid;
-    grid-template-columns: $col_thic 1fr;
     grid-template-rows: 1fr;
+    grid-template-columns: $col_thic 1fr;
     column-gap: $col_gap;
 
     &::before {
