@@ -6,7 +6,6 @@
 
 {% call html(path="/" ~ name ~ "index.html", css=["/pages_repo.css"], js=["/layout.js"]) %}
 {% set TIME_FMT = "%Y-%m-%dT%H:%M:%S%z" %}
-{% set HUMAN_FMT = "%Y-%m-%d %H:%M:%S %Z" %}
 <main class="d-grid p-8 row-gap-8">
   <section
     class="repo-header d-grid grid-col jc-end ai-centre mx-auto col-gap-4"
@@ -27,15 +26,11 @@
   <section class="repo-footer d-grid ji-end mx-auto col-gap-4">
     <div>
       <i class="fas fa-user-edit text-start"></i>
-      <time datetime="{{ updated_at.strftime(TIME_FMT) | e }}">
-        {{ updated_at.strftime(HUMAN_FMT) | e }}
-      </time>
+      <time datetime="{{ updated_at.strftime(TIME_FMT) | e }}"></time>
     </div>
     <div>
       <i class="fas fa-baby text-start"></i>
-      <time datetime="{{ created_at.strftime(TIME_FMT) | e }}">
-        {{ created_at.strftime(HUMAN_FMT) | e }}
-      </time>
+      <time datetime="{{ created_at.strftime(TIME_FMT) | e }}"></time>
     </div>
   </section>
 </main>
