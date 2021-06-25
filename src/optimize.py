@@ -12,6 +12,7 @@ from typing import Awaitable, Iterator, Optional, Tuple, cast
 from urllib.error import HTTPError
 from urllib.parse import SplitResult, quote, urlsplit, urlunsplit
 
+from PIL import ImageFile
 from PIL.Image import Image, UnidentifiedImageError
 from PIL.Image import open as open_i
 from std2.asyncio import run_in_executor
@@ -22,6 +23,8 @@ from .log import log
 from .parse import Node, ParseError, parse
 
 _IMG_DIR = ASSETS / "images"
+
+ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
 async def _guess_type(uri: SplitResult) -> Optional[str]:
@@ -84,7 +87,7 @@ def _downsize(img: Image, path: Path, limit: int) -> Awaitable[Tuple[int, Path]]
         if desired != existing:
             smol_path = path.with_stem(f"{path.stem}--{width}x{height}")
             smol = img.resize((width, height))
-            smol.save(smol_path, format="WEBP")
+            smol.save(smol_path, format="WEBP", save_all=True)
             return width, smol_path.relative_to(DIST_DIR)
         else:
             return width, path.relative_to(DIST_DIR)
@@ -124,7 +127,7 @@ def _saved(
                         webp_path = hashed_path.with_suffix(".webp")
                         save_path = DIST_DIR / webp_path
 
-                        img.save(save_path, format="WEBP")
+                        img.save(save_path, format="WEBP", save_all=True)
                         srcset = await _src_set(img, path=save_path)
                         return webp_path, ((img.width, img.height), srcset)
                 except UnidentifiedImageError:
