@@ -4,7 +4,7 @@ from http import HTTPStatus
 from locale import strxfrm
 from mimetypes import guess_extension
 from os import sep
-from pathlib import Path, PurePath, PurePosixPath
+from pathlib import Path, PurePosixPath
 from shutil import copy2
 from typing import Optional, Tuple, TypedDict, cast
 from urllib.error import HTTPError
