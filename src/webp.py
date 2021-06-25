@@ -1,3 +1,4 @@
+from concurrent.futures import ProcessPoolExecutor
 from hashlib import sha256
 from http import HTTPStatus
 from locale import strxfrm
@@ -5,7 +6,7 @@ from mimetypes import guess_extension
 from os import sep
 from pathlib import Path, PurePath, PurePosixPath
 from shutil import copy2
-from typing import Optional, Tuple, cast
+from typing import Optional, Tuple, TypedDict, cast
 from urllib.error import HTTPError
 from urllib.parse import SplitResult, quote, urlsplit, urlunsplit
 
@@ -16,10 +17,18 @@ from PIL.Image import open as open_i
 from PIL.ImageSequence import Iterator as FrameIter
 from std2.urllib import urlopen
 
-from ..consts import ASSETS, DIST_DIR, IMG_SIZES, TIMEOUT
-from ..log import log
-from .types import ImageAttrs
+from .consts import ASSETS, DIST_DIR, IMG_SIZES, TIMEOUT
+from .log import log
 
+
+class ImageAttrs(TypedDict, total=False):
+    src: str
+    srcset: str
+    width: str
+    height: str
+
+
+_POOL = ProcessPoolExecutor()
 _IMG_DIR = ASSETS / "images"
 
 assert check("webp_anim")
@@ -68,7 +77,8 @@ def _fetch(uri: SplitResult, path: Path) -> bool:
                 return False
 
 
-def _downsize(img: Image, path: Path, limit: int) -> Tuple[int, Path]:
+def _downsize(args: Tuple[Image, Path, int]) -> Tuple[int, Path]:
+    img, path, limit = args
     existing = (img.width, img.height)
     ratio = limit / max(img.width, img.height)
 
@@ -87,7 +97,7 @@ def _downsize(img: Image, path: Path, limit: int) -> Tuple[int, Path]:
 
 
 def _src_set(img: Image, path: Path) -> str:
-    smol = (_downsize(img, path=path, limit=limit) for limit in IMG_SIZES)
+    smol = tuple(_POOL.map(_downsize, ((img, path, limit) for limit in IMG_SIZES)))
     sources = (
         f"{quote(str(PurePosixPath(sep) / path))} {width}w" for width, path in {*smol}
     )
@@ -95,7 +105,7 @@ def _src_set(img: Image, path: Path) -> str:
     return srcset
 
 
-def attrs(src: str) -> ImageAttrs:
+def _attrs(src: str) -> ImageAttrs:
     uri = urlsplit(src)
     ext = PurePosixPath(uri.path).suffix.casefold() or _guess_type(uri)
     if not ext:
@@ -129,4 +139,9 @@ def attrs(src: str) -> ImageAttrs:
                 return {"src": quote(str(PurePosixPath(sep) / hashed_path))}
         else:
             return {"src": quote(str(PurePosixPath(sep) / hashed_path))}
+
+
+def attrs(src: str) -> ImageAttrs:
+    fut = _POOL.submit(_attrs, src)
+    return fut.result()
 
