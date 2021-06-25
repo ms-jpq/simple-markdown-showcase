@@ -77,6 +77,11 @@ def _fetch(uri: SplitResult, path: Path) -> bool:
                 return False
 
 
+def _esc(path: Path) -> str:
+    src = quote(str(PurePosixPath(sep) / path.relative_to(DIST_DIR)))
+    return src
+
+
 def _downsize(args: Tuple[Path, int]) -> Tuple[int, Path]:
     path, limit = args
     with open_i(path) as img:
@@ -96,11 +101,6 @@ def _downsize(args: Tuple[Path, int]) -> Tuple[int, Path]:
             return width, smol_path
         else:
             return width, path
-
-
-def _esc(path: Path) -> str:
-    src = quote(str(PurePosixPath(sep) / path.relative_to(DIST_DIR)))
-    return src
 
 
 def _srcset(path: Path) -> str:
