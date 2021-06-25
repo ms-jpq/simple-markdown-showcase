@@ -10,7 +10,7 @@ from .types import ImageAttrs
 
 def _parse_args() -> Namespace:
     parser = ArgumentParser()
-
+    parser.add_argument("src")
     return parser.parse_args()
 
 
@@ -21,7 +21,8 @@ def main() -> None:
 
 
 async def run(src: str) -> ImageAttrs:
-    p = await call(executable, "-m", __name__, src, check_returncode=True)
+    _, _, name = __name__.rpartition(".")
+    p = await call(executable, "-m", name, src, check_returncode=True)
     attrs: ImageAttrs = loads(p.out)
     return attrs
 
