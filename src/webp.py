@@ -93,16 +93,19 @@ def _downsize(args: Tuple[Path, int]) -> Tuple[int, Path]:
             smol, *frames = (frame.resize((width, height)) for frame in FrameIter(img))
             smol.save(smol_path, format="WEBP", save_all=True, append_images=frames)
 
-            return width, smol_path.relative_to(DIST_DIR)
+            return width, smol_path
         else:
-            return width, path.relative_to(DIST_DIR)
+            return width, path
+
+
+def _esc(path: Path) -> str:
+    src = quote(str(PurePosixPath(sep) / path.relative_to(DIST_DIR)))
+    return src
 
 
 def _srcset(path: Path) -> str:
     smol = tuple(_POOL.map(_downsize, ((path, limit) for limit in IMG_SIZES)))
-    sources = (
-        f"{quote(str(PurePosixPath(sep) / path))} {width}w" for width, path in {*smol}
-    )
+    sources = (f"{_esc(p)} {width}w" for width, p in {*smol})
     srcset = ", ".join(sorted(sources, key=strxfrm))
     return srcset
 
@@ -126,7 +129,7 @@ def attrs(src: str) -> ImageAttrs:
         sha = sha256(src.encode()).hexdigest()
         path = (DIST_DIR / sha).with_suffix(ext)
         succ = _fetch(uri, path=path)
-        src = quote(str(PurePosixPath(sep) / path.relative_to(DIST_DIR)))
+        src = _esc(path)
         if succ:
             try:
                 webp_path, width, height = _POOL.submit(_webp, path).result()
@@ -135,9 +138,7 @@ def attrs(src: str) -> ImageAttrs:
             else:
                 srcset = _POOL.submit(_srcset, webp_path).result()
                 return {
-                    "src": quote(
-                        str(PurePosixPath(sep) / webp_path.relative_to(DIST_DIR))
-                    ),
+                    "src": _esc(webp_path),
                     "width": str(width),
                     "height": str(height),
                     "srcset": srcset,
