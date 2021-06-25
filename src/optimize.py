@@ -74,14 +74,16 @@ def _fetch(uri: SplitResult, path: Path) -> Awaitable[bool]:
 
 
 @lru_cache
-def _resize(img: Path) -> Awaitable[Path]:
-    async def cont() -> Path:
+def _resize(src: Path) -> Awaitable[Path]:
+    def cont() -> Path:
+        with open(new_path, "rb") as fd:
+            img = open_i(fd)
         return Path()
 
-    return create_task(cont())
+    return create_task(run_in_executor(cont))
 
 
-async def _src_set() -> str:
+async def _src_set(src: Path, width: int, height: int) -> str:
     return ""
 
 
@@ -92,25 +94,30 @@ async def _localize(node: Node) -> None:
         raise KeyError(str(node))
     else:
         uri = urlsplit(src)
-        ext = PurePosixPath(uri.path).suffix.casefold() or await _guess_type(uri) or ""
-        hashed_path = PurePath(sha256(src.encode()).hexdigest()).with_suffix(ext)
-        new_path = DIST_DIR / hashed_path
-        succ = await _fetch(uri, path=new_path)
+        ext = PurePosixPath(uri.path).suffix.casefold() or await _guess_type(uri)
+        if not ext:
+            raise ValueError(uri)
+        else:
+            hashed_path = PurePath(sha256(src.encode()).hexdigest()).with_suffix(ext)
+            new_path = DIST_DIR / hashed_path
 
-        if succ:
-            try:
-                with open(new_path, "rb") as fd:
-                    img = open_i(fd)
-                    width, height = img.size
-            except UnidentifiedImageError:
-                pass
-            else:
-                node.attrs["width"] = str(width)
-                node.attrs["height"] = str(height)
+            succ = await _fetch(uri, path=new_path)
+            if succ:
+                try:
+                    with open(new_path, "rb") as fd:
+                        img = open_i(fd)
+                        width, height = img.size
+                except UnidentifiedImageError:
+                    pass
+                else:
+                    node.attrs["width"] = str(width)
+                    node.attrs["height"] = str(height)
+                    node.attrs["srcset"] = await _src_set(
+                        new_path, width=width, height=height
+                    )
 
-            node.attrs["loading"] = "lazy"
-            node.attrs["src"] = quote(str(PurePosixPath(sep) / hashed_path))
-            node.attrs["srcset"] = await _src_set()
+                node.attrs["loading"] = "lazy"
+                node.attrs["src"] = quote(str(PurePosixPath(sep) / hashed_path))
 
 
 def _optimize(node: Node) -> Iterator[Awaitable[None]]:
