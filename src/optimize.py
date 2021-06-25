@@ -80,10 +80,7 @@ async def _fetch(uri: SplitResult, path: Path) -> bool:
     return await run_in_executor(cont)
 
 
-def _save(path: Path, img: Image) -> None:
-    frames = (frame.copy() for frame in FrameIter(img))
-    next(frames, None)
-    img.save(path, format="WEBP", save_all=True, append_images=frames)
+
 
 
 def _downsize(img: Image, path: Path, limit: int) -> Awaitable[Tuple[int, Path]]:
@@ -97,7 +94,11 @@ def _downsize(img: Image, path: Path, limit: int) -> Awaitable[Tuple[int, Path]]
         if desired != existing:
             smol_path = path.with_stem(f"{path.stem}--{width}x{height}")
             smol = img.resize((width, height))
-            _save(smol_path, img=smol)
+
+            frames = (frame.resize((width, height)) for frame in FrameIter(img))
+            next(frames, None)
+            smol.save(smol_path, format="WEBP", save_all=True, append_images=frames)
+
             return width, smol_path.relative_to(DIST_DIR)
         else:
             return width, path.relative_to(DIST_DIR)
@@ -137,7 +138,10 @@ def _magic(
                         webp_path = hashed_path.with_suffix(".webp")
                         save_path = DIST_DIR / webp_path
 
-                        _save(save_path, img=img)
+                        frames = (frame.copy() for frame in FrameIter(img))
+                        next(frames, None)
+                        img.save(save_path, format="WEBP", save_all=True, append_images=frames)
+
                         srcset = await _src_set(img, path=save_path)
                         return webp_path, ((img.width, img.height), srcset)
                 except UnidentifiedImageError:
