@@ -11,7 +11,7 @@ from typing import Awaitable, Iterator, Optional
 from urllib.error import HTTPError
 from urllib.parse import SplitResult, quote, urlsplit, urlunsplit
 
-from PIL.Image import UnidentifiedImageError
+from PIL.Image import Image, UnidentifiedImageError
 from PIL.Image import open as open_i
 from std2.asyncio import run_in_executor
 from std2.urllib import urlopen
@@ -83,7 +83,7 @@ def _resize(src: Path) -> Awaitable[Path]:
     return create_task(run_in_executor(cont))
 
 
-async def _src_set(src: Path, width: int, height: int) -> str:
+async def _src_set(img: Image) -> str:
     return ""
 
 
@@ -112,9 +112,7 @@ async def _localize(node: Node) -> None:
                 else:
                     node.attrs["width"] = str(width)
                     node.attrs["height"] = str(height)
-                    node.attrs["srcset"] = await _src_set(
-                        new_path, width=width, height=height
-                    )
+                    node.attrs["srcset"] = await _src_set(img)
 
                 node.attrs["loading"] = "lazy"
                 node.attrs["src"] = quote(str(PurePosixPath(sep) / hashed_path))
