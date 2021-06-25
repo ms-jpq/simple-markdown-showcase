@@ -29,6 +29,7 @@ from .j2 import build, render
 from .log import log
 from .markdown import css
 from .optimize import optimize
+from .timeit import timeit
 from .types import Linguist, RepoInfo
 
 _TS = ASSETS / "js"
@@ -156,19 +157,23 @@ def _parse_args() -> Namespace:
 async def main() -> None:
     args = _parse_args()
 
-    if args.cache:
-        json = loads(_GH_CACHE.read_text())
-        cached: Tuple[Linguist, Sequence[RepoInfo]] = decode(
-            Tuple[Linguist, Sequence[RepoInfo]], json, decoders=BUILTIN_DECODERS
-        )
-        colours, specs = cached
-    else:
-        colours, specs = await ls(args.user)
-        fetched = encode((colours, specs), encoders=BUILTIN_ENCODERS)
-        json = dumps(fetched, check_circular=False, ensure_ascii=False, indent=2)
-        CACHE_DIR.mkdir(parents=True, exist_ok=True)
-        _GH_CACHE.write_text(json)
+    with timeit("GITHUB API"):
+        if args.cache:
+            json = loads(_GH_CACHE.read_text())
+            cached: Tuple[Linguist, Sequence[RepoInfo]] = decode(
+                Tuple[Linguist, Sequence[RepoInfo]], json, decoders=BUILTIN_DECODERS
+            )
+            colours, specs = cached
+        else:
+            colours, specs = await ls(args.user)
+            fetched = encode((colours, specs), encoders=BUILTIN_ENCODERS)
+            json = dumps(fetched, check_circular=False, ensure_ascii=False, indent=2)
+            CACHE_DIR.mkdir(parents=True, exist_ok=True)
+            _GH_CACHE.write_text(json)
 
-    _, instructions = await gather(_compile(), _j2(colours, specs=specs))
-    await _commit(instructions)
+    with timeit("COMPILE"):
+        _, instructions = await gather(_compile(), _j2(colours, specs=specs))
+
+    with timeit("COMMIT"):
+        await _commit(instructions)
 

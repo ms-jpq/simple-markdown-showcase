@@ -1,5 +1,6 @@
-from logging import StreamHandler, getLogger
+from logging import INFO, StreamHandler, getLogger
 
 log = getLogger()
 log.addHandler(StreamHandler())
+log.setLevel(INFO)
 
