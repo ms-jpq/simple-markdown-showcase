@@ -13,8 +13,10 @@ from urllib.error import HTTPError
 from urllib.parse import SplitResult, quote, urlsplit, urlunsplit
 
 from PIL import ImageFile
+from PIL.features import check
 from PIL.Image import Image, UnidentifiedImageError
 from PIL.Image import open as open_i
+from PIL.ImageSequence import Iterator as FrameIter
 from std2.asyncio import run_in_executor
 from std2.urllib import urlopen
 
@@ -24,6 +26,7 @@ from .parse import Node, ParseError, parse
 
 _IMG_DIR = ASSETS / "images"
 
+assert check("webp_anim")
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
@@ -76,6 +79,11 @@ async def _fetch(uri: SplitResult, path: Path) -> bool:
     return await run_in_executor(cont)
 
 
+def _save(path: Path, img: Image) -> None:
+    frames = FrameIter(img)
+    img.save(path, format="WEBP", save_all=True, append_images=frames)
+
+
 def _downsize(img: Image, path: Path, limit: int) -> Awaitable[Tuple[int, Path]]:
     def cont() -> Tuple[int, Path]:
         existing = (img.width, img.height)
@@ -87,7 +95,7 @@ def _downsize(img: Image, path: Path, limit: int) -> Awaitable[Tuple[int, Path]]
         if desired != existing:
             smol_path = path.with_stem(f"{path.stem}--{width}x{height}")
             smol = img.resize((width, height))
-            smol.save(smol_path, format="WEBP", save_all=True)
+            _save(smol_path, img=smol)
             return width, smol_path.relative_to(DIST_DIR)
         else:
             return width, path.relative_to(DIST_DIR)
@@ -107,7 +115,7 @@ async def _src_set(img: Image, path: Path) -> str:
 
 
 @cache
-def _saved(
+def _magic(
     src: str,
 ) -> Awaitable[Tuple[PurePath, Optional[Tuple[Tuple[int, int], str]]]]:
     async def cont() -> Tuple[PurePath, Optional[Tuple[Tuple[int, int], str]]]:
@@ -127,7 +135,7 @@ def _saved(
                         webp_path = hashed_path.with_suffix(".webp")
                         save_path = DIST_DIR / webp_path
 
-                        img.save(save_path, format="WEBP", save_all=True)
+                        _save(save_path, img=img)
                         srcset = await _src_set(img, path=save_path)
                         return webp_path, ((img.width, img.height), srcset)
                 except UnidentifiedImageError:
@@ -146,7 +154,7 @@ async def _localize(node: Node) -> None:
     if not src:
         raise KeyError(str(node))
     else:
-        path, attrs = await _saved(src)
+        path, attrs = await _magic(src)
         node.attrs["src"] = quote(str(PurePosixPath(sep) / path))
         if attrs:
             (width, height), srcset = attrs
