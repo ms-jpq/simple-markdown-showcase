@@ -1,6 +1,6 @@
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Sequence, Mapping, Optional
+from typing import Mapping, Optional, Sequence
 
 
 @dataclass(frozen=True)
@@ -38,5 +38,4 @@ class RepoInfo:
     repo: Repo
     info: Info
     read_me: Optional[str]
-
 
