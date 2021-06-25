@@ -149,6 +149,8 @@ async def _commit(instructions: Iterable[Tuple[Path, str]]) -> None:
             for path, html in instructions:
                 yield go(path, html=html)
 
+
+    with timeit("OPTIMIZED"):
         await gather(*cont())
 
 
