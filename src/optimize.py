@@ -23,6 +23,7 @@ from std2.urllib import urlopen
 from .consts import ASSETS, DIST_DIR, IMG_SIZES, TIMEOUT
 from .log import log
 from .parse import Node, ParseError, parse
+from .timeit import timeit
 
 _IMG_DIR = ASSETS / "images"
 
@@ -155,7 +156,8 @@ async def _localize(node: Node) -> None:
     if not src:
         raise KeyError(str(node))
     else:
-        path, attrs = await _magic(src)
+        with timeit("WEBP", src):
+            path, attrs = await _magic(src)
         node.attrs["src"] = quote(str(PurePosixPath(sep) / path))
         if attrs:
             (width, height), srcset = attrs
