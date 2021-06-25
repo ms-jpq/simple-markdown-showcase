@@ -136,7 +136,7 @@ def attrs(src: str) -> ImageAttrs:
             except UnidentifiedImageError:
                 return {"src": src}
             else:
-                srcset = _POOL.submit(_srcset, webp_path).result()
+                srcset = _srcset(webp_path)
                 return {
                     "src": _esc(webp_path),
                     "width": str(width),
