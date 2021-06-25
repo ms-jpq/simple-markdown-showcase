@@ -74,10 +74,8 @@ def _fetch(uri: SplitResult, path: Path) -> Awaitable[bool]:
 
 
 @lru_cache
-def _resize(src: Path) -> Awaitable[Path]:
+def _resize(img: Image) -> Awaitable[Path]:
     def cont() -> Path:
-        with open(new_path, "rb") as fd:
-            img = open_i(fd)
         return Path()
 
     return create_task(run_in_executor(cont))
@@ -89,6 +87,8 @@ async def _src_set(img: Image) -> str:
 
 async def _localize(node: Node) -> None:
     assert node.tag == "img"
+    node.attrs["loading"] = "lazy"
+
     src = node.attrs.get("src")
     if not src:
         raise KeyError(str(node))
@@ -103,19 +103,20 @@ async def _localize(node: Node) -> None:
 
             succ = await _fetch(uri, path=new_path)
             if succ:
-                try:
-                    with open(new_path, "rb") as fd:
-                        img = open_i(fd)
-                        width, height = img.size
-                except UnidentifiedImageError:
-                    pass
-                else:
-                    node.attrs["width"] = str(width)
-                    node.attrs["height"] = str(height)
-                    node.attrs["srcset"] = await _src_set(img)
+                with open(new_path, "rb") as fd:
+                    try:
+                        img: Image = open_i(fd)
+                    except UnidentifiedImageError:
+                        node.attrs["src"] = quote(str(PurePosixPath(sep) / hashed_path))
+                    else:
+                        webp_path = hashed_path.with_suffix(".webp")
+                        with open(webp_path, "wb") as fd:
+                            img.save(fd, format="WEBP")
 
-                node.attrs["loading"] = "lazy"
-                node.attrs["src"] = quote(str(PurePosixPath(sep) / hashed_path))
+                        node.attrs["src"] = quote(str(PurePosixPath(sep) / webp_path))
+                        node.attrs["width"] = str(img.width)
+                        node.attrs["height"] = str(img.height)
+                        node.attrs["srcset"] = await _src_set(img)
 
 
 def _optimize(node: Node) -> Iterator[Awaitable[None]]:
