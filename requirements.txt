@@ -1,5 +1,6 @@
 std2@https://github.com/ms-jpq/std2/archive/418e4ece665905789d01d14fd39b5289961cabae.tar.gz
 PyYAML==5.4.1
-Pygments==2.9.0
 Jinja2==3.0.1
 Markdown==3.3.4
+Pygments==2.9.0
+Pillow==8.2.0

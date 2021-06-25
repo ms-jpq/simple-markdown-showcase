@@ -3,13 +3,16 @@ from asyncio.tasks import gather
 from functools import lru_cache
 from hashlib import sha256
 from http import HTTPStatus
+from mimetypes import guess_extension
 from os import sep
 from pathlib import Path, PurePath, PurePosixPath
 from shutil import copy2
-from typing import Awaitable, Iterator
+from typing import Awaitable, Iterator, Optional
 from urllib.error import HTTPError
-from urllib.parse import SplitResult, urlsplit, urlunsplit
+from urllib.parse import SplitResult, quote, urlsplit, urlunsplit
 
+from PIL.Image import UnidentifiedImageError
+from PIL.Image import open as open_i
 from std2.asyncio import run_in_executor
 from std2.urllib import urlopen
 
@@ -20,34 +23,66 @@ from .parse import Node, ParseError, parse
 _IMG_DIR = ASSETS / "images"
 
 
-def _get(uri: str) -> bytes:
-    with urlopen(uri, timeout=TIMEOUT) as resp:
-        buf = resp.read()
-    return buf
+@lru_cache
+def _guess_type(uri: SplitResult) -> Awaitable[Optional[str]]:
+    def cont() -> Optional[str]:
+        if uri.scheme in {"http", "https"}:
+            src = urlunsplit(uri)
+            with urlopen(src, timeout=TIMEOUT) as resp:
+                for key, val in resp.getheaders():
+                    if key.casefold() == "content-type":
+                        mime, _, _ = val.partition(";")
+                        ext = guess_extension(mime)
+                        return ext
+                else:
+                    return None
+        else:
+            return None
+
+    return create_task(run_in_executor(cont))
 
 
 @lru_cache
-def _fetch(uri: SplitResult, path: Path) -> Awaitable[None]:
-    def cont() -> None:
-        if not path.exists():
+def _fetch(uri: SplitResult, path: Path) -> Awaitable[bool]:
+    def cont() -> bool:
+        if path.is_file():
+            return True
+        else:
             if uri.scheme in {"http", "https"}:
                 src = urlunsplit(uri)
                 try:
-                    buf = _get(src)
-                    path.write_bytes(buf)
+                    with urlopen(src, timeout=TIMEOUT) as resp:
+                        buf = resp.read()
                 except HTTPError as e:
                     if e.code in {HTTPStatus.FORBIDDEN}:
-                        pass
+                        return False
                     else:
                         log.exception("%s", f"{e} -- {src}")
+                        raise
                 else:
                     path.write_bytes(buf)
+                    return True
             else:
                 img_path = _IMG_DIR / uri.path
                 if img_path.is_file():
                     copy2(img_path, path)
+                    return True
+                else:
+                    return False
 
     return create_task(run_in_executor(cont))
+
+
+@lru_cache
+def _resize(img: Path) -> Awaitable[Path]:
+    async def cont() -> Path:
+        return Path()
+
+    return create_task(cont())
+
+
+async def _src_set() -> str:
+    return ""
 
 
 async def _localize(node: Node) -> None:
@@ -57,13 +92,25 @@ async def _localize(node: Node) -> None:
         raise KeyError(str(node))
     else:
         uri = urlsplit(src)
-        ext = PurePosixPath(uri.path).suffix.casefold()
+        ext = PurePosixPath(uri.path).suffix.casefold() or await _guess_type(uri) or ""
         hashed_path = PurePath(sha256(src.encode()).hexdigest()).with_suffix(ext)
         new_path = DIST_DIR / hashed_path
-        await _fetch(uri, path=new_path)
+        succ = await _fetch(uri, path=new_path)
 
-        node.attrs["loading"] = "lazy"
-        node.attrs["src"] = str(PurePosixPath(sep) / hashed_path)
+        if succ:
+            try:
+                with open(new_path, "rb") as fd:
+                    img = open_i(fd)
+                    width, height = img.size
+            except UnidentifiedImageError:
+                pass
+            else:
+                node.attrs["width"] = str(width)
+                node.attrs["height"] = str(height)
+
+            node.attrs["loading"] = "lazy"
+            node.attrs["src"] = quote(str(PurePosixPath(sep) / hashed_path))
+            node.attrs["srcset"] = await _src_set()
 
 
 def _optimize(node: Node) -> Iterator[Awaitable[None]]:

@@ -4,7 +4,7 @@
 
 Proud owner of [www.bigly.dog](https://bigly.dog).
 
-![me with dog.jpg](https://github.com/ms-jpq/simple-markdown-showcase/raw/show/assets/dog_pic.jpg)
+![me with dog.jpg](dog_pic.jpg)
 
 ```txt
     |\|\
@@ -16,5 +16,5 @@ Proud owner of [www.bigly.dog](https://bigly.dog).
       <_|      <_|
 ```
 
-![dog with cape.jpg](https://github.com/ms-jpq/simple-markdown-showcase/raw/show/assets/super_dog.jpg)
+![dog with cape.jpg](super_dog.jpg)
 
