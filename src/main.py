@@ -133,7 +133,7 @@ async def _j2(
     return [e async for e in cont()]
 
 
-async def _write(instructions: Iterable[Tuple[Path, str]]) -> None:
+async def _commit(instructions: Iterable[Tuple[Path, str]]) -> None:
     async def go(path: Path, html: str) -> None:
         optimized = await optimize(path, html=html)
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -170,5 +170,5 @@ async def main() -> None:
         _GH_CACHE.write_text(json)
 
     _, instructions = await gather(_compile(), _j2(colours, specs=specs))
-    await _write(instructions)
+    await _commit(instructions)
 
