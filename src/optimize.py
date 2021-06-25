@@ -7,7 +7,7 @@ from mimetypes import guess_extension
 from os import sep
 from pathlib import Path, PurePath, PurePosixPath
 from shutil import copy2
-from typing import Awaitable, Iterator, Optional, Tuple
+from typing import Awaitable, Iterator, Optional, Tuple, cast
 from urllib.error import HTTPError
 from urllib.parse import SplitResult, quote, urlsplit, urlunsplit
 
@@ -23,10 +23,11 @@ from .parse import Node, ParseError, parse
 _IMG_DIR = ASSETS / "images"
 
 
-def _guess_type(uri: SplitResult) -> Awaitable[Optional[str]]:
-    def cont() -> Optional[str]:
-        if uri.scheme in {"http", "https"}:
-            src = urlunsplit(uri)
+async def _guess_type(uri: SplitResult) -> Optional[str]:
+    if uri.scheme in {"http", "https"}:
+        src = urlunsplit(uri)
+
+        def cont() -> Optional[str]:
             with urlopen(src, timeout=TIMEOUT) as resp:
                 for key, val in resp.getheaders():
                     if key.casefold() == "content-type":
@@ -35,13 +36,13 @@ def _guess_type(uri: SplitResult) -> Awaitable[Optional[str]]:
                         return ext
                 else:
                     return None
-        else:
-            return None
 
-    return create_task(run_in_executor(cont))
+        return await run_in_executor(cont)
+    else:
+        return None
 
 
-def _fetch(uri: SplitResult, path: Path) -> Awaitable[bool]:
+async def _fetch(uri: SplitResult, path: Path) -> bool:
     def cont() -> bool:
         if path.is_file():
             return True
@@ -52,7 +53,7 @@ def _fetch(uri: SplitResult, path: Path) -> Awaitable[bool]:
                     with urlopen(src, timeout=TIMEOUT) as resp:
                         buf = resp.read()
                 except HTTPError as e:
-                    if e.code in {HTTPStatus.FORBIDDEN}:
+                    if e.code in {HTTPStatus.FORBIDDEN, 404}:
                         return False
                     else:
                         log.exception("%s", f"{e} -- {src}")
@@ -68,25 +69,30 @@ def _fetch(uri: SplitResult, path: Path) -> Awaitable[bool]:
                 else:
                     return False
 
-    return create_task(run_in_executor(cont))
+    return await run_in_executor(cont)
 
 
 def _downsize(
     img: Image, path: Path, limit: int
 ) -> Awaitable[Optional[Tuple[int, Path]]]:
     def cont() -> Optional[Tuple[int, Path]]:
-        if img.width < limit:
-            pass
-        else:
-            width, height = limit, round(img.height * (limit / img.width))
+        existing = (img.width, img.height)
+        ratio = limit / max(img.width, img.height)
 
-            new_stem = f"{path.stem}---{limit}"
-            smol_path = path.with_stem(new_stem)
+        desired = tuple(map(lambda l: round(l * ratio), existing))
+        width, height = min(desired, existing)
+
+        smol_path = path.with_stem(f"{path.stem}--{width}x{height}")
+
+        if desired != existing:
             smol = img.resize((width, height))
             smol.save(smol_path, format="WEBP")
-            return width, smol_path.relative_to(DIST_DIR)
+        else:
+            copy2(path, smol_path)
 
-    return create_task(run_in_executor(cont))
+        return width, smol_path.relative_to(DIST_DIR)
+
+    return run_in_executor(cont)
 
 
 async def _src_set(img: Image, path: Path) -> str:
@@ -101,31 +107,33 @@ async def _src_set(img: Image, path: Path) -> str:
 
 
 @cache
-async def _owo(src: str) -> Tuple[PurePath, Optional[Tuple[Tuple[int, int], str]]]:
-    uri = urlsplit(src)
-    ext = PurePosixPath(uri.path).suffix.casefold() or await _guess_type(uri)
-    if not ext:
-        raise ValueError(uri)
-    else:
-        hashed_path = PurePath(sha256(src.encode()).hexdigest()).with_suffix(ext)
-        new_path = DIST_DIR / hashed_path
-
-        succ = await _fetch(uri, path=new_path)
-        if succ:
-            try:
-                with open_i(new_path) as img:
-                    img = img
-
-                    webp_path = hashed_path.with_suffix(".webp")
-                    save_path = DIST_DIR / webp_path
-                    img.save(save_path, format="WEBP")
-
-                    srcset = await _src_set(img, path=save_path)
-                    return webp_path, ((img.width, img.height), srcset)
-            except UnidentifiedImageError:
-                return hashed_path, None
+def _saved(src: str) -> Awaitable[Tuple[PurePath, Optional[Tuple[Tuple[int, int], str]]]]:
+    async def cont() -> Tuple[PurePath, Optional[Tuple[Tuple[int, int], str]]]:
+        uri = urlsplit(src)
+        ext = PurePosixPath(uri.path).suffix.casefold() or await _guess_type(uri)
+        if not ext:
+            raise ValueError(uri)
         else:
-            return hashed_path, None
+            hashed_path = PurePath(sha256(src.encode()).hexdigest()).with_suffix(ext)
+            new_path = DIST_DIR / hashed_path
+
+            succ = await _fetch(uri, path=new_path)
+            if succ:
+                try:
+                    with open_i(new_path) as img:
+                        img = cast(Image, img)
+                        webp_path = hashed_path.with_suffix(".webp")
+                        save_path = DIST_DIR / webp_path
+
+                        img.save(save_path, format="WEBP")
+                        srcset = await _src_set(img, path=save_path)
+                        return webp_path, ((img.width, img.height), srcset)
+                except UnidentifiedImageError:
+                    return hashed_path, None
+            else:
+                return hashed_path, None
+
+    return create_task(cont())
 
 
 async def _localize(node: Node) -> None:
@@ -136,7 +144,7 @@ async def _localize(node: Node) -> None:
     if not src:
         raise KeyError(str(node))
     else:
-        path, attrs = await _owo(src)
+        path, attrs = await _saved(src)
         node.attrs["src"] = quote(str(PurePosixPath(sep) / path))
         if attrs:
             (width, height), srcset = attrs
