@@ -1,5 +1,6 @@
 from argparse import ArgumentParser, Namespace
 from asyncio import gather
+from concurrent.futures import ProcessPoolExecutor
 from dataclasses import asdict
 from json import dumps, loads
 from locale import strxfrm
@@ -135,18 +136,20 @@ async def _j2(
 
 
 async def _commit(instructions: Iterable[Tuple[Path, str]]) -> None:
-    async def go(path: Path, html: str) -> None:
-        with timeit("OPTIMIZE", path.relative_to(DIST_DIR)):
-            optimized = await optimize(path, html=html)
+    with ProcessPoolExecutor() as pool:
 
-        path.parent.mkdir(parents=True, exist_ok=True)
-        path.write_text(optimized)
+        async def go(path: Path, html: str) -> None:
+            with timeit("OPTIMIZE", path.relative_to(DIST_DIR)):
+                optimized = await optimize(pool,path=path, html=html)
 
-    def cont() -> Iterator[Awaitable[None]]:
-        for path, html in instructions:
-            yield go(path, html=html)
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_text(optimized)
 
-    await gather(*cont())
+        def cont() -> Iterator[Awaitable[None]]:
+            for path, html in instructions:
+                yield go(path, html=html)
+
+        await gather(*cont())
 
 
 def _parse_args() -> Namespace:

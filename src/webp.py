@@ -1,4 +1,4 @@
-from concurrent.futures import ProcessPoolExecutor
+from concurrent.futures import Executor
 from hashlib import sha256
 from http import HTTPStatus
 from locale import strxfrm
@@ -28,7 +28,6 @@ class ImageAttrs(TypedDict, total=False):
     height: str
 
 
-_POOL = ProcessPoolExecutor()
 _IMG_DIR = ASSETS / "images"
 
 assert check("webp_anim")
@@ -103,8 +102,8 @@ def _downsize(args: Tuple[Path, int]) -> Tuple[int, Path]:
             return width, path
 
 
-def _srcset(path: Path) -> str:
-    smol = tuple(_POOL.map(_downsize, ((path, limit) for limit in IMG_SIZES)))
+def _srcset(pool: Executor, path: Path) -> str:
+    smol = tuple(pool.map(_downsize, ((path, limit) for limit in IMG_SIZES)))
     sources = (f"{_esc(p)} {width}w" for width, p in {*smol})
     srcset = ", ".join(sorted(sources, key=strxfrm))
     return srcset
@@ -120,7 +119,7 @@ def _webp(path: Path) -> Tuple[Path, int, int]:
         return dest, img.width, img.height
 
 
-def attrs(src: str) -> ImageAttrs:
+def attrs(pool: Executor, src: str) -> ImageAttrs:
     uri = urlsplit(src)
     ext = PurePosixPath(uri.path).suffix.casefold() or _guess_type(uri)
     if not ext:
@@ -132,11 +131,11 @@ def attrs(src: str) -> ImageAttrs:
         src = _esc(path)
         if succ:
             try:
-                webp_path, width, height = _POOL.submit(_webp, path).result()
+                webp_path, width, height = pool.submit(_webp, path).result()
             except UnidentifiedImageError:
                 return {"src": src}
             else:
-                srcset = _srcset(webp_path)
+                srcset = _srcset(pool, path=webp_path)
                 return {
                     "src": _esc(webp_path),
                     "width": str(width),
