@@ -1,3 +1,4 @@
+from asyncio import gather, get_event_loop
 from concurrent.futures import Executor
 from hashlib import sha256
 from http import HTTPStatus
@@ -15,6 +16,7 @@ from PIL.features import check
 from PIL.Image import Image, UnidentifiedImageError
 from PIL.Image import open as open_i
 from PIL.ImageSequence import Iterator as FrameIter
+from std2.asyncio import run_in_executor
 from std2.urllib import urlopen
 
 from .consts import ASSETS, DIST_DIR, IMG_SIZES, TIMEOUT
@@ -34,46 +36,52 @@ assert check("webp_anim")
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 
 
-def _guess_type(uri: SplitResult) -> Optional[str]:
-    if uri.scheme in {"http", "https"}:
-        src = urlunsplit(uri)
-        with urlopen(src, timeout=TIMEOUT) as resp:
-            for key, val in resp.getheaders():
-                if key.casefold() == "content-type":
-                    mime, _, _ = val.partition(";")
-                    ext = guess_extension(mime)
-                    return ext
-            else:
-                return None
-    else:
-        return None
-
-
-def _fetch(uri: SplitResult, path: Path) -> bool:
-    if path.is_file():
-        return True
-    else:
+async def _guess_type(uri: SplitResult) -> Optional[str]:
+    def cont() -> Optional[str]:
         if uri.scheme in {"http", "https"}:
             src = urlunsplit(uri)
-            try:
-                with urlopen(src, timeout=TIMEOUT) as resp:
-                    buf = resp.read()
-            except HTTPError as e:
-                if e.code in {HTTPStatus.FORBIDDEN, 404}:
-                    return False
+            with urlopen(src, timeout=TIMEOUT) as resp:
+                for key, val in resp.getheaders():
+                    if key.casefold() == "content-type":
+                        mime, _, _ = val.partition(";")
+                        ext = guess_extension(mime)
+                        return ext
                 else:
-                    log.exception("%s", f"{e} -- {src}")
-                    raise
-            else:
-                path.write_bytes(buf)
-                return True
+                    return None
         else:
-            img_path = _IMG_DIR / uri.path
-            if img_path.is_file():
-                copy2(img_path, path)
-                return True
+            return None
+
+    return await run_in_executor(cont)
+
+
+async def _fetch(uri: SplitResult, path: Path) -> bool:
+    def cont() -> bool:
+        if path.is_file():
+            return True
+        else:
+            if uri.scheme in {"http", "https"}:
+                src = urlunsplit(uri)
+                try:
+                    with urlopen(src, timeout=TIMEOUT) as resp:
+                        buf = resp.read()
+                except HTTPError as e:
+                    if e.code in {HTTPStatus.FORBIDDEN, 404}:
+                        return False
+                    else:
+                        log.exception("%s", f"{e} -- {src}")
+                        raise
+                else:
+                    path.write_bytes(buf)
+                    return True
             else:
-                return False
+                img_path = _IMG_DIR / uri.path
+                if img_path.is_file():
+                    copy2(img_path, path)
+                    return True
+                else:
+                    return False
+
+    return await run_in_executor(cont)
 
 
 def _esc(path: Path) -> str:
@@ -81,8 +89,7 @@ def _esc(path: Path) -> str:
     return src
 
 
-def _downsize(args: Tuple[Path, int]) -> Tuple[int, Path]:
-    path, limit = args
+def _downsize(path: Path, limit: int) -> Tuple[int, Path]:
     with open_i(path) as img:
         img = cast(Image, img)
         existing = (img.width, img.height)
@@ -102,8 +109,11 @@ def _downsize(args: Tuple[Path, int]) -> Tuple[int, Path]:
             return width, path
 
 
-def _srcset(pool: Executor, path: Path) -> str:
-    smol = tuple(pool.map(_downsize, ((path, limit) for limit in IMG_SIZES)))
+async def _srcset(pool: Executor, path: Path) -> str:
+    loop = get_event_loop()
+    smol = await gather(
+        *(loop.run_in_executor(pool, _downsize, path, limit) for limit in IMG_SIZES)
+    )
     sources = (f"{_esc(p)} {width}w" for width, p in {*smol})
     srcset = ", ".join(sorted(sources, key=strxfrm))
     return srcset
@@ -119,23 +129,24 @@ def _webp(path: Path) -> Tuple[Path, int, int]:
         return dest, img.width, img.height
 
 
-def attrs(pool: Executor, src: str) -> ImageAttrs:
+async def attrs(pool: Executor, src: str) -> ImageAttrs:
+    loop = get_event_loop()
     uri = urlsplit(src)
-    ext = PurePosixPath(uri.path).suffix.casefold() or _guess_type(uri)
+    ext = PurePosixPath(uri.path).suffix.casefold() or await _guess_type(uri)
     if not ext:
         raise ValueError(uri)
     else:
         sha = sha256(src.encode()).hexdigest()
         path = (DIST_DIR / sha).with_suffix(ext)
-        succ = _fetch(uri, path=path)
         src = _esc(path)
+        succ = await _fetch(uri, path=path)
         if succ:
             try:
-                webp_path, width, height = pool.submit(_webp, path).result()
+                webp_path, width, height = await loop.run_in_executor(pool, _webp, path)
             except UnidentifiedImageError:
                 return {"src": src}
             else:
-                srcset = _srcset(pool, path=webp_path)
+                srcset = await _srcset(pool, path=webp_path)
                 return {
                     "src": _esc(webp_path),
                     "width": str(width),

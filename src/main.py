@@ -140,7 +140,7 @@ async def _commit(instructions: Iterable[Tuple[Path, str]]) -> None:
 
         async def go(path: Path, html: str) -> None:
             with timeit("OPTIMIZE", path.relative_to(DIST_DIR)):
-                optimized = await optimize(pool,path=path, html=html)
+                optimized = await optimize(pool, path=path, html=html)
 
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(optimized)
@@ -149,9 +149,8 @@ async def _commit(instructions: Iterable[Tuple[Path, str]]) -> None:
             for path, html in instructions:
                 yield go(path, html=html)
 
-
-    with timeit("OPTIMIZED"):
-        await gather(*cont())
+        with timeit("OPTIMIZED"):
+            await gather(*cont())
 
 
 def _parse_args() -> Namespace:

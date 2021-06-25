@@ -5,8 +5,6 @@ from functools import cache
 from pathlib import Path
 from typing import Awaitable, Iterator, Mapping, cast
 
-from std2.asyncio import run_in_executor
-
 from .log import log
 from .parse import Node, ParseError, parse
 from .timeit import timeit
@@ -15,7 +13,7 @@ from .webp import ImageAttrs, attrs
 
 @cache
 def _run(pool: Executor, src: str) -> Awaitable[ImageAttrs]:
-    return create_task(run_in_executor(attrs, pool, src))
+    return create_task(attrs(pool, src))
 
 
 async def _localize(pool: Executor, node: Node) -> None:
