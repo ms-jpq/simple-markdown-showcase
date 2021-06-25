@@ -77,27 +77,28 @@ def _fetch(uri: SplitResult, path: Path) -> bool:
                 return False
 
 
-def _downsize(args: Tuple[Image, Path, int]) -> Tuple[int, Path]:
-    img, path, limit = args
-    existing = (img.width, img.height)
-    ratio = limit / max(img.width, img.height)
+def _downsize(args: Tuple[Path, int]) -> Tuple[int, Path]:
+    path, limit = args
+    with open_i(path) as img:
+        existing = (img.width, img.height)
+        ratio = limit / max(img.width, img.height)
 
-    desired = tuple(map(lambda l: round(l * ratio), existing))
-    width, height = min(desired, existing)
+        desired = tuple(map(lambda l: round(l * ratio), existing))
+        width, height = min(desired, existing)
 
-    if desired != existing:
-        smol_path = path.with_stem(f"{path.stem}--{width}x{height}")
+        if desired != existing:
+            smol_path = path.with_stem(f"{path.stem}--{width}x{height}")
 
-        smol, *frames = (frame.resize((width, height)) for frame in FrameIter(img))
-        smol.save(smol_path, format="WEBP", save_all=True, append_images=frames)
+            smol, *frames = (frame.resize((width, height)) for frame in FrameIter(img))
+            smol.save(smol_path, format="WEBP", save_all=True, append_images=frames)
 
-        return width, smol_path.relative_to(DIST_DIR)
-    else:
-        return width, path.relative_to(DIST_DIR)
+            return width, smol_path.relative_to(DIST_DIR)
+        else:
+            return width, path.relative_to(DIST_DIR)
 
 
-def _src_set(img: Image, path: Path) -> str:
-    smol = tuple(_POOL.map(_downsize, ((img, path, limit) for limit in IMG_SIZES)))
+def _src_set(path: Path) -> str:
+    smol = tuple(_POOL.map(_downsize, ((path, limit) for limit in IMG_SIZES)))
     sources = (
         f"{quote(str(PurePosixPath(sep) / path))} {width}w" for width, path in {*smol}
     )
@@ -128,7 +129,7 @@ def _attrs(src: str) -> ImageAttrs:
                         save_path, format="WEBP", save_all=True, append_images=frames
                     )
 
-                    srcset = _src_set(img, path=save_path)
+                    srcset = _src_set(save_path)
                 return {
                     "src": quote(str(PurePosixPath(sep) / webp_path)),
                     "width": str(img.width),
