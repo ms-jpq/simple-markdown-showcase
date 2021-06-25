@@ -136,7 +136,9 @@ async def _j2(
 
 async def _commit(instructions: Iterable[Tuple[Path, str]]) -> None:
     async def go(path: Path, html: str) -> None:
-        optimized = await optimize(path, html=html)
+        with timeit("OPTIMIZE", path.relative_to(DIST_DIR)):
+            optimized = await optimize(path, html=html)
+
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(optimized)
 
