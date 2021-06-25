@@ -12,3 +12,5 @@ DIST_DIR = TOP_LV / "dist"
 
 TIMEOUT = 5.0
 
+IMG_SIZES = (200, 400, 600, 800, 1000)
+

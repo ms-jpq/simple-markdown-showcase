@@ -1,13 +1,13 @@
 from asyncio import create_task
 from asyncio.tasks import gather
-from functools import lru_cache
+from functools import cache
 from hashlib import sha256
 from http import HTTPStatus
 from mimetypes import guess_extension
 from os import sep
 from pathlib import Path, PurePath, PurePosixPath
 from shutil import copy2
-from typing import Awaitable, Iterator, Optional
+from typing import Awaitable, Iterator, Optional, Tuple
 from urllib.error import HTTPError
 from urllib.parse import SplitResult, quote, urlsplit, urlunsplit
 
@@ -16,14 +16,13 @@ from PIL.Image import open as open_i
 from std2.asyncio import run_in_executor
 from std2.urllib import urlopen
 
-from .consts import ASSETS, DIST_DIR, TIMEOUT
+from .consts import ASSETS, DIST_DIR, IMG_SIZES, TIMEOUT
 from .log import log
 from .parse import Node, ParseError, parse
 
 _IMG_DIR = ASSETS / "images"
 
 
-@lru_cache
 def _guess_type(uri: SplitResult) -> Awaitable[Optional[str]]:
     def cont() -> Optional[str]:
         if uri.scheme in {"http", "https"}:
@@ -42,7 +41,6 @@ def _guess_type(uri: SplitResult) -> Awaitable[Optional[str]]:
     return create_task(run_in_executor(cont))
 
 
-@lru_cache
 def _fetch(uri: SplitResult, path: Path) -> Awaitable[bool]:
     def cont() -> bool:
         if path.is_file():
@@ -73,16 +71,61 @@ def _fetch(uri: SplitResult, path: Path) -> Awaitable[bool]:
     return create_task(run_in_executor(cont))
 
 
-@lru_cache
-def _resize(img: Image) -> Awaitable[Path]:
-    def cont() -> Path:
-        return Path()
+def _downsize(
+    img: Image, path: Path, limit: int
+) -> Awaitable[Optional[Tuple[int, Path]]]:
+    def cont() -> Optional[Tuple[int, Path]]:
+        if img.width < limit:
+            pass
+        else:
+            width, height = limit, round(img.height * (limit / img.width))
+
+            new_stem = f"{path.stem}---{limit}"
+            smol_path = path.with_stem(new_stem)
+            smol = img.resize((width, height))
+            smol.save(smol_path, format="WEBP")
+            return width, smol_path.relative_to(DIST_DIR)
 
     return create_task(run_in_executor(cont))
 
 
-async def _src_set(img: Image) -> str:
-    return ""
+async def _src_set(img: Image, path: Path) -> str:
+    smol = await gather(
+        *(_downsize(img, path=path, limit=limit) for limit in IMG_SIZES)
+    )
+    srcset = ", ".join(
+        f"{quote(str(PurePosixPath(sep) / path))} {width}w"
+        for width, path in (s for s in smol if s)
+    )
+    return srcset
+
+
+@cache
+async def _owo(src: str) -> Tuple[PurePath, Optional[Tuple[Tuple[int, int], str]]]:
+    uri = urlsplit(src)
+    ext = PurePosixPath(uri.path).suffix.casefold() or await _guess_type(uri)
+    if not ext:
+        raise ValueError(uri)
+    else:
+        hashed_path = PurePath(sha256(src.encode()).hexdigest()).with_suffix(ext)
+        new_path = DIST_DIR / hashed_path
+
+        succ = await _fetch(uri, path=new_path)
+        if succ:
+            try:
+                with open_i(new_path) as img:
+                    img = img
+
+                    webp_path = hashed_path.with_suffix(".webp")
+                    save_path = DIST_DIR / webp_path
+                    img.save(save_path, format="WEBP")
+
+                    srcset = await _src_set(img, path=save_path)
+                    return webp_path, ((img.width, img.height), srcset)
+            except UnidentifiedImageError:
+                return hashed_path, None
+        else:
+            return hashed_path, None
 
 
 async def _localize(node: Node) -> None:
@@ -93,30 +136,13 @@ async def _localize(node: Node) -> None:
     if not src:
         raise KeyError(str(node))
     else:
-        uri = urlsplit(src)
-        ext = PurePosixPath(uri.path).suffix.casefold() or await _guess_type(uri)
-        if not ext:
-            raise ValueError(uri)
-        else:
-            hashed_path = PurePath(sha256(src.encode()).hexdigest()).with_suffix(ext)
-            new_path = DIST_DIR / hashed_path
-
-            succ = await _fetch(uri, path=new_path)
-            if succ:
-                with open(new_path, "rb") as fd:
-                    try:
-                        img: Image = open_i(fd)
-                    except UnidentifiedImageError:
-                        node.attrs["src"] = quote(str(PurePosixPath(sep) / hashed_path))
-                    else:
-                        webp_path = hashed_path.with_suffix(".webp")
-                        with open(webp_path, "wb") as fd:
-                            img.save(fd, format="WEBP")
-
-                        node.attrs["src"] = quote(str(PurePosixPath(sep) / webp_path))
-                        node.attrs["width"] = str(img.width)
-                        node.attrs["height"] = str(img.height)
-                        node.attrs["srcset"] = await _src_set(img)
+        path, attrs = await _owo(src)
+        node.attrs["src"] = quote(str(PurePosixPath(sep) / path))
+        if attrs:
+            (width, height), srcset = attrs
+            node.attrs["width"] = str(width)
+            node.attrs["height"] = str(height)
+            node.attrs["srcset"] = srcset
 
 
 def _optimize(node: Node) -> Iterator[Awaitable[None]]:
