@@ -3,6 +3,7 @@ from asyncio.tasks import gather
 from functools import cache
 from hashlib import sha256
 from http import HTTPStatus
+from locale import strxfrm
 from mimetypes import guess_extension
 from os import sep
 from pathlib import Path, PurePath, PurePosixPath
@@ -72,25 +73,21 @@ async def _fetch(uri: SplitResult, path: Path) -> bool:
     return await run_in_executor(cont)
 
 
-def _downsize(
-    img: Image, path: Path, limit: int
-) -> Awaitable[Optional[Tuple[int, Path]]]:
-    def cont() -> Optional[Tuple[int, Path]]:
+def _downsize(img: Image, path: Path, limit: int) -> Awaitable[Tuple[int, Path]]:
+    def cont() -> Tuple[int, Path]:
         existing = (img.width, img.height)
         ratio = limit / max(img.width, img.height)
 
         desired = tuple(map(lambda l: round(l * ratio), existing))
         width, height = min(desired, existing)
 
-        smol_path = path.with_stem(f"{path.stem}--{width}x{height}")
-
         if desired != existing:
+            smol_path = path.with_stem(f"{path.stem}--{width}x{height}")
             smol = img.resize((width, height))
             smol.save(smol_path, format="WEBP")
+            return width, smol_path.relative_to(DIST_DIR)
         else:
-            copy2(path, smol_path)
-
-        return width, smol_path.relative_to(DIST_DIR)
+            return width, path.relative_to(DIST_DIR)
 
     return run_in_executor(cont)
 
@@ -99,15 +96,17 @@ async def _src_set(img: Image, path: Path) -> str:
     smol = await gather(
         *(_downsize(img, path=path, limit=limit) for limit in IMG_SIZES)
     )
-    srcset = ", ".join(
-        f"{quote(str(PurePosixPath(sep) / path))} {width}w"
-        for width, path in (s for s in smol if s)
+    sources = (
+        f"{quote(str(PurePosixPath(sep) / path))} {width}w" for width, path in {*smol}
     )
+    srcset = ", ".join(sorted(sources, key=strxfrm))
     return srcset
 
 
 @cache
-def _saved(src: str) -> Awaitable[Tuple[PurePath, Optional[Tuple[Tuple[int, int], str]]]]:
+def _saved(
+    src: str,
+) -> Awaitable[Tuple[PurePath, Optional[Tuple[Tuple[int, int], str]]]]:
     async def cont() -> Tuple[PurePath, Optional[Tuple[Tuple[int, int], str]]]:
         uri = urlsplit(src)
         ext = PurePosixPath(uri.path).suffix.casefold() or await _guess_type(uri)
