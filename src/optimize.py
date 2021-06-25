@@ -80,7 +80,8 @@ async def _fetch(uri: SplitResult, path: Path) -> bool:
 
 
 def _save(path: Path, img: Image) -> None:
-    frames = FrameIter(img)
+    frames = (frame.copy() for frame in FrameIter(img))
+    next(frames, None)
     img.save(path, format="WEBP", save_all=True, append_images=frames)
 
 

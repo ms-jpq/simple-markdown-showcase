@@ -13,8 +13,8 @@ def timeit(label: str, *args: Any) -> Iterator[None]:
     with _timeit() as t:
         yield None
     delta = t()
-    time = si_prefixed_smol(delta, precision=3)
+    time = si_prefixed_smol(delta)
     cols, _ = get_terminal_size()
-    msg = f"{label.ljust(10)} -- {time}  " + " ".join(map(str, args)) + " "
+    msg = f"{label.ljust(10)} -- {time}s  " + " ".join(map(str, args)) + " "
     log.info("%s", msg.ljust(cols, "="))
 

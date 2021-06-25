@@ -1,4 +1,4 @@
-std2@https://github.com/ms-jpq/std2/archive/406b04314532ff5f5af1832796f599dff47737f7.tar.gz
+std2@https://github.com/ms-jpq/std2/archive/3362356016b4adf02a3ddb514809cb6597a2fa9d.tar.gz
 PyYAML==5.4.1
 Jinja2==3.0.1
 Markdown==3.3.4
