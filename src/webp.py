@@ -80,6 +80,7 @@ def _fetch(uri: SplitResult, path: Path) -> bool:
 def _downsize(args: Tuple[Path, int]) -> Tuple[int, Path]:
     path, limit = args
     with open_i(path) as img:
+        img = cast(Image, img)
         existing = (img.width, img.height)
         ratio = limit / max(img.width, img.height)
 
@@ -97,7 +98,7 @@ def _downsize(args: Tuple[Path, int]) -> Tuple[int, Path]:
             return width, path.relative_to(DIST_DIR)
 
 
-def _src_set(path: Path) -> str:
+def _srcset(path: Path) -> str:
     smol = tuple(_POOL.map(_downsize, ((path, limit) for limit in IMG_SIZES)))
     sources = (
         f"{quote(str(PurePosixPath(sep) / path))} {width}w" for width, path in {*smol}
@@ -106,43 +107,41 @@ def _src_set(path: Path) -> str:
     return srcset
 
 
-def _attrs(src: str) -> ImageAttrs:
+def _webp(path: Path) -> Tuple[Path, int, int]:
+    with open_i(path) as img:
+        img = cast(Image, img)
+        dest = path.with_suffix(".webp")
+        frames = (frame.copy() for frame in FrameIter(img))
+        next(frames, None)
+        img.save(dest, format="WEBP", save_all=True, append_images=frames)
+        return dest, img.width, img.height
+
+
+def attrs(src: str) -> ImageAttrs:
     uri = urlsplit(src)
     ext = PurePosixPath(uri.path).suffix.casefold() or _guess_type(uri)
     if not ext:
         raise ValueError(uri)
     else:
-        hashed_path = PurePath(sha256(src.encode()).hexdigest()).with_suffix(ext)
-        new_path = DIST_DIR / hashed_path
-
-        succ = _fetch(uri, path=new_path)
+        sha = sha256(src.encode()).hexdigest()
+        path = (DIST_DIR / sha).with_suffix(ext)
+        succ = _fetch(uri, path=path)
+        src = quote(str(PurePosixPath(sep) / path.relative_to(DIST_DIR)))
         if succ:
             try:
-                with open_i(new_path) as img:
-                    img = cast(Image, img)
-                    webp_path = hashed_path.with_suffix(".webp")
-                    save_path = DIST_DIR / webp_path
-
-                    frames = (frame.copy() for frame in FrameIter(img))
-                    next(frames, None)
-                    img.save(
-                        save_path, format="WEBP", save_all=True, append_images=frames
-                    )
-
-                    srcset = _src_set(save_path)
+                webp_path, width, height = _POOL.submit(_webp, path).result()
+            except UnidentifiedImageError:
+                return {"src": src}
+            else:
+                srcset = _POOL.submit(_srcset, webp_path).result()
                 return {
-                    "src": quote(str(PurePosixPath(sep) / webp_path)),
-                    "width": str(img.width),
-                    "height": str(img.height),
+                    "src": quote(
+                        str(PurePosixPath(sep) / webp_path.relative_to(DIST_DIR))
+                    ),
+                    "width": str(width),
+                    "height": str(height),
                     "srcset": srcset,
                 }
-            except UnidentifiedImageError:
-                return {"src": quote(str(PurePosixPath(sep) / hashed_path))}
         else:
-            return {"src": quote(str(PurePosixPath(sep) / hashed_path))}
-
-
-def attrs(src: str) -> ImageAttrs:
-    fut = _POOL.submit(_attrs, src)
-    return fut.result()
+            return {"src": src}
 
