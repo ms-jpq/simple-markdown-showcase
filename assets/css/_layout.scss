@@ -200,7 +200,7 @@ body > aside {
 
   > #headshot {
     img {
-      $radius: 30vh;
+      $radius: min(30vh, 100%);
 
       object-fit: cover;
       width: $radius;
