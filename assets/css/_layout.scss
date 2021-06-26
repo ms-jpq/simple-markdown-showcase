@@ -200,11 +200,10 @@ body > aside {
 
   > #headshot {
     img {
-      $radius: min(30vh, 100%);
-
       object-fit: cover;
-      width: $radius;
-      height: $radius;
+
+      width: min(30vh, 100%);
+      height: auto;
     }
   }
   > #about-me {
