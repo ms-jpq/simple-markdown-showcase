@@ -65,7 +65,7 @@ async def _fetch(cache: bool, uri: SplitResult, path: Path) -> bool:
                     with urlopen(src, timeout=TIMEOUT) as resp:
                         buf = resp.read()
                 except HTTPError as e:
-                    if e.code in {HTTPStatus.FORBIDDEN, 404}:
+                    if e.code in {HTTPStatus.FORBIDDEN}:
                         return False
                     else:
                         log.exception("%s", f"{e} -- {src}")
