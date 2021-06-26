@@ -3,7 +3,8 @@ name: Build
 
 on:
   push: 
-    - show
+    branch:
+      - show
   schedule:
     - cron: "0 0 * * *" # daily
 
