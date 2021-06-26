@@ -18,3 +18,5 @@ Proud owner of [www.bigly.dog](https://bigly.dog).
 
 ![dog with cape.jpg](super_dog.jpg)
 
+
+![statistics.png](https://github-readme-stats.vercel.app/api?username=ms-jpq&show_icons=true&theme=buefy)
