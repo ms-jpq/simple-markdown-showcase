@@ -1,10 +1,8 @@
 @import "../layout";
+@import "./md_base";
 
 main {
-  grid-template-columns: 1fr;
   grid-template-rows: auto 1fr auto;
-
-  background-color: var(--background-colour-light);
 
   .repo-header {
     .big-button {
