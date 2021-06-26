@@ -30,4 +30,4 @@ jobs:
         run: ./lint.sh
 
       - name: Build
-        run: python3 -m src 'ms-jpq'
+        run: python3 -m src 'ms-jpq' 'dist'

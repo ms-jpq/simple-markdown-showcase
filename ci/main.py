@@ -1,6 +1,7 @@
 from datetime import datetime, timezone
 from os import environ
 from pathlib import Path
+from shutil import rmtree
 from subprocess import check_call, run
 
 _TOP_LV = Path(__file__).resolve().parent.parent
@@ -13,21 +14,23 @@ def _git_identity() -> None:
     check_call(("git", "config", "--global", "user.name", username))
 
 
-def _get_branch() -> str:
-    ref = environ["GITHUB_REF"]
-    return ref.replace("refs/heads/", "")
-
-
 def _git_clone(path: Path) -> None:
     if not path.is_dir():
         token = environ["CI_TOKEN"]
-        uri = f"https://ms-jpq:{token}@github.com/ms-jpq/coq_nvim.git"
-        branch = _get_branch()
-        check_call(("git", "clone", "--branch", branch, uri, str(path)))
+        uri = f"https://ms-jpq:{token}@github.com/ms-jpq/ms-jpq.github.io.git"
+        check_call(("git", "clone", "--branch", "page", uri, str(path)))
 
 
-def _build() -> None:
-    check_call(("python3", "-m", f"src"), cwd=_TOP_LV)
+def _build(path: Path) -> None:
+    for p in path.iterdir():
+        if p.name in {".git", "_config.yml"}:
+            pass
+        elif p.is_dir():
+            rmtree(p)
+        else:
+            p.unlink(missing_ok=True)
+
+    check_call(("python3", "-m", "src", "ms-jpq", str(path)), cwd=_TOP_LV)
 
 
 def _git_push(cwd: Path) -> None:
@@ -40,9 +43,9 @@ def _git_push(cwd: Path) -> None:
 
 
 def main() -> None:
-    cwd = _TOP_LV / "dist"
+    cwd = _TOP_LV / "tmp"
     _git_identity()
     _git_clone(cwd)
-    _build()
+    _build(cwd)
     _git_push(cwd)
 
