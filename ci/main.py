@@ -18,7 +18,7 @@ def _git_clone(path: Path) -> None:
     if not path.is_dir():
         token = environ["CI_TOKEN"]
         uri = f"https://ms-jpq:{token}@github.com/ms-jpq/ms-jpq.github.io.git"
-        check_call(("git", "clone", "--branch", "page", uri, str(path)))
+        check_call(("git", "clone", uri, str(path)))
 
 
 def _build(path: Path) -> None:
