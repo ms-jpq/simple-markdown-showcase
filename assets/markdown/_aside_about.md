@@ -1,1 +1,5 @@
-I am a polyglot programmer and software engineer with more than 5 years of experience.
+I dunno? I guess im pretty good at programming, and ... tetris.
+
+I also really like dogs.
+
+🐶🐕🦮🐩🐕‍🦺🐾 are really good frens.
