@@ -24,7 +24,7 @@ from std2.pathlib import walk
 from std2.pickle import decode, encode
 from std2.pickle.coders import BUILTIN_DECODERS, BUILTIN_ENCODERS
 
-from .consts import ASSETS, CACHE_DIR, DIST_DIR, NPM_DIR, TEMPLATES, TOP_LV
+from .consts import ASSETS, CACHE_DIR, NPM_DIR, TEMPLATES, TOP_LV
 from .github import ls
 from .j2 import build, render
 from .log import log
@@ -40,25 +40,27 @@ _CSS = CACHE_DIR / "hl.css"
 _PAGES = PurePath("pages")
 _NPM_BIN = NPM_DIR / ".bin"
 _FONTS_SRC = NPM_DIR / "@fortawesome" / "fontawesome-free" / "webfonts"
-_FONTS_DEST = DIST_DIR / "webfonts"
 
 
-async def _compile() -> None:
-    DIST_DIR.mkdir(parents=True, exist_ok=True)
+async def _compile(dist: Path) -> None:
+    dist.mkdir(parents=True, exist_ok=True)
+    fonts_dest = dist / "webfonts"
     scss_paths = (
-        f"{path}:{DIST_DIR / '_'.join(path.with_suffix('.css').relative_to(_SCSS).parts)}"
+        f"{path}:{dist / '_'.join(path.with_suffix('.css').relative_to(_SCSS).parts)}"
         for path in walk(_SCSS)
         if not path.name.startswith("_")
     )
+
     _CSS.write_text(css())
-    copytree(_FONTS_SRC, _FONTS_DEST, dirs_exist_ok=True)
+    copytree(_FONTS_SRC, fonts_dest, dirs_exist_ok=True)
+
     try:
         procs = await gather(
             call(
                 _NPM_BIN / "esbuild",
                 "--bundle",
                 "--minify",
-                f"--outdir={DIST_DIR}",
+                f"--outdir={dist}",
                 *map(str, walk(_TS)),
                 cwd=TOP_LV,
                 check_returncode=True,
@@ -96,7 +98,7 @@ def _splat(colours: Linguist, spec: RepoInfo) -> Mapping[str, Any]:
 
 
 async def _j2(
-    colours: Linguist, specs: Sequence[RepoInfo]
+    colours: Linguist, specs: Sequence[RepoInfo], dist: Path
 ) -> Sequence[Tuple[Path, str]]:
     j2 = build(TEMPLATES)
     ordered = sorted(
@@ -122,12 +124,12 @@ async def _j2(
 
     async def cont() -> AsyncIterator[Tuple[Path, str]]:
         for src, env in frame.items():
-            dest = DIST_DIR / src.relative_to(_PAGES)
+            dest = dist / src.relative_to(_PAGES)
             html = await render(j2, path=src, env=env)
             yield dest, html
 
         for spec in specs:
-            dest = DIST_DIR / spec.repo.name / "index.html"
+            dest = dist / spec.repo.name / "index.html"
             env = _splat(colours, spec=spec)
             html = await render(j2, path=_PAGES / "repo.html", env=env)
             yield dest, html
@@ -135,12 +137,12 @@ async def _j2(
     return [e async for e in cont()]
 
 
-async def _commit(instructions: Iterable[Tuple[Path, str]]) -> None:
+async def _commit(instructions: Iterable[Tuple[Path, str]], dist: Path) -> None:
     with ProcessPoolExecutor() as pool:
 
         async def go(path: Path, html: str) -> None:
-            with timeit("OPTIMIZE", path.relative_to(DIST_DIR)):
-                optimized = await optimize(pool, path=path, html=html)
+            with timeit("OPTIMIZE", path.relative_to(dist)):
+                optimized = await optimize(pool, dist=dist, path=path, html=html)
 
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(optimized)
@@ -157,11 +159,13 @@ def _parse_args() -> Namespace:
     parser = ArgumentParser()
     parser.add_argument("--cache", action="store_true")
     parser.add_argument("user")
+    parser.add_argument("dist", type=Path)
     return parser.parse_args()
 
 
 async def main() -> None:
     args = _parse_args()
+    dist = Path(args.dist)
 
     with timeit("GITHUB API"):
         if args.cache:
@@ -178,8 +182,10 @@ async def main() -> None:
             _GH_CACHE.write_text(json)
 
     with timeit("COMPILE"):
-        _, instructions = await gather(_compile(), _j2(colours, specs=specs))
+        _, instructions = await gather(
+            _compile(dist), _j2(colours, specs=specs, dist=dist)
+        )
 
     with timeit("COMMIT"):
-        await _commit(instructions)
+        await _commit(instructions, dist=dist)
 

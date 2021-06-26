@@ -19,7 +19,7 @@ from PIL.ImageSequence import Iterator as FrameIter
 from std2.asyncio import run_in_executor
 from std2.urllib import urlopen
 
-from .consts import ASSETS, DIST_DIR, IMG_SIZES, TIMEOUT
+from .consts import ASSETS, IMG_SIZES, TIMEOUT
 from .log import log
 
 
@@ -84,8 +84,8 @@ async def _fetch(uri: SplitResult, path: Path) -> bool:
     return await run_in_executor(cont)
 
 
-def _esc(path: Path) -> str:
-    src = quote(str(PurePosixPath(sep) / path.relative_to(DIST_DIR)))
+def _esc(dist: Path, path: Path) -> str:
+    src = quote(str(PurePosixPath(sep) / path.relative_to(dist)))
     return src
 
 
@@ -109,12 +109,12 @@ def _downsize(path: Path, limit: int) -> Tuple[int, Path]:
             return width, path
 
 
-async def _srcset(pool: Executor, path: Path) -> str:
+async def _srcset(pool: Executor, dist: Path, path: Path) -> str:
     loop = get_event_loop()
     smol = await gather(
         *(loop.run_in_executor(pool, _downsize, path, limit) for limit in IMG_SIZES)
     )
-    sources = (f"{_esc(p)} {width}w" for width, p in {*smol})
+    sources = (f"{_esc(dist, path=p)} {width}w" for width, p in {*smol})
     srcset = ", ".join(sorted(sources, key=strxfrm))
     return srcset
 
@@ -129,7 +129,7 @@ def _webp(path: Path) -> Tuple[Path, int, int]:
         return dest, img.width, img.height
 
 
-async def attrs(pool: Executor, src: str) -> ImageAttrs:
+async def attrs(pool: Executor, dist: Path, src: str) -> ImageAttrs:
     loop = get_event_loop()
     uri = urlsplit(src)
     ext = PurePosixPath(uri.path).suffix.casefold() or await _guess_type(uri)
@@ -137,8 +137,8 @@ async def attrs(pool: Executor, src: str) -> ImageAttrs:
         raise ValueError(uri)
     else:
         sha = sha256(src.encode()).hexdigest()
-        path = (DIST_DIR / sha).with_suffix(ext)
-        src = _esc(path)
+        path = (dist / sha).with_suffix(ext)
+        src = _esc(dist, path=path)
         succ = await _fetch(uri, path=path)
         if succ:
             try:
@@ -146,9 +146,9 @@ async def attrs(pool: Executor, src: str) -> ImageAttrs:
             except UnidentifiedImageError:
                 return {"src": src}
             else:
-                srcset = await _srcset(pool, path=webp_path)
+                srcset = await _srcset(pool, dist=dist, path=webp_path)
                 return {
-                    "src": _esc(webp_path),
+                    "src": _esc(dist, path=webp_path),
                     "width": str(width),
                     "height": str(height),
                     "srcset": srcset,

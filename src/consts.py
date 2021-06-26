@@ -7,7 +7,6 @@ ASSETS = TOP_LV / "assets"
 TEMPLATES = ASSETS / "templates"
 
 CACHE_DIR = TOP_LV / ".cache"
-DIST_DIR = TOP_LV / "dist"
 
 
 TIMEOUT = 5.0
