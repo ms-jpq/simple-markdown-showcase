@@ -6,21 +6,10 @@ main {
 
   background-color: var(--background-colour-light);
 
-  > section {
-    width: 100%;
-    max-width: $max_md_w;
-  }
-
   .repo-header {
     .big-button {
       border-style: dashed;
       color: var(--text-color);
-    }
-  }
-
-  .repo-body {
-    > .markdown {
-      max-width: 85vw;
     }
   }
 
