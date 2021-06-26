@@ -1,4 +1,4 @@
-{% from "layout/aside/01_headshot.html" import aside_headshot with context %}
+{% from "layout/aside/00_headshot.html" import aside_headshot with context %}
 {% from "layout/aside/01_about_me.html" import aside_about_me with context %}
 {% from "layout/aside/02_nav.html" import aside_nav with context %}
 {% from "layout/aside/03_associations.html" import aside_associations with context %}
@@ -29,7 +29,7 @@
       {{ header_menu(title=header.menu) }}
       {{ header_title(title=header.title) }}
     </header>
-    <aside id="left-panel" class="grid ac-start px-4">
+    <aside id="left-panel" class="d-grid ac-start px-4">
       {{ aside_headshot() }}
       {{ aside_about_me() }}
       {{ aside_nav(path=path) }}

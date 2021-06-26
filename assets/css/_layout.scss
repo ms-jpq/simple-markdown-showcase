@@ -198,6 +198,15 @@ body > aside {
 
   row-gap: $side_padding_v;
 
+  > #headshot {
+    img {
+      $radius: 30vh;
+
+      object-fit: cover;
+      width: $radius;
+      height: $radius;
+    }
+  }
   > #about-me {
     p {
       color: var(--desc-colour);
