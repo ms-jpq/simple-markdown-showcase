@@ -2,7 +2,8 @@
 name: Build
 
 on:
-  push: show
+  push: 
+    - show
   schedule:
     - cron: "0 0 * * *" # daily
 
