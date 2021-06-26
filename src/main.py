@@ -137,12 +137,16 @@ async def _j2(
     return [e async for e in cont()]
 
 
-async def _commit(instructions: Iterable[Tuple[Path, str]], dist: Path) -> None:
+async def _commit(
+    cache: bool, dist: Path, instructions: Iterable[Tuple[Path, str]]
+) -> None:
     with ProcessPoolExecutor() as pool:
 
         async def go(path: Path, html: str) -> None:
             with timeit("OPTIMIZE", path.relative_to(dist)):
-                optimized = await optimize(pool, dist=dist, path=path, html=html)
+                optimized = await optimize(
+                    pool, cache=cache, dist=dist, path=path, html=html
+                )
 
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(optimized)
@@ -187,5 +191,5 @@ async def main() -> None:
         )
 
     with timeit("COMMIT"):
-        await _commit(instructions, dist=dist)
+        await _commit(args.cache, dist=dist, instructions=instructions)
 

@@ -54,9 +54,9 @@ async def _guess_type(uri: SplitResult) -> Optional[str]:
     return await run_in_executor(cont)
 
 
-async def _fetch(uri: SplitResult, path: Path) -> bool:
+async def _fetch(cache: bool, uri: SplitResult, path: Path) -> bool:
     def cont() -> bool:
-        if path.is_file():
+        if cache and path.is_file():
             return True
         else:
             if uri.scheme in {"http", "https"}:
@@ -89,7 +89,7 @@ def _esc(dist: Path, path: Path) -> str:
     return src
 
 
-def _downsize(path: Path, limit: int) -> Tuple[int, Path]:
+def _downsize(cache: bool, path: Path, limit: int) -> Tuple[int, Path]:
     with open_i(path) as img:
         img = cast(Image, img)
         existing = (img.width, img.height)
@@ -101,35 +101,47 @@ def _downsize(path: Path, limit: int) -> Tuple[int, Path]:
         if desired != existing:
             smol_path = path.with_stem(f"{path.stem}--{width}x{height}")
 
-            smol, *frames = (frame.resize((width, height)) for frame in FrameIter(img))
-            smol.save(smol_path, format="WEBP", save_all=True, append_images=frames)
+            if cache and smol_path.exists():
+                pass
+            else:
+                smol, *frames = (
+                    frame.resize((width, height)) for frame in FrameIter(img)
+                )
+                smol.save(smol_path, format="WEBP", save_all=True, append_images=frames)
 
             return width, smol_path
         else:
             return width, path
 
 
-async def _srcset(pool: Executor, dist: Path, path: Path) -> str:
+async def _srcset(pool: Executor, cache: bool, dist: Path, path: Path) -> str:
     loop = get_event_loop()
     smol = await gather(
-        *(loop.run_in_executor(pool, _downsize, path, limit) for limit in IMG_SIZES)
+        *(
+            loop.run_in_executor(pool, _downsize, cache, path, limit)
+            for limit in IMG_SIZES
+        )
     )
     sources = (f"{_esc(dist, path=p)} {width}w" for width, p in {*smol})
     srcset = ", ".join(sorted(sources, key=strxfrm))
     return srcset
 
 
-def _webp(path: Path) -> Tuple[Path, int, int]:
+def _webp(cache: bool, path: Path) -> Tuple[Path, int, int]:
+    dest = path.with_suffix(".webp")
     with open_i(path) as img:
         img = cast(Image, img)
-        dest = path.with_suffix(".webp")
-        frames = (frame.copy() for frame in FrameIter(img))
-        next(frames, None)
-        img.save(dest, format="WEBP", save_all=True, append_images=frames)
+        if cache and dest.exists():
+            pass
+        else:
+            frames = (frame.copy() for frame in FrameIter(img))
+            next(frames, None)
+            img.save(dest, format="WEBP", save_all=True, append_images=frames)
+
         return dest, img.width, img.height
 
 
-async def attrs(pool: Executor, dist: Path, src: str) -> ImageAttrs:
+async def attrs(pool: Executor, cache: bool, dist: Path, src: str) -> ImageAttrs:
     loop = get_event_loop()
     uri = urlsplit(src)
     ext = PurePosixPath(uri.path).suffix.casefold() or await _guess_type(uri)
@@ -139,14 +151,16 @@ async def attrs(pool: Executor, dist: Path, src: str) -> ImageAttrs:
         sha = sha256(src.encode()).hexdigest()
         path = (dist / sha).with_suffix(ext)
         src = _esc(dist, path=path)
-        succ = await _fetch(uri, path=path)
+        succ = await _fetch(cache, uri=uri, path=path)
         if succ:
             try:
-                webp_path, width, height = await loop.run_in_executor(pool, _webp, path)
+                webp_path, width, height = await loop.run_in_executor(
+                    pool, _webp, cache, path
+                )
             except UnidentifiedImageError:
                 return {"src": src}
             else:
-                srcset = await _srcset(pool, dist=dist, path=webp_path)
+                srcset = await _srcset(pool, cache=cache, dist=dist, path=webp_path)
                 return {
                     "src": _esc(dist, path=webp_path),
                     "width": str(width),
