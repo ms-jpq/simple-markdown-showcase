@@ -2,6 +2,7 @@
 name: Build
 
 on:
+  push: show
   schedule:
     - cron: "0 0 * * *" # daily
 
