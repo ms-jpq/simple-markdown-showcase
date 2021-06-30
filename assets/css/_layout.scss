@@ -232,6 +232,14 @@ body > aside {
   }
 }
 
+/********
+ * MAIN *
+ ********/
+
+body > .main {
+  max-width: calc(min(100vw, 60em) - 10em);
+}
+
 /**************
  * COMPONENTS *
  **************/
