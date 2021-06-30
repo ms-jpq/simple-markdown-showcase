@@ -8,7 +8,8 @@
 {% set TIME_FMT = "%Y-%m-%dT%H:%M:%S%z" %}
 <main class="d-grid p-8 row-gap-8">
   <section
-    class="repo-header d-grid grid-col jc-end ai-centre mx-auto col-gap-4"
+    id="repo-header"
+    class="d-grid grid-col jc-end ai-centre mx-auto col-gap-4"
   >
     {{ github_stars(stargazers_count) }}
     {{ github_forks(forks_count) }}
@@ -18,12 +19,12 @@
       {% endcall %}
     </a>
   </section>
-  <section class="repo-body d-grid mx-auto">
+  <section id="repo-body" class="d-grid mx-auto">
     <div class="markdown w-100">
       {{ (read_me or description or "") | markdown }}
     </div>
   </section>
-  <section class="repo-footer d-grid ji-end mx-auto col-gap-4">
+  <section id="repo-footer" class="d-grid ji-end mx-auto col-gap-4">
     <div>
       <i class="fas fa-user-edit text-start"></i>
       <time datetime="{{ updated_at.strftime(TIME_FMT) | e }}"></time>

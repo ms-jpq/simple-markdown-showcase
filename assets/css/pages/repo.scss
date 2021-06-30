@@ -4,14 +4,14 @@
 main {
   grid-template-rows: auto 1fr auto;
 
-  .repo-header {
+  #repo-header {
     .big-button {
       border-style: dashed;
       color: var(--text-color);
     }
   }
 
-  .repo-footer {
+  #repo-footer {
     i {
       width: 1.5em;
     }
