@@ -6,7 +6,7 @@
 
 {% call html(path="/" ~ name ~ "index.html", css=["/pages_repo.css"], js=["/layout.js"]) %}
 {% set TIME_FMT = "%Y-%m-%dT%H:%M:%S%z" %}
-<main class="d-grid p-8 row-gap-8">
+<main class="d-grid row-gap-8">
   <section
     id="repo-header"
     class="d-grid grid-col jc-end ai-centre mx-auto col-gap-4"
@@ -20,7 +20,7 @@
     </a>
   </section>
   <section id="repo-body" class="d-grid mx-auto">
-    <div class="markdown w-100">
+    <div class="markdown">
       {{ (read_me or description or "") | markdown }}
     </div>
   </section>

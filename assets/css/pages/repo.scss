@@ -11,9 +11,16 @@ main {
     }
   }
 
+  #repo-body {
+    > .markdown {
+      max-width: calc(min(100vw, 60em) - 3em);
+    }
+  }
+
   #repo-footer {
     i {
       width: 1.5em;
     }
   }
 }
+
