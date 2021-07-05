@@ -236,8 +236,23 @@ body > aside {
  * MAIN *
  ********/
 
-body > .main {
-  max-width: calc(min(100vw, 60em) - 10em);
+body > main {
+  $article_padding_v: 2em;
+  $article_padding_h: 3em;
+
+  padding-top: $article_padding_v;
+  padding-bottom: $article_padding_v;
+  padding-left: $article_padding_h;
+  padding-right: $article_padding_h;
+
+  grid-template-columns: 1fr;
+  grid-template-rows: auto;
+
+  background-color: var(--background-colour-light);
+
+  .markdown {
+    max-width: calc(min(100vw, 60em) - 10em);
+  }
 }
 
 /**************
