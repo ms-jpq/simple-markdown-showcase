@@ -10,7 +10,6 @@
 $font_free: "Font Awesome 5 Free";
 
 :root {
-  --aside-len: minmax(auto, 0.3fr);
   --main-padding-h: 2em;
   --main-md-width: calc(min(100vw, 60em) - 2em - var(--main-padding-h));
   --background-colour-dark: rgb(245, 245, 245);
@@ -73,13 +72,12 @@ samp {
 /********
  * BODY *
  ********/
-$transition_width: 60em;
 
+$transition_width: 60em;
 $side_padding_v: 1em;
 
 body {
   grid-template-rows: auto 1fr auto;
-
   row-gap: $side_padding_v;
 
   > header {
@@ -135,9 +133,11 @@ body {
   }
 }
 
+$side_width: minmax(auto, 0.3fr);
+
 @mixin col2_view() {
   body {
-    grid-template-columns: var(--aside-len) 1fr;
+    grid-template-columns: $side_width 1fr;
     grid-template-areas:
       "header main"
       "aside  main"
@@ -152,7 +152,7 @@ body {
 }
 
 @mixin col2_view_short() {
-  grid-template-columns: var(--aside-len) 1fr;
+  grid-template-columns: $side_width 1fr;
   grid-template-areas:
     "aside  header"
     "aside  main"
@@ -161,6 +161,10 @@ body {
   > aside {
     display: grid;
     padding-top: $side_padding_v;
+  }
+
+  > main {
+    overflow-x: hidden;
   }
 }
 
