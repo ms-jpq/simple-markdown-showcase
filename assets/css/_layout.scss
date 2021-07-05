@@ -133,7 +133,7 @@ body {
   }
 }
 
-$side_width: minmax(auto, 0.3fr);
+$side_width: minmax(auto, min(22em, 30vw));
 
 @mixin col2_view() {
   body {
