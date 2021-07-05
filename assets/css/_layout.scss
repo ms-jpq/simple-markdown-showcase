@@ -10,6 +10,7 @@
 $font_free: "Font Awesome 5 Free";
 
 :root {
+  --aside-len: minmax(auto, 0.3fr);
   --main-padding-h: 2em;
   --main-md-width: calc(min(100vw, 60em) - 2em - var(--main-padding-h));
   --background-colour-dark: rgb(245, 245, 245);
@@ -73,7 +74,6 @@ samp {
  * BODY *
  ********/
 $transition_width: 60em;
-$side_len: minmax(auto, 0.3fr);
 
 $side_padding_v: 1em;
 
@@ -120,35 +120,39 @@ body {
 }
 
 @mixin col1_view() {
-  grid-template-columns: 1fr;
-  grid-template-areas:
-    "header"
-    "main"
-    "footer";
+  body {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "main"
+      "footer";
 
-  > aside {
-    display: none;
+    > aside {
+      display: none;
+    }
+
+    @include show_header_menu();
   }
-
-  @include show_header_menu();
 }
 
 @mixin col2_view() {
-  grid-template-columns: $side_len 1fr;
-  grid-template-areas:
-    "header main"
-    "aside  main"
-    "footer main";
+  body {
+    grid-template-columns: var(--aside-len) 1fr;
+    grid-template-areas:
+      "header main"
+      "aside  main"
+      "footer main";
 
-  > aside {
-    display: grid;
+    > aside {
+      display: grid;
+    }
+
+    @include hide_header_menu();
   }
-
-  @include hide_header_menu();
 }
 
 @mixin col2_view_short() {
-  grid-template-columns: $side_len 1fr;
+  grid-template-columns: var(--aside-len) 1fr;
   grid-template-areas:
     "aside  header"
     "aside  main"
@@ -160,11 +164,11 @@ body {
   }
 }
 
-body {
+:root {
   @include col2_view();
   @media (max-width: $transition_width) {
     @include col1_view();
-    &.col2 {
+    body.col2 {
       @include col2_view_short();
     }
   }
@@ -253,6 +257,8 @@ body > main {
 
   .markdown {
     width: var(--main-md-width);
+    margin-left: auto;
+    margin-right: auto;
   }
 }
 
