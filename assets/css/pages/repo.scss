@@ -3,10 +3,11 @@
 main {
   grid-template-rows: auto 1fr auto;
 
+  #repo-header, #repo-footer {
+    width: var(--main-md-width);
+  }
+
   #repo-header {
-    align-self: end;
-    justify-self: end;
-    
     .big-button {
       border-style: dashed;
       color: var(--text-color);
@@ -14,8 +15,6 @@ main {
   }
 
   #repo-footer {
-    align-self: end;
-    justify-self: end;
     i {
       width: 1.5em;
     }

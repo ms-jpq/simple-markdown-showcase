@@ -10,6 +10,7 @@
 $font_free: "Font Awesome 5 Free";
 
 :root {
+  --main-md-width: calc(min(100vw, 60em) - 2em);
   --background-colour-dark: rgb(245, 245, 245);
   --background-colour-light: rgb(255, 255, 255);
   --highlight-colour: rgb(240, 80, 130);
@@ -251,7 +252,7 @@ body > main {
   background-color: var(--background-colour-light);
 
   .markdown {
-    max-width: calc(min(100vw, 60em) - 10em);
+    width: var(--main-md-width);
   }
 }
 
