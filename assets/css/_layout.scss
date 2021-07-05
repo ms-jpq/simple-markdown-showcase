@@ -11,7 +11,7 @@ $font_free: "Font Awesome 5 Free";
 
 :root {
   --main-padding-h: 2em;
-  --main-md-width: calc(min(100vw, 60em) - 2em - var(--main-padding-h));
+  --main-md-width: calc(min(100vw, 60em) - var(--main-padding-h));
   --background-colour-dark: rgb(245, 245, 245);
   --background-colour-light: rgb(255, 255, 255);
   --highlight-colour: rgb(240, 80, 130);
