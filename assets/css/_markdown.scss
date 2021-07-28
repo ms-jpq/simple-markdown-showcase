@@ -5,6 +5,7 @@
   --table-alternate-colour: hsl(210, 30%, 99%);
 }
 
+
 @mixin md_border() {
   border-style: solid;
   border-width: thin;
@@ -13,6 +14,7 @@
 }
 
 .markdown {
+  tex
   img {
     max-width: 100%;
     height: auto;
