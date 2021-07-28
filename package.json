@@ -8,7 +8,7 @@
     "@types/masonry-layout": "^4.2.2",
     "cda": "git+https://github.com/ms-jpq/cda.git#f197475ea799083482b127328b0dcb5461b1fc3d",
     "masonry-layout": "^4.2.2",
-    "nda": "git+https://github.com/ms-jpq/nda.git#a7f50acd1d3386f9c470aa393bfcbb068f86d2c3",
+    "nda": "git+https://github.com/ms-jpq/nda.git#b96c0d986808221ff63b3c15a32d5395db24bf52",
     "normalize.css": "^8.0.1"
   },
   "description": "Generates responsive personal portfolio pages using Github APIs.",
