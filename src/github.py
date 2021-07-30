@@ -8,6 +8,7 @@ from urllib.error import HTTPError
 
 from std2.asyncio import run_in_executor
 from std2.pickle import DecodeError, new_decoder
+from std2.pickle.coders import DEFAULT_DECODERS
 from std2.pickle.decoder import Decoder, DParser, DStep
 from std2.string import removeprefix, removesuffix
 from std2.urllib import urlopen
@@ -74,7 +75,9 @@ def _repos(uri: str) -> Iterator[Repo]:
                 if page:
                     pages.add(page)
 
-    decode = new_decoder(Sequence[Repo], strict=False)
+    decode = new_decoder(
+        Sequence[Repo], strict=False, decoders=(*DEFAULT_DECODERS, _date_decoder)
+    )
     json = loads(raw)
     repos: Sequence[Repo] = decode(json)
 
