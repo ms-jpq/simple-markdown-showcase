@@ -21,8 +21,7 @@ from typing import (
 
 from std2.asyncio import call
 from std2.pathlib import walk
-from std2.pickle import decode, encode
-from std2.pickle.coders import BUILTIN_DECODERS, BUILTIN_ENCODERS
+from std2.pickle import new_decoder, new_encoder
 
 from .consts import ASSETS, CACHE_DIR, NPM_DIR, TEMPLATES, TOP_LV
 from .github import ls
@@ -61,19 +60,17 @@ async def _compile(dist: Path) -> None:
                 "--bundle",
                 "--minify",
                 f"--outdir={dist}",
-                *map(str, walk(_TS)),
+                *walk(_TS),
                 cwd=TOP_LV,
-                check_returncode=True,
             ),
             call(
-                _NPM_BIN / "sass",
-                "--load-path",
-                str(TOP_LV),
-                "--style",
-                "compressed",
-                *scss_paths,
+                _NPM_BIN / "tailwindcss",
+                "--postcss",
+                "--input",
+                *(),
+                "--output",
+                *(),
                 cwd=TOP_LV,
-                check_returncode=True,
             ),
         )
     except CalledProcessError as e:
@@ -167,20 +164,23 @@ def _parse_args() -> Namespace:
     return parser.parse_args()
 
 
+_CACHE_TYPE = Tuple[Linguist, Sequence[RepoInfo]]
+
+
 async def main() -> None:
     args = _parse_args()
     dist = Path(args.dist)
 
     with timeit("GITHUB API"):
         if args.cache:
+            decode = new_decoder(_CACHE_TYPE)
             json = loads(_GH_CACHE.read_text())
-            cached: Tuple[Linguist, Sequence[RepoInfo]] = decode(
-                Tuple[Linguist, Sequence[RepoInfo]], json, decoders=BUILTIN_DECODERS
-            )
+            cached: _CACHE_TYPE = decode(json)
             colours, specs = cached
         else:
+            encode = new_encoder(_CACHE_TYPE)
             colours, specs = await ls(args.user)
-            fetched = encode((colours, specs), encoders=BUILTIN_ENCODERS)
+            fetched = encode((colours, specs))
             json = dumps(fetched, check_circular=False, ensure_ascii=False, indent=2)
             CACHE_DIR.mkdir(parents=True, exist_ok=True)
             _GH_CACHE.write_text(json)
@@ -192,4 +192,3 @@ async def main() -> None:
 
     with timeit("COMMIT"):
         await _commit(args.cache, dist=dist, instructions=instructions)
-

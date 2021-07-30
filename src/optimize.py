@@ -1,7 +1,7 @@
 from asyncio import create_task
 from asyncio.tasks import gather
 from concurrent.futures import Executor
-from functools import cache
+from functools import lru_cache
 from pathlib import Path
 from typing import Awaitable, Iterator, Mapping, cast
 
@@ -11,7 +11,7 @@ from .timeit import timeit
 from .webp import ImageAttrs, attrs
 
 
-@cache
+@lru_cache(maxsize=None)
 def _run(pool: Executor, cache: bool, dist: Path, src: str) -> Awaitable[ImageAttrs]:
     return create_task(attrs(pool, cache=cache, dist=dist, src=src))
 
@@ -54,4 +54,3 @@ async def optimize(
         )
         await gather(*_optimize(pool, cache=cache, dist=dist, node=main))
         return "<!DOCTYPE html>" + str(main)
-

@@ -1,15 +1,15 @@
 from asyncio import gather
 from datetime import datetime
 from http import HTTPStatus
-from inspect import isclass
 from json import loads
 from pathlib import PurePosixPath
 from typing import Any, Iterator, MutableSet, Optional, Sequence, Tuple
 from urllib.error import HTTPError
 
 from std2.asyncio import run_in_executor
-from std2.pickle import decode
-from std2.pickle.decoder import DecodeError, Decoders
+from std2.pickle import DecodeError, new_decoder
+from std2.pickle.decoder import Decoder, DParser, DStep
+from std2.string import removeprefix, removesuffix
 from std2.urllib import urlopen
 from yaml import safe_load
 
@@ -23,10 +23,11 @@ _README = PurePosixPath("README.md")
 
 
 def _colours() -> Linguist:
+    decode = new_decoder(Linguist, strict=False)
     with urlopen(_LINGUIST, timeout=TIMEOUT) as resp:
         raw = resp.read()
     yaml = safe_load(raw)
-    l: Linguist = decode(Linguist, yaml, strict=False)
+    l: Linguist = decode(yaml)
     return l
 
 
@@ -36,24 +37,31 @@ def _page(link: str) -> Optional[str]:
         for param in params:
             key, _, value = param.strip().partition("=")
             val = (
-                value.removeprefix('"').removesuffix('"')
+                removesuffix(removeprefix(value, '"'), '"')
                 if value.startswith('"') and value.endswith('"')
                 else value
             )
             if key == "rel" and val == "next":
-                return uri.removeprefix("<").removesuffix(">")
+                return removesuffix(removeprefix(uri, "<"), ">")
     else:
         return None
 
 
 def _date_decoder(
-    tp: Any, thing: Any, strict: bool, decoders: Decoders, path: Sequence[Any]
-) -> datetime:
-    if not (isclass(tp) and issubclass(tp, datetime) and isinstance(thing, str)):
-        raise DecodeError(path=(*path, tp), actual=thing)
+    tp: Any, path: Sequence[Any], strict: bool, decoders: Sequence[Decoder]
+) -> Optional[DParser]:
+    if not issubclass(tp, datetime):
+        return None
     else:
-        fmt = "%Y-%m-%dT%H:%M:%S%z"
-        return datetime.strptime(thing, fmt)
+
+        def cont(thing: Any) -> DStep:
+            if not isinstance(thing, str):
+                return False, DecodeError(path=(*path, tp), actual=thing)
+            else:
+                fmt = "%Y-%m-%dT%H:%M:%S%z"
+                return True, datetime.strptime(thing, fmt)
+
+        return cont
 
 
 def _repos(uri: str) -> Iterator[Repo]:
@@ -66,10 +74,9 @@ def _repos(uri: str) -> Iterator[Repo]:
                 if page:
                     pages.add(page)
 
+    decode = new_decoder(Sequence[Repo], strict=False)
     json = loads(raw)
-    repos: Sequence[Repo] = decode(
-        Sequence[Repo], json, strict=False, decoders=(_date_decoder,)
-    )
+    repos: Sequence[Repo] = decode(json)
 
     yield from repos
     for page in pages:
@@ -98,12 +105,13 @@ def _resource(repo: Repo, path: PurePosixPath) -> Optional[bytes]:
 
 
 async def _repo_info(repo: Repo) -> RepoInfo:
+    decode = new_decoder(Info)
     raw_info, raw_readme = await gather(
         run_in_executor(_resource, repo, path=_CONFIG),
         run_in_executor(_resource, repo, path=_README),
     )
     info = (
-        decode(Info, safe_load(raw_info))
+        decode(safe_load(raw_info))
         if raw_info
         else Info(title=repo.name.capitalize(), showcase=False, images=())
     )
@@ -118,4 +126,3 @@ async def ls(user: str) -> Tuple[Linguist, Sequence[RepoInfo]]:
     )
     infos = await gather(*map(_repo_info, repos))
     return colours, infos
-

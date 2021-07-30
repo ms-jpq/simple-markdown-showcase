@@ -99,7 +99,7 @@ def _downsize(cache: bool, path: Path, limit: int) -> Tuple[int, Path]:
         width, height = min(desired, existing)
 
         if desired != existing:
-            smol_path = path.with_stem(f"{path.stem}--{width}x{height}")
+            smol_path = path.with_name(f"{path.stem}--{width}x{height}{path.suffixes}")
 
             if cache and smol_path.exists():
                 pass
@@ -169,4 +169,3 @@ async def attrs(pool: Executor, cache: bool, dist: Path, src: str) -> ImageAttrs
                 }
         else:
             return {"src": src}
-
