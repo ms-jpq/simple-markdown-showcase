@@ -1,35 +1,20 @@
 {
   "author": "",
-  "bugs": {
-    "url": "https://github.com/ms-jpq/simple-markdown-showcase/issues"
-  },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.3",
     "@types/masonry-layout": "^4.2.2",
-    "cda": "git+https://github.com/ms-jpq/cda.git#f197475ea799083482b127328b0dcb5461b1fc3d",
+    "autoprefixer": "^10.3.1",
     "masonry-layout": "^4.2.2",
     "nda": "git+https://github.com/ms-jpq/nda.git#b96c0d986808221ff63b3c15a32d5395db24bf52",
-    "normalize.css": "^8.0.1"
+    "postcss": "^8.3.6",
+    "postcss-import": "^14.0.2",
+    "tailwindcss": "^2.2.7"
   },
-  "description": "Generates responsive personal portfolio pages using Github APIs.",
   "devDependencies": {
     "esbuild": "*",
     "prettier": "*",
-    "sass": "*",
     "typescript": "*"
   },
-  "homepage": "https://github.com/ms-jpq/simple-markdown-showcase#readme",
-  "keywords": [],
-  "license": "ISC",
-  "main": "index.js",
   "name": "simple-markdown-showcase",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ms-jpq/simple-markdown-showcase.git"
-  },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "version": "1.0.0"
+  "version": "0.0.0"
 }
-
