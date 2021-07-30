@@ -38,8 +38,8 @@ from .optimize import optimize
 from .timeit import timeit
 from .types import Linguist, RepoInfo
 
-_TS = ASSETS / "js"
-_SCSS = ASSETS / "css"
+_TS_DIR = ASSETS / "js"
+_CSS_DIR = ASSETS / "css"
 _GH_CACHE = CACHE_DIR / "github.json"
 _CSS = CACHE_DIR / "hl.css"
 _PAGES = PurePath("pages")
@@ -50,12 +50,6 @@ _FONTS_SRC = NPM_DIR / "@fortawesome" / "fontawesome-free" / "webfonts"
 async def _compile(dist: Path) -> None:
     dist.mkdir(parents=True, exist_ok=True)
     fonts_dest = dist / "webfonts"
-    scss_paths = (
-        f"{path}:{dist / '_'.join(path.with_suffix('.css').relative_to(_SCSS).parts)}"
-        for path in walk(_SCSS)
-        if not path.name.startswith("_")
-    )
-
     _CSS.write_text(css())
     copytree(_FONTS_SRC, fonts_dest, dirs_exist_ok=True)
 
@@ -66,16 +60,16 @@ async def _compile(dist: Path) -> None:
                 "--bundle",
                 "--minify",
                 f"--outdir={dist}",
-                *walk(_TS),
+                *walk(_TS_DIR),
                 cwd=TOP_LV,
             ),
             call(
                 _NPM_BIN / "tailwindcss",
                 "--postcss",
                 "--input",
-                *(),
+                _CSS_DIR / "main.css",
                 "--output",
-                *(),
+                dist / "main.css",
                 cwd=TOP_LV,
             ),
         )
