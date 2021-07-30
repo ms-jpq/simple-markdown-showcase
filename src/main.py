@@ -22,6 +22,12 @@ from typing import (
 from std2.asyncio import call
 from std2.pathlib import walk
 from std2.pickle import new_decoder, new_encoder
+from std2.pickle.coders import (
+    DEFAULT_DECODERS,
+    DEFAULT_ENCODERS,
+    iso_date_decoder,
+    iso_date_encoder,
+)
 
 from .consts import ASSETS, CACHE_DIR, NPM_DIR, TEMPLATES, TOP_LV
 from .github import ls
@@ -173,12 +179,16 @@ async def main() -> None:
 
     with timeit("GITHUB API"):
         if args.cache:
-            decode = new_decoder(_CACHE_TYPE)
+            decode = new_decoder(
+                _CACHE_TYPE, decoders=(*DEFAULT_DECODERS, iso_date_decoder)
+            )
             json = loads(_GH_CACHE.read_text())
             cached: _CACHE_TYPE = decode(json)
             colours, specs = cached
         else:
-            encode = new_encoder(_CACHE_TYPE)
+            encode = new_encoder(
+                _CACHE_TYPE, encoders=(*DEFAULT_ENCODERS, iso_date_encoder)
+            )
             colours, specs = await ls(args.user)
             fetched = encode((colours, specs))
             json = dumps(fetched, check_circular=False, ensure_ascii=False, indent=2)
