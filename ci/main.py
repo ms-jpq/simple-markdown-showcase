@@ -30,7 +30,9 @@ def _build(path: Path) -> None:
         else:
             p.unlink(missing_ok=True)
 
-    check_call(("python3", "-m", "src", "ms-jpq", str(path)), cwd=_TOP_LV)
+    check_call(
+        ("python3", "-m", "src", "ms-jpq", "--production", "--", path), cwd=_TOP_LV
+    )
 
 
 def _git_push(cwd: Path) -> None:
@@ -48,4 +50,3 @@ def main() -> None:
     _git_clone(cwd)
     _build(cwd)
     _git_push(cwd)
-

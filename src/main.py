@@ -4,10 +4,10 @@ from concurrent.futures import ProcessPoolExecutor
 from dataclasses import asdict
 from json import dumps, loads
 from locale import strxfrm
-from os import linesep
+from logging import DEBUG, INFO
+from os import environ
 from pathlib import Path, PurePath
 from shutil import copytree
-from subprocess import CalledProcessError
 from typing import (
     Any,
     AsyncIterator,
@@ -19,7 +19,7 @@ from typing import (
     Tuple,
 )
 
-from std2.asyncio import call
+from std2.asyncio.subprocess import call
 from std2.pathlib import walk
 from std2.pickle import new_decoder, new_encoder
 from std2.pickle.coders import (
@@ -47,40 +47,36 @@ _NPM_BIN = NPM_DIR / ".bin"
 _FONTS_SRC = NPM_DIR / "@fortawesome" / "fontawesome-free" / "webfonts"
 
 
-async def _compile(dist: Path) -> None:
+async def _compile(verbose: bool, production: bool, dist: Path) -> None:
     dist.mkdir(parents=True, exist_ok=True)
     fonts_dest = dist / "webfonts"
     _CSS.write_text(css())
     copytree(_FONTS_SRC, fonts_dest, dirs_exist_ok=True)
-
-    try:
-        procs = await gather(
-            call(
-                _NPM_BIN / "esbuild",
-                "--bundle",
-                "--minify",
-                f"--outdir={dist}",
-                *walk(_TS_DIR),
-                cwd=TOP_LV,
-            ),
-            call(
-                _NPM_BIN / "tailwindcss",
-                "--postcss",
-                "--input",
-                _CSS_DIR / "main.css",
-                "--output",
-                dist / "main.css",
-                cwd=TOP_LV,
-            ),
-        )
-    except CalledProcessError as e:
-        log.exception("%s", f"{e}{linesep}{e.stderr}")
-        exit(1)
-    else:
-        for p in procs:
-            if p.err:
-                log.warn("%s", p.err)
-            print(p.out.decode())
+    await gather(
+        call(
+            _NPM_BIN / "esbuild",
+            *(("--log-level=verbose",) if verbose else ()),
+            "--bundle",
+            *(("--minify",) if production else ()),
+            f"--outdir={dist}",
+            *walk(_TS_DIR),
+            cwd=TOP_LV,
+            capture_stdout=False,
+            capture_stderr=False,
+        ),
+        call(
+            _NPM_BIN / "tailwindcss",
+            "--postcss",
+            "--input",
+            _CSS_DIR / "main.css",
+            "--output",
+            dist / "main.css",
+            cwd=TOP_LV,
+            env={**environ, "NODE_ENV": "production"} if production else None,
+            capture_stdout=False,
+            capture_stderr=False,
+        ),
+    )
 
 
 def _splat(colours: Linguist, spec: RepoInfo) -> Mapping[str, Any]:
@@ -158,7 +154,12 @@ async def _commit(
 
 def _parse_args() -> Namespace:
     parser = ArgumentParser()
-    parser.add_argument("--cache", action="store_true")
+    parser.add_argument("-v", "--verbose", action="store_true")
+
+    group = parser.add_mutually_exclusive_group()
+    group.add_argument("--production", action="store_true")
+    group.add_argument("--cache", action="store_true")
+
     parser.add_argument("user")
     parser.add_argument("dist", type=Path)
     return parser.parse_args()
@@ -169,6 +170,8 @@ _CACHE_TYPE = Tuple[Linguist, Sequence[RepoInfo]]
 
 async def main() -> None:
     args = _parse_args()
+    log.setLevel(DEBUG if args.verbose else INFO)
+
     dist = Path(args.dist)
 
     with timeit("GITHUB API"):
@@ -191,7 +194,8 @@ async def main() -> None:
 
     with timeit("COMPILE"):
         _, instructions = await gather(
-            _compile(dist), _j2(colours, specs=specs, dist=dist)
+            _compile(args.verbose, production=args.production, dist=dist),
+            _j2(colours, specs=specs, dist=dist),
         )
 
     with timeit("COMMIT"):

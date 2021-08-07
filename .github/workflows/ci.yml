@@ -30,4 +30,4 @@ jobs:
         run: mypy -- .
 
       - name: Build
-        run: python3 -m src 'ms-jpq' 'dist'
+        run: python3 -m src --production -- 'ms-jpq' 'dist'
