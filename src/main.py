@@ -19,7 +19,8 @@ from typing import (
     Tuple,
 )
 
-from std2.asyncio.subprocess import call
+from std2.asyncio import run_in_executor
+from std2.asyncio.subprocess import ProcReturn, call
 from std2.pathlib import walk
 from std2.pickle import new_decoder, new_encoder
 from std2.pickle.coders import (
@@ -39,7 +40,7 @@ from .timeit import timeit
 from .types import Linguist, RepoInfo
 
 _TS_DIR = ASSETS / "js"
-_CSS_DIR = ASSETS / "css"
+_CSS_DIR = ASSETS / "css" / "pages"
 _GH_CACHE = CACHE_DIR / "github.json"
 _CSS = CACHE_DIR / "hl.css"
 _PAGES = PurePath("pages")
@@ -48,34 +49,51 @@ _FONTS_SRC = NPM_DIR / "@fortawesome" / "fontawesome-free" / "webfonts"
 
 
 async def _compile(verbose: bool, production: bool, dist: Path) -> None:
-    dist.mkdir(parents=True, exist_ok=True)
-    fonts_dest = dist / "webfonts"
-    _CSS.write_text(css())
-    copytree(_FONTS_SRC, fonts_dest, dirs_exist_ok=True)
-    await gather(
-        call(
+    env = {**environ, "NODE_ENV": "production"} if production else None
+
+    def c1() -> None:
+        dist.mkdir(parents=True, exist_ok=True)
+        fonts_dest = dist / "webfonts"
+        _CSS.write_text(css())
+        copytree(_FONTS_SRC, fonts_dest, dirs_exist_ok=True)
+
+    def c2() -> Awaitable[ProcReturn]:
+        js = dist / "js"
+        return call(
             _NPM_BIN / "esbuild",
             *(("--log-level=verbose",) if verbose else ()),
             "--bundle",
             *(("--minify",) if production else ()),
-            f"--outdir={dist}",
+            f"--outdir={js}",
             *walk(_TS_DIR),
             cwd=TOP_LV,
+            env=env,
             capture_stdout=False,
             capture_stderr=False,
-        ),
-        call(
-            _NPM_BIN / "tailwindcss",
-            "--postcss",
-            "--input",
-            _CSS_DIR / "main.css",
-            "--output",
-            dist / "main.css",
-            cwd=TOP_LV,
-            env={**environ, "NODE_ENV": "production"} if production else None,
-            capture_stdout=False,
-            capture_stderr=False,
-        ),
+        )
+
+    def c3() -> Iterator[Awaitable[ProcReturn]]:
+        for path in _CSS_DIR.iterdir():
+            out = dist / path.relative_to(_CSS_DIR)
+            out.parent.mkdir(parents=True, exist_ok=True)
+
+            yield call(
+                _NPM_BIN / "tailwindcss",
+                "--postcss",
+                "--input",
+                path,
+                "--output",
+                out,
+                cwd=TOP_LV,
+                env=env,
+                capture_stdout=False,
+                capture_stderr=False,
+            )
+
+    await gather(
+        run_in_executor(c1),
+        c2(),
+        *c3(),
     )
 
 
