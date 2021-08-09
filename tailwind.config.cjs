@@ -1,5 +1,5 @@
 module.exports = {
-  purge: ["assets/**/*.css", "assets/**/*.html", "assets/**/*.md"],
+  mode: "jit",
   darkMode: "media",
   theme: {
     extend: {},
@@ -8,4 +8,5 @@ module.exports = {
     extend: {},
   },
   plugins: [],
+  purge: ["assets/**/*.{css,html,md}"],
 }
