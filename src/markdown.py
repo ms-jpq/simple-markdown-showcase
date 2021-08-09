@@ -1,7 +1,7 @@
 from html import escape
 from locale import strxfrm
 from os import linesep
-from typing import Callable, Match, Sequence, Tuple, Union, no_type_check
+from typing import Callable, Match, Optional, Sequence, Tuple, Union, no_type_check
 
 from pygments.formatters.html import HtmlFormatter
 from pygments.styles import get_all_styles, get_style_by_name
@@ -85,11 +85,11 @@ def _extensions(style: str) -> Sequence[Extension]:
     )
 
 
-def css() -> str:
+def css(name: Optional[str]) -> str:
     lines = (
         f".{_CODEHL_CLASS}.{name} {line}"
-        for name in get_all_styles()
-        for line in HtmlFormatter(style=get_style_by_name(name))
+        for s_name in ((name,) if name else get_all_styles())
+        for line in HtmlFormatter(style=get_style_by_name(s_name))
         .get_style_defs()
         .splitlines()
     )
@@ -104,5 +104,3 @@ def render(style: str) -> Callable[[str], str]:
         return _markdown.convert(md)
 
     return render
-
-
