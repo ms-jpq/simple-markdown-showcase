@@ -10,5 +10,5 @@ module.exports = {
   plugins: [
     require("@tailwindcss/typography")
   ],
-  purge: ["assets/**/*.{css,html,md}"],
+  purge: ["assets/**/*.{scss,html,md}"],
 }
