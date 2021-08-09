@@ -40,7 +40,7 @@ from .timeit import timeit
 from .types import Linguist, RepoInfo
 
 _TS_DIR = ASSETS / "js"
-_CSS_DIR = ASSETS / "css" / "pages"
+_CSS_DIR = ASSETS / "css"
 _GH_CACHE = CACHE_DIR / "github.json"
 _CSS = CACHE_DIR / "hl.css"
 _PAGES = PurePath("pages")
@@ -73,8 +73,9 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
         )
 
     def c3() -> Iterator[Awaitable[ProcReturn]]:
-        for path in _CSS_DIR.iterdir():
-            out = dist / path.relative_to(_CSS_DIR)
+        css = dist / "css"
+        for path in walk(_CSS_DIR):
+            out = css / path.relative_to(_CSS_DIR).with_suffix(".css")
             out.parent.mkdir(parents=True, exist_ok=True)
 
             yield call(
