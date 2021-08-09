@@ -24,8 +24,8 @@
     <script defer src="{{ j | urlencode }}"></script>
     {% endfor %}
   </head>
-  <body class="d-grid vw-100 mp-0">
-    <header class="d-grid grid-col px-4">
+  <body class="grid vw-100 mp-0">
+    <header class="grid grid-col px-4">
       {{ header_menu(title=header.menu) }}
       {{ header_title(title=header.title) }}
     </header>
@@ -36,7 +36,7 @@
       {{ aside_associations() }}
     </aside>
     {{ caller() }}
-    <footer class="d-grid ji-centre ai-centre">
+    <footer class="grid ji-centre ai-centre">
       {{ footer_desc() }}
     </footer>
   </body>

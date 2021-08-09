@@ -1,7 +1,7 @@
 {% from "layout/layout.html" import html with context %}
 
 {% call html(path="/about_me.html", css=["/pages_about_me.css"], js=["/layout.js"]) %}
-<main class="d-grid">
+<main class="grid">
   <div class="markdown">
     {{ read_markdown("about_me.md") }}
   </div>

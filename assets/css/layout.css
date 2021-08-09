@@ -3,6 +3,8 @@
 @import "node_modules/cda/dist/entry";
 @import "./markdown";
 
+@tailwind base;
+
 /********
  * VARS *
  ********/

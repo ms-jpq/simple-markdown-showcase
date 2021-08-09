@@ -2,7 +2,7 @@
 {% from "layout/aside/03_associations.html" import aside_associations with context %}
 
 {% call html(path="/contact_me.html", css=["/pages_contact_me.css"], js=["/layout.js"]) %}
-<main class="d-grid">
+<main class="grid">
   {{ read_markdown("contact_me.md") }}
   {{ aside_associations() }}
 </main>

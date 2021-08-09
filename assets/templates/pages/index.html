@@ -5,13 +5,13 @@
 
 {% call html(path="/index.html", css=["/pages_index.css"], js=["/layout.js", "/index.js"]) %}
 <main class="p-4">
-  <div class="masonry d-grid ai-end ji-centre">
+  <div class="masonry grid ai-end ji-centre">
     {% for spec in specs %}
     {% set spec_uri = '/' ~ spec.name ~ '/index.html' | urlencode %}
-    <figure class="card d-grid m-0">
+    <figure class="card grid m-0">
       {% if spec.images %} 
       {% set image = spec.images[0] %}
-      <a href="{{ spec_uri }}" class="figure-img d-grid mp-0">
+      <a href="{{ spec_uri }}" class="figure-img grid mp-0">
         <img class="img-responsive w-100" src={{ image }} />
         <div class="figure-facade d-none ji-centre ai-centre">
           <i class="fas fa-chevron-right"></i>
@@ -25,7 +25,7 @@
           {{ spec.title | e }}
         </a>
       </h4>
-      <div class="figure-meta d-grid grid-col jc-start col-gap-4 px-4 pb-2"
+      <div class="figure-meta grid grid-col jc-start col-gap-4 px-4 pb-2"
       >
         {{ github_lang(lang=spec.language, colour=spec.colour)}}
         {{ github_stars(stars=spec.stargazers_count) }} 
