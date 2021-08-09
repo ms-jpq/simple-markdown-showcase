@@ -1,100 +1,65 @@
 @import "../../.cache/hl";
-:root {
-  --code-colour: rgb(245, 245, 245);
-  --table-border-colour: hsl(210, 10%, 90%);
-  --table-alternate-colour: hsl(210, 30%, 99%);
-}
-
-
-@mixin md_border() {
-  border-style: solid;
-  border-width: thin;
-  border-radius: 0.2em;
-  border-color: transparent;
-}
 
 .markdown {
-  tex
-  img {
-    max-width: 100%;
-    height: auto;
-
-    @include md_border();
+  tex img {
+    @apply object-contain max-w-full  h-auto;
+    @apply border-transparent border-2 rounded;
   }
 
   ul > li {
-    line-height: 140%;
+    @apply leading-normal before:text-pink-400;
 
-    &::before {
-      color: var(--highlight-colour);
-    }
+    // &::before {
+    //   @apply text-pink-400;
+    // }
   }
 
   pre,
   blockquote {
-    $padding: 0.5em;
-    $col_thic: 0.3em;
-    $col_gap: 0.5em;
+    @apply grid w-full overflow-x-auto;
 
-    width: calc(100% - $col_thic - $col_gap);
-    max-width: inherit;
-    overflow-x: scroll;
+    // max-width: inherit;
 
-    display: grid;
-    grid-template-columns: $col_thic 1fr;
+    grid-template-columns: 0.3em 1fr;
     grid-template-rows: auto;
-    column-gap: $col_gap;
+    @apply gap-x-2;
 
-    padding-left: $padding;
-    padding-right: $padding;
+    @apply px-2;
 
     &::before {
       grid-row: span 100;
       content: "";
-      background-color: var(--highlight-colour);
+      @apply bg-pink-400;
     }
 
     > *:not(first-child) {
-      grid-column: 2;
-      @include md_border();
+      // @apply grid-cols-2;
+      @apply border-transparent border-2 rounded;
     }
   }
 
   blockquote {
-    margin-left: 0;
-    margin-right: 0;
+    @apply mx-0;
     > * {
-      $margin: 0.5em;
-      margin-top: $margin;
-      margin-bottom: $margin;
+      @apply my-2;
     }
   }
 
   code {
-    background-color: var(--code-colour);
+    @apply bg-gray-200;
   }
 
   table {
-    border-collapse: collapse;
+    @apply table-auto border-collapse;
 
     thead > tr > th,
     tbody > tr > td {
-      $padding-y: 0.3em;
-      $padding-x: 0.7em;
-
-      border-width: thin;
-      border-style: solid;
-      border-color: var(--table-border-colour);
-
-      padding-top: $padding-y;
-      padding-bottom: $padding-y;
-      padding-left: $padding-x;
-      padding-right: $padding-x;
+      @apply border-2 border-solid border-gray-300;
+      @apply px-1 py-1;
     }
 
     tbody > tr:nth-child(even) {
-      background-color: var(--table-alternate-colour);
+      @apply bg-purple-100;
     }
   }
 }
-

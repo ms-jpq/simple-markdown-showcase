@@ -1,17 +1,24 @@
 {% macro circle(href, class) %}
 <a
-  class="association-circle border-solid border-thin border-circle d-flex ai-centre jc-centre p-2 m-2 text-centre"
+  class="
+    association-circle
+    border-solid border-2
+    rounded-full
+    flex
+    items-center
+    jc-centre
+    p-2
+    m-2
+    text-centre
+  "
   href="{{ href }}"
 >
   <i class="{{ class }}"></i>
 </a>
-{% endmacro %}
-
-{% macro aside_associations() %}
+{% endmacro %} 
+{% macro aside_associations() %} 
 {% set contacts = read_data("contacts.yml") %}
-<section
-  id="associations" class="associations d-flex flex-wrap"
->
+<section id="associations" class="associations d-flex flex-wrap">
   {{ circle(href="mailto:" ~ contacts.email, class="far fa-envelope") }}
   {# {{ circle(href=contacts.linkedin, class="fab fa-linkedin-in") }} #}
   {{ circle(href=contacts.github, class="fab fa-github") }}

@@ -3,20 +3,10 @@
 main {
   grid-template-rows: auto 1fr auto;
 
-  #repo-header, #repo-footer {
-    width: var(--main-md-width);
-  }
-
   #repo-header {
     .big-button {
-      border-style: dashed;
+      @apply border-dashed;
       color: var(--text-color);
-    }
-  }
-
-  #repo-footer {
-    i {
-      width: 1.5em;
     }
   }
 }

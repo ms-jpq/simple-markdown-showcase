@@ -1,24 +1,21 @@
 {% macro github_lang(lang, colour) %}
 <span class="github-lang">
   <i
-    class="border-circle d-inline-block"
+    class="rounded-full inline-block"
     style="background-color:{{ colour.color if colour else 'inherit' }}"
   ></i>
   {{ lang }}
 </span>
-{% endmacro %}
-
+{% endmacro %} 
 {% macro github_stars(stars) %}
 <span class="github-stars {{ 'hidden' if not stars else '' }}">
   <i class="fas fa-star"></i>
   {{ stars }}
 </span>
-{% endmacro %}
-
+{% endmacro %} 
 {% macro github_forks(forks) %}
 <span class="github-forks {{ 'hidden' if not forks else '' }}">
   <i class="fas fa-code-branch"></i>
   {{ forks }}
 </span>
 {% endmacro %}
-

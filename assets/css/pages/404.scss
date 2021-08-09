@@ -1,10 +1,9 @@
 @import "../layout";
 
 main {
-  background-color: var(--background-colour-light);
+  @apply bg-gray-50;
 
   > h1 {
-    color: var(--desc-colour);
-    font-size: 600%;
+    @apply text-5xl text-gray-200;
   }
 }

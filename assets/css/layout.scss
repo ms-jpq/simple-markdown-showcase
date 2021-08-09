@@ -9,7 +9,6 @@
  * VARS *
  ********/
 
-$font_free: "Font Awesome 5 Free";
 
 :root {
   --main-padding-h: 2em;
@@ -18,7 +17,6 @@ $font_free: "Font Awesome 5 Free";
   --background-colour-light: rgb(255, 255, 255);
   --highlight-colour: rgb(240, 80, 130);
   --nav-colour: #555555;
-  --desc-colour: #999999;
 }
 
 /********
@@ -28,38 +26,32 @@ $font_free: "Font Awesome 5 Free";
 a {
   color: inherit;
 
-  text-decoration-line: underline;
+  @apply underline text-pink-300;
   text-decoration-style: solid;
-  text-decoration-color: var(--highlight-colour);
 
   &:active,
   &:hover,
   &:focus {
     color: inherit;
     text-decoration-style: dashed;
-    text-decoration-color: var(--highlight-colour);
   }
 }
 
 ul {
-  list-style-type: none;
-  padding-left: 0.5em;
+  @apply pl-2;
 
   > li {
-    display: list-item;
+    @apply list-item;
 
     * {
-      display: inline;
+      @apply inline;
     }
 
     &::before {
-      padding-right: 0.3em;
+      @apply pr-1 font-semibold text-gray-600;
 
-      font-family: $font_free;
-      font-weight: 600;
+      font-family: "Font Awesome 5 Free";
       content: "\f105";
-
-      color: var(--desc-colour);
     }
   }
 }
@@ -68,7 +60,7 @@ pre,
 code,
 kbd,
 samp {
-  font-size: 0.9em;
+  @apply text-sm;
 }
 
 /********
@@ -249,15 +241,8 @@ body > aside {
  ********/
 
 body > main {
-  $article_padding_v: 2em;
-  $article_padding_h: 2em;
+  @apply p-8 grid grid-cols-1;
 
-  padding-top: $article_padding_v;
-  padding-bottom: $article_padding_v;
-  padding-left: $article_padding_h;
-  padding-right: $article_padding_h;
-
-  grid-template-columns: 1fr;
   grid-template-rows: auto;
 
   background-color: var(--background-colour-light);
@@ -286,10 +271,8 @@ body > main {
 }
 
 .github-lang {
-  $size: 0.7em;
   > i {
-    width: $size;
-    height: $size;
+    @apply w-3 h-3;
   }
 }
 
@@ -297,45 +280,17 @@ body > main {
  * CLASSES *
  ***********/
 
-button.big-button {
-  align-self: center;
-
-  $menu_padding_v: 0.3em;
-  $menu_padding_h: 0.5em;
-
-  padding-top: $menu_padding_v;
-  padding-bottom: $menu_padding_v;
-  padding-left: $menu_padding_h;
-  padding-right: $menu_padding_h;
-
-  cursor: pointer;
-
-  color: var(--highlight-colour);
-  background-color: transparent;
-
-  border-style: solid;
-  border-width: thin;
-  border-color: var(--highlight-colour);
-
-  font-size: 100%;
-
-  &:hover {
-    color: var(--background-colour-light);
-    background-color: var(--highlight-colour);
-  }
-}
-
 a.invis-link {
-  text-decoration: none;
+  @apply no-underline;
 
   &:hover {
-    text-decoration-line: underline;
+    @apply underline;
     text-decoration-style: dotted;
     text-decoration-color: var(--highlight-colour);
   }
 }
 
 li.active::before {
-  color: var(--highlight-colour);
+  @apply text-pink-300;
 }
 
