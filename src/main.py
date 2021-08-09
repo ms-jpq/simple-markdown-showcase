@@ -30,7 +30,7 @@ from std2.pickle.coders import (
     iso_date_encoder,
 )
 
-from .consts import ASSETS, CACHE_DIR, NPM_DIR, TEMPLATES, TOP_LV
+from .consts import ASSETS, CACHE_DIR, MD_STYLE, NPM_DIR, TEMPLATES, TOP_LV
 from .github import ls
 from .j2 import build, render
 from .log import log
@@ -54,7 +54,7 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
     def c1() -> None:
         dist.mkdir(parents=True, exist_ok=True)
         fonts_dest = dist / "webfonts"
-        _CSS.write_text(css())
+        _CSS.write_text(css(MD_STYLE))
         copytree(_FONTS_SRC, fonts_dest, dirs_exist_ok=True)
 
     def c2() -> Awaitable[ProcReturn]:

@@ -8,8 +8,8 @@ TEMPLATES = ASSETS / "templates"
 
 CACHE_DIR = TOP_LV / ".cache"
 
+MD_STYLE = "friendly"
 
 TIMEOUT = 5.0
 
 IMG_SIZES = (200, 400, 600, 800, 1000)
-

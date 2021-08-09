@@ -6,7 +6,7 @@ from typing import Any, Mapping, Tuple
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 from yaml import safe_load
 
-from .consts import ASSETS
+from .consts import ASSETS, MD_STYLE
 from .markdown import render as render_md
 
 _MARKDOWN_DIR = ASSETS / "markdown"
@@ -31,7 +31,7 @@ def _read_data(path: str, *paths: str) -> Any:
     return data
 
 
-_render = lru_cache(render_md("friendly"))
+_render = lru_cache(render_md(MD_STYLE))
 
 
 def _read_markdown(path: str, *paths: str) -> str:
@@ -59,4 +59,3 @@ def build(path: PurePath, *paths: PurePath) -> Environment:
 async def render(j2: Environment, path: PurePath, env: Mapping[str, Any]) -> str:
     text = await j2.get_template(str(path)).render_async(env)
     return text
-
