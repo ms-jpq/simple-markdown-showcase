@@ -9,7 +9,6 @@
     "nda": "git+https://github.com/ms-jpq/nda.git#b96c0d986808221ff63b3c15a32d5395db24bf52",
     "postcss": "^8.3.6",
     "postcss-import": "^14.0.2",
-    "postcss-nesting": "^8.0.1",
     "tailwindcss": "^2.2.7"
   },
   "devDependencies": {
