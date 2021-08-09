@@ -24,19 +24,19 @@
     <script defer src="{{ j | urlencode }}"></script>
     {% endfor %}
   </head>
-  <body class="grid vw-100 mp-0">
-    <header class="grid grid-col px-4">
+  <body class="grid w-screen">
+    <header class="grid grid-flow-col px-8">
       {{ header_menu(title=header.menu) }}
       {{ header_title(title=header.title) }}
     </header>
-    <aside id="left-panel" class="ac-start px-4">
+    <aside id="left-panel" class="content-start px-8">
       {{ aside_headshot() }}
       {{ aside_about_me() }}
       {{ aside_nav(path=path) }}
       {{ aside_associations() }}
     </aside>
     {{ caller() }}
-    <footer class="grid ji-centre ai-centre">
+    <footer class="grid justify-items-center items-center">
       {{ footer_desc() }}
     </footer>
   </body>

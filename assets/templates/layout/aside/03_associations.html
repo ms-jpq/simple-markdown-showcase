@@ -6,10 +6,10 @@
     rounded-full
     flex
     items-center
-    jc-centre
-    p-2
-    m-2
-    text-centre
+    justify-items-center
+    p-4
+    m-4
+    text-center
   "
   href="{{ href }}"
 >
@@ -18,7 +18,7 @@
 {% endmacro %} 
 {% macro aside_associations() %} 
 {% set contacts = read_data("contacts.yml") %}
-<section id="associations" class="associations d-flex flex-wrap">
+<section id="associations" class="associations flex flex-wrap">
   {{ circle(href="mailto:" ~ contacts.email, class="far fa-envelope") }}
   {# {{ circle(href=contacts.linkedin, class="fab fa-linkedin-in") }} #}
   {{ circle(href=contacts.github, class="fab fa-github") }}
