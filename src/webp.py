@@ -99,7 +99,8 @@ def _downsize(cache: bool, path: Path, limit: int) -> Tuple[int, Path]:
         width, height = min(desired, existing)
 
         if desired != existing:
-            smol_path = path.with_name(f"{path.stem}--{width}x{height}{path.suffixes}")
+            suffixes = "".join(path.suffixes)
+            smol_path = path.with_name(f"{path.stem}--{width}x{height}{suffixes}")
 
             if cache and smol_path.exists():
                 pass
