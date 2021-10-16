@@ -74,7 +74,7 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
 
     def c3() -> Iterator[Awaitable[ProcReturn]]:
         css = dist / "css"
-        for path in walk(_CSS_DIR):
+        for path in (_CSS_DIR / "markdown.scss",):
             out = css / path.relative_to(_CSS_DIR).with_suffix(".css")
             out.parent.mkdir(parents=True, exist_ok=True)
 

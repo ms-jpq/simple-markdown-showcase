@@ -17,6 +17,6 @@
     "typescript": "*"
   },
   "name": "simple-markdown-showcase",
-  "type": "module",
+
   "version": "0.0.0"
 }

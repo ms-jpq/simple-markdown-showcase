@@ -22,7 +22,8 @@ async def _localize(pool: Executor, cache: bool, dist: Path, node: Node) -> None
 
     src = node.attrs.get("src")
     if not src:
-        raise KeyError(str(node))
+        # raise KeyError(str(node))
+        pass
     else:
         with timeit("WEBP", src):
             attrs = await _run(pool, cache=cache, dist=dist, src=src)
