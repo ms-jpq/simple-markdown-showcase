@@ -11,9 +11,9 @@ from typing import Optional, Tuple, TypedDict, cast
 from urllib.error import HTTPError
 from urllib.parse import SplitResult, quote, urlsplit, urlunsplit
 
-from PIL import ImageFile
+from PIL import ImageFile, UnidentifiedImageError
 from PIL.features import check
-from PIL.Image import Image, UnidentifiedImageError
+from PIL.Image import Image
 from PIL.Image import open as open_i
 from PIL.ImageSequence import Iterator as FrameIter
 from std2.asyncio import run_in_executor

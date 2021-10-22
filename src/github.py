@@ -7,9 +7,9 @@ from typing import Any, Iterator, MutableSet, Optional, Sequence, Tuple
 from urllib.error import HTTPError
 
 from std2.asyncio import run_in_executor
-from std2.pickle import DecodeError, new_decoder
 from std2.pickle.coders import DEFAULT_DECODERS
-from std2.pickle.decoder import Decoder, DParser, DStep
+from std2.pickle.decoder import new_decoder
+from std2.pickle.types import DecodeError, Decoder, DParser, DStep
 from std2.string import removeprefix, removesuffix
 from std2.urllib import urlopen
 from yaml import safe_load

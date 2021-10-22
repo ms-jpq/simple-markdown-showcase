@@ -13,13 +13,13 @@ _MARKDOWN_DIR = ASSETS / "markdown"
 _DATA_DIR = ASSETS / "data"
 
 
-@lru_cache
+@lru_cache(maxsize=None)
 def _slurp(base: Path, part: str, *parts: str) -> Tuple[PurePath, str]:
     path = base.joinpath(part, *parts)
     return path, path.read_text()
 
 
-@lru_cache
+@lru_cache(maxsize=None)
 def _read_data(path: str, *paths: str) -> Any:
     resoure, raw = _slurp(_DATA_DIR, path, *paths)
     if resoure.suffix in {".yml", ".yaml"}:
