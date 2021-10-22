@@ -41,7 +41,7 @@ def _git_push(cwd: Path) -> None:
         time = datetime.now(tz=timezone.utc).strftime("%Y-%m-%d")
         check_call(("git", "add", "."), cwd=cwd)
         check_call(("git", "commit", "-m", f"update_artifacts: {time}"), cwd=cwd)
-        check_call(("git", "push"), cwd=cwd)
+        check_call(("git", "push", "--force"), cwd=cwd)
 
 
 def main() -> None:
