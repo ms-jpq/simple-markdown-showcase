@@ -17,6 +17,9 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v2
 
+      - name: Apt
+        run: sudo apt install --yes -- libwebp-dev
+
       - name: Pip Packages
         run: pip install -U mypy types-PyYAML types-Markdown
 
