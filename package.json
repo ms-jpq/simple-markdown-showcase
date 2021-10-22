@@ -3,6 +3,7 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@tailwindcss/typography": "^0.4.1",
+    "@types/masonry-layout": "^4.2.4",
     "autoprefixer": "^10.3.7",
     "masonry-layout": "^4.2.2",
     "postcss": "^8.3.11",

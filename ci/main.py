@@ -6,6 +6,8 @@ from subprocess import check_call, run
 
 _TOP_LV = Path(__file__).resolve().parent.parent
 
+_USER = environ["GITHUB_ACTOR"]
+
 
 def _git_identity() -> None:
     email = "ci@ci.ci"
@@ -17,7 +19,7 @@ def _git_identity() -> None:
 def _git_clone(path: Path) -> None:
     if not path.is_dir():
         token = environ["CI_TOKEN"]
-        uri = f"https://ms-jpq:{token}@github.com/ms-jpq/ms-jpq.github.io.git"
+        uri = f"https://{_USER}:{token}@github.com/{_USER}/{_USER}.github.io.git"
         check_call(("git", "clone", uri, str(path)))
 
 
@@ -30,9 +32,7 @@ def _build(path: Path) -> None:
         else:
             p.unlink(missing_ok=True)
 
-    check_call(
-        ("python3", "-m", "src", "ms-jpq", "--production", "--", path), cwd=_TOP_LV
-    )
+    check_call(("python3", "-m", "src", _USER, "--production", "--", path), cwd=_TOP_LV)
 
 
 def _git_push(cwd: Path) -> None:
