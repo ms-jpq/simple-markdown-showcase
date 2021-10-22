@@ -1,12 +1,10 @@
+@tailwind base;
 @import "../../node_modules/@fortawesome/fontawesome-free/css/all.css";
 @import "./markdown.scss";
-
-@tailwind base;
 
 /********
  * VARS *
  ********/
-
 
 :root {
   --main-padding-h: 2em;
@@ -88,27 +86,6 @@ body {
   background-color: var(--background-colour-dark);
 }
 
-@mixin show_header_menu() {
-  > header {
-    justify-content: space-between;
-    > button {
-      display: initial;
-    }
-    #header-title {
-      text-align: right;
-    }
-  }
-}
-
-@mixin hide_header_menu() {
-  > header {
-    justify-content: start;
-    > button {
-      display: none;
-    }
-  }
-}
-
 @mixin col1_view() {
   body {
     grid-template-columns: 1fr;
@@ -117,11 +94,19 @@ body {
       "main"
       "footer";
 
+    > header {
+      justify-content: space-between;
+      > button {
+        display: initial;
+      }
+      #header-title {
+        text-align: right;
+      }
+    }
+
     > aside {
       display: none;
     }
-
-    @include show_header_menu();
   }
 }
 
@@ -135,11 +120,19 @@ $side_width: minmax(auto, min(22em, 30vw));
       "aside  main"
       "footer main";
 
+    > header {
+      justify-content: space-between;
+      > button {
+        display: initial;
+      }
+      #header-title {
+        text-align: right;
+      }
+    }
+
     > aside {
       display: grid;
     }
-
-    @include hide_header_menu();
   }
 }
 
@@ -291,4 +284,3 @@ a.invis-link {
 li.active::before {
   @apply text-pink-300;
 }
-
