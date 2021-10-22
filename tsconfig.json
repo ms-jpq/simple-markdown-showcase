@@ -9,7 +9,7 @@
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
     "jsx": "react",
-    "module": "commonjs",
+    "module": "ESNext",
     "moduleResolution": "Node",
     "newLine": "LF",
     "noFallthroughCasesInSwitch": true,
@@ -26,4 +26,3 @@
   "exclude": ["node_modules/**", "dist/"],
   "include": ["*.ts", "*.tsx", "*/**/*.ts", "*/**/*.tsx"]
 }
-
