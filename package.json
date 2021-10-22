@@ -3,13 +3,11 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^5.15.4",
     "@tailwindcss/typography": "^0.4.1",
-    "@types/masonry-layout": "^4.2.2",
-    "autoprefixer": "^10.3.1",
+    "autoprefixer": "^10.3.7",
     "masonry-layout": "^4.2.2",
-    "nda": "git+https://github.com/ms-jpq/nda.git#b96c0d986808221ff63b3c15a32d5395db24bf52",
-    "postcss": "^8.3.6",
+    "postcss": "^8.3.11",
     "postcss-import": "^14.0.2",
-    "tailwindcss": "^2.2.7"
+    "tailwindcss": "^2.2.17"
   },
   "devDependencies": {
     "esbuild": "*",
@@ -17,6 +15,5 @@
     "typescript": "*"
   },
   "name": "simple-markdown-showcase",
-
   "version": "0.0.0"
 }
