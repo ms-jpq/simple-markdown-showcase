@@ -1,7 +1,5 @@
-@import "node_modules/normalize.css/normalize";
-@import "node_modules/@fortawesome/fontawesome-free/css/all";
-@import "node_modules/cda/dist/entry";
-@import "./markdown";
+@import "../../node_modules/@fortawesome/fontawesome-free/css/all.css";
+@import "./markdown.scss";
 
 @tailwind base;
 

@@ -5,7 +5,8 @@ from dataclasses import asdict
 from json import dumps, loads
 from locale import strxfrm
 from logging import DEBUG, INFO
-from os import environ
+from os import altsep, environ, sep
+from os.path import normcase
 from pathlib import Path, PurePath
 from shutil import copytree
 from typing import (
@@ -20,15 +21,17 @@ from typing import (
 )
 
 from std2.asyncio import run_in_executor
-from std2.asyncio.subprocess import ProcReturn, call
+from std2.asyncio.subprocess import call
 from std2.pathlib import walk
-from std2.pickle import new_decoder, new_encoder
 from std2.pickle.coders import (
     DEFAULT_DECODERS,
     DEFAULT_ENCODERS,
     iso_date_decoder,
     iso_date_encoder,
 )
+from std2.pickle.decoder import new_decoder
+from std2.pickle.encoder import new_encoder
+from std2.subprocess import ProcReturn
 
 from .consts import ASSETS, CACHE_DIR, MD_STYLE, NPM_DIR, TEMPLATES, TOP_LV
 from .github import ls
@@ -58,13 +61,12 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
         copytree(_FONTS_SRC, fonts_dest, dirs_exist_ok=True)
 
     def c2() -> Awaitable[ProcReturn]:
-        js = dist / "js"
         return call(
             _NPM_BIN / "esbuild",
             *(("--log-level=verbose",) if verbose else ()),
             "--bundle",
             *(("--minify",) if production else ()),
-            f"--outdir={js}",
+            f"--outdir={dist}",
             *walk(_TS_DIR),
             cwd=TOP_LV,
             env=env,
@@ -73,9 +75,9 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
         )
 
     def c3() -> Iterator[Awaitable[ProcReturn]]:
-        css = dist / "css"
-        for path in (_CSS_DIR / "markdown.scss",):
-            out = css / path.relative_to(_CSS_DIR).with_suffix(".css")
+        for path in _CSS_DIR.rglob("*.scss"):
+            name = normcase(path.relative_to(_CSS_DIR).with_suffix(".css"))
+            out = dist / name.replace(altsep or sep, "_")
             out.parent.mkdir(parents=True, exist_ok=True)
 
             yield call(
@@ -191,7 +193,7 @@ async def main() -> None:
     args = _parse_args()
     log.setLevel(DEBUG if args.verbose else INFO)
 
-    dist = Path(args.dist)
+    dist = Path(args.dist).resolve(strict=True)
 
     with timeit("GITHUB API"):
         if args.cache:
