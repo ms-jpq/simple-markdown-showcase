@@ -197,15 +197,17 @@ async def main() -> None:
 
     with timeit("GITHUB API"):
         if args.cache:
-            decode = new_decoder(
-                _CACHE_TYPE, decoders=(*DEFAULT_DECODERS, iso_date_decoder)
+            decode = new_decoder[_CACHE_TYPE](
+                _CACHE_TYPE,
+                decoders=(*DEFAULT_DECODERS, iso_date_decoder),
             )
             json = loads(_GH_CACHE.read_text())
             cached: _CACHE_TYPE = decode(json)
             colours, specs = cached
         else:
-            encode = new_encoder(
-                _CACHE_TYPE, encoders=(*DEFAULT_ENCODERS, iso_date_encoder)
+            encode = new_encoder[_CACHE_TYPE](
+                _CACHE_TYPE,
+                encoders=(*DEFAULT_ENCODERS, iso_date_encoder),
             )
             colours, specs = await ls(args.user)
             fetched = encode((colours, specs))

@@ -24,11 +24,11 @@ _README = PurePosixPath("README.md")
 
 
 def _colours() -> Linguist:
-    decode = new_decoder(Linguist, strict=False)
+    decode = new_decoder[Linguist](Linguist, strict=False)
     with urlopen(_LINGUIST, timeout=TIMEOUT) as resp:
         raw = resp.read()
     yaml = safe_load(raw)
-    l: Linguist = decode(yaml)
+    l = decode(yaml)
     return l
 
 
@@ -75,11 +75,13 @@ def _repos(uri: str) -> Iterator[Repo]:
                 if page:
                     pages.add(page)
 
-    decode = new_decoder(
-        Sequence[Repo], strict=False, decoders=(*DEFAULT_DECODERS, _date_decoder)
+    decode = new_decoder[Sequence[Repo]](
+        Sequence[Repo],
+        strict=False,
+        decoders=(*DEFAULT_DECODERS, _date_decoder),
     )
     json = loads(raw)
-    repos: Sequence[Repo] = decode(json)
+    repos = decode(json)
 
     yield from repos
     for page in pages:
@@ -108,7 +110,7 @@ def _resource(repo: Repo, path: PurePosixPath) -> Optional[bytes]:
 
 
 async def _repo_info(repo: Repo) -> RepoInfo:
-    decode = new_decoder(Info)
+    decode = new_decoder[Info](Info)
     raw_info, raw_readme = await gather(
         run_in_executor(_resource, repo, path=_CONFIG),
         run_in_executor(_resource, repo, path=_README),
