@@ -5,7 +5,7 @@ from dataclasses import asdict
 from json import dumps, loads
 from locale import strxfrm
 from logging import DEBUG, INFO
-from os import altsep, environ, sep
+from os import altsep, environ, getcwd, sep
 from os.path import normcase
 from pathlib import Path, PurePath
 from shutil import copytree
@@ -193,7 +193,8 @@ async def main() -> None:
     args = _parse_args()
     log.setLevel(DEBUG if args.verbose else INFO)
 
-    dist = Path(args.dist).resolve(strict=True)
+    dist = Path(args.dist)
+    dist = dist if dist.is_absolute() else Path(getcwd()) / dist
     dist.mkdir(parents=True, exist_ok=True)
 
     with timeit("GITHUB API"):
