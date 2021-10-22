@@ -194,6 +194,7 @@ async def main() -> None:
     log.setLevel(DEBUG if args.verbose else INFO)
 
     dist = Path(args.dist).resolve(strict=True)
+    dist.mkdir(parents=True, exist_ok=True)
 
     with timeit("GITHUB API"):
         if args.cache:
