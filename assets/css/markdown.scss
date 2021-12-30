@@ -1,0 +1,72 @@
+@import "../../.cache/hl.css";
+
+/************
+ * MARKDOWN *
+ ************/
+
+.markdown {
+  @apply prose;
+
+  &,
+  & h1,
+  & h2,
+  & h3,
+  & h4,
+  & h5,
+  & h6,
+  & strong,
+  & thead {
+    @apply text-inherit;
+  }
+
+  & a {
+    @apply text-inherit decoration-primary-400;
+  }
+
+  & ul > li {
+    @apply leading-normal;
+
+    &::marker {
+      @apply text-primary-400;
+    }
+
+    &::before {
+      @apply hidden;
+    }
+
+    & > * {
+      @apply inline;
+    }
+  }
+
+  & code {
+    @apply text-inherit bg-secondary-200;
+  }
+
+  & pre,
+  & blockquote {
+    @apply grid grid-flow-col w-full gap-x-2 overflow-x-auto border-2 rounded text-inherit bg-secondary-100;
+
+    max-width: inherit;
+    grid-template-columns: 0.3em 1fr;
+
+    &::before {
+      grid-row: span 100;
+      content: "";
+
+      @apply bg-primary-400;
+    }
+
+    & > span {
+      @apply hidden;
+    }
+
+    & > code {
+      @apply bg-secondary-100;
+    }
+
+    & > *:not(first-child) {
+      @apply grid-cols-2;
+    }
+  }
+}

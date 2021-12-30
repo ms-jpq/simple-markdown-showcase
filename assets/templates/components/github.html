@@ -1,0 +1,23 @@
+<!--% macro github_lang(lang, colour) %-->
+<span>
+  <i
+    class="rounded-full inline-block w-3 h-3"
+    style="background-color:<!--{ colour.color if colour else 'inherit' }-->"
+  ></i>
+  <!--{ lang | e }-->
+</span>
+<!--% endmacro %-->
+
+<!--% macro github_stars(stars) %-->
+<span class="github-stars <!--{ 'hidden' if not stars else '' }-->">
+  <i class="fas fa-star"></i>
+  <!--{ stars | e }-->
+</span>
+<!--% endmacro %-->
+
+<!--% macro github_forks(forks) %-->
+<span class="github-forks <!--{ 'hidden' if not forks else '' }-->">
+  <i class="fas fa-code-branch"></i>
+  <!--{ forks | e }-->
+</span>
+<!--% endmacro %-->

@@ -1,0 +1,127 @@
+@import "../../.cache/font-awesome.css";
+@import "./tailwind.scss";
+@import "./markdown.scss";
+
+a {
+  @apply underline text-inherit decoration-solid decoration-primary-400;
+
+  &:active,
+  &:hover,
+  &:focus {
+    @apply decoration-dashed text-inherit;
+  }
+}
+
+ul {
+  @apply pl-2;
+
+  & > li {
+    @apply list-item;
+
+    &* {
+      @apply inline;
+    }
+
+    &.active::before {
+      @apply text-primary-400;
+    }
+
+    &::before {
+      @apply pr-1 font-semibold;
+
+      font-family: "Font Awesome 5 Free", monospace;
+      content: "\f105";
+    }
+  }
+}
+
+pre,
+code,
+kbd,
+samp {
+  @apply text-sm;
+}
+
+/********
+ * BODY *
+ ********/
+
+body {
+  grid-template-rows: auto 1fr auto;
+
+  & > header {
+    grid-area: header;
+  }
+
+  & > aside {
+    grid-area: aside;
+  }
+
+  & > main {
+    grid-area: main;
+  }
+
+  & > footer {
+    grid-area: footer;
+  }
+}
+
+:root {
+  & body > main {
+    @apply p-8 grid grid-flow-row grid-cols-1 bg-secondary-100;
+  }
+
+  & body {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "main"
+      "footer";
+
+    & > aside {
+      @apply hidden;
+    }
+  }
+
+  & body.overlay {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      "header"
+      "aside"
+      "footer";
+
+    & > aside {
+      @apply grid;
+    }
+
+    & > main {
+      @apply hidden;
+    }
+  }
+
+  @media screen(sm) {
+    & body {
+      grid-template-columns: minmax(auto, min(22em, 27vw)) 1fr;
+      grid-template-areas:
+        "header main"
+        "aside  main"
+        "footer main";
+
+      & > aside {
+        @apply grid;
+      }
+    }
+  }
+}
+
+/***********
+ * CLASSES *
+ ***********/
+
+a.invis-link {
+  @apply no-underline;
+
+  &:hover {
+    @apply underline decoration-dotted decoration-primary-400;
+  }
+}

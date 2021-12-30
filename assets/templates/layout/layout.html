@@ -1,0 +1,46 @@
+<!--% from "layout/aside/00_headshot.html" import aside_headshot with context %-->
+<!--% from "layout/aside/01_about_me.html" import aside_about_me with context %-->
+<!--% from "layout/aside/02_nav.html" import aside_nav with context %-->
+<!--% from "layout/aside/03_associations.html" import aside_associations with context %-->
+<!--% from "layout/header/00_menu.html" import header_menu with context %-->
+<!--% from "layout/header/01_title.html" import header_title with context %-->
+<!--% from "layout/footer/00_desc.html" import footer_desc with context %-->
+
+<!--% macro html(path, css=[], js=[], desc="") %-->
+<!--% set header = read_data("header.yml") %-->
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="<!--{ desc | e }-->" />
+    <title><!--{ header.title | e }--></title>
+    <!--% for c in css %-->
+    <link rel="stylesheet" href="<!--{ c | urlencode }-->" />
+    <!--% endfor %-->
+
+    <!--% for j in js %-->
+    <script type="module" src="<!--{ j | urlencode }-->"></script>
+    <!--% endfor %-->
+  </head>
+
+  <body class="grid gap-4 w-screen bg-gray-50 break-words text-secondary-800">
+    <header
+      class="grid grid-flow-col grid-flow-col justify-between gap-x-2 px-8 pt-4"
+    >
+      <!--{ header_menu(title=header.menu) }-->
+      <!--{ header_title(title=header.title) }-->
+    </header>
+    <aside class="grid-flow-row grid-cols-1 gap-4 content-start px-8">
+      <!--{ aside_headshot() }-->
+      <!--{ aside_about_me() }-->
+      <!--{ aside_nav(path=path) }-->
+      <!--{ aside_associations() }-->
+    </aside>
+    <!--{ caller() }-->
+    <footer class="grid justify-items-center items-center">
+      <!--{ footer_desc(user) }-->
+    </footer>
+  </body>
+</html>
+<!--% endmacro %-->

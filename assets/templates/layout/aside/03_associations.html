@@ -1,0 +1,18 @@
+<!--% macro circle(href, class) %-->
+<a
+  class="border-solid border-2 border-secondary-500 rounded-full flex items-center justify-center p-4 m-4 no-underline text-center text-secondary-500 hover:text-primary-400 hover:border-primary-400"
+  href="<!--{ href | e }-->"
+>
+  <i class="<!--{ class | e }-->"></i>
+</a>
+<!--% endmacro %-->
+
+<!--% macro aside_associations() %-->
+<!--% set contacts = read_data("contacts.yml") %-->
+<section class="flex flex-wrap">
+  <!--{ circle(href="mailto:" ~ contacts.email, class="far fa-envelope") }-->
+  <!--# circle(href=contacts.linkedin, class="fab fa-linkedin-in") #-->
+  <!--{ circle(href=contacts.github, class="fab fa-github") }-->
+  <!--{ circle(href=contacts.stackoverflow, class="fab fa-stack-overflow") }-->
+</section>
+<!--% endmacro %-->

@@ -1,0 +1,14 @@
+---
+extends:
+  - stylelint-config-standard
+rules:
+  at-rule-no-unknown:
+    - true
+    - ignoreAtRules:
+        - tailwind
+        - apply
+  unit-no-unknown:
+    - true
+    - ignoreUnits:
+        - xl
+  no-duplicate-selectors:

@@ -1,0 +1,9 @@
+---
+- title: home
+  link: /index.html
+
+- title: about
+  link: /about_me.html
+
+- title: get in touch
+  link: /contact_me.html

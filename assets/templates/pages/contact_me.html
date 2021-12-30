@@ -1,0 +1,15 @@
+<!--% from "layout/layout.html" import html with context %-->
+<!--% from "layout/aside/03_associations.html" import aside_associations with context %-->
+<!--% call html(
+  path="/contact_me.html",
+  css=["/pages_contact_me.css"],
+  js=["/layout.js"], 
+  desc="contact:me")
+%-->
+<main class="grid-flow-row content-start items-start">
+  <section class="markdown">
+    <!--{ read_markdown("contact_me.md") }-->
+  </section>
+  <!--{ aside_associations() }-->
+</main>
+<!--% endcall %-->
