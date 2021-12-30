@@ -14,43 +14,47 @@
     <!--% for spec in specs %-->
     <!--% set spec_uri = ('/' ~ spec.name ~ '/index.html') | urlencode %-->
 
-    <figure
-      class="card grid break-inside-avoid-column drop-shadow-lg bg-gray-100 hover:drop-shadow-xl focus:drop-shadow-xl active:drop-shadow-xl prose mx-0 overflow-x-hidden"
+    <div
+      class="card drop-shadow-lg hover:drop-shadow-xl focus:drop-shadow-xl active:drop-shadow-xl"
     >
-      <!--% if spec.images %-->
-      <!--% set image = spec.images[0] %-->
-      <a
-        href="<!--{ spec_uri | urlencode }-->"
-        class="figure-img w-full grid m-0 p-0 no-underline"
+      <figure
+        class="grid break-inside-avoid-column bg-gray-100 prose mx-0 overflow-x-hidden"
       >
-        <img
-          class="row-start-1 row-end-1 col-start-1 col-end-1 object-contain object-center w-full max-w-full h-auto bg-slate-100 m-0 p-0"
-          src="<!--{ image }-->"
-          alt="<!--{ (spec.title ~ '.img') | e }-->"
-        />
-        <div
-          class="figure-facade row-start-1 row-end-1 col-start-1 col-end-1 justify-items-center items-center bg-slate-100 opacity-70 hidden"
+        <!--% if spec.images %-->
+        <!--% set image = spec.images[0] %-->
+        <a
+          href="<!--{ spec_uri | urlencode }-->"
+          class="figure-img w-full grid m-0 p-0 no-underline"
         >
-          <i class="fas fa-chevron-right text-slate-300 text-5xl"></i>
-        </div>
-      </a>
-      <!--% endif %-->
-      <h4 class="figure-title uppercase text-center text-ellipsis pt-2 px-4">
-        <a href="<!--{ spec_uri | urlencode }-->" class="invis-link">
-          <!--{ spec.title | e }-->
+          <img
+            class="row-start-1 row-end-1 col-start-1 col-end-1 object-contain object-center w-full max-w-full h-auto bg-tertiary-50 m-0 p-0"
+            src="<!--{ image }-->"
+            alt="<!--{ (spec.title ~ '.img') | e }-->"
+          />
+          <div
+            class="figure-facade row-start-1 row-end-1 col-start-1 col-end-1 justify-items-center items-center bg-gray-100 opacity-70 hidden"
+          >
+            <i class="fas fa-chevron-right text-stone-300 text-5xl"></i>
+          </div>
         </a>
-      </h4>
-      <div
-        class="figure-meta grid grid-flow-col justify-start gap-x-4 px-4 pb-2"
-      >
-        <!--{ github_lang(lang=spec.language, colour=spec.colour)}-->
-        <!--{ github_stars(stars=spec.stargazers_count) }-->
-        <!--{ github_forks(forks=spec.forks_count) }-->
-      </div>
-      <figcaption class="figure-detail text-ellipsis text-justify px-4 pb-2">
-        <!--{ (spec.description or "") | e }-->
-      </figcaption>
-    </figure>
+        <!--% endif %-->
+        <h4 class="figure-title uppercase text-center text-ellipsis pt-2 px-4">
+          <a href="<!--{ spec_uri | urlencode }-->" class="invis-link">
+            <!--{ spec.title | e }-->
+          </a>
+        </h4>
+        <div
+          class="figure-meta grid grid-flow-col justify-start gap-x-4 px-4 pb-2"
+        >
+          <!--{ github_lang(lang=spec.language, colour=spec.colour)}-->
+          <!--{ github_stars(stars=spec.stargazers_count) }-->
+          <!--{ github_forks(forks=spec.forks_count) }-->
+        </div>
+        <figcaption class="figure-detail text-ellipsis text-justify px-4 pb-2">
+          <!--{ (spec.description or "") | e }-->
+        </figcaption>
+      </figure>
+    </div>
 
     <!--% endfor %-->
 

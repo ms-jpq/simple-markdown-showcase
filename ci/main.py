@@ -44,19 +44,19 @@ def _git_push(cwd: Path) -> None:
         time = datetime.now(tz=timezone.utc).strftime("%Y-%m-%d")
         check_call(("git", "add", "."), cwd=cwd)
         check_call(("git", "commit", "-m", "::<>"), cwd=cwd)
-        sha = check_output(
-            (
-                "git",
-                "commit-tree",
-                "-m",
-                f"update_artifacts: {time}",
-                "--",
-                "HEAD^{tree}",
-            ),
-            cwd=cwd,
-            text=True,
-        )
-        check_call(("git", "reset", sha.rstrip()))
+        # sha = check_output(
+        #     (
+        #         "git",
+        #         "commit-tree",
+        #         "-m",
+        #         f"update_artifacts: {time}",
+        #         "--",
+        #         "HEAD^{tree}",
+        #     ),
+        #     cwd=cwd,
+        #     text=True,
+        # )
+        # check_call(("git", "reset", "--hard", sha.rstrip()))
         check_call(("git", "push", "--force"), cwd=cwd)
 
 

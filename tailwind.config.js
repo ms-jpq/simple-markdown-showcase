@@ -8,6 +8,7 @@ module.exports = {
       colors: {
         primary: colors.pink,
         secondary: colors.neutral,
+        tertiary: colors.fuchsia,
       },
       screens: {
         "3xl": "1792px",
