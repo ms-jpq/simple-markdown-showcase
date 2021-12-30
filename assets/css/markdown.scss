@@ -41,6 +41,11 @@
 
   & code {
     @apply text-inherit bg-secondary-200;
+
+    &::before,
+    &::after {
+      @apply hidden;
+    }
   }
 
   & pre,
