@@ -166,7 +166,7 @@ async def attrs(pool: Executor, cache: bool, dist: Path, src: str) -> ImageAttrs
                     "srcset": srcset,
                 }
             except (UnidentifiedImageError, OSError) as e:
-                log.error("%s", f"{path} --> {e}")
+                log.error("%s", f"{src} --> {e}")
                 return {"src": src}
         else:
             return {"src": src}
