@@ -158,9 +158,6 @@ async def attrs(pool: Executor, cache: bool, dist: Path, src: str) -> ImageAttrs
                 webp_path, width, height = await loop.run_in_executor(
                     pool, _webp, cache, path
                 )
-            except UnidentifiedImageError:
-                return {"src": src}
-            else:
                 srcset = await _srcset(pool, cache=cache, dist=dist, path=webp_path)
                 return {
                     "src": _esc(dist, path=webp_path),
@@ -168,5 +165,7 @@ async def attrs(pool: Executor, cache: bool, dist: Path, src: str) -> ImageAttrs
                     "height": str(height),
                     "srcset": srcset,
                 }
+            except (UnidentifiedImageError, OSError):
+                return {"src": src}
         else:
             return {"src": src}
