@@ -17,7 +17,7 @@ from typing import (
 )
 from weakref import ref
 
-_VOID = {
+_SELF_CLOSING = {
     "area",
     "base",
     "basefont",
@@ -57,14 +57,18 @@ class Node:
 
     def __str__(self) -> str:
         attrs = " ".join(
-            f'{key}="{escape((self.attrs[key] or ""))}"' if self.attrs[key] else key
+            f'{escape(key)}="{escape(self.attrs[key] or "")}"'
+            if self.attrs[key]
+            else escape(key)
             for key in sorted(self.attrs.keys(), key=strxfrm)
         )
         kids = "".join(
             escape(child) if isinstance(child, str) else str(child)
             for child in self.children
         )
-        if self.tag in _VOID:
+        if not self.tag:
+            return kids
+        elif self.tag in _SELF_CLOSING:
             return f"<{self.tag} {attrs}/>"
         else:
             return f"<{self.tag} {attrs}>{kids}</{self.tag}>"
@@ -130,4 +134,3 @@ def parse(html: str) -> Node:
     parser.feed(html)
     node = parser.consume()
     return node
-
