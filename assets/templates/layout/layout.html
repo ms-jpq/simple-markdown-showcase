@@ -16,11 +16,11 @@
     <meta name="description" content="<!--{ desc | e }-->" />
     <title><!--{ header.title | e }--></title>
     <!--% for c in css %-->
-    <link rel="stylesheet" href="<!--{ c | urlencode }-->" />
+    <link rel="stylesheet" href="<!--{ c | e }-->" />
     <!--% endfor %-->
 
     <!--% for j in js %-->
-    <script type="module" src="<!--{ j | urlencode }-->"></script>
+    <script type="module" src="<!--{ j | e }-->"></script>
     <!--% endfor %-->
   </head>
 

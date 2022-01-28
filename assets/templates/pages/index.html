@@ -12,7 +12,7 @@
 <main class="py-4 px-4 sm:px-0 m-0">
   <div class="masonry w-full flex flex-wrap justify-between items-center">
     <!--% for spec in specs %-->
-    <!--% set spec_uri = ('/' ~ spec.name ~ '/index.html') | urlencode %-->
+    <!--% set spec_uri = ('/' ~ spec.name ~ '/index.html') | e %-->
 
     <div
       class="card drop-shadow-lg hover:drop-shadow-xl focus:drop-shadow-xl active:drop-shadow-xl"
@@ -23,7 +23,7 @@
         <!--% if spec.images %-->
         <!--% set image = spec.images[0] %-->
         <a
-          href="<!--{ spec_uri | urlencode }-->"
+          href="<!--{ spec_uri | e }-->"
           class="figure-img w-full grid m-0 p-0 no-underline"
         >
           <img
@@ -39,7 +39,7 @@
         </a>
         <!--% endif %-->
         <h4 class="figure-title uppercase text-center text-ellipsis pt-2 px-4">
-          <a href="<!--{ spec_uri | urlencode }-->" class="invis-link">
+          <a href="<!--{ spec_uri | e }-->" class="invis-link">
             <!--{ spec.title | e }-->
           </a>
         </h4>
