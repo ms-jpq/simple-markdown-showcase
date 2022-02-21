@@ -5,6 +5,7 @@ from dataclasses import asdict
 from json import dumps, loads
 from locale import strxfrm
 from logging import DEBUG, INFO
+from multiprocessing import get_context
 from os import altsep, environ, getcwd, sep
 from os.path import normcase
 from pathlib import Path, PurePath
@@ -184,7 +185,8 @@ async def _j2(
 async def _commit(
     cache: bool, dist: Path, instructions: Iterable[Tuple[Path, str]]
 ) -> None:
-    with ProcessPoolExecutor() as pool:
+    ctx = get_context("spawn")
+    with ProcessPoolExecutor(mp_context=ctx) as pool:
 
         async def go(path: Path, html: str) -> None:
             path.parent.mkdir(parents=True, exist_ok=True)
