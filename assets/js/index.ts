@@ -7,7 +7,7 @@ const inc = function* () {
   }
 }
 
-const throttle = <F extends (...args: any[]) => any>(ms: number, fn: F) => {
+const throttle = <T, F extends (...args: any[]) => T>(ms: number, fn: F) => {
   let s: any = undefined
   let throttling = false
 
@@ -22,10 +22,11 @@ const throttle = <F extends (...args: any[]) => any>(ms: number, fn: F) => {
     return fn(...args)
   }
 
-  return (...args: Parameters<F>) => {
+  return (...args: Parameters<F>): T | undefined => {
     clearTimeout(s)
     if (throttling) {
       s = setTimeout(throttled, ms, ...args)
+      return undefined
     } else {
       return throttled(...args)
     }
