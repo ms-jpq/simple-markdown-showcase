@@ -22,7 +22,7 @@ const throttle = <T, F extends (...args: any[]) => T>(ms: number, fn: F) => {
     return fn(...args)
   }
 
-  return (...args: Parameters<F>): T | undefined => {
+  return (...args: Parameters<F>) => {
     clearTimeout(s)
     if (throttling) {
       s = setTimeout(throttled, ms, ...args)
