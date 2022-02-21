@@ -11,4 +11,9 @@ rules:
     - true
     - ignoreUnits:
         - xl
+  function-no-unknown:
+    - true
+    - ignoreFunctions:
+        - theme
+
   no-duplicate-selectors:
