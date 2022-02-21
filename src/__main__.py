@@ -111,12 +111,11 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
             out.parent.mkdir(parents=True, exist_ok=True)
 
             yield call(
-                _NPM_BIN / "tailwindcss",
-                "--postcss",
-                "--input",
-                path,
+                _NPM_BIN / "postcss",
                 "--output",
                 out,
+                "--",
+                path,
                 cwd=TOP_LV,
                 env=env,
                 capture_stdout=False,
