@@ -129,6 +129,6 @@ async def ls(user: str) -> Tuple[Linguist, Sequence[RepoInfo]]:
     colours, repos = await gather(
         run_in_executor(_colours), run_in_executor(_ls_repos, user)
     )
-    infos = await gather(*map(_repo_info, repos))
+    infos = await gather(*(_repo_info(repo) for repo in repos if not repo.archived))
     show = tuple(info for info in infos if info.info.showcase)
     return colours, show

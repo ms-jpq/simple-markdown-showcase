@@ -13,6 +13,7 @@ Linguist = Mapping[str, _Linguist]
 
 @dataclass(frozen=True)
 class Repo:
+    archived: bool
     created_at: datetime
     default_branch: str
     description: Optional[str]

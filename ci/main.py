@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from os import environ
 from pathlib import Path
 from shutil import rmtree
-from subprocess import check_call, check_output, run
+from subprocess import check_call, run
 from sys import executable
 
 _TOP_LV = Path(__file__).resolve().parent.parent
