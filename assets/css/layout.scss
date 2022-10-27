@@ -1,6 +1,6 @@
-@import "../../.cache/font-awesome.css";
-@import "./tailwind.scss";
-@import "./markdown.scss";
+@import url("../../.cache/font-awesome.css");
+@import url("./tailwind.scss");
+@import url("./markdown.scss");
 
 a {
   @apply underline text-inherit decoration-solid decoration-primary-400;
