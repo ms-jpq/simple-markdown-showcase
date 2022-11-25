@@ -1,20 +1,12 @@
 import Masonry from "masonry-layout"
 
-const inc = function* () {
-  let n = 0
-  while (true) {
-    yield n++
-  }
-}
-
-const idle = async () => {
-  // @ts-expect-error
-  if (globalThis.requestIdleCallback) {
-    await new Promise((resolve) => requestIdleCallback(resolve))
-  } else {
-    await new Promise<void>((resolve) => queueMicrotask(resolve))
-  }
-}
+const idle = () =>
+  new Promise<void>((resolve) =>
+    // @ts-expect-error
+    (globalThis.requestIdleCallback ? requestIdleCallback : queueMicrotask)(
+      resolve,
+    ),
+  )
 
 const throttle = <T, F extends (...args: unknown[]) => T>(
   ms: number,
@@ -46,58 +38,31 @@ const throttle = <T, F extends (...args: unknown[]) => T>(
 }
 
 const main = async () => {
-  const grid = document.body.querySelector(`.masonry`)
-  const images = new Set(document.body.querySelectorAll(`img`))
-  const layout_checkbox = document.body.querySelector(`#layout-checkbox`)
+  const masonry = new Masonry(`.masonry`, {
+    itemSelector: `.card`,
+    gutter: "#card-sizer",
+    initLayout: false,
+  })
 
-  const masonry =
-    grid &&
-    new Masonry(grid, {
-      itemSelector: `.card`,
-      percentPosition: true,
-      initLayout: false,
-      gutter: "#card-sizer",
-    })
-
-  layout_checkbox?.addEventListener(
+  document.body.querySelector(`#layout-checkbox`)?.addEventListener(
     "change",
     async () => {
       await idle()
-      masonry?.layout?.()
+      masonry.layout?.()
     },
     { passive: true },
   )
 
-  const layout = throttle(16, async () => {
+  const layout = throttle(16, () => masonry.layout?.())
+  const onload = async () => {
     await idle()
-    masonry?.layout?.()
-  })
-
-  layout()
-
-  for (const img of images) {
-    img.onload = img.onerror = layout
+    layout()
   }
 
-  for (const n of inc()) {
-    if (!images.size || n > 60) {
-      break
-    } else {
-      await idle()
-
-      const old_size = images.size
-
-      for (const img of images) {
-        if (img.naturalWidth && img.naturalHeight) {
-          images.delete(img)
-        }
-      }
-
-      if (images.size !== old_size) {
-        layout()
-      }
-    }
+  for (const img of document.body.querySelectorAll(`img`)) {
+    img.onload = img.onerror = onload
   }
+  await onload()
 }
 
 await idle()

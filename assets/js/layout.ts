@@ -1,10 +1,7 @@
-// @ts-expect-error
-if (globalThis.requestIdleCallback) {
-  await new Promise((resolve) => requestIdleCallback(resolve))
-}
+await new Promise<void>((resolve) => queueMicrotask(resolve))
 
-const times = document.body.querySelectorAll(`time`)
-for (const el of times) {
-  const time = new Date(el.dateTime)
-  el.textContent = time.toLocaleString(undefined, { hour12: false })
+for (const el of document.body.querySelectorAll(`time`)) {
+  el.textContent = new Date(el.dateTime).toLocaleString(undefined, {
+    hour12: false,
+  })
 }
