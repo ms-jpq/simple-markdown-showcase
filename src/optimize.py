@@ -3,7 +3,7 @@ from asyncio.tasks import gather
 from concurrent.futures import Executor
 from functools import lru_cache
 from pathlib import Path
-from typing import Awaitable, Iterator
+from typing import Awaitable, Iterator, Mapping, cast
 
 from .log import log
 from .parse import Node, ParseError, parse
@@ -25,7 +25,7 @@ async def _localize(pool: Executor, cache: bool, dist: Path, node: Node) -> None
     else:
         with timeit("WEBP", src):
             attrs = await _run(pool, cache=cache, dist=dist, src=src)
-        node.attrs.update({**attrs})
+        node.attrs.update(cast(Mapping[str, str], attrs))
 
 
 def _optimize(
