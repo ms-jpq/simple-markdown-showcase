@@ -1,5 +1,4 @@
 <!--% from "layout/layout.html" import html with context %-->
-<!--% from "components/big_button.html" import big_button with context %-->
 <!--% from "components/github.html" import github_stars with context %-->
 <!--% from "components/github.html" import github_forks with context %-->
 
@@ -16,10 +15,10 @@
       <!--{ github_stars(stargazers_count) }-->
       <!--{ github_forks(forks_count) }-->
       <a href="<!--{ html_url }-->" class="invis-link">
-        <!--% call big_button(classes=["border-dashed"]) %-->
-        View on Github
-        <i class="fab fa-github"></i>
-        <!--% endcall %-->
+        <button class="big-button border-dashed">
+          View on Github
+          <i class="fab fa-github"></i>
+        </button>
       </a>
     </section>
 

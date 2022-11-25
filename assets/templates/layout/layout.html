@@ -2,9 +2,6 @@
 <!--% from "layout/aside/01_about_me.html" import aside_about_me with context %-->
 <!--% from "layout/aside/02_nav.html" import aside_nav with context %-->
 <!--% from "layout/aside/03_associations.html" import aside_associations with context %-->
-<!--% from "layout/header/00_menu.html" import header_menu with context %-->
-<!--% from "layout/header/01_title.html" import header_title with context %-->
-<!--% from "layout/footer/00_desc.html" import footer_desc with context %-->
 
 <!--% macro html(path, css=[], js=[], desc="") %-->
 <!--% set header = read_data("header.yml") %-->
@@ -35,22 +32,41 @@
       class="scroll-smooth grid gap-4 bg-gray-50 break-words text-secondary-800 selection:bg-tertiary-200"
     >
       <header class="grid grid-flow-col justify-between gap-x-2 pt-4 px-8">
-        <label for="layout-checkbox">
-          <!--{ header_menu(title=header.menu) }-->
+        <label
+          for="layout-checkbox"
+          class="big-button font-medium inline-block sm:hidden"
+        >
+          <i class="fas fa-bars"></i>
+          <!--{ header.menu | e }-->
         </label>
-        <!--{ header_title(title=header.title) }-->
+        <div class="prose text-right overflow-ellipsis">
+          <h3 class="uppercase">
+            <a href="/index.html" class="invis-link">
+              <!--{ header.title | e }-->
+            </a>
+          </h3>
+        </div>
       </header>
+
       <aside class="grid-flow-row grid-cols-1 gap-4 content-start px-8">
         <!--{ aside_headshot() }-->
         <!--{ aside_about_me() }-->
         <!--{ aside_nav(path=path) }-->
         <!--{ aside_associations() }-->
       </aside>
+
       <div class="w-full px-8">
         <!--{ caller() }-->
       </div>
+
       <footer class="grid justify-items-center items-center">
-        <!--{ footer_desc(user) }-->
+        <div class="markdown">
+          <a href="https://github.com/<!--{ user | e }-->">
+            <span>©</span>
+            <!--{ now.year }-->
+            <span><!--{ user | e }--></span>
+          </a>
+        </div>
       </footer>
     </div>
   </body>
