@@ -59,10 +59,14 @@ const main = async () => {
     layout()
   }
 
+  let needs_layout = false
   for (const img of document.body.querySelectorAll(`img`)) {
     img.onload = img.onerror = onload
+    needs_layout = needs_layout || img.complete
   }
-  await onload()
+  if (needs_layout) {
+    await onload()
+  }
 }
 
 await idle()
