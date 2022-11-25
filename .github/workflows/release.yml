@@ -14,19 +14,38 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
 
       - name: Apt
-        run: sudo apt install --yes -- libwebp-dev
+        run: |-
+          sudo apt install --yes -- libwebp-dev
 
-      - name: Pip Packages
-        run: pip install -U mypy types-PyYAML types-Markdown
+      - name: Install Pip Packages
+        shell: python
+        run: |-
+          from itertools import chain
+          from os import execl
+          from sys import executable
 
-      - name: Pip Packages 2
-        run: pip install -U -r requirements.txt
+          from tomllib import load
+
+          with open("pyproject.toml", "rb") as fd:
+              toml = load(fd)
+          project = toml["project"]
+          execl(
+              executable,
+              executable,
+              "-m",
+              "pip",
+              "install",
+              "--upgrade",
+              "--",
+              *project["dependencies"],
+              *chain.from_iterable(project["optional-dependencies"].values()),
+          )
 
       - name: Npm Packages
         run: npm install

@@ -1,6 +1,0 @@
-std2@https://github.com/ms-jpq/std2/archive/2fb3883079e5d46f93d0c196b5961c14d5cfa979.tar.gz
-PyYAML==5.4.1
-Jinja2==3.0.1
-Markdown==3.3.4
-Pygments==2.9.0
-Pillow==8.4.0
