@@ -118,7 +118,7 @@ body > div {
  ***********/
 
 .big-button {
-  @apply self-center cursor-pointer px-2 py-1 border-solid border-2 border-primary-400;
+  @apply self-center cursor-pointer px-2 py-1 border-2 border-primary-400;
   @apply text-justify text-primary-400 bg-transparent hover:text-secondary-100 hover:bg-primary-400;
 }
 
