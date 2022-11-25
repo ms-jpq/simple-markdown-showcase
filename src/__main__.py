@@ -19,7 +19,6 @@ from typing import (
     Iterator,
     Mapping,
     Sequence,
-    Tuple,
 )
 
 from std2.asyncio.subprocess import call
@@ -138,7 +137,7 @@ def _splat(colours: Linguist, spec: RepoInfo) -> Mapping[str, Any]:
 
 async def _j2(
     colours: Linguist, user: str, specs: Sequence[RepoInfo], dist: Path
-) -> Sequence[Tuple[Path, str]]:
+) -> Sequence[tuple[Path, str]]:
     j2 = build(TEMPLATES)
 
     base_env = {"user": user}
@@ -165,7 +164,7 @@ async def _j2(
         },
     }
 
-    async def cont() -> AsyncIterator[Tuple[Path, str]]:
+    async def cont() -> AsyncIterator[tuple[Path, str]]:
         for src, env in frame.items():
             dest = dist / src.relative_to(_PAGES)
             html = await render(j2, path=src, env=base_env | env)
@@ -181,7 +180,7 @@ async def _j2(
 
 
 async def _commit(
-    cache: bool, dist: Path, instructions: Iterable[Tuple[Path, str]]
+    cache: bool, dist: Path, instructions: Iterable[tuple[Path, str]]
 ) -> None:
     ctx = get_context("spawn")
     with ProcessPoolExecutor(mp_context=ctx) as pool:
@@ -231,7 +230,7 @@ def _parse_args() -> Namespace:
     return parser.parse_args()
 
 
-_CACHE_TYPE = Tuple[Linguist, Sequence[RepoInfo]]
+_CACHE_TYPE = tuple[Linguist, Sequence[RepoInfo]]
 
 
 async def main() -> None:

@@ -7,7 +7,7 @@ from mimetypes import guess_extension
 from os import sep
 from pathlib import Path, PurePosixPath
 from shutil import copy2
-from typing import Optional, Tuple, TypedDict, cast
+from typing import Literal, Optional, TypedDict, cast
 from urllib.error import HTTPError
 from urllib.parse import SplitResult, quote, urlsplit, urlunsplit
 
@@ -18,7 +18,7 @@ from PIL.Image import open as open_i
 from PIL.ImageSequence import Iterator as FrameIter
 from std2.urllib import urlopen
 
-from .consts import ASSETS, IMG_SIZES, TIMEOUT
+from .consts import ASSETS, IMG_LAZY, IMG_SIZES, TIMEOUT
 from .log import log
 
 assert check("webp_anim")
@@ -30,6 +30,7 @@ class ImageAttrs(TypedDict, total=False):
     srcset: str
     width: str
     height: str
+    loading: Literal["lazy"]
 
 
 _IMG_DIR = ASSETS / "images"
@@ -88,7 +89,7 @@ def _esc(dist: Path, path: Path) -> str:
     return src
 
 
-def _downsize(cache: bool, path: Path, limit: int) -> Tuple[int, Path]:
+def _downsize(cache: bool, path: Path, limit: int) -> tuple[int, Path]:
     with open_i(path) as img:
         img = cast(Image, img)
         existing = (img.width, img.height)
@@ -127,7 +128,7 @@ async def _srcset(pool: Executor, cache: bool, dist: Path, path: Path) -> str:
     return srcset
 
 
-def _webp(cache: bool, path: Path) -> Tuple[Path, int, int]:
+def _webp(cache: bool, path: Path) -> tuple[Path, int, int]:
     dest = path.with_suffix(".webp")
     with open_i(path) as img:
         img = cast(Image, img)
@@ -158,14 +159,18 @@ async def attrs(pool: Executor, cache: bool, dist: Path, src: str) -> ImageAttrs
                     pool, _webp, cache, path
                 )
                 srcset = await _srcset(pool, cache=cache, dist=dist, path=webp_path)
-                return {
-                    "src": _esc(dist, path=webp_path),
-                    "width": str(width),
-                    "height": str(height),
-                    "srcset": srcset,
-                }
             except (UnidentifiedImageError, OSError) as e:
                 log.error("%s", f"{src} --> {e}")
-                return {"src": src}
+                return ImageAttrs(src=src)
+            else:
+                attrs = ImageAttrs(
+                    src=_esc(dist, path=webp_path),
+                    width=str(width),
+                    height=str(height),
+                    srcset=srcset,
+                )
+                if width * height >= IMG_LAZY:
+                    attrs["loading"] = "lazy"
+                return attrs
         else:
-            return {"src": src}
+            return ImageAttrs(src=src)

@@ -12,7 +12,6 @@ from typing import (
     MutableSequence,
     Optional,
     Sequence,
-    Tuple,
     Union,
 )
 from weakref import ref
@@ -90,7 +89,7 @@ class _Parser(HTMLParser):
         self._stack: MutableSequence[Node] = [root]
 
     def handle_starttag(
-        self, tag: str, attrs: Sequence[Tuple[str, Optional[str]]]
+        self, tag: str, attrs: Sequence[tuple[str, Optional[str]]]
     ) -> None:
         if stack := self._stack:
             parent = stack[-1]

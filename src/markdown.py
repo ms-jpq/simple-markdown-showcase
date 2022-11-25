@@ -1,7 +1,7 @@
 from html import escape
 from locale import strxfrm
 from os import linesep
-from typing import Callable, Match, Optional, Sequence, Tuple, Union, no_type_check
+from typing import Callable, Match, Optional, Sequence, Union, no_type_check
 
 from pygments.formatters.html import HtmlFormatter
 from pygments.styles import get_all_styles, get_style_by_name
@@ -44,7 +44,7 @@ class _B4HtmlProcessor(InlineProcessor):
     @no_type_check
     def handleMatch(
         self, m: Match[str], data: str
-    ) -> Union[Tuple[str, int, int], Tuple[None, None, None]]:
+    ) -> Union[tuple[str, int, int], tuple[None, None, None]]:
         maybe_html = m.group(1)
         chars = {*maybe_html}
 

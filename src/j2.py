@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from functools import lru_cache
 from json import loads
 from pathlib import Path, PurePath
-from typing import Any, Mapping, Tuple
+from typing import Any, Mapping
 
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 from yaml import safe_load
@@ -15,7 +15,7 @@ _DATA_DIR = ASSETS / "data"
 
 
 @lru_cache(maxsize=None)
-def _slurp(base: Path, part: str, *parts: str) -> Tuple[PurePath, str]:
+def _slurp(base: Path, part: str, *parts: str) -> tuple[PurePath, str]:
     path = base.joinpath(part, *parts)
     return path, path.read_text()
 

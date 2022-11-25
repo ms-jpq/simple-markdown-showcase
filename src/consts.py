@@ -16,6 +16,7 @@ MD_STYLE = "friendly"
 
 TIMEOUT = 5.0
 
+IMG_LAZY = new_decoder[int](int)(loads((ASSETS / "image_lazy.json").read_text()))
 IMG_SIZES = new_decoder[Sequence[int]](Sequence[int])(
     loads((ASSETS / "image_sizes.json").read_text())
 )

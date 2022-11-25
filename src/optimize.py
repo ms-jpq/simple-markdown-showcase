@@ -3,7 +3,7 @@ from asyncio.tasks import gather
 from concurrent.futures import Executor
 from functools import lru_cache
 from pathlib import Path
-from typing import Awaitable, Iterator, Mapping, cast
+from typing import Awaitable, Iterator
 
 from .log import log
 from .parse import Node, ParseError, parse
@@ -19,14 +19,13 @@ def _run(pool: Executor, cache: bool, dist: Path, src: str) -> Awaitable[ImageAt
 async def _localize(pool: Executor, cache: bool, dist: Path, node: Node) -> None:
     assert node.tag == "img"
 
-    src = node.attrs.get("src")
-    if not src:
+    if not (src := node.attrs.get("src")):
         # raise KeyError(str(node))
         pass
     else:
         with timeit("WEBP", src):
             attrs = await _run(pool, cache=cache, dist=dist, src=src)
-        node.attrs.update(cast(Mapping[str, str], attrs))
+        node.attrs.update({**attrs})
 
 
 def _optimize(

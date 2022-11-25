@@ -3,7 +3,7 @@ from datetime import datetime
 from http import HTTPStatus
 from json import loads
 from pathlib import PurePosixPath
-from typing import Any, Iterator, MutableSet, Optional, Sequence, Tuple
+from typing import Any, Iterator, MutableSet, Optional, Sequence
 from urllib.error import HTTPError
 
 from std2.pickle.coders import DEFAULT_DECODERS
@@ -124,7 +124,7 @@ async def _repo_info(repo: Repo) -> RepoInfo:
     return ri
 
 
-async def ls(user: str) -> Tuple[Linguist, Sequence[RepoInfo]]:
+async def ls(user: str) -> tuple[Linguist, Sequence[RepoInfo]]:
     colours, repos = await gather(to_thread(_colours), to_thread(_ls_repos, user))
     infos = await gather(*(_repo_info(repo) for repo in repos if not repo.archived))
     show = tuple(info for info in infos if info.info.showcase)
