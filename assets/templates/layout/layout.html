@@ -24,23 +24,35 @@
     <!--% endfor %-->
   </head>
 
-  <body
-    class="scroll-smooth grid gap-4 w-screen bg-gray-50 break-words text-secondary-800 selection:bg-tertiary-200"
-  >
-    <header class="grid grid-flow-col justify-between gap-x-2 px-8 pt-4">
-      <!--{ header_menu(title=header.menu) }-->
-      <!--{ header_title(title=header.title) }-->
-    </header>
-    <aside class="grid-flow-row grid-cols-1 gap-4 content-start px-8">
-      <!--{ aside_headshot() }-->
-      <!--{ aside_about_me() }-->
-      <!--{ aside_nav(path=path) }-->
-      <!--{ aside_associations() }-->
-    </aside>
-    <!--{ caller() }-->
-    <footer class="grid justify-items-center items-center">
-      <!--{ footer_desc(user) }-->
-    </footer>
+  <body class="m-0 p-0">
+    <input
+      type="checkbox"
+      id="layout-checkbox"
+      class="hidden"
+      aria-hidden="true"
+    />
+    <div
+      class="scroll-smooth grid gap-4 bg-gray-50 break-words text-secondary-800 selection:bg-tertiary-200"
+    >
+      <header class="grid grid-flow-col justify-between gap-x-2 pt-4 px-8">
+        <label for="layout-checkbox">
+          <!--{ header_menu(title=header.menu) }-->
+        </label>
+        <!--{ header_title(title=header.title) }-->
+      </header>
+      <aside class="grid-flow-row grid-cols-1 gap-4 content-start px-8">
+        <!--{ aside_headshot() }-->
+        <!--{ aside_about_me() }-->
+        <!--{ aside_nav(path=path) }-->
+        <!--{ aside_associations() }-->
+      </aside>
+      <div class="w-full px-8">
+        <!--{ caller() }-->
+      </div>
+      <footer class="grid justify-items-center items-center">
+        <!--{ footer_desc(user) }-->
+      </footer>
+    </div>
   </body>
 </html>
 <!--% endmacro %-->

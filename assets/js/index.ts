@@ -36,7 +36,7 @@ const throttle = <T, F extends (...args: any[]) => T>(ms: number, fn: F) => {
 const main = async () => {
   const grid = document.body.querySelector(`.masonry`)
   const images = new Set(document.body.querySelectorAll(`img`))
-  const header_menu = document.body.querySelector(`header > button`)
+  const layout_checkbox = document.body.querySelector(`#layout-checkbox`)
 
   const masonry =
     grid &&
@@ -47,8 +47,8 @@ const main = async () => {
       gutter: "#card-sizer",
     })
 
-  header_menu?.addEventListener(
-    "click",
+  layout_checkbox?.addEventListener(
+    "change",
     async () => {
       await new Promise(requestAnimationFrame)
       masonry?.layout?.()

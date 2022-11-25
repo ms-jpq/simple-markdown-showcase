@@ -46,7 +46,7 @@ samp {
  * BODY *
  ********/
 
-body {
+body > div {
   grid-template-rows: auto 1fr auto;
 
   & > header {
@@ -57,7 +57,7 @@ body {
     grid-area: aside;
   }
 
-  & > main {
+  & > div {
     grid-area: main;
   }
 
@@ -66,41 +66,36 @@ body {
   }
 }
 
-:root {
-  & body > main {
-    @apply p-8 grid grid-flow-row grid-cols-1 bg-secondary-100;
-  }
-
-  & body {
+:root > body {
+  & > div {
     grid-template-columns: 1fr;
     grid-template-areas:
       "header"
+      "aside"
       "main"
       "footer";
 
     & > aside {
       @apply hidden;
     }
+
+    & > div {
+      @apply pt-2 bg-secondary-100;
+    }
   }
 
-  & body.overlay {
-    grid-template-columns: 1fr;
-    grid-template-areas:
-      "header"
-      "aside"
-      "footer";
-
+  & > #layout-checkbox:checked + div {
     & > aside {
       @apply grid;
     }
 
-    & > main {
+    & > div {
       @apply hidden;
     }
   }
 
   @media screen(sm) {
-    & body {
+    & > #layout-checkbox:defined + div {
       grid-template-columns: minmax(auto, min(22em, 27vw)) 1fr;
       grid-template-areas:
         "header main"
@@ -109,6 +104,10 @@ body {
 
       & > aside {
         @apply grid;
+      }
+
+      & > div {
+        @apply block pt-8;
       }
     }
   }
