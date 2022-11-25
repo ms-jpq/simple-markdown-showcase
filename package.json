@@ -18,5 +18,6 @@
     "stylelint": "*",
     "stylelint-config-standard": "*",
     "typescript": "*"
-  }
+  },
+  "type": "module"
 }

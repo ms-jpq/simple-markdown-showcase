@@ -7,7 +7,19 @@ const inc = function* () {
   }
 }
 
-const throttle = <T, F extends (...args: any[]) => T>(ms: number, fn: F) => {
+const idle = async () => {
+  // @ts-expect-error
+  if (globalThis.requestIdleCallback) {
+    await new Promise((resolve) => requestIdleCallback(resolve))
+  } else {
+    await new Promise<void>((resolve) => queueMicrotask(resolve))
+  }
+}
+
+const throttle = <T, F extends (...args: unknown[]) => T>(
+  ms: number,
+  fn: F,
+) => {
   let s: any = undefined
   let throttling = false
 
@@ -50,13 +62,16 @@ const main = async () => {
   layout_checkbox?.addEventListener(
     "change",
     async () => {
-      await new Promise(requestAnimationFrame)
+      await idle()
       masonry?.layout?.()
     },
     { passive: true },
   )
 
-  const layout = throttle(50, () => masonry?.layout?.())
+  const layout = throttle(16, async () => {
+    await idle()
+    masonry?.layout?.()
+  })
 
   layout()
 
@@ -65,15 +80,15 @@ const main = async () => {
   }
 
   for (const n of inc()) {
-    if (!images.size || n > 40) {
+    if (!images.size || n > 60) {
       break
     } else {
-      await new Promise((resolve) => setTimeout(resolve, 250))
+      await idle()
 
       const old_size = images.size
 
       for (const img of images) {
-        if (img.naturalWidth !== 0 && img.naturalHeight !== 0) {
+        if (img.naturalWidth && img.naturalHeight) {
           images.delete(img)
         }
       }
@@ -85,4 +100,5 @@ const main = async () => {
   }
 }
 
-main()
+await idle()
+await main()

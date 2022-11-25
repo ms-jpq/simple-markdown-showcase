@@ -4,23 +4,20 @@
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
     "checkJs": false,
-    "declaration": false,
-    "esModuleInterop": true,
+    "declaration": true,
     "forceConsistentCasingInFileNames": true,
     "incremental": true,
-    "jsx": "react",
-    "module": "ESNext",
-    "moduleResolution": "Node",
+    "module": "nodenext",
     "noFallthroughCasesInSwitch": true,
     "noImplicitOverride": true,
     "noImplicitReturns": true,
     "noUncheckedIndexedAccess": true,
-    "outDir": "./dist",
+    "outDir": "tmp/builds/ts",
     "removeComments": true,
     "sourceMap": true,
     "strict": true,
-    "target": "ESNext"
+    "target": "esnext"
   },
-  "exclude": ["node_modules/**"],
-  "include": ["**/*.ts", "**/*.tsx"]
+  "exclude": ["node_modules", "tmp"],
+  "include": ["**/*.ts", "**/*.js"]
 }
