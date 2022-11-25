@@ -12,7 +12,7 @@ from .log import log
 def timeit(label: str, *args: Any) -> Iterator[None]:
     with _timeit() as t:
         yield None
-    delta = t()
+    delta = t().total_seconds()
     time = f"{si_prefixed_smol(delta)}s".ljust(8)
     cols, _ = get_terminal_size()
     msg = f"{label.ljust(10)} -- {time}  " + " ".join(map(str, args)) + " "

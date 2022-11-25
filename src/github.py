@@ -1,4 +1,4 @@
-from asyncio import gather
+from asyncio import gather, to_thread
 from datetime import datetime
 from http import HTTPStatus
 from json import loads
@@ -6,7 +6,6 @@ from pathlib import PurePosixPath
 from typing import Any, Iterator, MutableSet, Optional, Sequence, Tuple
 from urllib.error import HTTPError
 
-from std2.asyncio import run_in_executor
 from std2.pickle.coders import DEFAULT_DECODERS
 from std2.pickle.decoder import new_decoder
 from std2.pickle.types import DecodeError, Decoder, DParser, DStep
@@ -112,8 +111,8 @@ def _resource(repo: Repo, path: PurePosixPath) -> Optional[bytes]:
 async def _repo_info(repo: Repo) -> RepoInfo:
     decode = new_decoder[Info](Info)
     raw_info, raw_readme = await gather(
-        run_in_executor(_resource, repo, path=_CONFIG),
-        run_in_executor(_resource, repo, path=_README),
+        to_thread(_resource, repo, path=_CONFIG),
+        to_thread(_resource, repo, path=_README),
     )
     info = (
         decode(safe_load(raw_info))
@@ -126,9 +125,7 @@ async def _repo_info(repo: Repo) -> RepoInfo:
 
 
 async def ls(user: str) -> Tuple[Linguist, Sequence[RepoInfo]]:
-    colours, repos = await gather(
-        run_in_executor(_colours), run_in_executor(_ls_repos, user)
-    )
+    colours, repos = await gather(to_thread(_colours), to_thread(_ls_repos, user))
     infos = await gather(*(_repo_info(repo) for repo in repos if not repo.archived))
     show = tuple(info for info in infos if info.info.showcase)
     return colours, show

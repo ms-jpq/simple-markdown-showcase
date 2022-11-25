@@ -1,4 +1,4 @@
-from asyncio import gather, get_event_loop
+from asyncio import gather, get_event_loop, to_thread
 from concurrent.futures import Executor
 from hashlib import sha256
 from http import HTTPStatus
@@ -16,7 +16,6 @@ from PIL.features import check
 from PIL.Image import Image
 from PIL.Image import open as open_i
 from PIL.ImageSequence import Iterator as FrameIter
-from std2.asyncio import run_in_executor
 from std2.urllib import urlopen
 
 from .consts import ASSETS, IMG_SIZES, TIMEOUT
@@ -51,7 +50,7 @@ async def _guess_type(uri: SplitResult) -> Optional[str]:
         else:
             return None
 
-    return await run_in_executor(cont)
+    return await to_thread(cont)
 
 
 async def _fetch(cache: bool, uri: SplitResult, path: Path) -> bool:
@@ -81,7 +80,7 @@ async def _fetch(cache: bool, uri: SplitResult, path: Path) -> bool:
                 else:
                     return False
 
-    return await run_in_executor(cont)
+    return await to_thread(cont)
 
 
 def _esc(dist: Path, path: Path) -> str:

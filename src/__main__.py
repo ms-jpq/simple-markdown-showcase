@@ -1,5 +1,5 @@
 from argparse import ArgumentParser, Namespace
-from asyncio import gather, run
+from asyncio import gather, run, to_thread
 from concurrent.futures import ProcessPoolExecutor
 from dataclasses import asdict
 from json import dumps, loads
@@ -10,6 +10,7 @@ from os import altsep, environ, getcwd, sep
 from os.path import normcase
 from pathlib import Path, PurePath
 from shutil import copytree
+from subprocess import CompletedProcess
 from typing import (
     Any,
     AsyncIterator,
@@ -21,7 +22,6 @@ from typing import (
     Tuple,
 )
 
-from std2.asyncio import run_in_executor
 from std2.asyncio.subprocess import call
 from std2.pathlib import walk
 from std2.pickle.coders import (
@@ -32,7 +32,6 @@ from std2.pickle.coders import (
 )
 from std2.pickle.decoder import new_decoder
 from std2.pickle.encoder import new_encoder
-from std2.subprocess import ProcReturn
 
 from .consts import ASSETS, CACHE_DIR, MD_STYLE, NPM_DIR, TEMPLATES, TOP_LV
 from .github import ls
@@ -64,7 +63,7 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
         _CSS.write_text(css(MD_STYLE))
         copytree(_FONTS_DIR, fonts_dest, dirs_exist_ok=True)
 
-    async def c1() -> ProcReturn:
+    async def c1() -> CompletedProcess[bytes]:
         fut = call(
             _NPM_BIN / "purgecss",
             "--content",
@@ -78,10 +77,10 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
             capture_stdout=False,
             capture_stderr=False,
         )
-        _, proc = await gather(run_in_executor(c0), fut)
+        _, proc = await gather(to_thread(c0), fut)
         return proc
 
-    def c2() -> Awaitable[ProcReturn]:
+    def c2() -> Awaitable[CompletedProcess[bytes]]:
         return call(
             _NPM_BIN / "esbuild",
             *(("--log-level=verbose",) if verbose else ()),
@@ -96,7 +95,7 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
             capture_stderr=False,
         )
 
-    def c3() -> Iterator[Awaitable[ProcReturn]]:
+    def c3() -> Iterator[Awaitable[CompletedProcess[bytes]]]:
         yield call(
             _NPM_BIN / "stylelint",
             "--",

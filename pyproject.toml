@@ -5,10 +5,10 @@ requires-python = ">=3.11"
 version         = "0"
 
 dependencies = [
-  "std2@https://github.com/ms-jpq/std2/archive/2fb3883079e5d46f93d0c196b5961c14d5cfa979.tar.gz",
+  "std2@https://github.com/ms-jpq/std2/archive/b77d227da2854db281182c2bd26805508738d473.tar.gz",
   "Jinja2==3.0.1",
   "Markdown==3.3.4",
-  "Pillow==8.4.0",
+  "Pillow==9.3.0",
   "PyYAML==5.4.1",
   "Pygments==2.9.0",
 ]
