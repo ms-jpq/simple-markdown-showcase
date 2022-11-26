@@ -41,7 +41,6 @@ const main = async () => {
   const masonry = new Masonry(`.masonry`, {
     itemSelector: `.card`,
     gutter: "#card-sizer",
-    initLayout: false,
   })
 
   document.body.querySelector(`#layout-checkbox`)?.addEventListener(
@@ -59,13 +58,8 @@ const main = async () => {
     layout()
   }
 
-  let needs_layout = false
   for (const img of document.body.querySelectorAll(`img`)) {
     img.onload = img.onerror = onload
-    needs_layout = needs_layout || img.complete
-  }
-  if (needs_layout) {
-    await onload()
   }
 }
 
