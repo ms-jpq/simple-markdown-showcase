@@ -17,10 +17,6 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v3
 
-      - name: Apt
-        run: |-
-          sudo apt install --yes -- libwebp-dev
-
       - name: Install Pip Packages
         shell: python
         run: |-
@@ -45,12 +41,14 @@ jobs:
               *chain.from_iterable(project["optional-dependencies"].values()),
           )
 
-
       - name: Npm Packages
-        run: npm install
+        run: |-
+          npm install
 
       - name: Lint
-        run: mypy -- .
+        run: |-
+          mypy -- .
 
       - name: Build
-        run: python3 -m src --production -- 'ms-jpq' 'dist'
+        run: |-
+          python3 -m src --production -- 'ms-jpq' 'dist'

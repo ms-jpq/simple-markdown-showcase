@@ -1,25 +1,15 @@
 from argparse import ArgumentParser, Namespace
 from asyncio import gather, run, to_thread
-from concurrent.futures import ProcessPoolExecutor
 from dataclasses import asdict
 from json import dumps, loads
 from locale import strxfrm
 from logging import DEBUG, INFO
-from multiprocessing import get_context
 from os import altsep, environ, getcwd, sep
 from os.path import normcase
 from pathlib import Path, PurePath
 from shutil import copytree
 from subprocess import CompletedProcess
-from typing import (
-    Any,
-    AsyncIterator,
-    Awaitable,
-    Iterable,
-    Iterator,
-    Mapping,
-    Sequence,
-)
+from typing import Any, AsyncIterator, Awaitable, Iterable, Iterator, Mapping, Sequence
 
 from std2.asyncio.subprocess import call
 from std2.pathlib import walk
@@ -37,7 +27,6 @@ from .github import ls
 from .j2 import build, render
 from .log import log
 from .markdown import css
-from .optimize import optimize
 from .timeit import timeit
 from .types import Linguist, RepoInfo
 
@@ -182,39 +171,33 @@ async def _j2(
 async def _commit(
     cache: bool, dist: Path, instructions: Iterable[tuple[Path, str]]
 ) -> None:
-    ctx = get_context("spawn")
-    with ProcessPoolExecutor(mp_context=ctx) as pool:
+    async def go(path: Path, html: str) -> None:
+        path.parent.mkdir(parents=True, exist_ok=True)
 
-        async def go(path: Path, html: str) -> None:
-            path.parent.mkdir(parents=True, exist_ok=True)
+        if cache:
+            path.write_text(html)
+        else:
+            text = "<!DOCTYPE html>" + html
+            path.write_text(text)
 
-            if cache:
-                path.write_text(html)
-            else:
-                with timeit("OPTIMIZE", path.relative_to(dist)):
-                    optimized = await optimize(
-                        pool, cache=cache, dist=dist, path=path, html=html
-                    )
-                    path.write_text(optimized)
+    def cont() -> Iterator[Awaitable[None]]:
+        for path, html in instructions:
+            yield go(path, html=html)
 
-        def cont() -> Iterator[Awaitable[None]]:
-            for path, html in instructions:
-                yield go(path, html=html)
+    with timeit("OPTIMIZED"):
+        await gather(*cont())
 
-        with timeit("OPTIMIZED"):
-            await gather(*cont())
-
-        if not cache:
-            with timeit("PRETTY"):
-                await call(
-                    _NPM_BIN / "prettier",
-                    "--write",
-                    "--",
-                    "**/*.html",
-                    cwd=dist,
-                    capture_stdout=False,
-                    capture_stderr=False,
-                )
+    if not cache:
+        with timeit("PRETTY"):
+            await call(
+                _NPM_BIN / "prettier",
+                "--write",
+                "--",
+                "**/*.html",
+                cwd=dist,
+                capture_stdout=False,
+                capture_stderr=False,
+            )
 
 
 def _parse_args() -> Namespace:

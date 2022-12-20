@@ -3,6 +3,8 @@ from datetime import datetime
 from http import HTTPStatus
 from json import loads
 from pathlib import PurePosixPath
+from random import uniform
+from time import sleep
 from typing import Any, Iterator, MutableSet, Optional, Sequence
 from urllib.error import HTTPError
 
@@ -95,17 +97,25 @@ def _ls_repos(user: str) -> Sequence[Repo]:
 
 def _resource(repo: Repo, path: PurePosixPath) -> Optional[bytes]:
     uri = f"https://raw.githubusercontent.com/{repo.full_name}/{repo.default_branch}/{path}"
-    try:
-        with urlopen(uri, timeout=TIMEOUT) as resp:
-            raw = resp.read()
-    except HTTPError as e:
-        if e.code == HTTPStatus.NOT_FOUND:
-            return None
+    err = None
+    for i in range(3):
+        try:
+            with urlopen(uri, timeout=TIMEOUT) as resp:
+                raw = resp.read()
+        except HTTPError as e:
+            if e.code == HTTPStatus.NOT_FOUND:
+                return None
+            elif e.code == HTTPStatus.FORBIDDEN:
+                err = e
+                sleep(i * uniform(0, 1))
+            else:
+                log.exception("%s", e, uri)
+                raise
         else:
-            log.exception("%s", e, uri)
-            raise
+            return raw
     else:
-        return raw
+        assert err
+        raise err
 
 
 async def _repo_info(repo: Repo) -> RepoInfo:

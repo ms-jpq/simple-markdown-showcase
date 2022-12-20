@@ -19,10 +19,6 @@ jobs:
       - name: Setup Python
         uses: actions/setup-python@v3
 
-      - name: Apt
-        run: |-
-          sudo apt install --yes -- libwebp-dev
-
       - name: Install Pip Packages
         shell: python
         run: |-
@@ -48,12 +44,15 @@ jobs:
           )
 
       - name: Npm Packages
-        run: npm install
+        run: |-
+          npm install
 
       - name: Lint
-        run: mypy -- .
+        run: |-
+          mypy -- .
 
       - name: CI
         env:
           CI_TOKEN: ${{ secrets.CI_TOKEN }}
-        run: python3 -m ci
+        run: |-
+          python3 -m ci
