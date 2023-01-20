@@ -21,34 +21,34 @@
     <!--% endfor %-->
   </head>
 
-  <body class="m-0 p-0 w-screen min-h-screen flex">
+  <body class="m-0 flex min-h-screen w-screen p-0">
     <input
-      type="checkbox"
-      id="layout-checkbox"
       class="hidden"
+      id="layout-checkbox"
+      type="checkbox"
       aria-hidden="true"
     />
     <div
-      class="w-full grow scroll-smooth grid gap-4 bg-gray-50 break-words text-secondary-800 selection:bg-tertiary-200"
+      class="grid w-full grow gap-4 scroll-smooth break-words bg-gray-50 text-secondary-800 selection:bg-tertiary-200"
     >
-      <header class="grid grid-flow-col justify-between gap-x-2 pt-4 px-8">
+      <header class="grid grid-flow-col justify-between gap-x-2 px-8 pt-4">
         <label
+          class="big-button inline-block font-medium sm:hidden"
           for="layout-checkbox"
-          class="big-button font-medium inline-block sm:hidden"
         >
           <i class="fas fa-bars"></i>
           <!--{ header.menu | e }-->
         </label>
-        <div class="prose text-right overflow-ellipsis">
+        <div class="prose overflow-ellipsis text-right">
           <h3 class="uppercase">
-            <a href="/index.html" class="invis-link">
+            <a class="invis-link" href="/index.html">
               <!--{ header.title | e }-->
             </a>
           </h3>
         </div>
       </header>
 
-      <aside class="grid-flow-row grid-cols-1 gap-4 content-start px-8">
+      <aside class="grid-flow-row grid-cols-1 content-start gap-4 px-8">
         <!--{ aside_headshot() }-->
         <!--{ aside_about_me() }-->
         <!--{ aside_nav(path=path) }-->
@@ -59,7 +59,7 @@
         <!--{ caller() }-->
       </div>
 
-      <footer class="grid justify-items-center items-center">
+      <footer class="grid items-center justify-items-center">
         <div class="markdown">
           <a href="https://github.com/<!--{ user | e }-->">
             <span>©</span>

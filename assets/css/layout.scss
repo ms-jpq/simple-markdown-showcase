@@ -3,12 +3,12 @@
 @import url("./markdown.scss");
 
 a {
-  @apply underline text-inherit decoration-solid decoration-primary-400;
+  @apply text-inherit underline decoration-primary-400 decoration-solid;
 
   &:active,
   &:hover,
   &:focus {
-    @apply decoration-dashed text-inherit;
+    @apply text-inherit decoration-dashed;
   }
 }
 
@@ -80,7 +80,7 @@ body > div {
     }
 
     & > div {
-      @apply pt-2 bg-secondary-100;
+      @apply bg-secondary-100 pt-2;
     }
   }
 
@@ -118,14 +118,14 @@ body > div {
  ***********/
 
 .big-button {
-  @apply self-center cursor-pointer px-2 py-1 border-2 border-primary-400;
-  @apply text-justify text-primary-400 bg-transparent hover:text-secondary-100 hover:bg-primary-400;
+  @apply cursor-pointer self-center border-2 border-primary-400 px-2 py-1;
+  @apply bg-transparent text-justify text-primary-400 hover:bg-primary-400 hover:text-secondary-100;
 }
 
 a.invis-link {
   @apply no-underline;
 
   &:hover {
-    @apply underline decoration-dotted decoration-primary-400;
+    @apply underline decoration-primary-400 decoration-dotted;
   }
 }

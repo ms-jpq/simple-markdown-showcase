@@ -4,7 +4,7 @@
     <ul>
       <!--% for p in read_data("nav.yml") %-->
       <li
-        class="capitalize active:font-bold active:text-primary-400 <!--{ 'active' if p.link == path else '' }-->"
+        class="<!--{ 'active' if p.link == path else '' }--> capitalize active:font-bold active:text-primary-400"
       >
         <a
           class="no-underline hover:text-primary-400"

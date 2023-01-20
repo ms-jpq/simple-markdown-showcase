@@ -11,10 +11,10 @@
 <!--% set TIME_FMT = "%Y-%m-%dT%H:%M:%S%z" %-->
 <main class="grid grid-flow-row grid-cols-1 justify-items-center">
   <div class="grid grid-flow-row grid-cols-1 gap-y-8">
-    <section class="grid grid-flow-col justify-end items-center gap-x-4">
+    <section class="grid grid-flow-col items-center justify-end gap-x-4">
       <!--{ github_stars(stargazers_count) }-->
       <!--{ github_forks(forks_count) }-->
-      <a href="<!--{ html_url }-->" class="big-button invis-link border-dashed">
+      <a class="big-button invis-link border-dashed" href="<!--{ html_url }-->">
         View on Github
         <i class="fab fa-github"></i>
       </a>
@@ -26,7 +26,7 @@
       </article>
     </section>
 
-    <section class="grid grid-flow-col justify-end items-center gap-x-4">
+    <section class="grid grid-flow-col items-center justify-end gap-x-4">
       <div>
         <i class="fas fa-baby text-left"></i>
         <time datetime="<!--{ created_at.strftime(TIME_FMT) | e }-->"></time>

@@ -9,8 +9,8 @@
   js=["/layout.js", "/index.js"],
   desc=user)
 %-->
-<main class="grid grid-flow-row grid-cols-1 py-4 px-4 sm:px-0 m-0">
-  <div class="masonry w-full flex flex-wrap justify-between items-center">
+<main class="m-0 grid grid-flow-row grid-cols-1 py-4 px-4 sm:px-0">
+  <div class="masonry flex w-full flex-wrap items-center justify-between">
     <!--% for spec in specs %-->
     <!--% set spec_uri = ('/' ~ spec.name ~ '/index.html') | e %-->
 
@@ -18,28 +18,28 @@
       class="card drop-shadow-lg hover:drop-shadow-xl focus:drop-shadow-xl active:drop-shadow-xl"
     >
       <figure
-        class="grid break-inside-avoid-column bg-gray-100 prose mx-0 overflow-x-hidden"
+        class="prose mx-0 grid break-inside-avoid-column overflow-x-hidden bg-gray-100"
       >
         <!--% if spec.images %-->
         <!--% set image = spec.images[0] %-->
         <a
+          class="figure-img m-0 grid w-full p-0 no-underline"
           href="<!--{ spec_uri | e }-->"
-          class="figure-img w-full grid m-0 p-0 no-underline"
         >
           <img
-            class="row-start-1 row-end-1 col-start-1 col-end-1 object-contain object-center w-full max-w-full h-auto bg-tertiary-50 m-0 p-0"
+            class="col-start-1 col-end-1 row-start-1 row-end-1 m-0 h-auto w-full max-w-full bg-tertiary-50 object-contain object-center p-0"
             src="<!--{ image }-->"
             alt="<!--{ (spec.title ~ '.img') | e }-->"
           />
           <div
-            class="figure-facade row-start-1 row-end-1 col-start-1 col-end-1 justify-items-center items-center bg-gray-100 opacity-70 hidden"
+            class="figure-facade col-start-1 col-end-1 row-start-1 row-end-1 hidden items-center justify-items-center bg-gray-100 opacity-70"
           >
-            <i class="fas fa-chevron-right text-stone-300 text-5xl"></i>
+            <i class="fas fa-chevron-right text-5xl text-stone-300"></i>
           </div>
         </a>
         <!--% endif %-->
-        <h4 class="figure-title uppercase text-center text-ellipsis pt-2 px-4">
-          <a href="<!--{ spec_uri | e }-->" class="invis-link">
+        <h4 class="figure-title text-ellipsis px-4 pt-2 text-center uppercase">
+          <a class="invis-link" href="<!--{ spec_uri | e }-->">
             <!--{ spec.title | e }-->
           </a>
         </h4>
@@ -50,7 +50,7 @@
           <!--{ github_stars(stars=spec.stargazers_count) }-->
           <!--{ github_forks(forks=spec.forks_count) }-->
         </div>
-        <figcaption class="figure-detail text-ellipsis text-justify px-4 pb-2">
+        <figcaption class="figure-detail text-ellipsis px-4 pb-2 text-justify">
           <!--{ (spec.description or "") | e }-->
         </figcaption>
       </figure>
@@ -58,7 +58,7 @@
 
     <!--% endfor %-->
 
-    <div id="card-sizer" class="h-1"></div>
+    <div class="h-1" id="card-sizer"></div>
   </div>
 </main>
 <!--% endcall %-->

@@ -40,7 +40,7 @@
   }
 
   & code {
-    @apply text-inherit bg-secondary-200;
+    @apply bg-secondary-200 text-inherit;
 
     &::before,
     &::after {
@@ -50,7 +50,7 @@
 
   & pre,
   & blockquote {
-    @apply grid grid-flow-col w-full gap-x-2 overflow-x-auto border-2 rounded text-inherit bg-secondary-100;
+    @apply grid w-full grid-flow-col gap-x-2 overflow-x-auto rounded border-2 bg-secondary-100 text-inherit;
 
     max-width: inherit;
     grid-template-columns: 0.3em 1fr;
