@@ -29,9 +29,11 @@
       aria-hidden="true"
     />
     <div
-      class="group/layout grid w-full gap-4 scroll-smooth break-words bg-gray-50 text-secondary-800 selection:bg-tertiary-200"
+      class="group/layout grid w-full content-start scroll-smooth break-words bg-gray-50 text-secondary-800 selection:bg-tertiary-200"
     >
-      <header class="grid grid-flow-col justify-between gap-x-2 px-8 pt-4">
+      <header
+        class="mb-4 grid grid-flow-col justify-between gap-x-2 px-8 pt-4 sm:mb-0"
+      >
         <label
           class="big-button inline-block font-medium sm:hidden"
           for="layout-checkbox"
@@ -63,7 +65,7 @@
         <!--{ caller() }-->
       </div>
 
-      <footer class="grid items-center justify-items-center">
+      <footer class="mt-4 grid items-center justify-items-center">
         <div class="markdown">
           <a href="https://github.com/<!--{ user | e }-->">
             <span>©</span>

@@ -47,8 +47,6 @@ samp {
  ********/
 
 body > div {
-  grid-template-rows: auto 1fr auto;
-
   & > header {
     grid-area: header;
   }
@@ -77,11 +75,12 @@ body > div {
 
   @media screen(sm) {
     & > div {
-      grid-template-columns: minmax(auto, min(30ch, 30vw)) 1fr;
       grid-template-areas:
         "header main"
         "aside  main"
         "footer main";
+      grid-template-columns: minmax(auto, min(30ch, 30vw)) 1fr;
+      grid-template-rows: auto 1fr auto;
     }
   }
 }
