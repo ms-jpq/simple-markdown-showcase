@@ -2,10 +2,9 @@
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6",
     "@fullhuman/postcss-purgecss": "^5",
+    "@tailwindcss/container-queries": "^0.1",
     "@tailwindcss/typography": "^0.5",
-    "@types/masonry-layout": "^4",
     "cssnano": "^5",
-    "masonry-layout": "^4",
     "postcss": "^8",
     "postcss-cli": "^10",
     "postcss-import": "^15",

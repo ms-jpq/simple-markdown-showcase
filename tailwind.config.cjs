@@ -1,3 +1,4 @@
+const { screens } = require("tailwindcss/defaultTheme")
 const colors = require("tailwindcss/colors")
 
 /**
@@ -5,7 +6,10 @@ const colors = require("tailwindcss/colors")
  */
 module.exports = {
   relative: true,
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [
+    require("@tailwindcss/container-queries"),
+    require("@tailwindcss/typography"),
+  ],
   content: ["./assets/templates/**/*.html"],
   theme: {
     extend: {
@@ -14,10 +18,22 @@ module.exports = {
         secondary: colors.neutral,
         tertiary: colors.fuchsia,
       },
-      screens: {
-        "3xl": "1792px",
-        "4xl": "2048px",
-      },
+      screens: (() => {
+        const re = /\d+/g
+        const unit = screens.xl.replace(re, "")
+        const [xl] = screens.xl.match(re) ?? []
+        const [txl] = screens["2xl"].match(re) ?? []
+        const [lo, hi] = [xl, txl].map(Number)
+        const increment = hi - lo
+
+        const addnum = Object.fromEntries(
+          [3, 4, 5, 6, 7, 8].map((n, i) => [
+            `${n}xl`,
+            `${lo + (i + 1) * increment}${unit}`,
+          ]),
+        )
+        return addnum
+      })(),
     },
   },
 }

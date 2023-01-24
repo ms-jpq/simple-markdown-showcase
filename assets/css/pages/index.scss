@@ -4,17 +4,7 @@
  * CARD *
  ********/
 
-.masonry {
-  --c-gap: theme("spacing.4");
-  --m-padding: theme("spacing.4");
-
-  padding-left: var(--m-padding);
-  padding-right: var(--m-padding);
-
-  & > #card-sizer {
-    width: var(--c-gap);
-  }
-
+main {
   & > .card {
     grid-template-areas:
       "img"
@@ -36,29 +26,6 @@
 
     & > .figure-meta {
       grid-area: meta;
-    }
-
-    margin-bottom: var(--c-gap);
-    width: calc((100% - var(--m-padding) * 2 - var(--c-gap) * 0) / 1);
-
-    @media screen(md) {
-      width: calc((100% - var(--m-padding) * 2 - var(--c-gap) * 1) / 2);
-    }
-
-    @media screen(xl) {
-      width: calc((100% - var(--m-padding) * 2 - var(--c-gap) * 2) / 3);
-    }
-
-    @media screen(2xl) {
-      width: calc((100% - var(--m-padding) * 2 - var(--c-gap) * 3) / 4);
-    }
-
-    @media screen(3xl) {
-      width: calc((100% - var(--m-padding) * 2 - var(--c-gap) * 4) / 5);
-    }
-
-    @media screen(4xl) {
-      width: calc((100% - var(--m-padding) * 2 - var(--c-gap) * 5) / 6);
     }
   }
 }

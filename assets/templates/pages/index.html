@@ -6,16 +6,18 @@
 <!--% call html(
   path="/index.html",
   css=["/pages_index.css"],
-  js=["/layout.js", "/index.js"],
+  js=["/layout.js"],
   desc=user)
 %-->
-<main class="m-0 grid grid-flow-row grid-cols-1 py-4 px-4 sm:px-0">
-  <div class="masonry flex w-full flex-wrap items-center justify-between">
+<main class="m-0 py-4 px-4 @container sm:px-0">
+  <div
+    class="@8xl:columns-5 w-full columns-1 @xl:columns-2 @4xl:columns-3 @6xl:columns-4"
+  >
     <!--% for spec in specs %-->
     <!--% set spec_uri = ('/' ~ spec.name ~ '/index.html') | e %-->
 
     <div
-      class="card drop-shadow-lg hover:drop-shadow-xl focus:drop-shadow-xl active:drop-shadow-xl"
+      class="card mb-4 drop-shadow-lg hover:drop-shadow-xl focus:drop-shadow-xl active:drop-shadow-xl"
     >
       <figure
         class="prose mx-0 grid break-inside-avoid-column overflow-x-hidden bg-gray-100"
@@ -57,8 +59,6 @@
     </div>
 
     <!--% endfor %-->
-
-    <div class="h-1" id="card-sizer"></div>
   </div>
 </main>
 <!--% endcall %-->
