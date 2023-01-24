@@ -77,7 +77,7 @@ body > div {
 
   @media screen(sm) {
     & > div {
-      grid-template-columns: minmax(auto, min(22em, 27vw)) 1fr;
+      grid-template-columns: minmax(auto, min(30ch, 30vw)) 1fr;
       grid-template-areas:
         "header main"
         "aside  main"

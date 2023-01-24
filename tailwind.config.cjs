@@ -27,7 +27,7 @@ module.exports = {
         const increment = hi - lo
 
         const addnum = Object.fromEntries(
-          [3, 4, 5, 6, 7, 8].map((n, i) => [
+          [3, 4, 5, 6, 7, 8, 9, 10, 11, 12].map((n, i) => [
             `${n}xl`,
             `${lo + (i + 1) * increment}${unit}`,
           ]),

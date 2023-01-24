@@ -7,6 +7,8 @@
 .markdown {
   @apply prose;
 
+  max-width: 88ch;
+
   &,
   & h1,
   & h2,
@@ -53,7 +55,7 @@
     @apply grid w-full grid-flow-col gap-x-2 overflow-x-auto rounded border-2 bg-secondary-100 text-inherit;
 
     max-width: inherit;
-    grid-template-columns: 0.3em 1fr;
+    grid-template-columns: 0.5ch 1fr;
 
     &::before {
       grid-row: span 100;
