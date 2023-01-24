@@ -1,6 +1,6 @@
 <!--% macro circle(href, class) %-->
 <a
-  class="m-1 flex items-center justify-center rounded-full border-2 border-solid border-secondary-500 p-2 text-center text-secondary-500 no-underline hover:border-primary-400 hover:text-primary-400"
+  class="flex h-[3ch] w-[3ch] items-center justify-center rounded-full border-2 border-solid border-secondary-500 p-2 text-center text-secondary-500 no-underline hover:border-primary-400 hover:text-primary-400"
   href="<!--{ href | e }-->"
 >
   <i class="<!--{ class | e }-->"></i>
@@ -9,7 +9,7 @@
 
 <!--% macro aside_associations() %-->
 <!--% set contacts = read_data("contacts.yml") %-->
-<section class="flex flex-wrap px-2">
+<section class="flex flex-wrap gap-2">
   <!--{ circle(href="mailto:" ~ contacts.email, class="far fa-envelope") }-->
   <!--# circle(href=contacts.linkedin, class="fab fa-linkedin-in") #-->
   <!--{ circle(href=contacts.github, class="fab fa-github") }-->
