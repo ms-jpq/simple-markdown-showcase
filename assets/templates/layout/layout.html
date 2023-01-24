@@ -29,7 +29,7 @@
       aria-hidden="true"
     />
     <div
-      class="grid w-full grow gap-4 scroll-smooth break-words bg-gray-50 text-secondary-800 selection:bg-tertiary-200"
+      class="group/layout grid w-full grow gap-4 scroll-smooth break-words bg-gray-50 text-secondary-800 selection:bg-tertiary-200"
     >
       <header class="grid grid-flow-col justify-between gap-x-2 px-8 pt-4">
         <label
@@ -48,14 +48,18 @@
         </div>
       </header>
 
-      <aside class="grid-flow-row grid-cols-1 content-start gap-4 px-8">
+      <aside
+        class="hidden grid-flow-row grid-cols-1 content-start gap-4 px-8 group-[input:checked+_&]/layout:grid sm:grid"
+      >
         <!--{ aside_headshot() }-->
         <!--{ aside_about_me() }-->
         <!--{ aside_nav(path=path) }-->
         <!--{ aside_associations() }-->
       </aside>
 
-      <div class="w-full px-8">
+      <div
+        class="w-full bg-secondary-100 px-8 pt-2 group-[input:checked+_&]/layout:hidden sm:!block sm:pt-8"
+      >
         <!--{ caller() }-->
       </div>
 

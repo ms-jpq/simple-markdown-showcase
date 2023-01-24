@@ -68,47 +68,20 @@ body > div {
 
 :root > body {
   & > div {
-    grid-template-columns: 1fr;
     grid-template-areas:
       "header"
       "aside"
       "main"
       "footer";
-
-    & > aside {
-      @apply hidden;
-    }
-
-    & > div {
-      @apply bg-secondary-100 pt-2;
-    }
-  }
-
-  & > #layout-checkbox:checked + div {
-    & > aside {
-      @apply grid;
-    }
-
-    & > div {
-      @apply hidden;
-    }
   }
 
   @media screen(sm) {
-    & > #layout-checkbox:defined + div {
+    & > div {
       grid-template-columns: minmax(auto, min(22em, 27vw)) 1fr;
       grid-template-areas:
         "header main"
         "aside  main"
         "footer main";
-
-      & > aside {
-        @apply grid;
-      }
-
-      & > div {
-        @apply block pt-8;
-      }
     }
   }
 }

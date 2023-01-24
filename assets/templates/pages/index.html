@@ -23,7 +23,7 @@
         <!--% if spec.images %-->
         <!--% set image = spec.images[0] %-->
         <a
-          class="figure-img m-0 grid w-full p-0 no-underline"
+          class="figure-img group/index m-0 grid w-full p-0 no-underline"
           href="<!--{ spec_uri | e }-->"
         >
           <img
@@ -32,7 +32,7 @@
             alt="<!--{ (spec.title ~ '.img') | e }-->"
           />
           <div
-            class="figure-facade col-start-1 col-end-1 row-start-1 row-end-1 hidden items-center justify-items-center bg-gray-100 opacity-70"
+            class="figure-facade col-start-1 col-end-1 row-start-1 row-end-1 hidden items-center justify-items-center bg-gray-100 opacity-70 group-hover/index:grid"
           >
             <i class="fas fa-chevron-right text-5xl text-stone-300"></i>
           </div>

@@ -38,12 +38,6 @@
       grid-area: meta;
     }
 
-    & > .figure-img:hover {
-      & > .figure-facade {
-        display: grid;
-      }
-    }
-
     margin-bottom: var(--c-gap);
     width: calc((100% - var(--m-padding) * 2 - var(--c-gap) * 0) / 1);
 
