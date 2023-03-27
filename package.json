@@ -4,7 +4,7 @@
     "@fullhuman/postcss-purgecss": "^5",
     "@tailwindcss/container-queries": "^0.1",
     "@tailwindcss/typography": "^0.5",
-    "cssnano": "^5",
+    "cssnano": "^6",
     "postcss": "^8",
     "postcss-cli": "^10",
     "postcss-import": "^15",
