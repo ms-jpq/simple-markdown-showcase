@@ -29,7 +29,7 @@ from itertools import chain
 from os import execl
 from sys import executable
 
-from tomllib import load
+from tomli import load
 
 toml = load(open("pyproject.toml", "rb"))
 
@@ -48,6 +48,7 @@ execl(
 endef
 
 .venv/bin/mypy: .venv/bin/python3
+	'$<' -m pip install -- tomli
 	'$<' <<< '$(PYDEPS)'
 
 node_modules/.bin/tsc:
