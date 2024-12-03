@@ -1,6 +1,6 @@
 from collections.abc import Mapping
 from datetime import datetime, timezone
-from functools import lru_cache
+from functools import cache
 from json import loads
 from pathlib import Path, PurePath
 from typing import Any
@@ -15,13 +15,13 @@ _MARKDOWN_DIR = ASSETS / "markdown"
 _DATA_DIR = ASSETS / "data"
 
 
-@lru_cache(maxsize=None)
+@cache
 def _slurp(base: Path, part: str, *parts: str) -> tuple[PurePath, str]:
     path = base.joinpath(part, *parts)
     return path, path.read_text()
 
 
-@lru_cache(maxsize=None)
+@cache
 def _read_data(path: str, *paths: str) -> Any:
     resoure, raw = _slurp(_DATA_DIR, path, *paths)
     if resoure.suffix in {".yml", ".yaml"}:
@@ -33,7 +33,7 @@ def _read_data(path: str, *paths: str) -> Any:
     return data
 
 
-_render = lru_cache(render_md(MD_STYLE))
+_render = cache(render_md(MD_STYLE))
 
 
 def _read_markdown(path: str, *paths: str) -> str:
