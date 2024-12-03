@@ -3,7 +3,7 @@
   "compileOnSave": true,
   "compilerOptions": {
     "allowImportingTsExtensions": true,
-    "checkJs": true,
+    "checkJs": false,
     "composite": true,
     "isolatedDeclarations": true,
     "module": "nodenext",
