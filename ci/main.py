@@ -10,18 +10,17 @@ _TOP_LV = Path(__file__).resolve().parent.parent
 _USER = environ["GITHUB_ACTOR"]
 
 
-def _git_identity() -> None:
-    email = "ci@ci.ci"
-    username = "ci-bot"
-    check_call(("git", "config", "--global", "user.email", email))
-    check_call(("git", "config", "--global", "user.name", username))
+def _git_identity(repo: Path) -> None:
+    email, username = "ci@ci.ci", "ci[bot]"
+    check_call(("git", "-C", repo, "config", "--local", "--", "user.email", email))
+    check_call(("git", "-C", repo, "config", "--local", "--", "user.name", username))
 
 
 def _git_clone(path: Path) -> None:
     if not path.is_dir():
         token = environ["CI_TOKEN"]
         uri = f"https://{_USER}:{token}@github.com/{_USER}/{_USER}.github.io.git"
-        check_call(("git", "clone", uri, str(path)))
+        check_call(("git", "clone", "--", uri, path))
 
 
 def _build(path: Path) -> None:
@@ -39,11 +38,11 @@ def _build(path: Path) -> None:
 
 
 def _git_push(cwd: Path) -> None:
-    proc = run(("git", "diff", "--exit-code"), cwd=cwd)
+    proc = run(("git", "-C", cwd, "diff", "--exit-code"))
     if proc.returncode:
         time = datetime.now(tz=timezone.utc).strftime("%Y-%m-%d")
-        check_call(("git", "add", "."), cwd=cwd)
-        check_call(("git", "commit", "-m", "::<>"), cwd=cwd)
+        check_call(("git", "-C", cwd, "add", "."))
+        check_call(("git", "-C", cwd, "commit", "-m", "::<>"))
         # sha = check_output(
         #     (
         #         "git",
@@ -57,12 +56,12 @@ def _git_push(cwd: Path) -> None:
         #     text=True,
         # )
         # check_call(("git", "reset", "--hard", sha.rstrip()))
-        check_call(("git", "push", "--force"), cwd=cwd)
+        check_call(("git", "-C", cwd, "push", "--force"))
 
 
 def main() -> None:
     cwd = _TOP_LV / "tmp"
-    _git_identity()
     _git_clone(cwd)
+    _git_identity(cwd)
     _build(cwd)
     _git_push(cwd)

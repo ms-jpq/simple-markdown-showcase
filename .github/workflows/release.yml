@@ -20,9 +20,6 @@ jobs:
       - run: |-
           make lint
 
-      - run: |-
-          make build
-
       - env:
           CI_TOKEN: ${{ secrets.CI_TOKEN }}
         run: |-
