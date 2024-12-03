@@ -11,7 +11,7 @@ SHELL := bash
 
 .DEFAULT_GOAL := help
 
-.PHONY: clean clobber mypy tsc black prettier lint fmt build
+.PHONY: clean clobber mypy tsc black prettier lint fmt build ci
 
 clean:
 	shopt -u failglob
@@ -73,3 +73,6 @@ fmt: black prettier
 
 build: .venv/bin/python3 .venv/bin/mypy node_modules/.bin/tsc
 	'$<' -m src --production -- 'ms-jpq' 'dist'
+
+ci: .venv/bin/python3 .venv/bin/mypy
+	'$<' -m ci

@@ -26,4 +26,4 @@ jobs:
       - env:
           CI_TOKEN: ${{ secrets.CI_TOKEN }}
         run: |-
-          python3 -m ci
+          make ci
