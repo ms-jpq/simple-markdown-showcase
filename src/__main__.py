@@ -1,5 +1,13 @@
 from argparse import ArgumentParser, Namespace
 from asyncio import gather, run, to_thread
+from collections.abc import (
+    AsyncIterator,
+    Awaitable,
+    Iterable,
+    Iterator,
+    Mapping,
+    Sequence,
+)
 from dataclasses import asdict
 from json import dumps, loads
 from locale import strxfrm
@@ -9,7 +17,7 @@ from os.path import normcase
 from pathlib import Path, PurePath
 from shutil import copytree
 from subprocess import CompletedProcess
-from typing import Any, AsyncIterator, Awaitable, Iterable, Iterator, Mapping, Sequence
+from typing import Any
 
 from std2.asyncio.subprocess import call
 from std2.pathlib import walk
@@ -113,7 +121,7 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
     await gather(*c3())
 
 
-def _splat(colours: Linguist, spec: RepoInfo) -> Mapping[str, Any]:
+def _splat(colours: Linguist, spec: RepoInfo) -> dict[str, Any]:
     colour = colours.get(spec.repo.language or "")
     env = {
         **asdict(spec.info),
@@ -143,7 +151,7 @@ async def _j2(
         reverse=True,
     )
 
-    frame: Mapping[PurePath, Mapping[str, Any]] = {
+    frame: Mapping[PurePath, dict[str, Any]] = {
         _PAGES / "404.html": {},
         _PAGES / "about_me.html": {},
         _PAGES / "contact_me.html": {},

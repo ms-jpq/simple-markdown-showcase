@@ -1,0 +1,5 @@
+{
+  "$schema": "https://raw.githubusercontent.com/SchemaStore/schemastore/master/src/schemas/json/prettierrc.json",
+  "arrowParens": "always",
+  "semi": false
+}

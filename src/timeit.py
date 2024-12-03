@@ -17,4 +17,3 @@ def timeit(label: str, *args: Any) -> Iterator[None]:
     cols, _ = get_terminal_size()
     msg = f"{label.ljust(10)} -- {time}  " + " ".join(map(str, args)) + " "
     log.info("%s", msg.ljust(cols, "="))
-
