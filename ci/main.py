@@ -38,10 +38,10 @@ def _build(path: Path) -> None:
 
 
 def _git_push(cwd: Path) -> None:
-    proc = run(("git", "-C", cwd, "diff", "--exit-code"))
-    if proc.returncode:
+    # proc = run(("git", "-C", cwd, "diff", "--exit-code"))
+    # if proc.returncode:
         time = datetime.now(tz=timezone.utc).strftime("%Y-%m-%d")
-        check_call(("git", "-C", cwd, "add", "."))
+        check_call(("git", "-C", cwd, "add", "--", "."))
         check_call(("git", "-C", cwd, "commit", "--amend", "--message", time))
         check_call(("git", "-C", cwd, "push", "--force"))
 
@@ -52,4 +52,4 @@ def main() -> None:
     _git_identity(cwd)
     _build(cwd)
     _git_push(cwd)
-    print("<> ~~ <>")
+    print("<>::<>")
