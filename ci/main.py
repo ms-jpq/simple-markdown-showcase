@@ -52,3 +52,4 @@ def main() -> None:
     _git_identity(cwd)
     _build(cwd)
     _git_push(cwd)
+    print("<> ~~ <>")
