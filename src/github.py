@@ -1,11 +1,12 @@
 from asyncio import gather, to_thread
+from collections.abc import Iterator, MutableSet, Sequence
 from datetime import datetime
 from http import HTTPStatus
 from json import loads
 from pathlib import PurePosixPath
 from random import uniform
 from time import sleep
-from typing import Any, Iterator, MutableSet, Optional, Sequence
+from typing import Any
 from urllib.error import HTTPError
 
 from std2.pickle.coders import DEFAULT_DECODERS
@@ -33,7 +34,7 @@ def _colours() -> Linguist:
     return l
 
 
-def _page(link: str) -> Optional[str]:
+def _page(link: str) -> str | None:
     for sections in link.split(","):
         uri, *params = sections.split(";")
         for param in params:
@@ -51,7 +52,7 @@ def _page(link: str) -> Optional[str]:
 
 def _date_decoder(
     tp: Any, path: Sequence[Any], strict: bool, decoders: Sequence[Decoder]
-) -> Optional[DParser]:
+) -> DParser | None:
     if not issubclass(tp, datetime):
         return None
     else:
@@ -95,7 +96,7 @@ def _ls_repos(user: str) -> Sequence[Repo]:
     return repos
 
 
-def _resource(repo: Repo, path: PurePosixPath) -> Optional[bytes]:
+def _resource(repo: Repo, path: PurePosixPath) -> bytes | None:
     uri = f"https://raw.githubusercontent.com/{repo.full_name}/{repo.default_branch}/{path}"
     err = None
     for i in range(3):

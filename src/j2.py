@@ -1,8 +1,9 @@
+from collections.abc import Mapping
 from datetime import datetime, timezone
 from functools import lru_cache
 from json import loads
 from pathlib import Path, PurePath
-from typing import Any, Mapping
+from typing import Any
 
 from jinja2 import Environment, FileSystemLoader, StrictUndefined
 from yaml import safe_load

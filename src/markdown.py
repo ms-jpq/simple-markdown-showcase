@@ -1,7 +1,8 @@
+from collections.abc import Callable, Sequence
 from html import escape
 from locale import strxfrm
 from os import linesep
-from typing import Callable, Match, Optional, Sequence, Union, no_type_check
+from typing import Match, no_type_check
 
 from pygments.formatters.html import HtmlFormatter
 from pygments.styles import get_all_styles, get_style_by_name
@@ -44,7 +45,7 @@ class _B4HtmlProcessor(InlineProcessor):
     @no_type_check
     def handleMatch(
         self, m: Match[str], data: str
-    ) -> Union[tuple[str, int, int], tuple[None, None, None]]:
+    ) -> tuple[str, int, int] | tuple[None, None, None]:
         maybe_html = m.group(1)
         chars = {*maybe_html}
 
@@ -85,7 +86,7 @@ def _extensions(style: str) -> Sequence[Extension]:
     )
 
 
-def css(name: Optional[str]) -> str:
+def css(name: str | None) -> str:
     lines = (
         f".{_CODEHL_CLASS}.{name} {line}"
         for s_name in ((name,) if name else get_all_styles())

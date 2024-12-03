@@ -1,6 +1,6 @@
+from collections.abc import Sequence
 from json import loads
 from pathlib import Path
-from typing import Sequence
 
 from std2.pickle.decoder import new_decoder
 

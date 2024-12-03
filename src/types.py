@@ -1,11 +1,11 @@
+from collections.abc import Mapping, Sequence
 from dataclasses import dataclass
 from datetime import datetime
-from typing import Mapping, Optional, Sequence
 
 
 @dataclass(frozen=True)
 class _Linguist:
-    color: Optional[str] = None
+    color: str | None = None
 
 
 Linguist = Mapping[str, _Linguist]
@@ -16,12 +16,12 @@ class Repo:
     archived: bool
     created_at: datetime
     default_branch: str
-    description: Optional[str]
+    description: str | None
     fork: bool
     forks_count: int
     full_name: str
     html_url: str
-    language: Optional[str]
+    language: str | None
     name: str
     stargazers_count: int
     updated_at: datetime
@@ -38,4 +38,4 @@ class Info:
 class RepoInfo:
     repo: Repo
     info: Info
-    read_me: Optional[str]
+    read_me: str | None

@@ -1,6 +1,7 @@
+from collections.abc import Iterator
 from contextlib import contextmanager
 from shutil import get_terminal_size
-from typing import Any, Iterator
+from typing import Any
 
 from std2.locale import si_prefixed_smol
 from std2.timeit import timeit as _timeit

@@ -5,7 +5,7 @@ requires-python = ">=3.11"
 version         = "0"
 
 dependencies = [
-  "std2@https://github.com/ms-jpq/std2/archive/1fbd11fb4854a38176bc7377b4ef9f409f400bcf.tar.gz",
+  "std2@https://github.com/ms-jpq/std2/archive/b733ecb989ac78d65c6855c32000d88c58f69b09.tar.gz",
   "Jinja2",
   "Markdown",
   "PyYAML",
