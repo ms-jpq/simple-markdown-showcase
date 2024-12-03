@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from os import environ
 from pathlib import Path
 from shutil import rmtree
-from subprocess import check_call, check_output, run
+from subprocess import check_call, run
 from sys import executable
 
 _TOP_LV = Path(__file__).resolve().parent.parent
@@ -19,7 +19,7 @@ def _git_identity(repo: Path) -> None:
 def _git_clone(path: Path) -> None:
     if not path.is_dir():
         token = environ["CI_TOKEN"]
-        uri = f"https://{_USER}:{token}@github.com/{_USER}/{_USER}.github.io.git"
+        uri = f"https://{_USER}:{token}@github.com/{_USER}/{_USER}.github.io"
         check_call(("git", "clone", "--", uri, path))
 
 
@@ -42,20 +42,7 @@ def _git_push(cwd: Path) -> None:
     if proc.returncode:
         time = datetime.now(tz=timezone.utc).strftime("%Y-%m-%d")
         check_call(("git", "-C", cwd, "add", "."))
-        check_call(("git", "-C", cwd, "commit", "-m", "::<>"))
-        # sha = check_output(
-        #     (
-        #         "git",
-        #         "commit-tree",
-        #         "-m",
-        #         f"update_artifacts: {time}",
-        #         "--",
-        #         "HEAD^{tree}",
-        #     ),
-        #     cwd=cwd,
-        #     text=True,
-        # )
-        # check_call(("git", "reset", "--hard", sha.rstrip()))
+        check_call(("git", "-C", cwd, "commit", "--amend", "--message", time))
         check_call(("git", "-C", cwd, "push", "--force"))
 
 
