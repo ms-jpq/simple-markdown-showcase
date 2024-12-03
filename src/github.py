@@ -5,6 +5,7 @@ from http import HTTPStatus
 from json import loads
 from pathlib import PurePosixPath
 from random import uniform
+from re import compile
 from time import sleep
 from typing import Any
 from urllib.error import HTTPError
@@ -23,6 +24,7 @@ from .types import Info, Linguist, Repo, RepoInfo
 _LINGUIST = "https://raw.githubusercontent.com/github/linguist/master/lib/linguist/languages.yml"
 _CONFIG = PurePosixPath("_config.yml")
 _README = PurePosixPath("README.md")
+_RE = compile(r"^\s*<\s*([^\s>]+)\s*>\s*$")
 
 
 def _colours() -> Linguist:
@@ -45,7 +47,7 @@ def _page(link: str) -> str | None:
                 else value
             )
             if key == "rel" and val == "next":
-                return removesuffix(removeprefix(uri, "<"), ">")
+                return m.group(1) if (m := _RE.match(uri)) else uri
     else:
         return None
 
@@ -73,8 +75,7 @@ def _repos(uri: str) -> Iterator[Repo]:
         raw = resp.read()
         for key, val in resp.getheaders():
             if key.casefold() == "link":
-                page = _page(val)
-                if page:
+                if page := _page(val):
                     pages.add(page)
 
     decode = new_decoder[Sequence[Repo]](

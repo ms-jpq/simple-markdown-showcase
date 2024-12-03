@@ -185,7 +185,7 @@ async def _commit(
         if cache:
             path.write_text(html)
         else:
-            text = "<!DOCTYPE html>" + html
+            text = "<!doctype html>" + html
             path.write_text(text)
 
     def cont() -> Iterator[Awaitable[None]]:

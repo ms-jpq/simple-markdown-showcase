@@ -19,3 +19,5 @@ rules:
   declaration-block-no-redundant-longhand-properties:
 
   no-duplicate-selectors:
+
+  media-query-no-invalid:
