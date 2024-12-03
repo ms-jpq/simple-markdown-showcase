@@ -9,7 +9,7 @@
     "postcss": "^8",
     "postcss-cli": "^10",
     "postcss-import": "^15",
-    "postcss-preset-env": "^8",
+    "postcss-preset-env": "^10",
     "tailwindcss": "^3"
   },
   "devDependencies": {
