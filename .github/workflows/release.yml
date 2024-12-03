@@ -5,54 +5,25 @@ on:
   push:
     branches:
       - show
-  # schedule:
-  #   - cron: "0 0 * * *" # daily
+  schedule:
+    - cron: "0 0 * * *" # daily
 
 jobs:
   release:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v4
 
-      - name: Setup Python
-        uses: actions/setup-python@v3
+      - uses: actions/setup-python@v4
 
-      - name: Install Pip Packages
-        shell: python
-        run: |-
-          from itertools import chain
-          from os import execl
-          from sys import executable
+      - run: |-
+          make lint
 
-          from tomllib import load
+      - run: |-
+          make build
 
-          with open("pyproject.toml", "rb") as fd:
-              toml = load(fd)
-          project = toml["project"]
-          execl(
-              executable,
-              executable,
-              "-m",
-              "pip",
-              "install",
-              "--upgrade",
-              "--",
-              *project["dependencies"],
-              *chain.from_iterable(project["optional-dependencies"].values()),
-          )
-
-      - name: Npm Packages
-        run: |-
-          npm install
-
-      - name: Lint
-        run: |-
-          mypy -- .
-
-      - name: CI
-        env:
+      - env:
           CI_TOKEN: ${{ secrets.CI_TOKEN }}
         run: |-
           python3 -m ci

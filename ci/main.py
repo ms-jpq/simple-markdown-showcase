@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 from os import environ
 from pathlib import Path
 from shutil import rmtree
-from subprocess import check_call, run
+from subprocess import check_call, check_output, run
 from sys import executable
 
 _TOP_LV = Path(__file__).resolve().parent.parent
@@ -44,19 +44,19 @@ def _git_push(cwd: Path) -> None:
         time = datetime.now(tz=timezone.utc).strftime("%Y-%m-%d")
         check_call(("git", "add", "."), cwd=cwd)
         check_call(("git", "commit", "-m", "::<>"), cwd=cwd)
-        # sha = check_output(
-        #     (
-        #         "git",
-        #         "commit-tree",
-        #         "-m",
-        #         f"update_artifacts: {time}",
-        #         "--",
-        #         "HEAD^{tree}",
-        #     ),
-        #     cwd=cwd,
-        #     text=True,
-        # )
-        # check_call(("git", "reset", "--hard", sha.rstrip()))
+        sha = check_output(
+            (
+                "git",
+                "commit-tree",
+                "-m",
+                f"update_artifacts: {time}",
+                "--",
+                "HEAD^{tree}",
+            ),
+            cwd=cwd,
+            text=True,
+        )
+        check_call(("git", "reset", "--hard", sha.rstrip()))
         check_call(("git", "push", "--force"), cwd=cwd)
 
 

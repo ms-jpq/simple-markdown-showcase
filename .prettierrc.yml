@@ -4,7 +4,3 @@ printWidth: 80
 semi: false
 tabWidth: 2
 trailingComma: "all"
-pluginSearchDirs: false
-plugins:
-  - prettier-plugin-organize-attributes
-  - prettier-plugin-tailwindcss
