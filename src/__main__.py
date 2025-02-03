@@ -61,12 +61,8 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
 
     async def c1() -> CompletedProcess[bytes]:
         fut = call(
-            _NPM_BIN / "purgecss",
-            "--content",
-            f"{ASSETS}/**/*.html",
-            "--css",
+            "cp",
             _FONTS_CSS,
-            "--output",
             CACHE_DIR / "font-awesome.css",
             cwd=TOP_LV,
             env=env,
@@ -92,6 +88,8 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
         )
 
     def c3() -> Iterator[Awaitable[CompletedProcess[bytes]]]:
+        tc = NPM_DIR / "@tailwindcss" / "cli" / "node_modules" / ".bin" / "tailwindcss"
+
         yield call(
             _NPM_BIN / "stylelint",
             "--",
@@ -106,10 +104,10 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
             out.parent.mkdir(parents=True, exist_ok=True)
 
             yield call(
-                _NPM_BIN / "postcss",
+                tc,
                 "--output",
                 out,
-                "--",
+                "--input",
                 path,
                 cwd=TOP_LV,
                 env=env,

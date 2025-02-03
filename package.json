@@ -2,7 +2,7 @@
   "$schema": "https://json.schemastore.org/package.json",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6",
-    "@tailwindcss/container-queries": "^0.1",
+    "@tailwindcss/cli": "^0.1",
     "@tailwindcss/typography": "^0.5",
     "cssnano": "^7",
     "postcss": "^8",

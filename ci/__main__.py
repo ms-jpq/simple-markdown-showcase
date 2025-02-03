@@ -3,7 +3,6 @@ from os import environ
 from pathlib import Path
 from shutil import rmtree
 from subprocess import check_call, run
-from sys import executable
 
 _TOP_LV = Path(__file__).resolve().parent.parent
 
@@ -32,9 +31,7 @@ def _build(path: Path) -> None:
         else:
             p.unlink(missing_ok=True)
 
-    check_call(
-        (executable, "-m", "src", _USER, "--production", "--", path), cwd=_TOP_LV
-    )
+    check_call(("make", "--", "build"), cwd=_TOP_LV)
 
 
 def _git_push(cwd: Path) -> None:

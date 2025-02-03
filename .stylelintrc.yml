@@ -10,6 +10,7 @@ rules:
     - true
     - ignoreAtRules:
         - config
+  import-notation: null
   media-feature-name-no-unknown:
     - true
     - ignoreMediaFeatureNames:
