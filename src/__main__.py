@@ -118,7 +118,7 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
             )
 
     await gather(c1(), c2())
-    await gather(*c3())
+    # await gather(*c3())
 
 
 def _splat(colours: Linguist, spec: RepoInfo) -> dict[str, Any]:
