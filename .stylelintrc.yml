@@ -2,19 +2,22 @@
 extends:
   - stylelint-config-standard
 rules:
+  at-rule-no-deprecated:
+    - true
+    - ignoreAtRules:
+        - apply
   at-rule-no-unknown:
     - true
     - ignoreAtRules:
-        - tailwind
-        - apply
+        - config
+  media-feature-name-no-unknown:
+    - true
+    - ignoreMediaFeatureNames:
+        - screen
   unit-no-unknown:
     - true
     - ignoreUnits:
         - xl
-  function-no-unknown:
-    - true
-    - ignoreFunctions:
-        - theme
 
   declaration-block-no-redundant-longhand-properties:
 

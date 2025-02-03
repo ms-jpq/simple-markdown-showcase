@@ -2,7 +2,6 @@
   "$schema": "https://json.schemastore.org/package.json",
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6",
-    "@fullhuman/postcss-purgecss": "^7",
     "@tailwindcss/container-queries": "^0.1",
     "@tailwindcss/typography": "^0.5",
     "cssnano": "^7",
@@ -10,7 +9,7 @@
     "postcss-cli": "^11",
     "postcss-import": "^16",
     "postcss-preset-env": "^10",
-    "tailwindcss": "^3"
+    "tailwindcss": "^4"
   },
   "devDependencies": {
     "esbuild": "*",

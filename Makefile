@@ -74,5 +74,8 @@ fmt: black prettier
 build: .venv/bin/python3 .venv/bin/mypy node_modules/.bin/tsc
 	'$<' -m src --production -- 'ms-jpq' 'dist'
 
+dev: .venv/bin/python3 .venv/bin/mypy node_modules/.bin/tsc
+	'$<' -m src --cache -- 'ms-jpq' 'dist'
+
 ci: .venv/bin/python3 .venv/bin/mypy
 	'$<' -m ci

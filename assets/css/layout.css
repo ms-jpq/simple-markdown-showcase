@@ -1,6 +1,6 @@
 @import url("../../.cache/font-awesome.css");
-@import url("./tailwind.scss");
-@import url("./markdown.scss");
+@import url("./tailwind.css");
+@import url("./markdown.css");
 
 a {
   @apply text-inherit underline decoration-primary-400 decoration-solid;
@@ -73,7 +73,7 @@ body > div {
       "footer";
   }
 
-  @media screen(sm) {
+  @media (screen: sm) {
     & > div {
       grid-template-areas:
         "header main"

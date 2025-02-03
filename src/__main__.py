@@ -95,13 +95,13 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
         yield call(
             _NPM_BIN / "stylelint",
             "--",
-            "**/*.scss",
+            "**/*.css",
             cwd=_CSS_DIR,
             capture_stdout=False,
             capture_stderr=False,
         )
-        for path in _CSS_DIR.rglob("*.scss"):
-            name = normcase(path.relative_to(_CSS_DIR).with_suffix(".css"))
+        for path in _CSS_DIR.rglob("*.css"):
+            name = normcase(path.relative_to(_CSS_DIR))
             out = dist / name.replace(altsep or sep, "_")
             out.parent.mkdir(parents=True, exist_ok=True)
 
@@ -118,7 +118,7 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
             )
 
     await gather(c1(), c2())
-    # await gather(*c3())
+    await gather(*c3())
 
 
 def _splat(colours: Linguist, spec: RepoInfo) -> dict[str, Any]:
