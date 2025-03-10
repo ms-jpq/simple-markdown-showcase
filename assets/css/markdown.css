@@ -7,7 +7,7 @@
  ************/
 
 .markdown {
-  @apply prose;
+  /* @apply prose; */
 
   max-width: 88ch;
 
@@ -24,14 +24,14 @@
   }
 
   & a {
-    @apply text-inherit decoration-primary-400;
+    @apply text-inherit decoration-pink-400;
   }
 
   & ul > li {
     @apply leading-normal;
 
     &::marker {
-      @apply text-primary-400;
+      @apply text-pink-400;
     }
 
     &::before {
@@ -44,7 +44,7 @@
   }
 
   & code {
-    @apply bg-secondary-200 text-inherit;
+    @apply bg-neutral-200 text-inherit;
 
     &::before,
     &::after {
@@ -54,7 +54,7 @@
 
   & pre,
   & blockquote {
-    @apply grid w-full grid-flow-col gap-x-2 overflow-x-auto rounded border-2 bg-secondary-100 text-inherit;
+    @apply grid w-full grid-flow-col gap-x-2 overflow-x-auto rounded border-2 bg-neutral-100 text-inherit;
 
     max-width: inherit;
     grid-template-columns: 0.5ch 1fr;
@@ -63,7 +63,7 @@
       grid-row: span 100;
       content: "";
 
-      @apply bg-primary-400;
+      @apply bg-pink-400;
     }
 
     & > span {
@@ -71,7 +71,7 @@
     }
 
     & > code {
-      @apply bg-secondary-100;
+      @apply bg-neutral-100;
     }
 
     & > *:not(first-child) {

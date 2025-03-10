@@ -4,7 +4,7 @@
 @reference "tailwindcss";
 
 a {
-  @apply text-inherit underline decoration-primary-400 decoration-solid;
+  @apply text-inherit underline decoration-pink-400 decoration-solid;
 
   &:active,
   &:hover,
@@ -24,7 +24,7 @@ ul {
     }
 
     &.active::before {
-      @apply text-primary-400;
+      @apply text-pink-400;
     }
 
     &::before {
@@ -91,14 +91,14 @@ body > div {
  ***********/
 
 .big-button {
-  @apply cursor-pointer self-center border-2 border-primary-400 px-2 py-1;
-  @apply bg-transparent text-justify text-primary-400 hover:bg-primary-400 hover:text-secondary-100;
+  @apply cursor-pointer self-center border-2 border-pink-400 px-2 py-1;
+  @apply bg-transparent text-justify text-pink-400 hover:bg-pink-400 hover:text-neutral-100;
 }
 
 a.invis-link {
   @apply no-underline;
 
   &:hover {
-    @apply underline decoration-primary-400 decoration-dotted;
+    @apply underline decoration-pink-400 decoration-dotted;
   }
 }
