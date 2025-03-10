@@ -41,7 +41,6 @@ from .types import Linguist, RepoInfo
 _TS_DIR = ASSETS / "js"
 _CSS_DIR = ASSETS / "css"
 _GH_CACHE = CACHE_DIR / "github.json"
-_CSS = CACHE_DIR / "hl.css"
 _PAGES = PurePath("pages")
 _NPM_BIN = NPM_DIR / ".bin"
 
@@ -56,7 +55,7 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
     def c0() -> None:
         dist.mkdir(parents=True, exist_ok=True)
         fonts_dest = dist / "webfonts"
-        _CSS.write_text(css(MD_STYLE))
+        (dist / "hl.css").write_text(css(MD_STYLE))
         copytree(_FONTS_DIR, fonts_dest, dirs_exist_ok=True)
 
     async def c1() -> CompletedProcess[bytes]:
