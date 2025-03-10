@@ -15,8 +15,6 @@
     "esbuild": "*",
     "prettier": "*",
     "prettier-plugin-tailwindcss": "*",
-    "stylelint": "*",
-    "stylelint-config-standard": "*",
     "typescript": "*"
   },
   "type": "module"

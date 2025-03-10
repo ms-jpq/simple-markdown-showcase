@@ -1,6 +1,5 @@
 @import url("tailwindcss");
 @plugin "@tailwindcss/typography";
-
 @config "../../tailwind.config.cjs";
 
 /*

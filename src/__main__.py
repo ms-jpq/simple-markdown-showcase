@@ -89,15 +89,6 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
 
     def c3() -> Iterator[Awaitable[CompletedProcess[bytes]]]:
         tc = _NPM_BIN / "tailwindcss"
-
-        yield call(
-            _NPM_BIN / "stylelint",
-            "--",
-            "**/*.css",
-            cwd=_CSS_DIR,
-            capture_stdout=False,
-            capture_stderr=False,
-        )
         for path in _CSS_DIR.rglob("*.css"):
             name = normcase(path.relative_to(_CSS_DIR))
             out = dist / name.replace(altsep or sep, "_")
