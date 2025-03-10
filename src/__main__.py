@@ -60,9 +60,13 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
 
     async def c1() -> CompletedProcess[bytes]:
         fut = call(
-            "cp",
+            _NPM_BIN / "purgecss",
+            "--css",
             _FONTS_CSS,
-            CACHE_DIR / "font-awesome.css",
+            "--content",
+            *ASSETS.rglob("*.html"),
+            "--output",
+            dist / "font-awesome.css",
             cwd=TOP_LV,
             env=env,
             capture_stdout=False,
