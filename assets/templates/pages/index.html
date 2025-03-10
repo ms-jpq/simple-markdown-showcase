@@ -9,7 +9,7 @@
   js=["/layout.js"],
   desc=user)
 %-->
-<main class="m-0 py-4 px-4 @container sm:px-0">
+<main class="@container m-0 px-4 py-4 sm:px-0">
   <div
     class="@9xl:columns-5 w-full columns-1 @2xl:columns-2 @5xl:columns-3 @7xl:columns-4"
   >
@@ -38,7 +38,7 @@
           </div>
         </a>
         <!--% endif %-->
-        <h4 class="figure-title text-ellipsis px-4 pt-2 text-center uppercase">
+        <h4 class="figure-title px-4 pt-2 text-center text-ellipsis uppercase">
           <a class="invis-link" href="<!--{ spec_uri | e }-->">
             <!--{ spec.title | e }-->
           </a>
@@ -50,7 +50,7 @@
           <!--{ github_stars(stars=spec.stargazers_count) }-->
           <!--{ github_forks(forks=spec.forks_count) }-->
         </div>
-        <figcaption class="figure-detail text-ellipsis px-4 pb-2 text-justify">
+        <figcaption class="figure-detail px-4 pb-2 text-justify text-ellipsis">
           <!--{ (spec.description or "") | e }-->
         </figcaption>
       </figure>
