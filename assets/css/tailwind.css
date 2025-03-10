@@ -1,6 +1,5 @@
 @import url("tailwindcss");
-
-@config "../../tailwind.config.cjs";
+@plugin "@tailwindcss/typography";
 
 /*
   The default border color has changed to `currentColor` in Tailwind CSS v4,

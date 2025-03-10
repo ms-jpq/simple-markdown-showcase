@@ -1,4 +1,6 @@
 @import url("../../.cache/hl.css");
+@import url("./tailwind.css");
+@reference "tailwindcss";
 
 /************
  * MARKDOWN *

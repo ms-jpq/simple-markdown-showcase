@@ -88,7 +88,7 @@ async def _compile(verbose: bool, production: bool, dist: Path) -> None:
         )
 
     def c3() -> Iterator[Awaitable[CompletedProcess[bytes]]]:
-        tc = NPM_DIR / "@tailwindcss" / "cli" / "node_modules" / ".bin" / "tailwindcss"
+        tc = _NPM_BIN / "tailwindcss"
 
         yield call(
             _NPM_BIN / "stylelint",

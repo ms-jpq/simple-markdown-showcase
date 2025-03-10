@@ -6,10 +6,7 @@ const colors = require("tailwindcss/colors")
  */
 module.exports = {
   relative: true,
-  plugins: [
-    require("@tailwindcss/container-queries"),
-    require("@tailwindcss/typography"),
-  ],
+  plugins: [],
   content: ["./assets/templates/**/*.html"],
   theme: {
     extend: {
