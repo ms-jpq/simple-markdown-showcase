@@ -31,7 +31,7 @@ def _build(path: Path) -> None:
         else:
             p.unlink(missing_ok=True)
 
-    check_call(("make", "--", "build"), cwd=_TOP_LV)
+    check_call(("make", "--", "build", f"DIST={path}"), cwd=_TOP_LV)
 
 
 def _git_push(cwd: Path) -> None:

@@ -72,12 +72,13 @@ prettier: node_modules/.bin/tsc
 fmt: black prettier
 
 GITHUB_ACTOR ?= ms-jpq
+DIST := dist
 
 build: .venv/bin/python3 .venv/bin/mypy node_modules/.bin/tsc
-	'$<' -m src --production -- '$(GITHUB_ACTOR)' 'dist'
+	'$<' -m src --production -- '$(GITHUB_ACTOR)' '$(DIST)'
 
 dev: .venv/bin/python3 .venv/bin/mypy node_modules/.bin/tsc
-	'$<' -m src --cache -- '$(GITHUB_ACTOR)' 'dist'
+	'$<' -m src --cache -- '$(GITHUB_ACTOR)' '$(DIST)'
 
 ci: .venv/bin/python3 .venv/bin/mypy
 	'$<' -m ci
