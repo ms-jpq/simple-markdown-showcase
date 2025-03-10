@@ -50,3 +50,6 @@ def main() -> None:
     _build(cwd)
     _git_push(cwd)
     print("<>::<>")
+
+
+main()
