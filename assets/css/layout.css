@@ -75,7 +75,7 @@ body > div {
       "footer";
   }
 
-  @media (screen: sm) {
+  @media (width >= 48rem) {
     & > div {
       grid-template-areas:
         "header main"
