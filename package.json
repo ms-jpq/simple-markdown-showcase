@@ -4,7 +4,7 @@
     "@fortawesome/fontawesome-free": "^6",
     "@tailwindcss/cli": "^4",
     "@tailwindcss/typography": "^0.5",
-    "purgecss": "^7",
+    "purgecss": "^8",
     "tailwindcss": "^4"
   },
   "devDependencies": {
